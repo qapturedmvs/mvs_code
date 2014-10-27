@@ -1,5 +1,14 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function __autoload($classname) {
+	if (strpos($classname, 'CI_') !== 0) {
+		$file = APPPATH . 'libraries/' . $classname . '.php';
+		if (file_exists($file) && is_file($file)) {
+			@include_once($file);
+		}
+	}
+}
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -106,7 +115,7 @@ $config['enable_hooks'] = FALSE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = 'MVS_';
 
 
 /*
