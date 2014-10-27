@@ -5,14 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Qaptured Admin</title>
-    <!-- Bootstrap -->
     <link href="<?php echo site_url('back/css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo site_url('back/css/main.css'); ?>" rel="stylesheet">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="<?php echo site_url('back/js/jquery-1.11.1.min.js'); ?>"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="<?php echo site_url('back/js/bootstrap.min.js'); ?>"></script>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

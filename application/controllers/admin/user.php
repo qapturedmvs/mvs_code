@@ -7,7 +7,7 @@ class User extends Backend_Controller {
 
     public function login(){
     	
-        $this->data['subview'] = 'admin/login';
+        $this->data['subview'] = 'admin/pages/user_login';
         $this->load->view('admin/_layout_main', $this->data);
     }
 
