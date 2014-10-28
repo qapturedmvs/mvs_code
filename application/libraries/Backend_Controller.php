@@ -16,7 +16,7 @@
 			
 			if (in_array(uri_string(), $exception_uris) == FALSE) {
 				if ($this->user_m->loggedin() == FALSE) {
-					redirect('admin/user/login');
+					//redirect('admin/user/login');
 				}
 			}
 
