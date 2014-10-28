@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	class Backend_Controller extends MVS_Controller
 	{
@@ -16,7 +16,7 @@
 			
 			if (in_array(uri_string(), $exception_uris) == FALSE) {
 				if ($this->user_m->loggedin() == FALSE) {
-					//redirect('admin/user/login');
+					redirect('admin/user/login');
 				}
 			}
 

@@ -56,9 +56,9 @@ class User_M extends MVS_Model
 		if (count($user)) {
 			// Log in user
 			$data = array(
-				'name' => $user->name,
-				'email' => $user->email,
-				'id' => $user->id,
+				'name' => $user->adm_usr_name,
+				'email' => $user->adm_usr_email,
+				'id' => $user->adm_usr_id,
 				'loggedin' => TRUE,
 			);
 			$this->session->set_userdata($data);

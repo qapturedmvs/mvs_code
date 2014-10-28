@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	class Dashboard extends Backend_Controller{
 		function __construct(){
