@@ -7,6 +7,10 @@
 		{
 			parent::__construct();
 			
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+			$this->load->model('admin/user_m');
+			
 			// Login check
 			$exception_uris = array('admin/user/login', 'admin/user/logout');
 			
