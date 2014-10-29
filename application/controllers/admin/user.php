@@ -21,6 +21,8 @@ class User extends Backend_Controller {
 		if ($id) {
 			$this->data['user'] = $this->user_m->get($id);
 			count($this->data['user']) || $this->data['errors'][] = 'User could not be found';
+			
+			if( count($this->data['user']) == 0 ) redirect('admin/user'); //-->user bulunamazsa hatayı önlemek için redirect
 		}
 		else {
 			$this->data['user'] = $this->user_m->get_new();
@@ -32,9 +34,9 @@ class User extends Backend_Controller {
 		$this->form_validation->set_rules($rules);
 		
 		// Process the form
-		if ($this->form_validation->run() == TRUE) {
-			$data = $this->user_m->array_from_post(array('name', 'email', 'password'));
-			$data['password'] = $this->user_m->hash($data['password']);
+		if ($this->form_validation->run() == TRUE) {			
+			$data = $this->user_m->array_from_post(array('adm_usr_name', 'adm_usr_email', 'adm_usr_password', 'adm_usr_note'));
+			$data['adm_usr_password'] = $this->user_m->hash($data['adm_usr_password']);		
 			$this->user_m->save($data, $id);
 			redirect('admin/user');
 		}
