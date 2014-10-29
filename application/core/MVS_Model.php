@@ -6,13 +6,14 @@ class MVS_Model extends CI_Model {
 	protected $_primary_filter = 'intval';
 	protected $_order_by = '';
 	protected $_rules = array();
+	protected $_per_page = 0;
 	protected $_timestamps = FALSE;
 	
 	function __construct() {
 		parent::__construct();
 	}
 	
-	public function get($id = NULL, $single = FALSE){
+	public function get($id = NULL, $single = FALSE, $offset = 0){
 		
 		if ($id != NULL) {
 			$filter = $this->_primary_filter;
@@ -30,7 +31,13 @@ class MVS_Model extends CI_Model {
 		if (!count($this->db->ar_orderby)) {
 			$this->db->order_by($this->_order_by);
 		}
+		
+		if($this->_per_page !== 0){
+			$this->db->limit($this->_per_page, $offset);
+		}
+
 		return $this->db->get($this->_table_name)->$method();
+
 	}
 	
 	public function get_by($where, $single = FALSE){
@@ -76,5 +83,11 @@ class MVS_Model extends CI_Model {
 		$this->db->where($this->_primary_key, $id);
 		$this->db->limit(1);
 		$this->db->delete($this->_table_name);
+	}
+	
+	public function data_count(){
+
+		return $this->db->count_all_results($this->_table_name);
+	
 	}
 }

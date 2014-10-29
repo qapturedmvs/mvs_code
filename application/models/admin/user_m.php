@@ -61,6 +61,7 @@ class User_M extends MVS_Model
 				'id' => $user->adm_usr_id,
 				'loggedin' => TRUE,
 			);
+			
 			$this->session->set_userdata($data);
 		}
 	}
