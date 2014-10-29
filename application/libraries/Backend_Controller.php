@@ -10,6 +10,7 @@
 			// Default Variables
 			$this->data['site_name'] = "Qaptured";
 			$this->data['site_url'] = site_url();
+			$this->data['current_url'] = current_url();
 			
 			$this->load->helper('form');
 			$this->load->library('form_validation');

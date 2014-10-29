@@ -10,9 +10,11 @@ class Movie extends Backend_Controller {
 	
 	public function lister(){
 		
-		$this->data['movies'] = $this->movie_m->movies(0);
-		
-		var_dump($this->data['movies']);
+		$this->data['movies'] = $this->movie_m->movies();
+
+		// Load view
+		$this->data['subview'] = 'admin/movie/list';
+		$this->load->view('admin/_main_body_layout', $this->data);
 		
 	}
 	
