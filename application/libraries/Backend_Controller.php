@@ -12,7 +12,7 @@
 			$this->data['site_url'] = site_url();
 			$this->data['current_url'] = current_url();
 			
-			$this->load->helper('form');
+			$this->load->helper(array('form', 'mvs_helper'));
 			$this->load->library('form_validation');
 			$this->load->model('admin/user_m');
 			
@@ -25,5 +25,14 @@
 				}
 			}
 
+		}
+		
+		public function paging($total, $perPage, $curPage, $linkCount){
+			
+			$totalPage = ceil($total/$perPage);
+			$bLinks = ceil($linkCount/2);
+			$aLinks = $linkCount-$bLinks;
+
+			
 		}
 	}

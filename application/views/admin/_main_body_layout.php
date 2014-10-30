@@ -18,7 +18,7 @@
         <li><a href="<?php echo $site_url; ?>admin/movie/lister">Movies</a></li>
         <li><a href="#">Actors</a></li>
         <li><a href="#">Members</a></li>
-        <li><a href="#">Admin Users</a></li>
+        <li><a href="<?php echo $site_url; ?>admin/user">Admin Users</a></li>
         <li><a href="#">Settings</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

@@ -14,11 +14,12 @@ class Movie_M extends MVS_Model
 	{
 		parent::__construct();
 		
+		// Getting sort arguments
 		if(isset($_GET['orderBy']))
-			$this->_order_by = 'mvs_'.$_GET['orderBy'];
+			$this->_order_by = 'mvs_'.$this->cleaner($_GET['orderBy']);
 		
 		if(isset($_GET['orderRule']))
-			$this->_order_rule = $_GET['orderRule'];
+			$this->_order_rule = $this->cleaner($_GET['orderRule']);
 	}
 	
 	public function movies($offset = 0){

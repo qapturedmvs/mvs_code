@@ -74,6 +74,7 @@ class MVS_Model extends CI_Model {
 		return $id;
 	}
 	
+	// Delete
 	public function delete($id){
 		$filter = $this->_primary_filter;
 		$id = $filter($id);
@@ -86,9 +87,18 @@ class MVS_Model extends CI_Model {
 		$this->db->delete($this->_table_name);
 	}
 	
+	// Get count of all data in a table
 	public function data_count(){
 
 		return $this->db->count_all_results($this->_table_name);
 	
 	}
+	
+	// XSS Filter to a string
+	public function cleaner($str){
+
+		return $this->security->xss_clean($str);
+	
+	}
+	
 }
