@@ -1,3 +1,4 @@
+<div class="container pgaeUserDetail">
 <h3><?php echo empty($user->adm_usr_id) ? 'Add a new user' : 'Edit user ' . $user->adm_usr_name; ?></h3>
 <?php echo validation_errors(); ?>
 <?php echo form_open(); ?>
@@ -28,3 +29,4 @@
 	</tr>
 </table>
 <?php echo form_close();?>
+</div>

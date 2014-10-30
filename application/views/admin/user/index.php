@@ -1,4 +1,4 @@
-<section>
+<div class="container pgaeUsers">
 	<h2>Users</h2>
 	<?php echo anchor('admin/user/edit', '<i class="icon-plus"></i> Add a user'); ?>
 	<table class="table table-striped">
@@ -26,4 +26,4 @@
 <?php endif; ?>	
 		</tbody>
 	</table>
-</section>
+</div>
