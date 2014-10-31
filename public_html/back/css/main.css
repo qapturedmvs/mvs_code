@@ -44,3 +44,5 @@
 
 
 .noData{text-align:center;}
+nav{text-align:center;}
+.posterGrid a{display:block; width:62px; min-height:100px; background:#ccc; border:1px solid #555;}

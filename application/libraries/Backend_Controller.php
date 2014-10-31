@@ -27,45 +27,42 @@
 
 		}
 		
-		public function _getPaging($total, $perPage, $curPage, $linkCount){
+		//Thumb generate
+		public function _image_thumbs($path, $width, $height){
 			
-			$totalPage = ceil($total/$perPage);
-			$aLinks = floor(($linkCount-1)/2);
-			$bLinks = $linkCount-$aLinks-1;
-			$html = '';
+			$this->load->library('image_lib');
+			$this->load->helper('directory');
 			
-			if($totalPage > 1){
-				if($totalPage > $linkCount){
-					if($curPage+$aLinks > $totalPage){
-						$end = $totalPage;
-						$start = $curPage-$bLinks+($curPage+$aLinks-$totalPage);
-					}else if($curPage-$bLinks < 1){
-						$start = 1;
-						$end = $curPage+$aLinks-(1-$curPage-$bLinks);
-					}else{
-						$start = $curPage-$bLinks;
-						$end = $curPage+$aLinks;	
+			$imgMap = directory_map($path, 0);
+			if(substr($path, -1) == "/") $thumPath = $path."thumbs/"; else $thumPath = $path."/thumbs/";
+			if (!file_exists($thumPath)) mkdir($thumPath, 0755, true);
+			$thumbMap = directory_map($thumPath, 0);
+		
+			foreach($imgMap as $item){
+		
+				if(!is_array($item) && !in_array(str_replace(".jpg", "_thumb.jpg", $item), $thumbMap)){
+					$config['image_library'] = 'gd2';
+					$config['source_image'] = $path.$item;
+					$config['new_image'] = $path."thumbs/";
+					$config['create_thumb'] = TRUE;
+					$config['maintain_ratio'] = TRUE;
+					$config['width'] = $width;
+					$config['height'] = $height;
+		
+					$this->image_lib->initialize($config);
+		
+					if (!$this->image_lib->resize())
+					{
+						return "<p>".$item." -> ".$this->image_lib->display_errors()."</p>";
 					}
-				}else{
-					$start = 1;
-					$end = $totalPage;
+		
+					$this->image_lib->clear();
+		
 				}
-				
-				$html = '<li><a class="lastPage" href="'.$this->data['current_url'].'1">&laquo;</a></li>';
-				
-				for($i=$start; $i<$end+1; $i++){
-					
-					if($i == $curPage)
-						$html .= '<li class="active"><span>'.$i.'</span></li>';
-					else
-						$html .= '<li><a href="'.$this->data['current_url'].$i.'">'.$i.'</a></li>';
-						
-				}
-				
-				$html .= '<li><a class="lastPage" href="'.$this->data['current_url'].$totalPage.'">&raquo;</a></li>';
+		
 			}
-			
-			return $html;
-			
+		
 		}
+		
+		
 	}

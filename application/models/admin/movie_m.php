@@ -8,7 +8,7 @@ class Movie_M extends MVS_Model
 	protected $_primary_key = 'mvs_id';
 	protected $_order_by = 'mvs_id';
 	protected $_order_rule = 'ASC';
-	protected $_per_page = 100;
+	public $per_page = 100;
 
 	function __construct ()
 	{
@@ -30,7 +30,6 @@ class Movie_M extends MVS_Model
 			return $movies;
 		else
 			return "No data found...";
-
 		
 	}
 

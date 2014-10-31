@@ -7,17 +7,22 @@ class Movie extends Backend_Controller {
 		
 		$this->load->model('admin/movie_m');
 		
-		$curPage = (isset($this->uri->segment(4))) ? $this->uri->segment(4) : 1;
+		
 	}
 	
 	public function lister(){
 		
-		$total = $this->movie_m->data_count();
-		$perPage = 100;
+		// Thumbs (Settings kısmındaki bir buttona bağlanacak
+		//$this->_image_thumbs(FCPATH."data/movies/", 60, 100);
+		
+		$p = $this->uri->segment(4);
+		$curPage = ($p != '') ? $p : 1;
 		$linkCount = 10;
-		$offset = ($curPage-1)*$perPage;
+		$offset = ($curPage-1)*$this->movie_m->per_page;
+
+		$this->data['offset'] = $offset;
 		$this->data['movies'] = $this->movie_m->movies($offset);
-		$this->data['paging'] = $this->_getPaging($total, $perPage, $curPage, $linkCount);
+		$this->data['paging'] = $this->movie_m->getPaging($curPage, $linkCount);
 
 		// Load view
 		$this->data['subview'] = 'admin/movie/list';

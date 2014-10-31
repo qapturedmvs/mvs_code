@@ -15,14 +15,16 @@
 				</thead>
 				<tbody>
 				<?php foreach($movies as $movie): ?>
+				<?php $imgPath = $site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_thumb.jpg'; ?>
 					<tr>
-						<td><?php echo $movie->mvs_id; ?></td>
-						<td><?php echo $movie->mvs_poster; ?></td>
-						<td><a href="<?php echo '#'.$movie->mvs_id; ?>"><?php echo $movie->mvs_title; ?></a></td>
+						<td><?php echo $offset; ?>.</td>
+						<td class="posterGrid"><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_thumb.jpg" alt="'.$movie->mvs_title.'" />'; ?></a></td>
+						<td><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php echo $movie->mvs_title; ?></a></td>
 						<td><?php echo $movie->mvs_org_title; ?></td>
 						<td><?php echo $movie->mvs_year; ?></td>
 						<td style="text-align:right;"><?php echo $movie->mvs_runtime; ?> min.</td>
 					</tr>
+				<?php $offset++; ?>
 				<?php endforeach; ?>		
 				</tbody>
 			</table>
