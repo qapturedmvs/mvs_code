@@ -30,4 +30,5 @@
 			<div class="noData"><?php echo $movies; ?></div>
 		<?php endif; ?>
 	</div>
+    <?php if($paging != '') echo '<nav><ul class="pagination">'.$paging.'</ul></nav>'; ?>
 </div>
