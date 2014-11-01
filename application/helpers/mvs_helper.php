@@ -14,3 +14,15 @@ function btnType( $uri, $type = null, $events = null ){
 	}
 	return anchor($uri, $html, $events);
 }
+
+
+function changeObjectKeys( $obj, $keys = null ){
+	
+	if( $keys ){
+		foreach ($obj as $key => $value) {
+			$obj[ $keys . $key ] = $obj[ $key ];
+			unset( $obj[ $key ] );
+		}
+	}
+	return $obj;
+}
