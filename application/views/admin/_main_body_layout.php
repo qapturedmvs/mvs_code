@@ -22,7 +22,7 @@
         <li><a href="<?php echo $site_url; ?>admin/settings">Settings</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo $site_url; ?>admin/user/logout">Logout</a></li>
+        <li><a href="<?php echo $site_url; ?>admin/user/logout"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

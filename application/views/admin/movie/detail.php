@@ -2,10 +2,8 @@
 <div class="headHolder">
 	<div class="posterHolder"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/'.$movie->mvs_imdb_id.'.jpg" alt="'.$movie->mvs_title.'" />'; ?></div>
 	<h2 class="sub-header">Movie #<?php echo $movie->mvs_id; ?></h2>
-	<div class="btn-group">
-	  <a href="javascript:history.go(-1)" class="btn btn-default">Back</a>
-	</div>
-	<div class="floatFixer"></div>
+	<a href="javascript:history.go(-1)" class="btn btn-default btnBack">Back</a>
+	<div class="clearfix"></div>
 </div>
 <?php echo form_open(); ?>
 	<div class="input-group input-group-lg">

@@ -4,14 +4,18 @@ function btnType( $uri, $type = null, $events = null ){
 	$html;
 	switch( $type ){
 		case 'edit':
-			$html = '<i class="icon-edit">EDIT</i>';
+			$html = '<i class="glyphicon glyphicon-edit"></i>';
 			break;
 		case 'remove':
-			$html = '<i class="icon-remove">REMOVE</i>';
+			$html = '<i class="glyphicon glyphicon-remove"></i>';
+			break;
+		case 'add':
+			$html = '<i class="glyphicon glyphicon-plus"></i>';
 			break;
 		default:
 			$html = '';
 	}
+	
 	return anchor($uri, $html, $events);
 }
 
@@ -50,18 +54,4 @@ function getMessage($type, $message){
 	}
 	
 	return $html;
-}
-
-// Get a setting value
-function getSetting($array, $code){
-	
-	$set = '';
-	
-	foreach($array as $item){
-		if($item->adm_set_code == $code)
-			$set = $item->adm_set_value;
-	}
-	
-	return $set;
-	
 }

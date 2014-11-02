@@ -46,6 +46,8 @@
 .noData{text-align:center;}
 nav{text-align:center;}
 .posterGrid a{display:block; width:62px; min-height:100px; background:#ccc; border:1px solid #aaa;}
+h2.sub-header{margin:10px 0 20px;}
+.alignCenter{text-align:center;}
 
 /* Movie Detail */
 .pageMovie .headHolder{margin-bottom:20px;}
@@ -53,7 +55,7 @@ nav{text-align:center;}
 .pageMovie .headHolder .posterHolder img{height:250px; cursor:pointer; cursor:hand;}
 .pageMovie .headHolder .posterHolder img.big{position:absolute; top:0; left:0; height:auto;}
 .pageMovie .headHolder h2{float:left;}
-.pageMovie .headHolder .btn-group{float:right;}
+.pageMovie .headHolder .btnBack{float:right;}
 .input-group{margin-bottom:15px;}
 .input-group-addon:first-child{min-width:150px; text-align:left;}
 .input-group textarea{height:100px !important; resize:none;}
@@ -62,3 +64,9 @@ nav{text-align:center;}
 .input-group.groupMulti .selections small{display:block; text-align:left;}
 .input-group .castHolder{height:auto;}
 .input-group .castHolder .list-group-item .actor{display:inline-block; width:300px;}
+
+/* Settings */
+.NavHolder{margin-bottom:40px;}
+
+.btnThumbGenerate{float:right;}
+.btnThumbGenerate .btn{}

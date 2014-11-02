@@ -16,7 +16,14 @@ class Settings extends Backend_Controller {
 		$this->data['settings'] = $this->settings_m->settings();
 		
 		// Load view
-		$this->data['subview'] = 'admin/settings';
+		$this->data['subview'] = 'admin/settings/index';
+		$this->load->view('admin/_main_body_layout', $this->data);
+	}
+	
+	public function thumbs(){
+	
+		// Load view
+		$this->data['subview'] = 'admin/settings/thumbs';
 		$this->load->view('admin/_main_body_layout', $this->data);
 	}
 	

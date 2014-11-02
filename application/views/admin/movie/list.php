@@ -2,6 +2,8 @@
 	<h2 class="sub-header">Movies</h2>
 	<div class="table-responsive">
 		<?php if(count($movies)): ?>
+		<div class="panel panel-default panelMovies">
+		<div class="panel-heading">Movies in <?php echo ($movie_counts->offset+1).' - '.($movie_counts->offset+$movie_counts->per_page); ?></div>
 			<table class="table table-striped table-movies">
 				<thead>
 					<tr>
@@ -14,19 +16,21 @@
 					</tr>
 				</thead>
 				<tbody>
+				<?php $s = $movie_counts->offset+1; ?>
 				<?php foreach($movies as $movie): ?>
 					<tr>
-						<td><?php echo $offset; ?>.</td>
+						<td><?php echo $s; ?>.</td>
 						<td class="posterGrid"><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_thumb.jpg" alt="'.$movie->mvs_title.'" />'; ?></a></td>
 						<td><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php echo $movie->mvs_title; ?></a></td>
 						<td><?php echo $movie->mvs_org_title; ?></td>
 						<td><?php echo $movie->mvs_year; ?></td>
 						<td style="text-align:right;"><?php echo $movie->mvs_runtime; ?> min.</td>
 					</tr>
-				<?php $offset++; ?>
+				<?php $s++; ?>
 				<?php endforeach; ?>		
 				</tbody>
 			</table>
+		</div>
 		<?php else: ?>
 			<?php echo getMessage('info', 'Movie data not found.'); ?>
 		<?php endif; ?>
