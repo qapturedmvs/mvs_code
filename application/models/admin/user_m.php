@@ -19,6 +19,7 @@ class User_M extends MVS_Model
 		)
 	);
 	
+	
 	public $rules_admin = array(
 		'name' => array(
 			'field' => 'name', 
@@ -82,6 +83,7 @@ class User_M extends MVS_Model
 		$user->name = '';
 		$user->email = '';
 		$user->password = '';
+		$user->note = '';
 		return $user;
 	}
 
