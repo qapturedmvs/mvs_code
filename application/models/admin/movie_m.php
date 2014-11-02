@@ -29,7 +29,7 @@ class Movie_M extends MVS_Model
 		if (count($movies))
 			return $movies;
 		else
-			return "No data found...";
+			return FALSE;
 		
 	}
 	

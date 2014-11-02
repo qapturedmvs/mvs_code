@@ -1,7 +1,7 @@
 <div class="container pgaeMovies">
 	<h2 class="sub-header">Movies</h2>
 	<div class="table-responsive">
-		<?php if(is_array($movies)): ?>
+		<?php if(count($movies)): ?>
 			<table class="table table-striped table-movies">
 				<thead>
 					<tr>
@@ -28,7 +28,7 @@
 				</tbody>
 			</table>
 		<?php else: ?>
-			<div class="noData"><?php echo $movies; ?></div>
+			<?php echo getMessage('info', 'Movie data not found.'); ?>
 		<?php endif; ?>
 	</div>
     <?php if($paging != '') echo '<nav><ul class="pagination">'.$paging.'</ul></nav>'; ?>

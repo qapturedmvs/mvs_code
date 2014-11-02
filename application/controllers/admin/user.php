@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class User extends Backend_Controller {
 
     public function __construct(){
@@ -22,7 +23,7 @@ class User extends Backend_Controller {
 			$this->data['user'] = $this->user_m->get($id);
 			count($this->data['user']) || $this->data['errors'][] = 'User could not be found';
 			
-			if( count($this->data['user']) == 0 ) redirect('admin/user'); //-->user bulunamazsa hatayı önlemek için redirect
+			if( count($this->data['user']) == 0 ) redirect('admin/user'); //-->user bulunamazsa hatayï¿½ ï¿½nlemek iï¿½in redirect
 		}
 		else {
 			$this->data['user'] = $this->user_m->get_new();

@@ -1,7 +1,5 @@
 <?php
-class MVS_Controller extends CI_Controller {
-	
-	public $data = array();
+class MVS_Controller extends CI_Controller{
 	
 	function __construct() {
 		parent::__construct();

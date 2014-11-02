@@ -2,20 +2,29 @@
 
 	class Backend_Controller extends MVS_Controller
 	{
+		
+		public $data = array();
 	
 		function __construct ()
 		{
 			parent::__construct();
 			
-			// Default Variables
-			$this->data['site_name'] = "Qaptured";
-			$this->data['site_url'] = site_url();
-			$this->data['current_url'] = current_url();
-			
+			$this->config->load('mvs_adm_config');
+			$this->load->model('admin/settings_m');
+			$this->load->model('admin/user_m');
 			$this->load->helper(array('form', 'mvs_helper'));
 			$this->load->library('form_validation');
-			$this->load->model('admin/user_m');
 			
+			// Set mvs_adm_config variables from db
+			$sets = $this->settings_m->get();
+			foreach($sets as $set){
+				$this->config->set_item($set->adm_set_code, $set->adm_set_value);
+			}
+
+			// Default Variables
+			$this->data['site_url'] = site_url();
+			$this->data['current_url'] = current_url();
+
 			// Login check
 			$exception_uris = array('admin/user/login', 'admin/user/logout');
 			
@@ -63,6 +72,5 @@
 			}
 		
 		}
-		
 		
 	}
