@@ -15,6 +15,7 @@
 				</thead>
 				<tbody>
 				<?php foreach($movies as $movie): ?>
+				<?php $imgPath = $site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_thumb.jpg'; ?>
 					<tr>
 						<td><?php echo $movie->mvs_id; ?></td>
 						<td><?php echo $movie->mvs_poster; ?></td>

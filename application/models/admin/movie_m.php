@@ -29,7 +29,10 @@ class Movie_M extends MVS_Model
 			return $movies;
 		else
 			return "No data found...";
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 5685b4c... Movie detay
 		
 	}
 

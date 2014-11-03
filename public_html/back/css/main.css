@@ -43,4 +43,10 @@
 }
 
 
+<<<<<<< HEAD
 .noData{text-align:center;}
+=======
+.noData{text-align:center;}
+nav{text-align:center;}
+.posterGrid a{display:block; width:62px; min-height:100px; background:#ccc; border:1px solid #555;}
+>>>>>>> parent of 5685b4c... Movie detay
