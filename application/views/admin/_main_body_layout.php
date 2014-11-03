@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo $site_url; ?>admin/dashboard"><?php echo $site_name; ?></a>
+      <a class="navbar-brand" href="<?php echo $site_url; ?>admin/dashboard"><?php echo $this->config->item('mvs_site_name'); ?></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -18,11 +18,11 @@
         <li><a href="<?php echo $site_url; ?>admin/movie/lister">Movies</a></li>
         <li><a href="<?php echo $site_url; ?>admin/actors/lister">Actors</a></li>
         <li><a href="#">Members</a></li>
-        <li><a href="#">Admin Users</a></li>
-        <li><a href="#">Settings</a></li>
+        <li><a href="<?php echo $site_url; ?>admin/user">Admin Users</a></li>
+        <li><a href="<?php echo $site_url; ?>admin/settings">Settings</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo $site_url; ?>admin/user/logout">Logout</a></li>
+        <li><a href="<?php echo $site_url; ?>admin/user/logout"><i class="glyphicon glyphicon-off"></i> Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

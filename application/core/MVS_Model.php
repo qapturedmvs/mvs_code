@@ -2,16 +2,24 @@
 class MVS_Model extends CI_Model {
 	
 	protected $_table_name = '';
-	protected $_primary_key = 'adm_usr_id';
+	protected $_primary_key = 'id';
 	protected $_primary_filter = 'intval';
 	protected $_order_by = '';
 	protected $_order_rule = 'ASC';
-	protected $_rules = array();
-	protected $_per_page = 0;
+	public $rules = array();
+	public $per_page = 0;
 	protected $_timestamps = FALSE;
 	
 	function __construct() {
 		parent::__construct();
+	}
+	
+	public function array_from_post($fields){
+		$data = array();
+		foreach ($fields as $field) {
+			$data[$field] = $this->input->post($field);
+		}
+		return $data;
 	}
 	
 	public function get($id = NULL, $single = FALSE, $offset = 0){
@@ -33,8 +41,8 @@ class MVS_Model extends CI_Model {
 			$this->db->order_by($this->_order_by, $this->_order_rule);
 		}
 		
-		if($this->_per_page !== 0){
-			$this->db->limit($this->_per_page, $offset);
+		if($this->per_page !== 0){
+			$this->db->limit($this->per_page, $offset);
 		}
 
 		return $this->db->get($this->_table_name)->$method();
@@ -74,6 +82,7 @@ class MVS_Model extends CI_Model {
 		return $id;
 	}
 	
+	// Delete
 	public function delete($id){
 		$filter = $this->_primary_filter;
 		$id = $filter($id);
@@ -86,13 +95,12 @@ class MVS_Model extends CI_Model {
 		$this->db->delete($this->_table_name);
 	}
 	
+	// Get count of all data in a table
 	public function data_count(){
 
 		return $this->db->count_all_results($this->_table_name);
 	
 	}
-<<<<<<< HEAD
-=======
 	
 	// XSS Filter to a string
 	public function cleaner($str){
@@ -101,7 +109,7 @@ class MVS_Model extends CI_Model {
 	
 	}
 	
-	public function getPaging($curPage, $linkCount){
+	public function getPaging($curPage, $linkCount, $path){
 		
 		$total = $this->data_count($this->_table_name);
 		$totalPage = ceil($total/$this->per_page);
@@ -116,7 +124,7 @@ class MVS_Model extends CI_Model {
 					$start = $curPage-$bLinks+($curPage+$aLinks-$totalPage);
 				}else if($curPage-$bLinks < 1){
 					$start = 1;
-					$end = $curPage+$aLinks-(1-$curPage-$bLinks);
+					$end = $curPage+$aLinks-($curPage-$bLinks-1);
 				}else{
 					$start = $curPage-$bLinks;
 					$end = $curPage+$aLinks;
@@ -126,23 +134,22 @@ class MVS_Model extends CI_Model {
 				$end = $totalPage;
 			}
 	
-			$html = '<li><a class="lastPage" href="'.$this->data['current_url'].'/1">&laquo;</a></li>';
+			$html = '<li><a class="lastPage" href="'.$this->data['site_url'].$path.'/1">&laquo;</a></li>';
 	
 			for($i=$start; $i<$end+1; $i++){
 					
 				if($i == $curPage)
 					$html .= '<li class="active"><span>'.$i.'</span></li>';
 				else
-					$html .= '<li><a href="'.$this->data['current_url'].'/'.$i.'">'.$i.'</a></li>';
+					$html .= '<li><a href="'.$this->data['site_url'].$path.'/'.$i.'">'.$i.'</a></li>';
 	
 			}
 	
-			$html .= '<li><a class="lastPage" href="'.$this->data['current_url'].'/'.$totalPage.'">&raquo;</a></li>';
+			$html .= '<li><a class="lastPage" href="'.$this->data['site_url'].$path.'/'.$totalPage.'">&raquo;</a></li>';
 		}
 			
 		return $html;
 			
 	}
 	
->>>>>>> parent of 5685b4c... Movie detay
 }
