@@ -1,14 +1,11 @@
-<div class="container pgaeMovies">
-	
-	<?php if(is_array($actors)): ?>
+<div class="container pageActors">
+	<?php if(count($actors)): ?>
 		<?php foreach($actors as $actor): ?>
 			<h2 class="sub-header"><?php echo $actor->str_name; ?></h2>
 		<?php endforeach; ?>
 	<?php else: ?>
-		<div class="noData"><?php echo $actors; ?></div>
+		<?php echo getMessage('info', 'Actor data not found.'); ?>
 	<?php endif; ?>
-	
-	
 	<div class="table-responsive">
 		<?php if(is_array($casting)): ?>
 			<table class="table table-striped table-movies">
@@ -23,7 +20,7 @@
 				<tbody>
 				<?php foreach($casting as $cast): ?>
 					<tr>
-						<td><?php echo $cast->mvs_title; ?></td>
+						<td><a href="<?php echo $site_url.'admin/movie/detail/'.$cast->mvs_id; ?>"><?php echo $cast->mvs_title; ?></a></td>
 						<td><?php echo $cast->mvs_year; ?></td>
 						<td><?php echo $cast->char_name; ?></td>
 						<td><?php echo $cast->type_id; ?></td>
@@ -32,7 +29,7 @@
 				</tbody>
 			</table>
 		<?php else: ?>
-			<div class="noData"><?php echo $casting; ?></div>
+			<?php echo getMessage('info', 'Actor's movie data not found.'); ?>
 		<?php endif; ?>
 	</div>
 </div>

@@ -21,7 +21,7 @@ class Actor extends Backend_Controller {
 		//$this->data['casting'] = $this->actors_m->cast();
 
 		// Load view
-		$this->data['subview'] = 'admin/actors/list';
+		$this->data['subview'] = 'admin/actor/list';
 		$this->load->view('admin/_main_body_layout', $this->data);
 	}
 	
@@ -29,7 +29,7 @@ class Actor extends Backend_Controller {
 		
 		$this->data['actors'] = $this->actors_m->actors(NULL, $this->seg_4);
 		$this->data['casting'] = $this->actors_m->cast($this->seg_4);
-
+		
 		// Load view
 		$this->data['subview'] = 'admin/actor/detail';
 		$this->load->view('admin/_main_body_layout', $this->data);
