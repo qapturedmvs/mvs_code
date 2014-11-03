@@ -2,39 +2,35 @@
 
 class Actors_M extends MVS_Model
 {
-	
 		
 	protected $_table_name = 'mvs_stars';
 	protected $_primary_key = 'str_id';
 	protected $_order_by = 'str_id';
-	protected $_order_rule = 'ASC';
-	protected $_per_page = 100;
+	public $per_page = 100;
 	protected $_actor_id = NULL;
 
 	function __construct ()
 	{
 		parent::__construct();
 			
-		if(isset($_GET['id']))
-			$this->_actor_id = $_GET['id'];
 	}
 	
-	public function actors($offset = 0){
+	public function actors($offset = 0, $id = NULL){
 		
-		if($this->_actor_id == NULL)
+		if($id == NULL)
 			$actors = $this->get(NULL,FALSE,$offset);
 		else
 		{
-			$actors = $this->get_by(array('str_id' => $this->_actor_id));
+			$actors = $this->get_by(array('str_id' => $id));
 		}
 		
 		if (count($actors))
 			return $actors;
 		else
-			return "No data found...";
+			return FALSE;
 	}
 	
-	public function cast()
+	public function cast($id)
 	{
 		/*
 		 * bu kod tek seferde cozuyor ancak acayip yavas calisiyor
@@ -56,7 +52,7 @@ class Actors_M extends MVS_Model
 		
 		$movies_arr = NULL;
 		
-		$casting = $this->db->get_where('mvs_cast', array('str_id' => $this->_actor_id));
+		$casting = $this->db->get_where('mvs_cast', array('str_id' => $id));
 		
 		$casting_arr = $casting->result();
 		
@@ -89,7 +85,7 @@ class Actors_M extends MVS_Model
 		if(count($movies_arr))
 			return $movies_arr;
 		else
-			return "No casting data found...";
+			return FALSE;
 	}
 
 }
