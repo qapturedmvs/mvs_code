@@ -19,7 +19,7 @@ class Movie extends Backend_Controller {
 		$linkCount = 10;
 		$offset = ($curPage-1)*$this->movie_m->per_page;
 
-		$this->data['offset'] = $offset;
+		$this->data['movie_counts'] = (object)array('offset' => $offset, 'per_page' => $this->movie_m->per_page);
 		$this->data['movies'] = $this->movie_m->movies($offset);
 		$this->data['paging'] = $this->movie_m->getPaging($curPage, $linkCount, 'admin/movie/lister');
 
