@@ -22,7 +22,7 @@ class User extends Backend_Controller {
 			$this->data['user'] = $this->user_m->get($id);
 			count($this->data['user']) || $this->data['errors'][] = 'User could not be found';
 			
-			if( count($this->data['user']) == 0 ) redirect('admin/user'); //-->user bulunamazsa hatayý önlemek için redirect
+			if( count($this->data['user']) == 0 ) redirect('admin/user'); //-->user bulunamazsa hatayï¿½ ï¿½nlemek iï¿½in redirect
 		}
 		else {
 			$this->data['user'] = $this->user_m->get_new();
@@ -32,11 +32,12 @@ class User extends Backend_Controller {
 		$rules = $this->user_m->rules_admin;
 		$id || $rules['password']['rules'] .= '|required';
 		$this->form_validation->set_rules($rules);
-		
+	
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {			
-			$data = $this->user_m->array_from_post(array('adm_usr_name', 'adm_usr_email', 'adm_usr_password', 'adm_usr_note'));
-			$data['adm_usr_password'] = $this->user_m->hash($data['adm_usr_password']);		
+			$data = $this->user_m->array_from_post(array('name', 'email', 'password', 'note'));
+			$data['password'] = $this->user_m->hash($data['password']);
+			$data = changeObjectKeys($data, 'adm_usr_');
 			$this->user_m->save($data, $id);
 			redirect('admin/user');
 		}
@@ -91,10 +92,9 @@ class User extends Backend_Controller {
 		// UNLESS it's the email for the current user
 		
 		$id = $this->uri->segment(4);
-		$this->db->where('email', $this->input->post('email'));
-		!$id || $this->db->where('id !=', $id);
+		$this->db->where('adm_usr_email', $this->input->post('email'));
+		!$id || $this->db->where('adm_usr_id !=', $id);
 		$user = $this->user_m->get();
-		
 		if (count($user)) {
 			$this->form_validation->set_message('_unique_email', '%s should be unique');
 			return FALSE;

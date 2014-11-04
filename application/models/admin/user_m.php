@@ -81,6 +81,7 @@ class User_M extends MVS_Model
 		$user->name = '';
 		$user->email = '';
 		$user->password = '';
+		$user->note = '';
 		return $user;
 	}
 
