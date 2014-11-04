@@ -23,7 +23,7 @@
 						<td><a href="<?php echo $site_url.'admin/movie/detail/'.$cast->mvs_id; ?>"><?php echo $cast->mvs_title; ?></a></td>
 						<td><?php echo $cast->mvs_year; ?></td>
 						<td><?php echo $cast->char_name; ?></td>
-						<td><?php echo $cast->type_id; ?></td>
+						<td><?php echo $cast->type_name; ?></td>
 					</tr>
 				<?php endforeach; ?>		
 				</tbody>

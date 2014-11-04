@@ -15,3 +15,14 @@
 
 /* End of file profiler.php */
 /* Location: ./application/config/profiler.php */
+
+$config['benchmarks']= TRUE;
+//$config['config']= FALSE;
+$config['controller_info']= TRUE;
+//$config['get']= FALSE;
+//$config['http_headers']= FALSE;
+$config['memory_usage']= TRUE;
+$config['post']= TRUE;
+$config['queries']= TRUE;
+//$config['uri_string']= FALSE;
+$config['query_toggle_count']= 25;

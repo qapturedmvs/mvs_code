@@ -9,6 +9,7 @@
 		{
 			parent::__construct();	
 			
+			$this->output->enable_profiler();
 			$this->load->model('admin/user_m');
 			$this->load->helper(array('form', 'mvs_helper'));
 			$this->load->library('form_validation');	

@@ -51,11 +51,8 @@ class Actors_M extends MVS_Model
 		*/
 		
 		$movies_arr = NULL;
-		
-		$casting = $this->db->get_where('mvs_cast', array('str_id' => $id));
-		
-		$casting_arr = $casting->result();
-		
+		$casting_arr = $this->db->get_where('mvs_cast', array('str_id' => $id))->result();
+		$cast_type_arr = $this->db->get('mvs_cast_type')->result();
 		$ids = array();
 		
 		if( count($casting_arr) )
@@ -72,11 +69,15 @@ class Actors_M extends MVS_Model
 			for($i =0;  $i < count($movies_arr); ++$i)
 			{
 				$movies_arr[$i]->char_name = $casting_arr[$i]->char_name;
+				
+				foreach($cast_type_arr as $type){
+					if($type->type_id == $casting_arr[$i]->type_id)
+						$movies_arr[$i]->type_name = $type->type_name;
+				}
+					
 				$movies_arr[$i]->type_id = $casting_arr[$i]->type_id;
 			}
 		}
-		
-		
 		
 		if(count($movies_arr))
 			return $movies_arr;
