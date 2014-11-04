@@ -38,42 +38,4 @@
 
 		}
 		
-		//Thumb generate
-		public function _image_thumbs($path, $width, $height){
-			
-			$this->load->library('image_lib');
-			$this->load->helper('directory');
-			
-			$path = trim("/", $path);
-			$imgMap = directory_map(FCPATH.$path, 0);
-			$thumPath = FCPATH.$path."/thumbs/";
-			if (!file_exists($thumPath)) mkdir($thumPath, 0755, true);
-			$thumbMap = directory_map($thumPath, 0);
-		
-			foreach($imgMap as $item){
-		
-				if(!is_array($item) && !in_array(str_replace(".jpg", "_thumb.jpg", $item), $thumbMap)){
-					$config['image_library'] = 'gd2';
-					$config['source_image'] = FCPATH.$path.$item;
-					$config['new_image'] = FCPATH.$path."thumbs/";
-					$config['create_thumb'] = TRUE;
-					$config['maintain_ratio'] = TRUE;
-					$config['width'] = $width;
-					$config['height'] = $height;
-		
-					$this->image_lib->initialize($config);
-		
-					if (!$this->image_lib->resize())
-					{
-						return "<p>".$item." -> ".$this->image_lib->display_errors()."</p>";
-					}
-		
-					$this->image_lib->clear();
-		
-				}
-		
-			}
-		
-		}
-		
 	}

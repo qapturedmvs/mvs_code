@@ -6,13 +6,11 @@ class Settings extends Backend_Controller {
 		parent::__construct();
 	
 		$this->load->model('admin/settings_m');
-		$this->seg_4 = $this->uri->segment(4);
 	
 	}
 	
-	public function index(){
+	public function index($s = NULL){
 		
-		$curPage = ($this->seg_4 != '') ? $this->seg_4 : 1;
 		$this->data['settings'] = $this->settings_m->settings();
 		
 		// Load view
@@ -25,6 +23,44 @@ class Settings extends Backend_Controller {
 		// Load view
 		$this->data['subview'] = 'admin/settings/thumbs';
 		$this->load->view('admin/_main_body_layout', $this->data);
+	}
+	
+	//Thumb generate
+	private function _image_thumbs($path, $width, $height){
+			
+		$this->load->library('image_lib');
+		$this->load->helper('directory');
+			
+		$path = trim("/", $path);
+		$imgMap = directory_map(FCPATH.$path, 0);
+		$thumPath = FCPATH.$path."/thumbs/";
+		if (!file_exists($thumPath)) mkdir($thumPath, 0755, true);
+		$thumbMap = directory_map($thumPath, 0);
+	
+		foreach($imgMap as $item){
+	
+			if(!is_array($item) && !in_array(str_replace(".jpg", "_thumb.jpg", $item), $thumbMap)){
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = FCPATH.$path.$item;
+				$config['new_image'] = FCPATH.$path."thumbs/";
+				$config['create_thumb'] = TRUE;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = $width;
+				$config['height'] = $height;
+	
+				$this->image_lib->initialize($config);
+	
+				if (!$this->image_lib->resize())
+				{
+					return "<p>".$item." -> ".$this->image_lib->display_errors()."</p>";
+				}
+	
+				$this->image_lib->clear();
+	
+			}
+	
+		}
+	
 	}
 	
 }

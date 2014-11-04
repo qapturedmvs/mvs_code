@@ -6,16 +6,15 @@ class Movie extends Backend_Controller {
 		parent::__construct();
 		
 		$this->load->model('admin/movie_m');
-		$this->seg_4 = $this->uri->segment(4);
 		
 	}
 	
-	public function lister(){
+	public function lister($p = NULL){
 		
 		// Thumbs (Settings kısmındaki bir buttona bağlanacak
 		//$this->_image_thumbs(FCPATH."data/movies/", 60, 100);
 		
-		$curPage = ($this->seg_4 != '') ? $this->seg_4 : 1;
+		$curPage = ($p != '') ? $p : 1;
 		$linkCount = 10;
 		$offset = ($curPage-1)*$this->movie_m->per_page;
 
@@ -29,10 +28,10 @@ class Movie extends Backend_Controller {
 		
 	}
 	
-	public function detail(){
+	public function detail($id = NULL){
 		
-		$this->data['movie'] = $this->movie_m->movie($this->seg_4);
-		$this->data['casts'] = $this->movie_m->getCastList($this->seg_4);
+		$this->data['movie'] = $this->movie_m->movie($id);
+		$this->data['casts'] = $this->movie_m->getCastList($id);
 		$countries = $this->movie_m->countries();
 		$genres = $this->movie_m->genres();
 		$gnrs = array();
