@@ -61,7 +61,7 @@ h2.sub-header{margin:10px 0 20px;}
 .input-group textarea{height:100px !important; resize:none;}
 .input-group.groupMulti select{height:200px !important;}
 .input-group.groupMulti .selections{min-width:200px; vertical-align:top;}
-.input-group.groupMulti .selections small{display:block; text-align:left;}
+.input-group.groupMulti .selections small{display:block; text-align:left; margin-bottom:3px;}
 .input-group .castHolder{height:auto;}
 .input-group .castHolder .list-group-item .actor{display:inline-block; width:300px;}
 

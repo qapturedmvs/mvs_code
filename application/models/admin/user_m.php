@@ -4,6 +4,7 @@ class User_M extends MVS_Model
 {
 	
 	protected $_table_name = 'mvs_adm_users';
+	protected $_primary_key = 'adm_usr_id';
 	protected $_order_by = 'adm_usr_id';
 	public $rules = array(
 		'email' => array(
