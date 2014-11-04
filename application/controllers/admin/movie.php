@@ -11,7 +11,7 @@ class Movie extends Backend_Controller {
 	
 	public function lister($p = NULL){
 		
-		// Thumbs (Settings kısmındaki bir buttona bağlanacak
+		// Thumbs (Settings kï¿½smï¿½ndaki bir buttona baï¿½lanacak
 		//$this->_image_thumbs(FCPATH."data/movies/", 60, 100);
 		
 		$curPage = ($p != '') ? $p : 1;
@@ -30,6 +30,7 @@ class Movie extends Backend_Controller {
 	
 	public function detail($id = NULL){
 		
+		//$this->output->cache($this->config->item('mvs_cache_expire'));
 		$this->data['movie'] = $this->movie_m->movie($id);
 		$this->data['casts'] = $this->movie_m->getCastList($id);
 		$countries = $this->movie_m->countries();

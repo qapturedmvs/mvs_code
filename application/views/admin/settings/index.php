@@ -16,6 +16,7 @@
 					  <?php if($setting->adm_set_info != NULL) echo '<span class="input-group-addon">'.$setting->adm_set_info.'</span>'; ?>
 					</div>
 				<?php endforeach; ?>
+				<div class="btnHolder"><?php echo form_submit('submit', 'Save', 'class="btn btn-primary"'); ?></div>
 			<?php form_close(); ?>
 		<?php else: ?>
 			<?php echo getMessage('info', 'Settings data not found.'); ?>
