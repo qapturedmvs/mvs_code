@@ -18,6 +18,22 @@ class Settings extends Backend_Controller {
 		$this->load->view('admin/_main_body_layout', $this->data);
 	}
 	
+	public function saved(){
+		
+		if ($this->form_validation->run() == TRUE) {
+			$data = $this->settings_m->array_from_post(array('mvs_site_name', 'mvs_cache_expire'));
+			
+			var_dump($data);
+// 			$sets = $this->settings_m->settings();
+			
+// 			foreach($sets as $set)
+// 				$this->settings_m->save($data, $set->adm_set_id);
+			
+// 			redirect('admin/settings', refresh);
+		}
+		
+	}
+	
 	public function thumbs(){
 	
 		// Load view

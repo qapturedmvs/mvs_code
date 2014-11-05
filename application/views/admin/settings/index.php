@@ -8,11 +8,12 @@
 	</div>
 	<div class="settingsHolder">
 		<?php if($settings): ?>
-			<?php echo form_open(); ?>
+		<?php echo validation_errors(); ?>
+			<?php echo form_open($site_url.'admin/settings/saved'); ?>
 				<?php foreach($settings as $setting): ?>
 					<div class="input-group input-group-lg">
 					  <span class="input-group-addon"><?php echo $setting->adm_set_title; ?></span>
-					  <?php echo form_input(array('name' => 'adm_set_value', 'value' => $setting->adm_set_value, 'id' => $setting->adm_set_code, 'class' => 'form-control')); ?>
+					  <?php echo form_input(array('name' => $setting->adm_set_code, 'value' => $setting->adm_set_value, 'id' => $setting->adm_set_code, 'class' => 'form-control')); ?>
 					  <?php if($setting->adm_set_info != NULL) echo '<span class="input-group-addon">'.$setting->adm_set_info.'</span>'; ?>
 					</div>
 				<?php endforeach; ?>
