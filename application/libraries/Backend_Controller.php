@@ -12,7 +12,8 @@
 			$this->output->enable_profiler();
 			$this->load->model('admin/user_m');
 			$this->load->helper(array('form', 'mvs_helper'));
-			$this->load->library('form_validation');	
+			$this->load->library('form_validation');
+			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 			// Login check
 			$exception_uris = array('admin/user/login', 'admin/user/logout');

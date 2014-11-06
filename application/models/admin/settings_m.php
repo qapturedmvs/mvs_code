@@ -10,13 +10,30 @@ class Settings_M extends MVS_Model
 	protected $_order_rule = 'ASC';
 	public $rules = array(
 			'mvs_site_name' => array(
-					'field' => 'adm_set_value',
+					'field' => 'mvs_site_name',
 					'label' => 'Site Name',
 					'rules' => 'trim|required'
 			),
 			'mvs_cache_expire' => array(
-					'field' => 'adm_set_value',
+					'field' => 'mvs_cache_expire',
 					'label' => 'Cache Expire',
+					'rules' => 'trim|required|numeric'
+			)
+	);
+	public $rules_thumb = array(
+			'img_path' => array(
+					'field' => 'img_path',
+					'label' => 'Path',
+					'rules' => 'trim|required'
+			),
+			'img_width' => array(
+					'field' => 'img_width',
+					'label' => 'Width',
+					'rules' => 'trim|required|numeric'
+			),
+			'img_height' => array(
+					'field' => 'img_height',
+					'label' => 'Height',
 					'rules' => 'trim|required|numeric'
 			)
 	);
@@ -36,6 +53,13 @@ class Settings_M extends MVS_Model
 		else
 			return FALSE;
 	
+	}
+	
+	public function save_sets($sets){
+		
+		$this->db->update_batch('mvs_adm_settings', $sets, 'adm_set_code');
+		return TRUE;
+		
 	}
 	
 }

@@ -8,8 +8,9 @@
 	</div>
 	<div class="settingsHolder">
 		<?php if($settings): ?>
+		<?php if($form_success) echo getMessage('success', 'Settings successfully saved.'); ?>
 		<?php echo validation_errors(); ?>
-			<?php echo form_open($site_url.'admin/settings/saved'); ?>
+			<?php echo form_open(); ?>
 				<?php foreach($settings as $setting): ?>
 					<div class="input-group input-group-lg">
 					  <span class="input-group-addon"><?php echo $setting->adm_set_title; ?></span>

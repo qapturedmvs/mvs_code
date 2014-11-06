@@ -7,6 +7,7 @@
 		</ul>
 	</div>
 	<div class="settingsHolder">
+	<?php echo validation_errors(); ?>
 		<?php echo form_open(); ?>
 					<div class="input-group">
 					  <span class="input-group-addon">Path of Images</span>
