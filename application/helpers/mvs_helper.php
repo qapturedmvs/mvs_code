@@ -55,3 +55,9 @@ function getMessage($type, $message){
 	
 	return $html;
 }
+
+function generateSlug(){
+	
+	$slug = 'q'.strtolower(random_string('alnum', 6));
+	return $slug;
+}

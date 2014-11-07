@@ -103,4 +103,47 @@ class Settings extends Backend_Controller {
 	
 	}
 	
+	public function slug($method = NULL){
+		
+		if($method != NULL){
+			
+			$this->_slug_gen($method);
+			
+		}
+	}
+	
+	private function _slug_gen($method){
+		
+		$this->load->helper('string');
+		
+// 		$slug = generateSlug();
+// 		$check = $this->check_slug($slug);
+			
+// 		if($check)
+// 			$this->save(array(), $);
+
+		if($method == 'movies'){
+		
+			$this->_table_name = 'mvs_movies';
+			$this->_primary_key = 'mvs_slug';
+			$cols = "'mvs_id',mvs_slug'";
+		
+		}else{
+		
+			$this->_table_name = 'mvs_stars';
+			$this->_primary_key = 'str_slug';
+			$cols = "'str_id',str_slug'";
+		
+		}
+			
+		$rows = $this->get_with($cols);
+			
+		foreach($rows as $row){
+		
+			$slug = $this->_slug_gen();
+		}
+	
+	}
+	
+	
 }

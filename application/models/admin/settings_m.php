@@ -55,11 +55,24 @@ class Settings_M extends MVS_Model
 	
 	}
 	
+	// Settings save
 	public function save_sets($sets){
 		
 		$this->db->update_batch('mvs_adm_settings', $sets, 'adm_set_code');
 		return TRUE;
 		
+	}
+	
+	// Slug check
+	public function check_slug($slug){
+		
+		$this->db->from($this->_table_name);
+		$this->db->where($this->_primary_filter, $slug);
+		$count = $this->db->count_all_results();
+		
+		if($count > 0)
+			return FALSE;
+	
 	}
 	
 }

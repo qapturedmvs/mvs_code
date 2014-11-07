@@ -49,6 +49,13 @@ class MVS_Model extends CI_Model {
 
 	}
 	
+	public function get_with($cols = '*'){
+		
+		$this->db->select($cols);
+		return $this->db->get($this->_table_name)->result();
+		
+	}
+	
 	public function get_by($where, $single = FALSE){
 		$this->db->where($where);
 		return $this->get(NULL, $single);
