@@ -6,5 +6,7 @@
 		function __construct ()
 		{
 			parent::__construct();
+			
+			$this->load->helper(array('form', 'mvs_front_helper'));
 		}
 	}

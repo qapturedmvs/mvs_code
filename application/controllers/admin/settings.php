@@ -103,47 +103,41 @@ class Settings extends Backend_Controller {
 	
 	}
 	
-	public function slug($method = NULL){
+	public function slug(){
+		
+		$this->data['movie_slugs'] = $this->settings_m->no_slug('mvs_movies', 'mvs_id', 'mvs_slug');
+		$this->data['actor_slugs'] = $this->settings_m->no_slug('mvs_stars', 'str_id', 'str_slug');
+		
+		// Load view
+		$this->data['subview'] = 'admin/settings/slugs';
+		$this->load->view('admin/_main_body_layout', $this->data);
+		
+	}
+	
+	public function slug_gen($method = NULL){
 		
 		if($method != NULL){
-			
-			$this->_slug_gen($method);
-			
-		}
-	}
-	
-	private function _slug_gen($method){
-		
-		$this->load->helper('string');
-		
-// 		$slug = generateSlug();
-// 		$check = $this->check_slug($slug);
-			
-// 		if($check)
-// 			$this->save(array(), $);
+				
+			$this->load->helper('string');
+				
+			if($method == 'movies'){
+					
+				$table = 'mvs_movies';
+				$key = 'mvs_slug';
+				$cols = 'mvs_id';
+					
+			}else{
+					
+				$table = 'mvs_stars';
+				$key = 'str_slug';
+				$cols = 'str_id';
+					
+			}
+				
+			return $this->settings_m->set_slug($table, $key, $cols);
 
-		if($method == 'movies'){
-		
-			$this->_table_name = 'mvs_movies';
-			$this->_primary_key = 'mvs_slug';
-			$cols = "'mvs_id',mvs_slug'";
-		
-		}else{
-		
-			$this->_table_name = 'mvs_stars';
-			$this->_primary_key = 'str_slug';
-			$cols = "'str_id',str_slug'";
-		
 		}
-			
-		$rows = $this->get_with($cols);
-			
-		foreach($rows as $row){
 		
-			$slug = $this->_slug_gen();
-		}
-	
 	}
-	
 	
 }

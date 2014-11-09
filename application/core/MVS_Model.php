@@ -22,11 +22,18 @@ class MVS_Model extends CI_Model {
 		return $data;
 	}
 	
-	public function get($id = NULL, $single = FALSE, $offset = 0){
+	public function get($id = NULL, $single = FALSE, $offset = 0, $select = NULL){
+		
+		if($select != NULL){
+			$this->db->select($select);
+			//$this->db->from($this->_table_name);
+		}
 		
 		if ($id != NULL) {
-			$filter = $this->_primary_filter;
-			$id = $filter($id);
+			if($this->_primary_filter != NULL){
+				$filter = $this->_primary_filter;
+				$id = $filter($id);
+			}
 			$this->db->where($this->_primary_key, $id);
 			$method = 'row';
 		}
@@ -49,10 +56,12 @@ class MVS_Model extends CI_Model {
 
 	}
 	
-	public function get_with($cols = '*'){
+	public function get_with($cols = '*', $where = NULL){
 		
 		$this->db->select($cols);
-		return $this->db->get($this->_table_name)->result();
+		$this->db->from($this->_table_name);
+		if($where != NULL) $this->db->where($where);
+		return $this->db->get(NULL)->result();
 		
 	}
 	
@@ -103,9 +112,9 @@ class MVS_Model extends CI_Model {
 	}
 	
 	// Get count of all data in a table
-	public function data_count(){
+	public function data_count($table){
 
-		return $this->db->count_all_results($this->_table_name);
+		return $this->db->count_all_results($table);
 	
 	}
 	

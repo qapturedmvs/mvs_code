@@ -1,4 +1,6 @@
 
+var siteUrl = $('#hdnSiteUrl').val();
+
 // Obj Exist
 function exist(obj){
 	if(obj.html() != undefined) 
@@ -62,4 +64,32 @@ if(exist($('.pageMovie'))){
 		$(this).toggleClass('big');
 	});
 	
+}
+
+//Settings (Slug Generate)
+if(exist($('.pgaeSlugs'))){
+	
+	var rel;
+	
+	$('span.badge').click(function(){
+		if(!exist($('.generating'))){
+			rel = $(this).attr("rel");
+			console.log(rel);
+			$(this).parent(".list-group-item").addClass("generating");
+			
+			$.post(rel, function(result){
+				
+//				if(parseFloat(result) > 0)
+//					$(this).text(result);
+//				else
+//					$(this).remove();
+//				
+//				$(this).parent(".list-group-item").removeClass("generating");
+				window.location.href = window.location.href;
+				
+			});
+		}
+	});
+	
+
 }

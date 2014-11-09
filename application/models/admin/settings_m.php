@@ -63,16 +63,36 @@ class Settings_M extends MVS_Model
 		
 	}
 	
-	// Slug check
-	public function check_slug($slug){
+	public function no_slug($table, $key, $slug_key){
 		
-		$this->db->from($this->_table_name);
-		$this->db->where($this->_primary_filter, $slug);
-		$count = $this->db->count_all_results();
-		
-		if($count > 0)
-			return FALSE;
+		return $this->db->select($key)->from($table)->where($slug_key.' IS NULL')->count_all_results();
 	
+	}
+	
+	public function set_slug($table, $key, $cols){
+		
+		$this->_table_name = $table;
+		$rows = $this->get_with($cols, $key.' IS NULL')->result();
+		$res = 0;
+		
+		foreach($rows as $row){
+				
+			$slug = generateSlug();
+			$check = $this->db->select($key)->from($this->_table_name)->where($key, $slug)->count_all_results();
+			
+			if($check == 0){
+
+				$this->db->where($cols, $row->{$cols});
+				$result = $this->db->update($this->_table_name, array($key => $slug));
+			
+			}else{
+				$res++;
+			}
+
+		}
+		
+		return $res;
+		
 	}
 	
 }

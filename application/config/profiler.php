@@ -17,12 +17,12 @@
 /* Location: ./application/config/profiler.php */
 
 $config['benchmarks']= TRUE;
-//$config['config']= FALSE;
+$config['config']= TRUE;
 $config['controller_info']= TRUE;
-//$config['get']= FALSE;
-//$config['http_headers']= FALSE;
+$config['get']= TRUE;
+$config['http_headers']= TRUE;
 $config['memory_usage']= TRUE;
 $config['post']= TRUE;
 $config['queries']= TRUE;
-//$config['uri_string']= FALSE;
+$config['uri_string']= TRUE;
 $config['query_toggle_count']= 25;

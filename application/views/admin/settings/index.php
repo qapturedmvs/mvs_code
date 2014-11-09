@@ -4,6 +4,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 		  <li role="presentation" class="active"><a>General</a></li>
 		  <li role="presentation"><a href="<?php echo $site_url; ?>admin/settings/thumbs">Generate Thumbs</a></li>
+		  <li role="presentation"><a href="<?php echo $site_url; ?>admin/settings/slug">Generate Slugs</a></li>
 		</ul>
 	</div>
 	<div class="settingsHolder">

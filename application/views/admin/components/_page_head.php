@@ -18,3 +18,4 @@
     <![endif]-->
   </head>
   <body>
+  <input type="hidden" id="hdnSiteUrl" value="<?php echo $site_url; ?>" />
