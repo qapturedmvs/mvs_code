@@ -72,12 +72,13 @@ class Settings_M extends MVS_Model
 	public function set_slug($table, $key, $cols){
 		
 		$this->_table_name = $table;
-		$rows = $this->get_with($cols, $key.' IS NULL')->result();
+		$rows = $this->get_with($cols, $key.' IS NULL');
 		$res = 0;
 		
 		foreach($rows as $row){
-				
-			$slug = generateSlug();
+			
+			$type = ($key == 'mvs_slug') ? 'movie' : 'actor';
+			$slug = generateSlug($type);
 			$check = $this->db->select($key)->from($this->_table_name)->where($key, $slug)->count_all_results();
 			
 			if($check == 0){
