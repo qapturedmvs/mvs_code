@@ -1,4 +1,14 @@
 <div class="container pgaeMovies">
+	
+	<form action="<?php echo $current_url; ?>" method="POST">
+		<div class="input-group">
+			<input type="text" name="search_name" class="form-control">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit">Bul biseyler</button>
+			</span>
+		</div>
+	</form>
+	
 	<h2 class="sub-header">Stars</h2>
 	<div class="table-responsive">
 		<?php if(is_array($actors)): ?>

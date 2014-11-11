@@ -8,6 +8,7 @@ class Actors_M extends MVS_Model
 	protected $_order_by = 'str_id';
 	public $per_page = 100;
 	protected $_actor_id = NULL;
+	protected $_search_name = NULL;
 
 	function __construct ()
 	{
@@ -17,17 +18,38 @@ class Actors_M extends MVS_Model
 	
 	public function actors($offset = 0, $id = NULL){
 		
-		if($id == NULL)
-			$actors = $this->get(NULL,FALSE,$offset);
+		if(!isset($_POST['search_name']))
+		{
+			if($id == NULL)
+				$actors = $this->get(NULL,FALSE,$offset);
+			else
+			{
+				$actors = $this->get_by(array('str_id' => $id));
+			}
+			
+		}
 		else
 		{
-			$actors = $this->get_by(array('str_id' => $id));
+			$_search_name = $_POST['search_name'];
+			
+			
+			if(strlen($_search_name) > 3)
+			{
+				$this->db->select("*");
+				$this->db->from('mvs_stars');
+				$this->db->like('str_name', $_search_name);
+				
+				$actors = $this->db->get()->result();
+				
+			}
+			else
+				$actors = "type 4 or more characters please!";
 		}
 		
 		if (count($actors))
-			return $actors;
-		else
-			return FALSE;
+				return $actors;
+			else
+				return FALSE;
 	}
 	
 	public function cast($id)
