@@ -6,18 +6,21 @@ class Actor extends Backend_Controller {
 		parent::__construct();
 		
 		$this->load->model('admin/actors_m');
-		$this->seg_4 = $this->uri->segment(4);
+
 	}
 	
-	public function lister(){
+	public function lister($p = 1){
 		
-		$curPage = ($this->seg_4 != '') ? $this->seg_4 : 1;
-		$linkCount = 10;
-		$offset = ($curPage-1)*$this->actors_m->per_page;
+		//$curPage = ($this->seg_4 != '') ? $this->seg_4 : 1;
+		//$linkCount = 10;
+		$offset = ($p-1)*$this->actors_m->per_page;
 		
-		$this->data['actor_counts'] = (object)array('offset' => $offset, 'per_page' => $this->actors_m->per_page);
-		$this->data['actors'] = $this->actors_m->actors($offset);
-		$this->data['paging'] = $this->actors_m->getPaging($curPage, $linkCount, 'admin/actor/lister');
+		//$this->data['actor_counts'] = (object)array('offset' => $offset, 'per_page' => $this->actors_m->per_page);
+		//var_dump($this->actors_m->actors($offset));
+		$db_data = $this->actors_m->actors($offset);
+		$this->data['actors'] = $db_data['data'];
+		//$this->data['paging'] = $this->actors_m->getPaging($curPage, $linkCount, 'admin/actor/lister');
+		$this->data['paging'] = $this->_get_paging($db_data['count'], $this->actors_m->per_page, 'admin/actor/lister', 4);
 		//$this->data['casting'] = $this->actors_m->cast();
 
 		// Load view
@@ -25,10 +28,10 @@ class Actor extends Backend_Controller {
 		$this->load->view('admin/_main_body_layout', $this->data);
 	}
 	
-	public function detail(){
+	public function detail($id){
 		
-		$this->data['actors'] = $this->actors_m->actors(NULL, $this->seg_4);
-		$this->data['casting'] = $this->actors_m->cast($this->seg_4);
+		$this->data['actors'] = $this->actors_m->actors(NULL, $id);
+		$this->data['casting'] = $this->actors_m->cast($id);
 		
 		// Load view
 		$this->data['subview'] = 'admin/actor/detail';

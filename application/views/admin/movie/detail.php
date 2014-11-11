@@ -94,6 +94,11 @@
 	  <?php echo form_input(array('name' => 'mvs_website', 'value' => $movie->mvs_website, 'id' => 'mvs_website', 'class' => 'form-control')); ?>
 	</div>
 	<div class="input-group">
+	  <span class="input-group-addon">Slug</span>
+	  <?php echo form_input(array('name' => 'mvs_slug', 'value' => $movie->mvs_slug, 'id' => 'mvs_slug', 'class' => 'form-control')); ?>
+	  <span class="input-group-addon"><a target="_blank" href="<?php echo $site_url.'movie/'.$movie->mvs_slug; ?>">Go to Page</a></span>
+	</div>
+	<div class="input-group">
 	  <span class="input-group-addon">Qaptured Note</span>
 	  <?php echo form_textarea(array('name' => 'adm_mvs_note', 'value' => $movie->adm_mvs_note, 'id' => 'adm_mvs_note', 'class' => 'form-control')); ?>
 	</div>

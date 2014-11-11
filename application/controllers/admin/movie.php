@@ -20,7 +20,8 @@ class Movie extends Backend_Controller {
 
 		$this->data['movie_counts'] = (object)array('offset' => $offset, 'per_page' => $this->movie_m->per_page);
 		$this->data['movies'] = $this->movie_m->movies($offset);
-		$this->data['paging'] = $this->movie_m->getPaging($curPage, $linkCount, 'admin/movie/lister');
+		//$this->data['paging'] = $this->movie_m->getPaging($curPage, $linkCount, 'admin/movie/lister');
+		$this->data['paging'] = $this->_get_paging($this->movie_m->data_count('mvs_movies'), $this->movie_m->per_page, 'admin/movie/lister', 4);
 
 		// Load view
 		$this->data['subview'] = 'admin/movie/list';

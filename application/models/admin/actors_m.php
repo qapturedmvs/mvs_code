@@ -18,19 +18,19 @@ class Actors_M extends MVS_Model
 	
 	public function actors($offset = 0, $id = NULL){
 		
-		if(!isset($_POST['search_name']))
+		if(!$this->input->post('search_name', TRUE))
 		{
 			if($id == NULL)
-				$actors = $this->get(NULL,FALSE,$offset);
+				$db_data['data'] = $this->get(NULL,FALSE,$offset);
 			else
 			{
-				$actors = $this->get_by(array('str_id' => $id));
+				$db_data['data'] = $this->get_by(array('str_id' => $id));
 			}
 			
 		}
 		else
 		{
-			$_search_name = $_POST['search_name'];
+			$_search_name = $this->input->post('search_name', TRUE);
 			
 			
 			if(strlen($_search_name) > 3)
@@ -39,15 +39,18 @@ class Actors_M extends MVS_Model
 				$this->db->from('mvs_stars');
 				$this->db->like('str_name', $_search_name);
 				
-				$actors = $this->db->get()->result();
+				//$db_data['count'] = $this->db->count_all_results();
+				$db_data['data'] = $this->db->get()->result();
 				
 			}
 			else
-				$actors = "type 4 or more characters please!";
+				$db_data['data'] = "type 4 or more characters please!";
 		}
 		
-		if (count($actors))
-				return $actors;
+		
+		
+		if (count($db_data['data']))
+				return $db_data;
 			else
 				return FALSE;
 	}

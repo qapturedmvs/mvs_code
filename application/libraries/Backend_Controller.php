@@ -12,7 +12,7 @@
 			$this->output->enable_profiler();
 			$this->load->model('admin/user_m');
 			$this->load->helper(array('form', 'mvs_helper'));
-			$this->load->library('form_validation');
+			$this->load->library(array('form_validation', 'pagination'));
 			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 			// Login check
@@ -38,6 +38,38 @@
 			$this->data['site_url'] = site_url();
 			$this->data['current_url'] = current_url();
 
+		}
+		
+		public function _get_paging($total, $perPage, $path, $uri){
+		
+			$config['base_url'] = site_url().$path;
+			$config['total_rows'] = $total;
+			$config['per_page'] = $perPage;
+			$config['uri_segment'] = $uri;
+			$config['num_links'] = 5;
+			$config['use_page_numbers'] = TRUE;
+			$config['suffix'] = '';
+			
+			$config['first_link'] = '&lt;&lt;';
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['last_link'] = '&gt;&gt;';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['next_link'] = '&gt;';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['prev_link'] = '&lt;';
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="active"><span>';
+			$config['cur_tag_close'] = '</span></li>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+		
+			$this->pagination->initialize($config);
+		
+			return $this->pagination->create_links();
 		}
 		
 	}

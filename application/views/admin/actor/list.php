@@ -1,13 +1,13 @@
 <div class="container pgaeMovies">
 	
-	<form action="<?php echo $current_url; ?>" method="POST">
+	<?php echo form_open(); ?>
 		<div class="input-group">
-			<input type="text" name="search_name" class="form-control">
+			<?php echo form_input(array('name' => 'search_name', 'id' => 'search_name', 'class' => 'form-control')); ?>
 			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit">Bul biseyler</button>
+			<?php echo form_submit('submit', 'Search', 'class="btn btn-primary"'); ?>
 			</span>
 		</div>
-	</form>
+	<?php echo form_close(); ?>
 	
 	<h2 class="sub-header">Stars</h2>
 	<div class="table-responsive">
