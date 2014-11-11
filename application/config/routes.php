@@ -40,7 +40,13 @@
 
 $route['default_controller'] = "home";
 $route['404_override'] = '';
+
+// Önyüzle ilgili route'lar, admin route'larýndan daha yukarýda tanýmlý olmalý
+// Önyüzle ilgili route'lar
 $route['movie/(:any)'] = "movie/index/$1";
+
+// Admin ilgili route'lar
+$route['admin'] = "admin/user/login";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

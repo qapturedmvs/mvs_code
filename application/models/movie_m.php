@@ -15,9 +15,9 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Movie list JSON
-	public function movies($offset = 0){
+	public function movies_json($offset = 0){
 	
-		$movies = $this->get(NULL,FALSE,$offset,$select = 'mvs_title, mvs_year, mvs_runtime, gnr_id, country_id');		
+		$movies = $this->get(NULL,FALSE,$offset,$select = 'mvs_title, mvs_year, mvs_runtime, gnr_id, cntry_id');		
 		
 		if (count($movies))
 			return $movies;
@@ -28,7 +28,8 @@ class Movie_M extends MVS_Model
 	
 	// Movie detail
 	public function movie($id){
-
+		
+		$id = $this->cleaner($id);
 		$this->_primary_key = 'mvs_slug';
 		$this->_primary_filter = NULL;
 		$movie = $this->get($id);
@@ -73,9 +74,7 @@ class Movie_M extends MVS_Model
 		}else{
 			$countries = $this->get_with('*', $ids);
 		}
-	
-		
-	
+
 		if (count($countries))
 			return $countries;
 		else
@@ -84,14 +83,8 @@ class Movie_M extends MVS_Model
 	}
 	
 	public function getCastList($id){
-		// 		$query = "SELECT mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name FROM mvs_cast
-		// 					INNER JOIN mvs_stars ON mvs_cast.str_id = mvs_stars.str_id
-		// 					WHERE mvs_id = 510;";
 	
-		// 		$casts = $this->db->query($query)->result();
-	
-		//$this->db->cache_on();
-		$this->db->select('mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug');
+		$this->db->select('mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug, mvs_stars.str_photo');
 		$this->db->from('mvs_cast');
 		$this->db->join('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner');
 		$this->db->where('mvs_id', $id);

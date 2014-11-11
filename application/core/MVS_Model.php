@@ -61,7 +61,7 @@ class MVS_Model extends CI_Model {
 		$this->db->select($cols);
 		$this->db->from($this->_table_name);
 		if($where != NULL) $this->db->where($where);
-		return $this->db->get(NULL)->result();
+		return $this->db->get()->result();
 		
 	}
 	
@@ -103,9 +103,9 @@ class MVS_Model extends CI_Model {
 		$filter = $this->_primary_filter;
 		$id = $filter($id);
 		
-		if (!$id) {
+		if(!$id)
 			return FALSE;
-		}
+		
 		$this->db->where($this->_primary_key, $id);
 		$this->db->limit(1);
 		$this->db->delete($this->_table_name);

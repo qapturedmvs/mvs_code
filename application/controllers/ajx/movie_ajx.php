@@ -14,9 +14,10 @@
 		
 	public function lister($p = NULL){
 		
+		$p = $this->movie_m->cleaner($p);
 		$curPage = ($p != '') ? $p : 1;
 		$offset = ($curPage-1)*$this->movie_m->per_page;
-		$movies = $this->movie_m->movies($offset);
+		$movies = $this->movie_m->movies_json($offset);
 		$countries = $this->movie_m->_countries();
 		$genres = $this->movie_m->_genres();
 		$json = (object) array();
@@ -25,7 +26,7 @@
 			foreach($movies as $movie){
 					
 				$g = explode('|', $movie->gnr_id);
-				$c = explode('|', $movie->country_id);
+				$c = explode('|', $movie->cntry_id);
 				$temp = array();
 			
 				for($i=0; $i<count($g); $i++){

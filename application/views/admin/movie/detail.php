@@ -53,7 +53,7 @@
 	</div>
 	<div class="input-group groupMulti" rel="countries">
 	  <span class="input-group-addon">Country</span>
-	  <?php echo form_multiselect('countries', $countries, explode("|", $movie->country_id), 'id="country_id" class="form-control"'); ?>
+	  <?php echo form_multiselect('countries', $countries, explode("|", $movie->cntry_id), 'id="cntry_id" class="form-control"'); ?>
 	  <span class="input-group-addon selections selectedCountries"></span>
 	</div>
 	<div class="input-group">
