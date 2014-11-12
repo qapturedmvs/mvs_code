@@ -20,9 +20,10 @@ class Actors_M extends MVS_Model
 		
 		if(!$this->input->post('search_name', TRUE))
 		{
-			if($id == NULL)
+			if($id == NULL){
 				$db_data['data'] = $this->get(NULL,FALSE,$offset);
-			else
+				$db_data['count'] = $this->db->count_all_results('mvs_stars');
+			}else
 			{
 				$db_data['data'] = $this->get_by(array('str_id' => $id));
 			}
@@ -35,11 +36,13 @@ class Actors_M extends MVS_Model
 			
 			if(strlen($_search_name) > 3)
 			{
+				$this->db->start_cache();
 				$this->db->select("*");
 				$this->db->from('mvs_stars');
 				$this->db->like('str_name', $_search_name);
+				$this->db->stop_cache();
 				
-				//$db_data['count'] = $this->db->count_all_results();
+				$db_data['count'] = $this->db->count_all_results();
 				$db_data['data'] = $this->db->get()->result();
 				
 			}

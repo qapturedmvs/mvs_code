@@ -11,7 +11,7 @@
 			$this->load->helper(array('form', 'mvs_front_helper'));
 			
 			// Bütün query stringleri array içerisinde topla
-			$get_vars = $this->input->get(NULL, TRUE);
+			$this->get_vars = $this->input->get(NULL, TRUE);
 			
 		}
 	}
