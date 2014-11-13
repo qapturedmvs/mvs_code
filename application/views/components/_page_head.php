@@ -8,7 +8,7 @@
     <link href="<?php echo site_url('css/main.css'); ?>" rel="stylesheet">
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/location.plugin.min.js'); ?>"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
 	<script src="<?php echo site_url('js/ng-infinite-scroll.min.js'); ?>"></script>
   </head>
   <body>

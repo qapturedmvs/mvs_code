@@ -20,7 +20,7 @@ class Actor extends Backend_Controller {
 		$db_data = $this->actors_m->actors($offset);
 		$this->data['actors'] = $db_data['data'];
 		//$this->data['paging'] = $this->actors_m->getPaging($curPage, $linkCount, 'admin/actor/lister');
-		$this->data['paging'] = $this->_get_paging($db_data['count'], $this->actors_m->per_page, 'admin/actor/lister', 4);
+		$this->data['paging'] = $this->_get_paging($db_data['total_count'], $this->actors_m->per_page, 'admin/actor/lister', 4);
 		//$this->data['casting'] = $this->actors_m->cast();
 
 		// Load view

@@ -14,6 +14,34 @@ class MVS_Model extends CI_Model {
 		parent::__construct();
 	}
 	
+	public function get_data($id = NULL, $offset = 0, $filters = array()){
+	
+		$this->db->start_cache();
+	
+		foreach($filters as $key => $val)
+			//echo $key.'-->'.$val;
+			$this->db->{$key}($val);
+// 		$this->db->select('*');
+// 		$this->db->from('mvs_stars');
+// 		$this->db->like('str_name', "'%marlon%'");
+	
+		$this->db->stop_cache();
+	
+		//$db_data['total_count'] = $this->db->count_all_results($this->_table_name);
+	
+		$method = ($id != NULL) ? 'row' : 'result';
+	
+		if($this->per_page !== 0)
+			$this->db->limit($this->per_page, $offset);
+	
+		$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
+	
+		$this->db->flush_cache();
+	
+		return $db_data;
+	
+	}
+	
 	public function array_from_post($fields){
 		$data = array();
 		foreach ($fields as $field) {
