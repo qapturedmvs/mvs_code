@@ -59,7 +59,7 @@ function getMessage($type, $message){
 function generateSlug($type){
 	
 	$prefix = ($type == 'movie') ? 'qm' : 'qa';
-	$slug = $prefix.strtolower(random_string('alnum', 8));
+	$slug = $prefix.str_shuffle(strtolower(random_string('alpha', 5)).random_string('numeric', 3));
 	return $slug;
 	
 }

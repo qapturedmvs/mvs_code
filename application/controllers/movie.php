@@ -8,6 +8,33 @@
 			$this->load->model('movie_m');
 		}
 		
+// 		function _remap($method, $params=array())
+// 		{
+// 			$methodToCall = method_exists($this, $method) ? $method : 'index';
+			
+// 			$params = array_slice($this->uri->rsegment_array(), $param_offset);
+			
+// 			return call_user_func_array(array($this, $methodToCall), $params);
+// 		}
+		
+// 		public function _remap($method)
+// 		{	
+// 			$param_offset = 3;
+
+// 			if (!method_exists($this, $method))
+// 			{
+// 				$method = 'index';
+// 				$param_offset = 2;
+// 			}
+			
+// 			$params = array_slice($this->uri->rsegment_array(), $param_offset);
+			
+// 			var_dump($params);
+			
+// 			//return call_user_func_array(array($this, $method), $params);
+			
+// 		}
+	
 		public function index($id = NULL){
 			
 			//$this->output->cache($this->config->item('mvs_cache_expire'));
@@ -28,6 +55,10 @@
 				show_404();
 			}
 			
+		}
+		
+		public function test(){
+			echo generateSlug('movie');
 		}
 		
 			
