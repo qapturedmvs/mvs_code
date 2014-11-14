@@ -15,19 +15,21 @@ class MVS_Model extends CI_Model {
 	}
 	
 	public function get_data($id = NULL, $offset = 0, $filters = array()){
-	
+
 		$this->db->start_cache();
-	
-		foreach($filters as $key => $val)
-			//echo $key.'-->'.$val;
-			$this->db->{$key}($val);
-// 		$this->db->select('*');
-// 		$this->db->from('mvs_stars');
-// 		$this->db->like('str_name', "'%marlon%'");
+		
+		foreach($filters as $key => $val){
+			if(is_array($val) && count($val) > 1){
+				call_user_func_array(array(&$this->db, $key), $val);
+			}else{
+				$this->db->{$key}($val);
+			}
+
+		}
 	
 		$this->db->stop_cache();
 	
-		//$db_data['total_count'] = $this->db->count_all_results($this->_table_name);
+		$db_data['total_count'] = $this->db->count_all_results($this->_table_name);
 	
 		$method = ($id != NULL) ? 'row' : 'result';
 	

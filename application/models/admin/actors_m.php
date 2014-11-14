@@ -45,7 +45,8 @@ class Actors_M extends MVS_Model
 				
 				
 				
-				$db_data = $this->get_data(NULL, 0, $filters = array('select' => '*', 'from' => 'mvs_stars', 'like' => "'str_name', ".$_search_name.", 'both'"));
+				//$db_data = $this->get_data(NULL, 0, array('select' => '*', 'from' => 'mvs_stars', 'like' => array('str_name' => $_search_name)));
+				$db_data = $this->get_data(NULL, 0, array('select' => '*', 'from' => 'mvs_stars', 'like' => array('str_name', $_search_name, 'both')));
 				//var_dump($db_data);
 				//$db_data['data'] = $this->db->get()->result();
 				
