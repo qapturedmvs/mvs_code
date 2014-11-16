@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Settings_M extends MVS_Model
 {
@@ -46,9 +46,9 @@ class Settings_M extends MVS_Model
 	
 	public function settings($id = NULL, $offset = 0){
 	
-		$settings = $this->get($id, FALSE, $offset);
+		$settings = $this->get_data($id, $offset);
 	
-		if (count($settings))
+		if (count($settings['data']))
 			return $settings;
 		else
 			return FALSE;
@@ -71,8 +71,14 @@ class Settings_M extends MVS_Model
 	
 	public function set_slug($table, $key, $cols){
 		
-		$this->_table_name = $table;
-		$rows = $this->get_with($cols, $key.' IS NULL');
+		$filters = array(
+				'select' => $cols,
+				'from' => $table,
+				'where' => $key.' IS NULL'
+		);
+		
+		$db_data = $this->get_data(NULL, 0, FALSE, $filters);
+		$rows = $db_data['data'];
 		$res = 0;
 		
 		foreach($rows as $row){

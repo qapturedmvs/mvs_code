@@ -13,7 +13,7 @@
 		<?php echo validation_errors(); ?>
 			<?php echo form_open(); ?>
 				<?php foreach($settings as $setting): ?>
-					<div class="input-group input-group-lg">
+					<div class="input-group">
 					  <span class="input-group-addon"><?php echo $setting->adm_set_title; ?></span>
 					  <?php echo form_input(array('name' => $setting->adm_set_code, 'value' => $setting->adm_set_value, 'id' => $setting->adm_set_code, 'class' => 'form-control')); ?>
 					  <?php if($setting->adm_set_info != NULL) echo '<span class="input-group-addon">'.$setting->adm_set_info.'</span>'; ?>

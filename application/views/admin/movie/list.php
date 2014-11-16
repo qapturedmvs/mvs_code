@@ -20,7 +20,7 @@
 				<?php foreach($movies as $movie): ?>
 					<tr>
 						<td><?php echo $s; ?>.</td>
-						<td class="posterGrid"><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_thumb.jpg" alt="'.$movie->mvs_title.'" />'; ?></a></td>
+						<td class="posterGrid"><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_60X85_.jpg" alt="'.$movie->mvs_title.'" />'; ?></a></td>
 						<td><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php echo $movie->mvs_title; ?></a></td>
 						<td><?php echo $movie->mvs_org_title; ?></td>
 						<td><?php echo $movie->mvs_year; ?></td>

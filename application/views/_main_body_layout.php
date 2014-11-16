@@ -14,8 +14,7 @@
 			</nav>
 		</div>
 		<div class="searchHolder">
-		<input type="text" placeholder="search" />
-		<input type="submit" value="Search" />
+			<?php $this->load->view('components/searchbox'); ?>
 		</div>
 		<hr class="qFixer" />
 	</div>

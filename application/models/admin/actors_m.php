@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Actors_M extends MVS_Model
 {
@@ -21,12 +21,13 @@ class Actors_M extends MVS_Model
 		if(!$this->input->post('search_name', TRUE))
 		{
 			if($id == NULL){
-// 				$db_data['data'] = $this->get(NULL,FALSE,$offset);
-// 				$db_data['count'] = $this->db->count_all_results('mvs_stars');
-				$db_data = $this->get_data();
-			}else
-			{
-				$db_data['data'] = $this->get_by(array('str_id' => $id));
+				
+				$db_data = $this->get_data($id, $offset, TRUE);
+				
+			}else{
+				
+				$db_data = $this->get_data($id);
+				
 			}
 			
 		}
@@ -37,25 +38,18 @@ class Actors_M extends MVS_Model
 			
 			if(strlen($_search_name) > 3)
 			{
-// 				$this->db->start_cache();
-// 				$this->db->select("*");
-// 				$this->db->from('mvs_stars');
-// 				$this->db->like('str_name', $_search_name);
-// 				$this->db->stop_cache();
+				$filters = array(
+						'select' => '*', 
+						'from' => 'mvs_stars', 
+						'like' => array('str_name', $_search_name, 'both')
+				);
 				
-				
-				
-				//$db_data = $this->get_data(NULL, 0, array('select' => '*', 'from' => 'mvs_stars', 'like' => array('str_name' => $_search_name)));
-				$db_data = $this->get_data(NULL, 0, array('select' => '*', 'from' => 'mvs_stars', 'like' => array('str_name', $_search_name, 'both')));
-				//var_dump($db_data);
-				//$db_data['data'] = $this->db->get()->result();
+				$db_data = $this->get_data(NULL, 0, TRUE, $filters);
 				
 			}
 			else
 				$db_data['data'] = "type 4 or more characters please!";
 		}
-		
-		
 		
 		if (count($db_data['data']))
 				return $db_data;

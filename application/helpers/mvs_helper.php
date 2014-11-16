@@ -64,3 +64,23 @@ function generateSlug($type){
 	
 }
 
+function getVars($array){
+	$qs = '';
+	
+	if($array){
+		$i = 0;
+		$sep = '';
+		
+		foreach($array as $key => $val){
+			$sep = ($i > 0) ? '&' : '?';
+			
+			$qs .= $sep.$key.'='.$val;
+			
+			$i++;
+		}
+		
+	}
+	
+	return $qs;
+}
+

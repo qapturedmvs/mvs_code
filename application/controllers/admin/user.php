@@ -8,7 +8,8 @@ class User extends Backend_Controller {
     public function index ()
 	{
 		// Fetch all users
-		$this->data['users'] = $this->user_m->get();
+		$db_data = $this->user_m->get_data();
+		$this->data['users'] = $db_data['data'];
 		
 		// Load view
 		$this->data['subview'] = 'admin/user/index';
@@ -19,7 +20,8 @@ class User extends Backend_Controller {
 	{
 		// Fetch a user or set a new one
 		if ($id) {
-			$this->data['user'] = $this->user_m->get($id);
+			$db_data = $this->user_m->get_data($id);
+			$this->data['user'] = $db_data['data'];
 			count($this->data['user']) || $this->data['errors'][] = 'User could not be found';
 			
 			if( count($this->data['user']) == 0 ) redirect('admin/user'); //-->user bulunamazsa hatay� �nlemek i�in redirect
@@ -92,10 +94,13 @@ class User extends Backend_Controller {
 		// UNLESS it's the email for the current user
 		
 		$id = $this->uri->segment(4);
-		$this->db->where('adm_usr_email', $this->input->post('email'));
-		!$id || $this->db->where('adm_usr_id !=', $id);
-		$user = $this->user_m->get();
-		if (count($user)) {
+		$filters = array(
+				'where' => "adm_usr_email = '".$this->input->post('email')."' AND adm_usr_id != '".$id."'"
+		);
+		//$this->db->where('adm_usr_email', $this->input->post('email'));
+		//!$id || $this->db->where('adm_usr_id !=', $id);
+		$user = $this->user_m->get_data(NULL, 0, FALSE, $filters);
+		if (count($user['data'])) {
 			$this->form_validation->set_message('_unique_email', '%s should be unique');
 			return FALSE;
 		}

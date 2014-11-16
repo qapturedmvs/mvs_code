@@ -23,20 +23,6 @@
 					redirect('admin/user/login');
 				}
 			}
-			
-			// Loading mvs_adm_config file and admin settings table
-			$this->config->load('mvs_adm_config');
-			$this->load->model('admin/settings_m');
-			
-			// Set mvs_adm_config variables from db
-			$sets = $this->settings_m->get();
-			foreach($sets as $set){
-				$this->config->set_item($set->adm_set_code, $set->adm_set_value);
-			}
-			
-			// Default Variables
-			$this->data['site_url'] = site_url();
-			$this->data['current_url'] = current_url();
 
 		}
 		
@@ -48,7 +34,8 @@
 			$config['uri_segment'] = $uri;
 			$config['num_links'] = 5;
 			$config['use_page_numbers'] = TRUE;
-			$config['suffix'] = '';
+			$config['suffix'] = getVars($this->get_vars);
+			$config['first_url'] = $config['base_url'].$config['suffix'];
 			
 			$config['first_link'] = '&lt;&lt;';
 			$config['first_tag_open'] = '<li>';

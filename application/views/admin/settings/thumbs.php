@@ -1,4 +1,4 @@
-<div class="container pgaeSettings">
+<div class="container pageSettings pageThumbs">
 	<h2 class="sub-header">Settings</h2>
 	<div class="NavHolder">
 		<ul class="nav nav-tabs" role="tablist">
@@ -33,6 +33,7 @@
 					</div>
 					<?php echo form_submit(array('name' => 'img_submit', 'value' => 'Start', 'class' => 'btn btn-primary btnThumbGenerate')); ?>
 					<div class="clearfix"></div>
-			<?php form_close(); ?>
+			<?php echo form_close(); ?>
 	</div>
+	<?php if($form_success === TRUE) echo getMessage('success', 'All thumbs generated.'); elseif($form_success === FALSE) echo getMessage('danger', 'An error occured.');?>
 </div>

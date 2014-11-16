@@ -16,10 +16,13 @@
 		
 		$p = $this->movie_m->cleaner($p);
 		$curPage = ($p != '') ? $p : 1;
-		$offset = ($curPage-1)*$this->movie_m->per_page;
-		$movies = $this->movie_m->movies_json($offset);
-		$countries = $this->movie_m->_countries();
-		$genres = $this->movie_m->_genres();
+		$offset = ($curPage-1) * $this->movie_m->per_page;
+		$db_data = $this->movie_m->movies_json($offset);
+		$movies = $db_data['data'];
+		$db_data = $this->movie_m->_countries();
+		$countries = $db_data['data'];
+		$db_data = $this->movie_m->_genres();
+		$genres = $db_data['data'];
 		$json = (object) array();
 
 		if($movies){

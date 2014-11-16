@@ -1,8 +1,6 @@
 <div class="container pageActors">
 	<?php if(count($actors)): ?>
-		<?php foreach($actors as $actor): ?>
-			<h2 class="sub-header"><?php echo $actor->str_name; ?></h2>
-		<?php endforeach; ?>
+		<h2 class="sub-header"><?php echo $actors->str_name; ?></h2>
 	<?php else: ?>
 		<?php echo getMessage('info', 'Actor data not found.'); ?>
 	<?php endif; ?>

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Movie_M extends MVS_Model
 {
@@ -16,10 +16,14 @@ class Movie_M extends MVS_Model
 	
 	// Movie list JSON
 	public function movies_json($offset = 0){
-	
-		$movies = $this->get(NULL,FALSE,$offset,$select = 'mvs_title, mvs_year, mvs_runtime, gnr_id, cntry_id');		
 		
-		if (count($movies))
+		$filters = array(
+				'select' => 'mvs_title, mvs_year, mvs_runtime, mvs_slug, gnr_id, cntry_id'
+		);
+		
+		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
+		
+		if (count($movies['data']))
 			return $movies;
 		else
 			return FALSE;
@@ -31,10 +35,9 @@ class Movie_M extends MVS_Model
 		
 		$id = $this->cleaner($id);
 		$this->_primary_key = 'mvs_slug';
-		$this->_primary_filter = NULL;
-		$movie = $this->get($id);
+		$movie = $this->get_data($id);
 	
-		if (count($movie) == 1)
+		if (count($movie['data']) == 1)
 			return $movie;
 		else
 			return FALSE;
@@ -49,12 +52,13 @@ class Movie_M extends MVS_Model
 		$this->_order_by = 'gnr_id';
 		
 		if($ids == NULL){
-			$genres = $this->get(NULL,FALSE,0);
+			$genres = $this->get_data(NULL, 0);
 		}else{
-			$genres = $this->get_with('*', $ids);
+			$filters = array('where' => $ids);
+			$genres = $this->get_data(NULL, 0, FALSE, $filters);
 		}
 	
-		if (count($genres))
+		if (count($genres['data']))
 			return $genres;
 		else
 			return FALSE;
@@ -67,15 +71,16 @@ class Movie_M extends MVS_Model
 		$this->_table_name = 'mvs_country';
 		$this->_primary_key = 'cntry_id';
 		$this->_order_by = 'cntry_id';
-		$this->per_page = 200;
+		$this->per_page = 0;
 		
 		if($ids == NULL){
-			$countries = $this->get(NULL,FALSE,0);
+			$countries = $this->get_data(NULL, 0);
 		}else{
-			$countries = $this->get_with('*', $ids);
+			$filters = array('where' => $ids);
+			$countries = $this->get_data(NULL, 0, FALSE, $filters);
 		}
 
-		if (count($countries))
+		if (count($countries['data']))
 			return $countries;
 		else
 			return FALSE;
@@ -84,13 +89,16 @@ class Movie_M extends MVS_Model
 	
 	public function getCastList($id){
 	
-		$this->db->select('mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug, mvs_stars.str_photo');
-		$this->db->from('mvs_cast');
-		$this->db->join('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner');
-		$this->db->where('mvs_id', $id);
-		$casts = $this->db->get()->result();
+		$filters = array(
+				'select' => 'mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug, mvs_stars.str_photo',
+				'from' => 'mvs_cast',
+				'join' => array('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner'),
+				'where' => array('mvs_id', $id)
+		);
+
+		$casts = $this->get_data(NULL, 0, FALSE, $filters);
 	
-		if (count($casts))
+		if (count($casts['data']))
 			return $casts;
 		else
 			return FALSE;

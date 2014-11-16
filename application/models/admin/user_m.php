@@ -49,17 +49,16 @@ class User_M extends MVS_Model
 
 	public function login()
 	{
-		$user = $this->get_by(array(
-			'adm_usr_email' => $this->input->post('email'),
-			'adm_usr_password' => $this->hash($this->input->post('password')),
-		), TRUE);
+		$filters = array('where' => "adm_usr_email = '".$this->input->post('email')."' AND adm_usr_password = '".$this->hash($this->input->post('password'))."'");
 		
-		if (count($user)) {
+		$user = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		if (count($user['data'])) {
 			// Log in user
 			$data = array(
-				'name' => $user->adm_usr_name,
-				'email' => $user->adm_usr_email,
-				'id' => $user->adm_usr_id,
+				'name' => $user['data'][0]->adm_usr_name,
+				'email' => $user['data'][0]->adm_usr_email,
+				'id' => $user['data'][0]->adm_usr_id,
 				'loggedin' => TRUE,
 			);
 			

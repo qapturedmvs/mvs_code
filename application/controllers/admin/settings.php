@@ -28,7 +28,8 @@ class Settings extends Backend_Controller {
 				$this->data['form_success'] = TRUE;
 		}
 		
-		$this->data['settings'] = $this->settings_m->settings();
+		$db_data = $this->settings_m->settings();
+		$this->data['settings'] = $db_data['data'];
 		
 		// Load view
 		$this->data['subview'] = 'admin/settings/index';
@@ -39,15 +40,14 @@ class Settings extends Backend_Controller {
 		
 		$rules = $this->settings_m->rules_thumb;
 		$this->form_validation->set_rules($rules);
-		$this->data['form_success'] = FALSE;
+		$this->data['form_success'] = NULL;
 		
 		if ($this->form_validation->run() == TRUE) {
-				
+			
 			$sets = $this->settings_m->array_from_post(array('img_path', 'img_width', 'img_height'));
 			
-			if (file_exists($sets['img_path'])){
-				$this->_image_thumbs($sets['img_path'], $sets['img_width'], $sets['img_height']);
-				$this->data['form_success'] = TRUE;
+			if (file_exists(FCPATH.$sets['img_path'])){
+				$this->data['form_success'] = $this->_image_thumbs($sets['img_path'], $sets['img_width'], $sets['img_height']);
 			}
 
 		}
@@ -59,29 +59,32 @@ class Settings extends Backend_Controller {
 	
 	//Thumb generate
 	private function _image_thumbs($path, $width, $height){
-			
-		if (file_exists($path)){
+		
+		if (file_exists(FCPATH.$path)){
 			
 			$this->load->library('image_lib');
 			$this->load->helper('directory');
 			
-			$path = trim("/", $path);
-			$imgMap = directory_map(FCPATH.$path, 0);
-			$thumPath = FCPATH.$path."/thumbs/";
+			$path = FCPATH.str_replace("/", "\\", trim($path, "/"));
+			$imgMap = directory_map($path, 0);
+			$thumPath = $path."\\thumbs";
 			if (!file_exists($thumPath)) mkdir($thumPath, 0755, true);
 			$thumbMap = directory_map($thumPath, 0);
-		
+			$marker = "_".$width."X".$height."_";
+
 			foreach($imgMap as $item){
 		
-				if(!is_array($item) && !in_array(str_replace(".jpg", "_thumb.jpg", $item), $thumbMap)){
+				if(!is_array($item) && !in_array(str_replace(".jpg", $marker.".jpg", $item), $thumbMap)){
+					
+					$config['thumb_marker'] = $marker;
 					$config['image_library'] = 'gd2';
-					$config['source_image'] = FCPATH.$path.$item;
-					$config['new_image'] = FCPATH.$path."thumbs/";
+					$config['source_image'] = $path."\\".$item;
+					$config['new_image'] = $path."\\thumbs";
 					$config['create_thumb'] = TRUE;
 					$config['maintain_ratio'] = TRUE;
 					$config['width'] = $width;
 					$config['height'] = $height;
-		
+
 					$this->image_lib->initialize($config);
 		
 					if (!$this->image_lib->resize())
@@ -94,6 +97,8 @@ class Settings extends Backend_Controller {
 				}
 		
 			}
+			
+			return TRUE;
 			
 		}else{
 			

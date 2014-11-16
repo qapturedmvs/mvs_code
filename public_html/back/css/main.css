@@ -70,6 +70,7 @@ h2.sub-header{margin:10px 0 20px;}
 
 .btnThumbGenerate{float:right;}
 .btnThumbGenerate .btn{}
+.pageThumbs .settingsHolder{margin-bottom:15px;}
 
 .pgaeSlugs .list-group{width:500px;}
 .pgaeSlugs .list-group .list-group-item > span{cursor:pointer; cursor:hand;}

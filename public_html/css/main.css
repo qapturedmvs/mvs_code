@@ -13,11 +13,31 @@ abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}
 table{border-collapse:collapse;border-spacing:0}
 hr{display:block;height:0;border:0;margin:0;padding:0;}
 input,select{vertical-align:middle}
+ol,ul,li{list-style:none;}
 
 .qFixer{display:block; width:100%; height:0 !important; font-size:0  !important; overflow:hidden; visibility:hidden; clear:both; float:none !important;}
 
 
 /* TEMP CSS */
+body{font-family:Arial, Helvetica, sans-serif; font-size:13px;}
+body a{color:#000; text-decoration:none; font-size:13px;}
+body a:hover{text-decoration:underline;}
+body span{font-size:13px;}
+body input{border:2px solid #000; background:#fff; height:25px; line-height:25px;}
+body textarea{border:2px solid #000; background:#fff; resize:none;}
+.pageDefault{margin-top:10px;}
+.btnDefault{padding:7px 22px; font-size:14px; line-height:16px; background:#E6E6E6; border:2px solid #000; cursor:pointer; cursor:hand; display:inline-block;}
+.btnDefault:hover{background:#fff; text-decoration:none;}
+.btnPlus{padding:5px; font-size:32px; height:20px; line-height:20px;}
+.rc{border-radius:16px;}
+.lrc{border-radius:5px;}
+.left{float:left;}
+.right{float:right;}
+
+.commentForm{margin:10px 0;}
+.commentForm textarea{width:100%; height:95px; margin:0 0 5px;}
+.commentForm a{float:left; margin-right:5px;}
+
 #qContainer{width:1000px; margin:0 auto;}
 
 #qHeader{padding:10px 0 20px; border-bottom:1px solid #ccc;}
@@ -25,8 +45,49 @@ input,select{vertical-align:middle}
 #qHeader .logo a{font-size:30px; text-decoration:none;}
 #qHeader .mainMenu{float:left; padding-top:5px;}
 #qHeader .mainMenu li{float:left; margin-right:20px;}
-#qHeader .searchHolder{float:right; padding-top:5px;}
+#qHeader .mainMenu li a{font-size:16px;}
+#qHeader .searchHolder{float:right; padding-top:5px; width:240px;}
+#qHeader .searchHolder .searchbox{border:2px solid #000; position:relative; padding-left:35px;}
+#qHeader .searchHolder .searchbox input[type=text]{border:none; width:185px;}
+#qHeader .searchHolder .searchbox .btnHolder{position:absolute; top:3px; left:5px;}
+#qHeader .searchHolder .searchbox .btnHolder input{border:none; background:url(../images/search.jpg) no-repeat; width:21px; height:21px;}
 
 #qBody{}
 
 #qFooter{}
+
+/* MOVIE DETAIL */
+.pageMovie{}
+.pageMovie .hero{width:100%; height:225px; background:#bbb;}
+.pageMovie .body{}
+.pageMovie .body .posArea{margin-top:-155px;}
+.pageMovie .body .mainCol{padding-left:20px; width:760px; border-right:1px solid #e6e6e6;}
+.pageMovie .body .mainCol .details{margin-bottom:60px;}
+.pageMovie .body .mainCol .details .cover{width:175px;}
+.pageMovie .body .mainCol .details .text{padding:35px 30px 0; width:520px;}
+.pageMovie .body .mainCol .details .text h1{font-size:20px; margin-bottom:10px; font-weight:normal;}
+.pageMovie .body .mainCol .details .text .genre{float:left; margin:0 50px 25px 0;}
+.pageMovie .body .mainCol .details .text .genre li{float:left; height:15px; line-height:15px; border-left:2px solid #000; padding:0 10px; font-size:12px;}
+.pageMovie .body .mainCol .details .text .genre li:first-child{padding-left:0; border-left:none;}
+.pageMovie .body .mainCol .details .text .country{float:left; margin:0 50px 25px 0;}
+.pageMovie .body .mainCol .details .text .country li{float:left; height:15px; line-height:15px; border-left:2px; solid #000; padding:0 10px; font-size:12px;}
+.pageMovie .body .mainCol .details .text .country li:first-child{padding-left:0; border-left:none;}
+.pageMovie .body .mainCol .details .text .actions{border:2px solid #000; display:inline-block; margin-bottom:30px;}
+.pageMovie .body .mainCol .details .text .actions li{float:left;}
+.pageMovie .body .mainCol .details .text .actions li a{padding:7px 22px; font-size:14px; line-height:16px; background:#E6E6E6; border:none; border-left:2px solid #000; cursor:pointer; cursor:hand; display:inline-block;}
+.pageMovie .body .mainCol .details .text .actions li:first-child a{border-left:none;}
+.pageMovie .body .mainCol .details .text .actions li a:hover{background:#fff; text-decoration:none;}
+.pageMovie .body .mainCol .details .text .plot{margin-bottom:20px;}
+.pageMovie .body .mainCol .details .text .cast{}
+.pageMovie .body .mainCol .details .text .cast li{clear:both; margin-bottom:10px;}
+.pageMovie .body .mainCol .details .text .cast li.topBilled{float:left; margin-right:10px; clear:none; margin-bottom:30px;}
+.pageMovie .body .mainCol .details .text .cast li.topBilled img{border:2px solid #000;}
+.pageMovie .body .mainCol .details .text .cast li span.actor{display:inline-block; width:200px;}
+.pageMovie .body .mainCol .details .text .cast li span.actor a:hover{text-decoration:underline;}
+.pageMovie .body .mainCol .details .text .cast li span.character{color:#555;}
+.pageMovie .body .mainCol .social{width:700px;}
+.pageMovie .body .sidebar{width:190px; padding-top:35px;}
+.pageMovie .body .sidebar .btnSet{margin-bottom:55px;}
+.pageMovie .body .sidebar .lists{}
+.pageMovie .body .sidebar .lists .sectionTitle{font-weight:bold; display:block; margin-bottom:20px;}
+.pageMovie .body .sidebar .lists li{margin-bottom:7px;}
