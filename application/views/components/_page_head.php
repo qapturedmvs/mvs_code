@@ -10,6 +10,7 @@
     <script src="<?php echo site_url('js/location.plugin.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
 	<script src="<?php echo site_url('js/ng-infinite-scroll.min.js'); ?>"></script>
+	<script src="<?php echo site_url('js/jquery.lazyload.min.js'); ?>"></script>
   </head>
   <body>
   <input type="hidden" value="<?php echo $site_url; ?>" id="mvs_site_url" />

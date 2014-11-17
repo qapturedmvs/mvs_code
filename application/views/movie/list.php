@@ -3,7 +3,8 @@
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items'>
 		    <div ng-if="item.type == 0 ">
-		      <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span>
+		      <span class='poster'><img class="lazy" data-original="<?php echo $site_url ?>{{item.mvs_poster}}" alt="{{item.mvs_title}}" /></span>
+			  <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span>
 		      <span class='runtime'>{{item.mvs_runtime}} min.</span>
 		      <span class='genre'>{{item.mvs_genre}}</span>
 		      <span class='country'>{{item.mvs_country}}</span>
@@ -41,13 +42,21 @@ myApp.factory('Reddit', function($http) {
 	  if( d['result'] == 'OK' ){
 	  	for(var i = 0; i < d['data'].length; ++i){
 			var items = d['data'][ i ];
-				items['type'] = 0;			
+				items['type'] = 0;
+				items['mvs_genre'] = items['mvs_genre'].toString();
+				items['mvs_country'] = items['mvs_country'].toString();					
 			this.items.push( items );
 		}
 	  	this.after++;
 	  	this.busy = false;
 	  	this.items.push( { 'type': 1, 'paging': this.after } );
-
+		
+		
+		// TRIGGER LAZYLOAD
+		setTimeout(function(){
+			if( $("img.lazy").length > 0 )
+				$("img.lazy").lazyload();
+		}, 1);
 	  }
     }.bind(this));
   };
