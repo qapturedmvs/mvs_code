@@ -18,6 +18,21 @@ class Settings_M extends MVS_Model
 					'field' => 'mvs_cache_expire',
 					'label' => 'Cache Expire',
 					'rules' => 'trim|required|numeric'
+			),
+			'mvs_img_path' => array(
+					'field' => 'mvs_img_path',
+					'label' => 'Image Path',
+					'rules' => 'trim|required'
+			),
+			'mvs_img_l_size' => array(
+					'field' => 'mvs_img_l_size',
+					'label' => 'List Image Sizes',
+					'rules' => 'trim|required'
+			),
+			'mvs_img_d_size' => array(
+					'field' => 'mvs_img_d_size',
+					'label' => 'Detail Image Sizes',
+					'rules' => 'trim|required'
 			)
 	);
 	public $rules_thumb = array(

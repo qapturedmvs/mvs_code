@@ -1,4 +1,4 @@
-<div class="container pgaeSettings">
+<div class="container pageSettings">
 	<h2 class="sub-header">Settings</h2>
 	<div class="NavHolder">
 		<ul class="nav nav-tabs" role="tablist">

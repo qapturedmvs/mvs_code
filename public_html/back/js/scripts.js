@@ -66,6 +66,34 @@ if(exist($('.pageMovie'))){
 	
 }
 
+//Settings (Image Generate)
+if(exist($('.pageSettings'))){
+	
+	var size, path, url = $('#hdnSiteUrl').val()+"admin/settings/thumbs";
+	
+	$('a.btnGen').click(function(){
+		if(!exist($('.generating'))){
+			size = $(this).parents('.input-group-addon').siblings('input').val(),
+			path = $('#mvs_img_path').val();
+			size = size.toLowerCase().split("x");
+			
+			$(".settingsHolder").addClass("generating");
+			$(this).parents('.input-group-addon').append('<img src="../back/images/ajax-loader.gif" class="genAct" />');
+			
+			$.post(url+"?path="+path+"&width="+size[0]+"&height="+size[1], function(result){
+				
+				if(result){
+					$(".settingsHolder").removeClass("generating");
+					$(this).siblings('.genAct').remove();
+				}
+				
+			});
+		}
+	});
+	
+
+}
+
 //Settings (Slug Generate)
 if(exist($('.pgaeSlugs'))){
 	

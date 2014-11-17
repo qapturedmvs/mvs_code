@@ -18,7 +18,7 @@ class Settings extends Backend_Controller {
 		if ($this->form_validation->run() == TRUE) {
 			
 			// Settings'deki yeni alanlar buradaki array'e, settings_m'deki rules array'ine ve mvs_adm_config dosyasına eklenmeli
-			$temp = $this->settings_m->array_from_post(array('mvs_site_name', 'mvs_cache_expire'));
+			$temp = $this->settings_m->array_from_post(array('mvs_site_name', 'mvs_cache_expire', 'mvs_img_path', 'mvs_img_l_size', 'mvs_img_d_size'));
 			$sets = array();
 
 			foreach($temp as $key => $val)
@@ -38,23 +38,35 @@ class Settings extends Backend_Controller {
 	
 	public function thumbs(){
 		
-		$rules = $this->settings_m->rules_thumb;
-		$this->form_validation->set_rules($rules);
-		$this->data['form_success'] = NULL;
+		$result = FALSE;
 		
-		if ($this->form_validation->run() == TRUE) {
-			
-			$sets = $this->settings_m->array_from_post(array('img_path', 'img_width', 'img_height'));
-			
-			if (file_exists(FCPATH.$sets['img_path'])){
-				$this->data['form_success'] = $this->_image_thumbs($sets['img_path'], $sets['img_width'], $sets['img_height']);
+		if($this->get_vars['path'] && $this->get_vars['width'] && $this->get_vars['height'] ){				
+		
+			if(file_exists(FCPATH.$this->get_vars['path'])){
+				$result = $this->_image_thumbs($this->get_vars['path'], $this->get_vars['width'], $this->get_vars['height']);
+		
 			}
-
 		}
+		
+		return $result;
+		
+// 		$rules = $this->settings_m->rules_thumb;
+// 		$this->form_validation->set_rules($rules);
+// 		$this->data['form_success'] = NULL;
+		
+// 		if ($this->form_validation->run() == TRUE) {
+			
+// 			$sets = $this->settings_m->array_from_post(array('img_path', 'img_width', 'img_height'));
+			
+// 			if (file_exists(FCPATH.$sets['img_path'])){
+// 				$this->data['form_success'] = $this->_image_thumbs($sets['img_path'], $sets['img_width'], $sets['img_height']);
+// 			}
+
+// 		}
 	
-		// Load view
-		$this->data['subview'] = 'admin/settings/thumbs';
-		$this->load->view('admin/_main_body_layout', $this->data);
+// 		// Load view
+// 		$this->data['subview'] = 'admin/settings/thumbs';
+// 		$this->load->view('admin/_main_body_layout', $this->data);
 	}
 	
 	//Thumb generate
