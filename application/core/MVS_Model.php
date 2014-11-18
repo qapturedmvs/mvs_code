@@ -34,7 +34,6 @@ class MVS_Model extends CI_Model {
 						else
 							$this->db->{$key}($val);
 					}
-		
 				}
 			}
 			
@@ -47,15 +46,13 @@ class MVS_Model extends CI_Model {
 			
 		}
 		
-		if($cache) $this->db->cache_on();
-		
 		$db_data['total_count'] = (!$count) ? FALSE : $this->db->count_all_results($this->_table_name);
 	
 		if($this->per_page !== 0 && $id == NULL)
 			$this->db->limit($this->per_page, $offset);
 		
+		if($cache) $this->db->cache_on(); // File cache for query results
 		$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
-		
 		if($cache) $this->db->cache_off();
 	
 		$this->db->flush_cache();
