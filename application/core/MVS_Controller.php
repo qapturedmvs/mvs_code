@@ -9,7 +9,7 @@ class MVS_Controller extends CI_Controller{
 		$this->load->model('admin/settings_m');
 			
 		// Set mvs_adm_config variables from db
-		$db_data = $this->settings_m->get_data();
+		$db_data = $this->settings_m->settings();
 		$sets = $db_data['data'];
 		foreach($sets as $set){
 			$this->config->set_item($set->adm_set_code, $set->adm_set_value);

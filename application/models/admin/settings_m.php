@@ -8,50 +8,50 @@ class Settings_M extends MVS_Model
 	protected $_primary_key = 'adm_set_group';
 	protected $_order_by = 'adm_set_id';
 	protected $_order_rule = 'ASC';
-	public $rules = array(
-			'mvs_site_name' => array(
-					'field' => 'mvs_site_name',
-					'label' => 'Site Name',
-					'rules' => 'trim|required'
-			),
-			'mvs_cache_expire' => array(
-					'field' => 'mvs_cache_expire',
-					'label' => 'Cache Expire',
-					'rules' => 'trim|required|numeric'
-			),
-			'mvs_img_path' => array(
-					'field' => 'mvs_img_path',
-					'label' => 'Image Path',
-					'rules' => 'trim|required'
-			),
-			'mvs_img_l_size' => array(
-					'field' => 'mvs_img_l_size',
-					'label' => 'List Image Sizes',
-					'rules' => 'trim|required'
-			),
-			'mvs_img_d_size' => array(
-					'field' => 'mvs_img_d_size',
-					'label' => 'Detail Image Sizes',
-					'rules' => 'trim|required'
-			)
-	);
-	public $rules_thumb = array(
-			'img_path' => array(
-					'field' => 'img_path',
-					'label' => 'Path',
-					'rules' => 'trim|required'
-			),
-			'img_width' => array(
-					'field' => 'img_width',
-					'label' => 'Width',
-					'rules' => 'trim|required|numeric'
-			),
-			'img_height' => array(
-					'field' => 'img_height',
-					'label' => 'Height',
-					'rules' => 'trim|required|numeric'
-			)
-	);
+// 	public $rules = array(
+// 			'mvs_site_name' => array(
+// 					'field' => 'mvs_site_name',
+// 					'label' => 'Site Name',
+// 					'rules' => 'trim|required'
+// 			),
+// 			'mvs_cache_expire' => array(
+// 					'field' => 'mvs_cache_expire',
+// 					'label' => 'Cache Expire',
+// 					'rules' => 'trim|required|numeric'
+// 			),
+// 			'mvs_img_path' => array(
+// 					'field' => 'mvs_img_path',
+// 					'label' => 'Image Path',
+// 					'rules' => 'trim|required'
+// 			),
+// 			'mvs_img_l_size' => array(
+// 					'field' => 'mvs_img_l_size',
+// 					'label' => 'List Image Sizes',
+// 					'rules' => 'trim|required'
+// 			),
+// 			'mvs_img_d_size' => array(
+// 					'field' => 'mvs_img_d_size',
+// 					'label' => 'Detail Image Sizes',
+// 					'rules' => 'trim|required'
+// 			)
+// 	);
+// 	public $rules_thumb = array(
+// 			'img_path' => array(
+// 					'field' => 'img_path',
+// 					'label' => 'Path',
+// 					'rules' => 'trim|required'
+// 			),
+// 			'img_width' => array(
+// 					'field' => 'img_width',
+// 					'label' => 'Width',
+// 					'rules' => 'trim|required|numeric'
+// 			),
+// 			'img_height' => array(
+// 					'field' => 'img_height',
+// 					'label' => 'Height',
+// 					'rules' => 'trim|required|numeric'
+// 			)
+// 	);
 
 	function __construct ()
 	{

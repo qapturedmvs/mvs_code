@@ -11,11 +11,11 @@ class Settings extends Backend_Controller {
 	
 	public function index($s = NULL){
 		
-		$rules = $this->settings_m->rules;
-		$this->form_validation->set_rules($rules);
+		//$rules = $this->settings_m->rules;
+		//$this->form_validation->set_rules($rules);
 		$this->data['form_success'] = FALSE;
 		
-		if ($this->form_validation->run() == TRUE) {
+		if ($this->form_validation->run('adm_settings_general') == TRUE) {
 			
 			// Settings'deki yeni alanlar buradaki array'e, settings_m'deki rules array'ine ve mvs_adm_config dosyasına eklenmeli
 			$temp = $this->settings_m->array_from_post(array('mvs_site_name', 'mvs_cache_expire', 'mvs_img_path', 'mvs_img_l_size', 'mvs_img_d_size'));
@@ -24,8 +24,12 @@ class Settings extends Backend_Controller {
 			foreach($temp as $key => $val)
 				array_push($sets, array('adm_set_code' => $key, 'adm_set_value' => $val));
 
-			if($this->settings_m->save_sets($sets))
+			if($this->settings_m->save_sets($sets)){
 				$this->data['form_success'] = TRUE;
+				
+				$this->db->cache_delete('admin', 'settings');
+				$this->db->cache_delete('admin', 'user');
+			}
 		}
 		
 		$db_data = $this->settings_m->settings();
