@@ -97,8 +97,8 @@ class Movie_M extends MVS_Model
 				'join' => array('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner'),
 				'where' => array('mvs_id', $id)
 		);
-
-		$casts = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		$casts = $this->get_data(NULL, 0, FALSE, $filters, TRUE);
 		
 		if (count($casts['data']))
 			return $casts;

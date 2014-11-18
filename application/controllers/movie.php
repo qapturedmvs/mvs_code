@@ -18,7 +18,7 @@
 		}
 	
 		public function index($id = NULL){
-			
+
 			//$this->output->cache($this->config->item('mvs_cache_expire'));
 			$movie = $this->movie_m->movie($id);
 

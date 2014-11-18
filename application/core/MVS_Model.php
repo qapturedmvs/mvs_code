@@ -15,7 +15,7 @@ class MVS_Model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL){
+	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL, $cache = FALSE){
 
 		$method = 'result';
 		$chk_filters = is_array($filters);
@@ -46,13 +46,17 @@ class MVS_Model extends CI_Model {
 			$this->db->stop_cache();
 			
 		}
-	
+		
+		if($cache) $this->db->cache_on();
+		
 		$db_data['total_count'] = (!$count) ? FALSE : $this->db->count_all_results($this->_table_name);
 	
 		if($this->per_page !== 0 && $id == NULL)
 			$this->db->limit($this->per_page, $offset);
-	
+		
 		$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
+		
+		if($cache) $this->db->cache_off();
 	
 		$this->db->flush_cache();
 	
