@@ -26,9 +26,7 @@ class Settings extends Backend_Controller {
 
 			if($this->settings_m->save_sets($sets)){
 				$this->data['form_success'] = TRUE;
-				
-				$this->db->cache_delete('admin', 'settings');
-				$this->db->cache_delete('admin', 'user');
+				$this->cache->delete('mvs_settings');
 			}
 		}
 		

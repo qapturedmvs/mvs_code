@@ -41,9 +41,9 @@
 $route['default_controller'] = "home";
 $route['404_override'] = '';
 
-// Önyüzle ilgili route'lar, admin route'larýndan daha yukarýda tanýmlý olmalý
-// Önyüzle ilgili route'lar
-$route['movie/index/(:any)'] = "movie/$1";
+// ï¿½nyï¿½zle ilgili route'lar, admin route'larï¿½ndan daha yukarï¿½da tanï¿½mlï¿½ olmalï¿½
+// ï¿½nyï¿½zle ilgili route'lar
+//$route['movie/index/(:any)'] = "movie/$1";
 
 // Admin ilgili route'lar
 $route['admin'] = "admin/user/login";
