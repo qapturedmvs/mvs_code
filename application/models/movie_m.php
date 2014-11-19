@@ -35,7 +35,7 @@ class Movie_M extends MVS_Model
 		
 		$id = $this->cleaner($id);
 		$this->_primary_key = 'mvs_slug';
-		$movie = $this->get_data($id, 0, FALSE, NULL, TRUE);
+		$movie = $this->get_data($id, 0, FALSE, NULL);
 	
 		if (count($movie['data']) == 1)
 			return $movie;
@@ -55,7 +55,7 @@ class Movie_M extends MVS_Model
 			$genres = $this->get_data(NULL, 0);
 		}else{
 			$filters = array('where' => $ids);
-			$genres = $this->get_data(NULL, 0, FALSE, $filters, TRUE);
+			$genres = $this->get_data(NULL, 0, FALSE, $filters);
 		}
 	
 		if (count($genres['data']))
@@ -77,7 +77,7 @@ class Movie_M extends MVS_Model
 			$countries = $this->get_data(NULL, 0);
 		}else{
 			$filters = array('where' => $ids);
-			$countries = $this->get_data(NULL, 0, FALSE, $filters, TRUE);
+			$countries = $this->get_data(NULL, 0, FALSE, $filters);
 		}
 
 		if (count($countries['data']))

@@ -43,7 +43,7 @@ $route['404_override'] = '';
 
 // Önyüzle ilgili route'lar, admin route'larýndan daha yukarýda tanýmlý olmalý
 // Önyüzle ilgili route'lar
-//$route['movie/(:any)'] = "movie/index/$1";
+$route['movie/index/(:any)'] = "movie/$1";
 
 // Admin ilgili route'lar
 $route['admin'] = "admin/user/login";
