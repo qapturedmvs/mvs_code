@@ -2,3 +2,4 @@
 application/config/database.php
 public_html/**/data
 application/**/cache
+*.komodoproject
