@@ -35,6 +35,14 @@
 					$genres = $this->movie_m->_genres('gnr_id IN('.$gnrId.')');
 					$this->data['genres'] = $genres['data'];
 					
+					// Setting meta_tags object
+					$this->data['meta_tags'] = (object) array(
+																				'title' => $movie['data']->mvs_title.' ('.$movie['data']->mvs_year.')',
+																				'description' => $movie['data']->mvs_plot,
+																				'type' => 'movie',
+																				'image' => $movie['data']->mvs_poster
+																);
+					
 					// Load view
 					$this->data['subview'] = 'movie/detail';
 					$this->load->view('_main_body_layout', $this->data);

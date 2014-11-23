@@ -3,7 +3,7 @@
 	class Backend_Controller extends MVS_Controller
 	{
 		
-		public $data = array();
+		protected $data = array();
 	
 		function __construct ()
 		{

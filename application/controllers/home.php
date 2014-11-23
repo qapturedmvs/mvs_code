@@ -11,7 +11,7 @@
 			$this->load->view('_main_body_layout', $this->data);	
 			
 		}
-			
+
 	}
 
 ?>

@@ -7,18 +7,19 @@ class MVS_Controller extends CI_Controller{
 		// Loading mvs_adm_config file and admin settings table
 		$this->config->load('mvs_adm_config');
 		$this->load->model('admin/settings_m');
-		$this->load->driver('cache', array('adapter' => 'file', 'backup' => 'memcached'));
+		//$this->load->driver('cache', array('adapter' => 'file', 'backup' => 'memcached'));
 			
 		// Set mvs_adm_config variables from db
-		$sets = $this->cache->get('mvs_settings');
+		//$sets = $this->cache->get('mvs_settings');
 		
-		if(!$sets){
+		//if(!$sets){
 			
-			$db_data = $this->settings_m->settings();
-			$sets = $db_data['data'];
-			$this->cache->save('mvs_settings', $sets, 600);
+		$db_data = $this->settings_m->settings();
+		$sets = $db_data['data'];
+		
+			//$this->cache->save('mvs_settings', $sets, 600);
 			
-		}
+		//}
 		
 		foreach($sets as $set){
 			$this->config->set_item($set->adm_set_code, $set->adm_set_value);

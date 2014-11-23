@@ -4,7 +4,7 @@ class Movie_M extends MVS_Model
 {
 	
 	protected $_table_name = 'mvs_movies';
-	protected $_primary_key = 'mvs_id';
+	protected $_primary_key = 'mvs_slug';
 	protected $_order_by = 'mvs_id';
 	public $per_page = 100;
 	
@@ -34,7 +34,6 @@ class Movie_M extends MVS_Model
 	public function movie($id){
 		
 		$id = $this->cleaner($id);
-		$this->_primary_key = 'mvs_slug';
 		$movie = $this->get_data($id, 0, FALSE, NULL);
 	
 		if (count($movie['data']) == 1)

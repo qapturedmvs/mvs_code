@@ -69,7 +69,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .mainCol .details .text .genre{float:left; margin:0 50px 25px 0;}
 .pageMovie .body .mainCol .details .text .genre li{float:left; height:15px; line-height:15px; border-left:2px solid #000; padding:0 10px; font-size:12px;}
 .pageMovie .body .mainCol .details .text .genre li:first-child{padding-left:0; border-left:none;}
-.pageMovie .body .mainCol .details .text .country{float:left; margin:0 50px 25px 0;}
+.pageMovie .body .mainCol .details .text .country{float:left; margin:0 0 25px 0;}
 .pageMovie .body .mainCol .details .text .country li{float:left; height:15px; line-height:15px; border-left:2px; solid #000; padding:0 10px; font-size:12px;}
 .pageMovie .body .mainCol .details .text .country li:first-child{padding-left:0; border-left:none;}
 .pageMovie .body .mainCol .details .text .actions{border:2px solid #000; display:inline-block; margin-bottom:30px;}
@@ -91,3 +91,19 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .sidebar .lists{}
 .pageMovie .body .sidebar .lists .sectionTitle{font-weight:bold; display:block; margin-bottom:20px;}
 .pageMovie .body .sidebar .lists li{margin-bottom:7px;}
+
+/* ACTOR DETAIL */
+.pageActor{padding-top:30px;}
+.pageActor .cover{width:175px; border:2px solid #000;}
+.pageActor .cover img{width:100%;}
+.pageActor .detail{padding-top:10px; width:785px;}
+.pageActor .detail h1{font-size:20px; margin-bottom:10px; font-weight:normal;}
+.pageActor .detail .position{margin-bottom:20px;}
+.pageActor .detail .position li{float:left; height:15px; line-height:15px; border-left:2px solid #000; padding:0 10px; font-size:12px;}
+.pageActor .detail .position li:first-child{padding-left:0; border-left:none;}
+.pageActor .detail .btnSet{margin-bottom:60px;}
+.pageActor .detail .movies{padding-top:15px; border-top:1px solid #e6e6e6;}
+.pageActor .detail .movies li{clear:both; margin-bottom:10px;}
+.pageActor .detail .movies li span.movie{display:inline-block; width:300px; float:left;}
+.pageActor .detail .movies li span.movie a:hover{text-decoration:underline;}
+.pageActor .detail .movies li span.character{color:#555; float:left;}
