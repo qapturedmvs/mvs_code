@@ -35,6 +35,7 @@
 								
 								$db_data['chars'][$i]->mvs_title = $db_data['movies'][$i]->mvs_title;
 								$db_data['chars'][$i]->mvs_slug = $db_data['movies'][$i]->mvs_slug;
+								$db_data['chars'][$i]->mvs_year = $db_data['movies'][$i]->mvs_year;
 								
 								foreach($db_data['types'] as $type){
 			
@@ -48,6 +49,15 @@
 								}
                             
             }
+						
+						function sortByYear($a, $b){
+								if ($a->mvs_year == $b->mvs_year){
+										return 0;
+								}
+								return ($a->mvs_year > $b->mvs_year) ? -1 : 1;
+						}
+												
+						usort($db_data['chars'], "sortByYear");
                     
 						$this->data['chars'] = $db_data['chars'];
 						$this->data['types'] = $type_unq;

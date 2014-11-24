@@ -42,10 +42,10 @@ class Actor_M extends MVS_Model
             $temp .= $char->mvs_id.',';
             
         $filters = array(
-            'select' => 'mvs_id, mvs_slug, mvs_title',
+            'select' => 'mvs_id, mvs_slug, mvs_title, mvs_year',
             'from' => 'mvs_movies',
             'where' => 'mvs_id IN('.trim($temp, ',').')',
-            'order_by' => array('mvs_id', 'ASC')
+            'order_by' => array('mvs_id', 'DESC')
         );
         
         $movies = $this->get_data(NULL, 0, FALSE, $filters);

@@ -104,6 +104,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageActor .detail .btnSet{margin-bottom:60px;}
 .pageActor .detail .movies{padding-top:15px; border-top:1px solid #e6e6e6;}
 .pageActor .detail .movies li{clear:both; margin-bottom:10px;}
+.pageActor .detail .movies li span.year{display:inline-block; width:50px; float:left;}
 .pageActor .detail .movies li span.movie{display:inline-block; width:300px; float:left;}
 .pageActor .detail .movies li span.movie a:hover{text-decoration:underline;}
 .pageActor .detail .movies li span.character{color:#555; float:left;}
