@@ -18,7 +18,7 @@ class Movie_M extends MVS_Model
 	public function movies_json($offset = 0){
 		
 		$filters = array(
-				'select' => 'mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id'
+				'select' => 'mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id'
 		);
 		
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);

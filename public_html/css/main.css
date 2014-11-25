@@ -56,6 +56,15 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 #qFooter{}
 
+/* MOVIE LIST */
+.pageMovies{}
+.pageMovies .movieItem{padding:0 0 15px; margin:0 0 15px; border-bottom:1px solid #e6e6e6;}
+.pageMovies .movieItem span{display:block; margin-bottom:10px;}
+.pageMovies .movieItem .poster{float:left; margin:0 20px 0 0;}
+.pageMovies .movieItem .poster img{width:100px;}
+.pageMovies .movieItem .title{margin-bottom:15px;}
+.pageMovies .movieItem .title a{font-size:24px;}
+
 /* MOVIE DETAIL */
 .pageMovie{}
 .pageMovie .hero{width:100%; height:225px; background:#bbb;}

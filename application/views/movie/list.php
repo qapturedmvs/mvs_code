@@ -1,15 +1,15 @@
 <div class="pageDefault pageMovies">
 	<div ng-app='myApp' ng-controller='DemoController'>
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
-	    <div ng-repeat='item in reddit.items'>
+	    <div ng-repeat='item in reddit.items' class="movieItem">
 		    <div ng-if="item.type == 0 ">
-		      <span class='poster'><img class="lazy" data-original="<?php echo $site_url ?>{{item.mvs_poster}}" alt="{{item.mvs_title}}" /></span>
-			  <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span>
+		      <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><img class="lazy" data-original="<?php echo $site_url ?>data/movies/thumbs/{{item.mvs_imdb_id}}_175x240_.jpg" alt="{{item.mvs_title}}" /></a></span>
+					<span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}} ({{item.mvs_year}})</a></span>
 		      <span class='runtime'>{{item.mvs_runtime}} min.</span>
 		      <span class='genre'>{{item.mvs_genre}}</span>
 		      <span class='country'>{{item.mvs_country}}</span>
 		      <hr class="qFixer" />
-	      	</div>
+	      </div>
 	      <div ng-if="item.type == 1 " class="seperator"><b>PAGE {{item.paging}}</b></div>
 	    </div>
 	    <div ng-show='reddit.busy'>Loading data...</div>
