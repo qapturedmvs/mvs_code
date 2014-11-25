@@ -29,36 +29,36 @@ class Actor_M extends MVS_Model
     
     public function get_chars($id){
         
-        $filters = array(
-            'select' => 'mvs_id, type_id, char_name',
-            'from' => 'mvs_cast',
-            'where' => 'str_id = '.$id,
-            'order_by' => array('mvs_id', 'ASC')
-        );
-        $chars = $this->get_data(NULL, 0, FALSE, $filters);
-        $temp = '';
-                    
-        foreach($chars['data'] as $char)
-            $temp .= $char->mvs_id.',';
-            
-        $filters = array(
-            'select' => 'mvs_id, mvs_slug, mvs_title, mvs_year',
-            'from' => 'mvs_movies',
-            'where' => 'mvs_id IN('.trim($temp, ',').')',
-            'order_by' => array('mvs_id', 'DESC')
-        );
-        
-        $movies = $this->get_data(NULL, 0, FALSE, $filters);
-        $this->_table_name = 'mvs_cast_type';
-        $cast_types = $this->get_data();
-        $db_data['chars'] = $chars['data'];
-        $db_data['movies'] = $movies['data'];
-        $db_data['types'] = $cast_types['data'];
-        
-        if (count($db_data))
-			return $db_data;
-		else
-			return FALSE;
+			$filters = array(
+					'select' => 'mvs_id, type_id, char_name',
+					'from' => 'mvs_cast',
+					'where' => 'str_id = '.$id,
+					'order_by' => array('mvs_id', 'ASC')
+			);
+			$chars = $this->get_data(NULL, 0, FALSE, $filters);
+			$temp = '';
+									
+			foreach($chars['data'] as $char)
+					$temp .= $char->mvs_id.',';
+					
+			$filters = array(
+					'select' => 'mvs_id, mvs_slug, mvs_title, mvs_year, mvs_imdb_rate',
+					'from' => 'mvs_movies',
+					'where' => 'mvs_id IN('.trim($temp, ',').')',
+					'order_by' => array('mvs_id', 'ASC')
+			);
+			
+			$movies = $this->get_data(NULL, 0, FALSE, $filters);
+			$this->_table_name = 'mvs_cast_type';
+			$cast_types = $this->get_data();
+			$db_data['chars'] = $chars['data'];
+			$db_data['movies'] = $movies['data'];
+			$db_data['types'] = $cast_types['data'];
+			
+			if (count($db_data))
+				return $db_data;
+			else
+				return FALSE;
 		
     }
 }

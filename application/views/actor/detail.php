@@ -14,12 +14,42 @@
             <div class="btnSet">
                 <a class="btnDefault btnExplore rc" href="#">Explore &gt;</a>
             </div>
+						<?php
+						
+								function sortByYear($a, $b){
+										if ($a->mvs_year == $b->mvs_year){
+												return 0;
+										}
+										return ($a->mvs_year > $b->mvs_year) ? -1 : 1;
+								}
+														
+								$i = 0;
+						?>
             <div class="movies">
-                <ul>
-                    <?php foreach($chars as $char): ?>
-                    <li><span class="year"><?php echo $char->mvs_year; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$char->mvs_slug; ?>"><?php echo $char->mvs_title; ?></a></span><span class="character"><?php echo $char->char_name; ?></span><hr class="qFixer" /></li>
-                    <?php endforeach; ?>
-                </ul>
+								<div class="featured">
+										<ul>
+												<?php
+														foreach($chars as $char){
+																
+																if($i < 5)	
+																	echo '<li><a href="'.$site_url.'movie/'.$char->mvs_slug.'"><img src="#" alt="'.$char->mvs_title.'" title="'.$char->mvs_title.'" /></a></li>';	
+																
+																$i++;
+																
+														}
+												
+												?>
+										</ul>
+										<hr class="qFixer" />
+								</div>
+								<div class="filmography">
+								<?php usort($chars, "sortByYear"); ?>
+										<ul>
+												<?php foreach($chars as $char): ?>
+												<li><span class="year"><?php echo $char->mvs_year; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$char->mvs_slug; ?>"><?php echo $char->mvs_title; ?></a></span><span class="character"><?php echo $char->char_name; ?></span><hr class="qFixer" /></li>
+												<?php endforeach; ?>
+										</ul>
+								</div>
             </div>
         </aside>
         <hr class="qFixer" />

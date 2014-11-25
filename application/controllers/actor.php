@@ -21,58 +21,58 @@
 
 			if($this->uri->segment(2) != 'index'){	// Url'den index ile cagirilirsa 404 dönmeli
 				
-				$actor = $this->actor_m->actor($id);
-                
+				$actor = $this->actor_m->actor($id);             
 		
 				if($actor['data']){
                     
-						$db_data = $this->actor_m->get_chars($actor['data']->str_id);
-						$type_unq = array();
-                    
-						$this->data['actor'] = $actor['data'];
-                    
-						for($i=0; $i<count($db_data['chars']); $i++){
-								
-								$db_data['chars'][$i]->mvs_title = $db_data['movies'][$i]->mvs_title;
-								$db_data['chars'][$i]->mvs_slug = $db_data['movies'][$i]->mvs_slug;
-								$db_data['chars'][$i]->mvs_year = $db_data['movies'][$i]->mvs_year;
-								
-								foreach($db_data['types'] as $type){
-			
-										if($db_data['chars'][$i]->type_id == $type->type_id){	
-												$db_data['chars'][$i]->type_name = $type->type_name;
-										
-												if(!in_array($type->type_name, $type_unq))
-													array_push($type_unq, $type->type_name);
-										}
-							
-								}
-                            
-            }
-						
-						function sortByYear($a, $b){
-								if ($a->mvs_year == $b->mvs_year){
-										return 0;
-								}
-								return ($a->mvs_year > $b->mvs_year) ? -1 : 1;
-						}
+								$db_data = $this->actor_m->get_chars($actor['data']->str_id);
+								$type_unq = array(); 
 												
-						usort($db_data['chars'], "sortByYear");
-                    
-						$this->data['chars'] = $db_data['chars'];
-						$this->data['types'] = $type_unq;
-						
-						// Setting meta_tags object
-						$this->data['meta_tags'] = (object) array(
-																				'title' => $actor['data']->str_name,
-																				'description' => $actor['data']->str_name,
-																				'type' => 'actor',
-																				'image' => $actor['data']->str_photo
-																);
+								$this->data['actor'] = $actor['data'];
+												
+								for($i=0; $i<count($db_data['chars']); $i++){
+										
+										$db_data['chars'][$i]->mvs_title = $db_data['movies'][$i]->mvs_title;
+										$db_data['chars'][$i]->mvs_slug = $db_data['movies'][$i]->mvs_slug;
+										$db_data['chars'][$i]->mvs_year = $db_data['movies'][$i]->mvs_year;
+										$db_data['chars'][$i]->mvs_imdb_rate = $db_data['movies'][$i]->mvs_imdb_rate;
+										
+										foreach($db_data['types'] as $type){
 					
-						// Load view
-						$this->data['subview'] = 'actor/detail';
-						$this->load->view('_main_body_layout', $this->data);
+												if($db_data['chars'][$i]->type_id == $type->type_id){	
+														$db_data['chars'][$i]->type_name = $type->type_name;
+												
+														if(!in_array($type->type_name, $type_unq))
+															array_push($type_unq, $type->type_name);
+												}
+									
+										}
+																
+								}
+								
+								function sortByRate($a, $b){
+										if ($a->mvs_imdb_rate == $b->mvs_imdb_rate){
+												return 0;
+										}
+										return ($a->mvs_imdb_rate > $b->mvs_imdb_rate) ? -1 : 1;
+								}
+								
+								usort($db_data['chars'], "sortByRate");
+												
+								$this->data['chars'] = $db_data['chars'];
+								$this->data['types'] = $type_unq;
+								
+								// Setting meta_tags object
+								$this->data['meta_tags'] = (object) array(
+																						'title' => $actor['data']->str_name,
+																						'description' => $actor['data']->str_name,
+																						'type' => 'actor',
+																						'image' => $actor['data']->str_photo
+																		);
+							
+								// Load view
+								$this->data['subview'] = 'actor/detail';
+								$this->load->view('_main_body_layout', $this->data);
 					
 				}else{
 					show_404();
