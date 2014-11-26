@@ -36,6 +36,7 @@
 										$db_data['chars'][$i]->mvs_slug = $db_data['movies'][$i]->mvs_slug;
 										$db_data['chars'][$i]->mvs_year = $db_data['movies'][$i]->mvs_year;
 										$db_data['chars'][$i]->mvs_imdb_rate = $db_data['movies'][$i]->mvs_imdb_rate;
+										$db_data['chars'][$i]->mvs_imdb_id = $db_data['movies'][$i]->mvs_imdb_id;
 										
 										foreach($db_data['types'] as $type){
 					

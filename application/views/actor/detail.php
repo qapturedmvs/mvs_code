@@ -27,12 +27,13 @@
 						?>
             <div class="movies">
 								<div class="featured">
+										<div class="titleDefault titleFilmography">Known For</div>
 										<ul>
 												<?php
 														foreach($chars as $char){
 																
 																if($i < 5)	
-																	echo '<li><a href="'.$site_url.'movie/'.$char->mvs_slug.'"><img src="#" alt="'.$char->mvs_title.'" title="'.$char->mvs_title.'" /></a></li>';	
+																	echo '<li><a href="'.$site_url.'movie/'.$char->mvs_slug.'"><img src="'.$site_url.'data/movies/thumbs/'.$char->mvs_imdb_id.'_175x240_.jpg" alt="'.$char->mvs_title.'" title="'.$char->mvs_title.'" /></a></li>';	
 																
 																$i++;
 																
@@ -43,6 +44,7 @@
 										<hr class="qFixer" />
 								</div>
 								<div class="filmography">
+								<div class="titleDefault titleFilmography">Full Filmography</div>
 								<?php usort($chars, "sortByYear"); ?>
 										<ul>
 												<?php foreach($chars as $char): ?>
