@@ -33,7 +33,7 @@
 														foreach($chars as $char){
 																
 																if($i < 5)	
-																	echo '<li><a href="'.$site_url.'movie/'.$char->mvs_slug.'"><img src="'.$site_url.'data/movies/thumbs/'.$char->mvs_imdb_id.'_175x240_.jpg" alt="'.$char->mvs_title.'" title="'.$char->mvs_title.'" /></a></li>';	
+																	echo '<li style="background:url('.$site_url.'data/movies/thumbs/'.$char->mvs_imdb_id.'_175x240_.jpg) center center no-repeat; background-size:cover;"><a href="'.$site_url.'movie/'.$char->mvs_slug.'"></a></li>';	
 																
 																$i++;
 																
