@@ -1,5 +1,5 @@
 <div class="pageDefault pageMovies">
-	<div ng-app='myApp' ng-controller='DemoController'>
+	<div ng-app='myApp' ng-controller='DemoController' class="movieListHolder row">
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items' class="movieItem">
 		    <div ng-if="item.type == 0 ">

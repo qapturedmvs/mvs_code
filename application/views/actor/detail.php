@@ -32,10 +32,14 @@
 												<?php
 														foreach($chars as $char){
 																
-																if($i < 5)	
-																	echo '<li style="background:url('.$site_url.'data/movies/thumbs/'.$char->mvs_imdb_id.'_175x240_.jpg) center center no-repeat; background-size:cover;"><a href="'.$site_url.'movie/'.$char->mvs_slug.'"></a></li>';	
+																$cover = getCoverPath($char->mvs_imdb_id, 'medium');
 																
-																$i++;
+																if($i < 5 && file_exists($cover)){
+																		echo '<li style="background:url('.$site_url.$cover.') center center no-repeat; background-size:cover;"><a href="'.$site_url.'movie/'.$char->mvs_slug.'"></a></li>';	
+																		$i++;
+																}
+																
+																
 																
 														}
 												

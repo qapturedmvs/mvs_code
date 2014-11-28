@@ -59,12 +59,19 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 /* MOVIE LIST */
 .pageMovies{}
-.pageMovies .movieItem{padding:0 0 15px; margin:0 0 15px; border-bottom:1px solid #e6e6e6;}
-.pageMovies .movieItem span{display:block; margin-bottom:10px;}
-.pageMovies .movieItem .poster{float:left; margin:0 20px 0 0;}
-.pageMovies .movieItem .poster img{width:100px;}
-.pageMovies .movieItem .title{margin-bottom:15px;}
-.pageMovies .movieItem .title a{font-size:24px;}
+.pageMovies .movieListHolder.row .movieItem{padding:0 0 15px; margin:0 0 15px; border-bottom:1px solid #e6e6e6;}
+.pageMovies .movieListHolder.row .movieItem span{display:block; margin-bottom:10px;}
+.pageMovies .movieListHolder.row .movieItem .poster{float:left; margin:0 20px 0 0;}
+.pageMovies .movieListHolder.row .movieItem .poster img{width:100px;}
+.pageMovies .movieListHolder.row .movieItem .title{margin-bottom:15px;}
+.pageMovies .movieListHolder.row .movieItem .title a{font-size:24px;}
+
+.pageMovies .movieListHolder.grid .movieItem{padding:8px; margin:0 10px 20px 0; background:#E6E6E6; display:inline-block; width:175px; height:350px; vertical-align:top;}
+.pageMovies .movieListHolder.grid .movieItem:nth-child(5n){margin-right:0;}
+.pageMovies .movieListHolder.grid .movieItem span{display:block; margin-bottom:10px;}
+.pageMovies .movieListHolder.grid .movieItem .poster{text-align:center; max-height:240px; overflow: hidden;}
+.pageMovies .movieListHolder.grid .movieItem .title{margin-bottom:15px;}
+.pageMovies .movieListHolder.grid .movieItem .title a{}
 
 /* MOVIE DETAIL */
 .pageMovie{}
