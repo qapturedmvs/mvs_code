@@ -39,12 +39,15 @@ class User extends Backend_Controller {
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {			
 			$data = $this->user_m->array_from_post(array('name', 'email', 'password', 'note'));
-			$data['password'] = $this->user_m->hash($data['password']);
+			
+			if( trim( $data['password'] ) == '' ) unset( $data['password'] );
+			else $data['password'] = $this->user_m->hash($data['password']);
+			
 			$data = changeObjectKeys($data, 'adm_usr_');
 			$this->user_m->save($data, $id);
 			redirect('admin/user');
 		}
-		
+
 		// Load the view
 		$this->data['subview'] = 'admin/user/edit';
 		$this->load->view('admin/_main_body_layout', $this->data);
