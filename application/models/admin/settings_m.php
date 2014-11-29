@@ -117,4 +117,28 @@ class Settings_M extends MVS_Model
 		
 	}
 	
+	public function get_ratings(){
+		
+		$filters = array(
+					'select' => 'mvs_id, mvs_rating, mvs_imdb_rate, mvs_tmt_meter, mvs_metascore',
+					'from' => 'mvs_movies',
+					'where' => "mvs_rating IS NULL OR mvs_rating = ''"
+		);
+		
+		$rates = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		if (count($rates['data']))
+			return $rates;
+		else
+			return FALSE;
+		
+	}
+	
+	public function set_ratings($rates){
+		
+		$this->db->update_batch('mvs_movies', $rates, 'mvs_id');
+		return TRUE;
+		
+	}
+	
 }

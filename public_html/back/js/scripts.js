@@ -119,3 +119,29 @@ if(exist($('.pgaeSlugs'))){
 	
 
 }
+
+//Settings (Rate Movies)
+if(exist($('.pageRate'))){
+	
+	var rel;
+	
+	$('span.badge').click(function(){
+		if(!exist($('.generating'))){
+			rel = $(this).attr("rel");
+			$(this).parent(".list-group-item").addClass("generating");
+			
+			$.post(rel, function(result){
+				
+				if(parseFloat(result) > 0)
+					$(this).text(result);
+				else
+					$(this).remove();
+				
+				$(this).parent(".list-group-item").removeClass("generating");
+				
+			});
+		}
+	});
+	
+
+}

@@ -51,24 +51,7 @@ class Settings extends Backend_Controller {
 		}
 		
 		return $result;
-		
-// 		$rules = $this->settings_m->rules_thumb;
-// 		$this->form_validation->set_rules($rules);
-// 		$this->data['form_success'] = NULL;
-		
-// 		if ($this->form_validation->run() == TRUE) {
-			
-// 			$sets = $this->settings_m->array_from_post(array('img_path', 'img_width', 'img_height'));
-			
-// 			if (file_exists(FCPATH.$sets['img_path'])){
-// 				$this->data['form_success'] = $this->_image_thumbs($sets['img_path'], $sets['img_width'], $sets['img_height']);
-// 			}
 
-// 		}
-	
-// 		// Load view
-// 		$this->data['subview'] = 'admin/settings/thumbs';
-// 		$this->load->view('admin/_main_body_layout', $this->data);
 	}
 	
 	//Thumb generate
@@ -157,6 +140,42 @@ class Settings extends Backend_Controller {
 
 		}
 		
+	}
+	
+	public function rate(){
+		
+		$filters = array(
+					'select' => 'mvs_rating',
+					'from' => 'mvs_movies',
+					'where' => "mvs_rating IS NULL OR mvs_rating = ''"
+		);
+		
+		$rates = $this->settings_m->get_data(NULL, 0, 'ONLY', $filters);
+		$this->data['unrated'] = $rates['total_count'];
+		
+		// Load view
+		$this->data['subview'] = 'admin/settings/rate';
+		$this->load->view('admin/_main_body_layout', $this->data);
+		
+	}
+	
+	public function calc_rating(){
+		
+		$rates = $this->settings_m->get_ratings();
+		
+		if(count($rates['data'])){
+
+			foreach($rates['data'] as $rate){
+				$rate->mvs_rating = rate_math($rate->mvs_imdb_rate, $rate->mvs_tmt_meter, $rate->mvs_metascore);
+			}
+			
+			if($this->settings_m->set_ratings($rates['data']))
+				echo count($rates['data']).' movies rated sucessfully.';
+			else
+				return FALSE;
+			
+		}
+
 	}
 	
 }

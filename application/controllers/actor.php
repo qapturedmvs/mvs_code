@@ -35,7 +35,7 @@
 										$db_data['chars'][$i]->mvs_title = $db_data['movies'][$i]->mvs_title;
 										$db_data['chars'][$i]->mvs_slug = $db_data['movies'][$i]->mvs_slug;
 										$db_data['chars'][$i]->mvs_year = $db_data['movies'][$i]->mvs_year;
-										$db_data['chars'][$i]->mvs_imdb_rate = $db_data['movies'][$i]->mvs_imdb_rate;
+										$db_data['chars'][$i]->mvs_rating = $db_data['movies'][$i]->mvs_rating;
 										$db_data['chars'][$i]->mvs_imdb_id = $db_data['movies'][$i]->mvs_imdb_id;
 										
 										foreach($db_data['types'] as $type){
@@ -52,10 +52,10 @@
 								}
 								
 								function sortByRate($a, $b){
-										if ($a->mvs_imdb_rate == $b->mvs_imdb_rate){
+										if ($a->mvs_rating == $b->mvs_rating){
 												return 0;
 										}
-										return ($a->mvs_imdb_rate > $b->mvs_imdb_rate) ? -1 : 1;
+										return ($a->mvs_rating > $b->mvs_rating) ? -1 : 1;
 								}
 								
 								usort($db_data['chars'], "sortByRate");
@@ -65,11 +65,11 @@
 								
 								// Setting meta_tags object
 								$this->data['meta_tags'] = (object) array(
-																						'title' => $actor['data']->str_name,
-																						'description' => $actor['data']->str_name,
-																						'type' => 'actor',
-																						'image' => $actor['data']->str_photo
-																		);
+																'title' => $actor['data']->str_name,
+																'description' => $actor['data']->str_name,
+																'type' => 'actor',
+																'image' => $actor['data']->str_photo
+														);
 							
 								// Load view
 								$this->data['subview'] = 'actor/detail';

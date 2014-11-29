@@ -38,9 +38,7 @@
 																		echo '<li style="background:url('.$site_url.$cover.') center center no-repeat; background-size:cover;"><a href="'.$site_url.'movie/'.$char->mvs_slug.'"></a></li>';	
 																		$i++;
 																}
-																
-																
-																
+
 														}
 												
 												?>

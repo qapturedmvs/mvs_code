@@ -17,47 +17,53 @@ class MVS_Model extends CI_Model {
 	
 	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL, $cache = FALSE){
 
-		$method = 'result';
-		$chk_filters = is_array($filters);
-		
-		if($chk_filters || $id != NULL){
-			
-			$this->db->start_cache();
-			
-			if($chk_filters){
-				foreach($filters as $key => $val){
-					if(is_array($val) && count($val) > 1){
-						call_user_func_array(array(&$this->db, $key), $val);
-					}else{
-						if($key == 'from')
-							$this->_table_name = $val;
-						else
-							$this->db->{$key}($val);
+				$method = 'result';
+				$chk_filters = is_array($filters);
+				
+				if($chk_filters || $id != NULL){
+					
+					$this->db->start_cache();
+					
+					if($chk_filters){
+						foreach($filters as $key => $val){
+							if(is_array($val) && count($val) > 1){
+								call_user_func_array(array(&$this->db, $key), $val);
+							}else{
+								if($key == 'from')
+									$this->_table_name = $val;
+								else
+									$this->db->{$key}($val);
+							}
+						}
 					}
+					
+					if($id != NULL){
+						$this->db->where($this->_primary_key, $id);
+						$method = 'row';
+					}
+				
+					$this->db->stop_cache();
+					
 				}
-			}
-			
-			if($id != NULL){
-				$this->db->where($this->_primary_key, $id);
-				$method = 'row';
-			}
-		
-			$this->db->stop_cache();
-			
-		}
-		
-		$db_data['total_count'] = (!$count) ? FALSE : $this->db->count_all_results($this->_table_name);
-	
-		if($this->per_page !== 0 && $id == NULL)
-			$this->db->limit($this->per_page, $offset);
-		
-		if($cache) $this->db->cache_on(); // File cache for query results
-		$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
-		if($cache) $this->db->cache_off();
-	
-		$this->db->flush_cache();
-	
-		return $db_data;
+				
+				$db_data['total_count'] = (!$count) ? FALSE : $this->db->count_all_results($this->_table_name);
+				
+				if($count != 'ONLY'){
+								
+								if($this->per_page !== 0 && $id == NULL)
+									$this->db->limit($this->per_page, $offset);
+								
+								if($cache) $this->db->cache_on(); // File cache for query results
+								$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
+								if($cache) $this->db->cache_off();
+								
+				}else{
+								$db_data['data'] = NULL;
+				}
+				
+				$this->db->flush_cache();
+				
+				return $db_data;
 	
 	}
 	

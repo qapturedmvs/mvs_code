@@ -79,3 +79,9 @@ h2.sub-header{margin:10px 0 20px;}
 .pgaeSlugs .list-group .list-group-item .ajax-loader{float:right; display:none;}
 .pgaeSlugs .list-group .list-group-item.generating .ajax-loader{display:inline;}
 .pgaeSlugs .list-group .list-group-item.generating span.badge{display:none;}
+
+.pageRate .list-group{width:500px;}
+.pageRate .list-group .list-group-item > span{cursor:pointer; cursor:hand;}
+.pageRate .list-group .list-group-item .ajax-loader{float:right; display:none;}
+.pageRate .list-group .list-group-item.generating .ajax-loader{display:inline;}
+.pageRate .list-group .list-group-item.generating span.badge{display:none;}

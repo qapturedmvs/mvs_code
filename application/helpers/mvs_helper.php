@@ -84,3 +84,13 @@ function getVars($array){
 	return $qs;
 }
 
+function rate_math($imdb, $tmt, $meta){
+	
+	if($imdb == '' || $imdb == NULL) $imdb = 1;
+	if($tmt == '' || $tmt == NULL) $tmt = 1;
+	if($meta == '' || $meta == NULL) $meta = 1;
+	
+	return number_format((($imdb*59.13)+($tmt*23.64)+($meta*17.23))/100, 2, '.', '');
+	
+}
+

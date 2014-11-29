@@ -3,8 +3,8 @@
 	<div class="NavHolder">
 		<ul class="nav nav-tabs" role="tablist">
 		  <li role="presentation"><a href="<?php echo $site_url; ?>admin/settings">General</a></li>
-		  <li role="presentation"><a href="<?php echo $site_url; ?>admin/settings/thumbs">Generate Thumbs</a></li>
 		  <li role="presentation" class="active"><a>Generate Slugs</a></li>
+			<li role="presentation"><a href="<?php echo $site_url; ?>admin/settings/rate">Rate Movies</a></li>
 		</ul>
 	</div>
 	<div class="settingsHolder">
