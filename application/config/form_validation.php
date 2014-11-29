@@ -64,7 +64,3 @@ $config = array(
 		)
 	)
 );
-/*
-$config['form_error_prefix'] = '<span class="help-inline error">';
-$config['form_error_suffix'] = '</span>';
-*/

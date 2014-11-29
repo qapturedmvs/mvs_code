@@ -52,7 +52,7 @@ class User_M extends MVS_Model
 		$filters = array('where' => "adm_usr_email = '".$this->input->post('email')."' AND adm_usr_password = '".$this->hash($this->input->post('password'))."'");
 		
 		$user = $this->get_data(NULL, 0, FALSE, $filters);
-		
+
 		if (count($user['data'])) {
 			// Log in user
 			$data = array(

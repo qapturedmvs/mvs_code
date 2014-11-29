@@ -67,15 +67,17 @@ class MVS_Form_validation extends CI_Form_validation
 	
 	//unique[mvs_adm_users,adm_usr_email]
 	public function unique($str, $field)
-	{
-		list($table, $column) = explode(',', $field, 2);
-	 
-		$this->_ci->form_validation->set_message('unique', 'The %s that you requested is already in use.');
-	 
-		$query = $this->_ci->db->query("SELECT COUNT(*) AS dupe FROM {$this->CI->db->dbprefix($table)} WHERE {$column} = '{$str}'");
-		$row = $query->row();
-	 
-		return ($row->dupe > 0) ? FALSE : TRUE;
+	{	
+		$id = $this->_ci->uri->segment(4);
+		$filters = array(
+				'where' => "adm_usr_email = '".$str."' AND adm_usr_id != '".$id."'"
+		);
+		$user = $this->_ci->user_m->get_data(NULL, 0, FALSE, $filters);
+		if (count($user['data'])) {
+			$this->_ci->form_validation->set_message('unique', '%s should be unique');
+			return FALSE;
+		}
+		return TRUE;
 	}
 }
 /* End of file MY_Form_validation.php */

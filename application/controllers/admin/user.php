@@ -35,7 +35,7 @@ class User extends Backend_Controller {
 		$id || $rules['password']['rules'] .= '|required';
 		$this->form_validation->set_rules($rules);
 		//$id || $this->config->config['adm_user']['password']['rules'] .= '|required';
-	
+
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {			
 			$data = $this->user_m->array_from_post(array('name', 'email', 'password', 'note'));
@@ -69,9 +69,12 @@ class User extends Backend_Controller {
 		// Set form
 		//$rules = $this->user_m->rules;
 		//$this->form_validation->set_rules($rules);
-		
+
 		// Process form
-		if ($this->form_validation->run('adm_login') == TRUE){
+		$rules = $this->user_m->rules;
+		$this->form_validation->set_rules($rules);
+		if ($this->form_validation->run() == TRUE){
+			
 			// We can login and redirect
 			if ($this->user_m->login() == TRUE) {
 				redirect($dashboard);
@@ -81,7 +84,7 @@ class User extends Backend_Controller {
 				redirect('admin/user/login', 'refresh');
 			}
 		}
-		
+
 		// Load view
 		$this->data['subview'] = 'admin/user/login';
 		$this->load->view('admin/_modal_body_layout', $this->data);
@@ -102,6 +105,8 @@ class User extends Backend_Controller {
 		$filters = array(
 				'where' => "adm_usr_email = '".$this->input->post('email')."' AND adm_usr_id != '".$id."'"
 		);
+		
+
 		//$this->db->where('adm_usr_email', $this->input->post('email'));
 		//!$id || $this->db->where('adm_usr_id !=', $id);
 		$user = $this->user_m->get_data(NULL, 0, FALSE, $filters);
