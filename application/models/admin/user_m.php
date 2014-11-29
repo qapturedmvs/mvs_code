@@ -28,7 +28,7 @@ class User_M extends MVS_Model
 		'email' => array(
 			'field' => 'email', 
 			'label' => 'Email', 
-			'rules' => 'trim|required|valid_email|callback__unique_email|xss_clean'
+			'rules' => 'trim|required|valid_email|unique[mvs_adm_users,adm_usr_email]|xss_clean'
 		), 
 		'password' => array(
 			'field' => 'password', 

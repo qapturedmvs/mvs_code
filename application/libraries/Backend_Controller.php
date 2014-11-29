@@ -13,7 +13,6 @@
 			$this->load->model('admin/user_m');
 			$this->load->helper(array('form', 'mvs_helper'));
 			$this->load->library(array('form_validation', 'pagination'));
-			$this->form_validation->set_error_delimiters('<div class="alert alert-danger" role="alert">', '</div>');
 
 			// Login check
 			$exception_uris = array('admin/user/login', 'admin/user/logout');

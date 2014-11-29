@@ -1,6 +1,7 @@
-<?php
-
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 $config = array(
+	'form_error_prefix' => '<div class="alert alert-danger" role="alert">',
+	'form_error_suffix' => '</div>',
 	'adm_login' => array(
 		'email' => array(
 			'field' => 'email',
@@ -63,3 +64,7 @@ $config = array(
 		)
 	)
 );
+/*
+$config['form_error_prefix'] = '<span class="help-inline error">';
+$config['form_error_suffix'] = '</span>';
+*/
