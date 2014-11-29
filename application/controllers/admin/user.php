@@ -40,7 +40,8 @@ class User extends Backend_Controller {
 		if ($this->form_validation->run() == TRUE) {			
 			$data = $this->user_m->array_from_post(array('name', 'email', 'password', 'note'));
 			
-			if( trim( $data['password'] ) == '' ) unset( $data['password'] );
+			$psw = str_replace(array("\n", "\r"), '', $data['password']);
+			if( trim( $psw ) == '' ) unset( $data['password'] );
 			else $data['password'] = $this->user_m->hash($data['password']);
 			
 			$data = changeObjectKeys($data, 'adm_usr_');
