@@ -8,3 +8,15 @@ function exist(obj){
 	else 
 		return false;
 }
+
+
+// Movies List
+if(exist($('.pageMovies'))){
+	
+	$('.controllers .view a').click(function(){
+		var view = $(this).attr("class");
+		
+		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
+	});
+	
+}

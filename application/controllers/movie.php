@@ -26,22 +26,35 @@
 				if($movie['data']){
 					$movie['data']->mvs_cover = $this->data['site_url']."data/movies/thumbs/".$movie['data']->mvs_imdb_id."_".$this->config->item('mvs_img_suffix_m')."_.jpg";
 					$this->data['movie'] = $movie['data'];
+					
+					// Eğer filmin cast, genre, country bilgilerinden olmayan var ise view'daki loop hata vermesin
+					$this->data['casts'] = array();
+					$this->data['genres'] = array();
+					$this->data['countries'] = array();
+					
 					$casts = $this->movie_m->getCastList($movie['data']->mvs_id);
-					$this->data['casts'] = $casts['data'];
-					$gnrId = str_replace('|', ',', $movie['data']->gnr_id);
-					$cntId = str_replace('|', ',', $movie['data']->cntry_id);
-					$countries = $this->movie_m->_countries('cntry_id IN('.$cntId.')');
-					$this->data['countries'] = $countries['data'];
-					$genres = $this->movie_m->_genres('gnr_id IN('.$gnrId.')');
-					$this->data['genres'] = $genres['data'];
+					
+					if($casts) $this->data['casts'] = $casts['data'];
+					
+					if($movie['data']->cntry_id != ''){
+								$cntId = str_replace('|', ',', $movie['data']->cntry_id);
+								$countries = $this->movie_m->_countries('cntry_id IN('.$cntId.')');
+								$this->data['countries'] = $countries['data'];
+					}
+					
+					if($movie['data']->gnr_id != ''){
+								$gnrId = str_replace('|', ',', $movie['data']->gnr_id);
+								$genres = $this->movie_m->_genres('gnr_id IN('.$gnrId.')');
+								$this->data['genres'] = $genres['data'];
+					}
 					
 					// Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(
-																				'title' => $movie['data']->mvs_title.' ('.$movie['data']->mvs_year.')',
-																				'description' => $movie['data']->mvs_plot,
-																				'type' => 'movie',
-																				'image' => $movie['data']->mvs_poster
-																);
+																'title' => $movie['data']->mvs_title.' ('.$movie['data']->mvs_year.')',
+																'description' => $movie['data']->mvs_plot,
+																'type' => 'movie',
+																'image' => $movie['data']->mvs_poster
+												);
 					
 					// Load view
 					$this->data['subview'] = 'movie/detail';

@@ -72,6 +72,9 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .movieListHolder.grid .movieItem .poster{text-align:center; max-height:240px; overflow: hidden;}
 .pageMovies .movieListHolder.grid .movieItem .title{margin-bottom:15px;}
 .pageMovies .movieListHolder.grid .movieItem .title a{}
+.pageMovies .movieListHolder.grid .seperator{width:100%;}
+
+.pageMovies .controllers{height:40px;}
 
 /* MOVIE DETAIL */
 .pageMovie{}

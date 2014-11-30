@@ -1,4 +1,10 @@
 <div class="pageDefault pageMovies">
+	<div class="controllers">
+		<div class="view">
+			<a class="row" href="javascript:void(0);">Row View</a>
+			<a class="grid" href="javascript:void(0);">Grid View</a>
+		</div>
+	</div>
 	<div ng-app='myApp' ng-controller='DemoController' class="movieListHolder row">
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items' class="movieItem">
