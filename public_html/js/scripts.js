@@ -17,6 +17,10 @@ if(exist($('.pageMovies'))){
 		var view = $(this).attr("class");
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
+		
+		if( $("img.lazy").length > 0 )
+				$("img.lazy").lazyload();
+		
 	});
 	
 }
