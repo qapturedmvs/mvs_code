@@ -50,15 +50,17 @@ class MVS_Model extends CI_Model {
 				
 				if($count != 'ONLY'){
 								
-								if($this->per_page !== 0 && $id == NULL)
-									$this->db->limit($this->per_page, $offset);
-								
-								if($cache) $this->db->cache_on(); // File cache for query results
-								$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
-								if($cache) $this->db->cache_off();
+					if($this->per_page !== 0 && $id == NULL)
+						$this->db->limit($this->per_page, $offset);
+					
+					if($cache) $this->db->cache_on(); // File cache for query results
+					
+					$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
+					
+					if($cache) $this->db->cache_off();
 								
 				}else{
-								$db_data['data'] = NULL;
+					$db_data['data'] = NULL;
 				}
 				
 				$this->db->flush_cache();

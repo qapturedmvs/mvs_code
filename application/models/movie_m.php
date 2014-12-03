@@ -88,7 +88,9 @@ class Movie_M extends MVS_Model
 	}
 	
 	public function getCastList($id){
-	
+		
+		$this->per_page = 0;
+		
 		$filters = array(
 				'select' => 'mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug, mvs_stars.str_photo',
 				'from' => 'mvs_cast',
@@ -96,7 +98,7 @@ class Movie_M extends MVS_Model
 				'where' => array('mvs_id', $id)
 		);
 
-		$casts = $this->get_data(NULL, 0, FALSE, $filters, TRUE);
+		$casts = $this->get_data(NULL, 0, FALSE, $filters);
 	
 		if (count($casts['data']))
 			return $casts;
