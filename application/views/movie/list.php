@@ -10,8 +10,9 @@
 	    <div ng-repeat='item in reddit.items' class="movieItem">
 		    <div ng-if="item.type == 0 ">
 		      <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><img class="lazy" data-original="<?php echo $site_url ?>data/movies/thumbs/{{item.mvs_imdb_id}}_175x240_.jpg" alt="{{item.mvs_title}}" /></a></span>
-					<span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}} ({{item.mvs_year}})</a></span>
-		      <span class='runtime'>{{item.mvs_runtime}} min.</span>
+					<span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span>
+		      <span class='year'>{{item.mvs_year}}</span>
+					<span class='runtime'>{{item.mvs_runtime}} min.</span>
 					<span class='rating'>{{item.mvs_rating}}</span>
 		      <span class='genre'>{{item.mvs_genre}}</span>
 		      <span class='country'>{{item.mvs_country}}</span>

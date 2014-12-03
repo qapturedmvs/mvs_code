@@ -86,9 +86,31 @@ function getVars($array){
 
 function rate_math($imdb, $tmt, $meta){
 	
-	if($imdb == '' || $imdb == NULL) $imdb = 1;
-	if($tmt == '' || $tmt == NULL) $tmt = 1;
-	if($meta == '' || $meta == NULL) $meta = 1;
+	$rArr = array();
+	
+	if($imdb != '' && $imdb == NULL){
+		array_push($rArray, 'imdb');
+	}
+	if($tmt != '' && $tmt != NULL){
+		array_push($rArray, 'tmt');
+	}
+	if($meta != '' && $meta != NULL){
+		array_push($rArray, 'meta');
+	}
+	
+	if(count($rArr) == 0){
+		//WTF
+	}else if(count($rArr) == 1){
+		//WTF
+	}else if(count($rArr) == 2){
+		
+	}else if(count($rArr) == 3){
+		
+	}
+	
+	//if($imdb == '' || $imdb == NULL) $imdb = 1;
+	//if($tmt == '' || $tmt == NULL) $tmt = 1;
+	//if($meta == '' || $meta == NULL) $meta = 1;
 	
 	return number_format((($imdb*59.13)+($tmt*23.64)+($meta*17.23))/100, 2, '.', '');
 	
