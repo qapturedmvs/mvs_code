@@ -86,9 +86,11 @@ function getVars($array){
 
 function rate_math($imdb, $tmt, $meta){
 	
+	$bArr = array(array('ref' => 'imdb', 'rate' => 59.13), array('ref' => 'tmt', 'rate' => 23.64), array('ref' => 'meta', 'rate' => 17.23));
 	$rArr = array();
+	$base = $bArr[0]->ref, $base_r = $bArr[0]->rate;
 	
-	if($imdb != '' && $imdb == NULL){
+	if($imdb != '' && $imdb != NULL){
 		array_push($rArray, 'imdb');
 	}
 	if($tmt != '' && $tmt != NULL){
@@ -98,19 +100,15 @@ function rate_math($imdb, $tmt, $meta){
 		array_push($rArray, 'meta');
 	}
 	
-	if(count($rArr) == 0){
-		//WTF
-	}else if(count($rArr) == 1){
-		//WTF
-	}else if(count($rArr) == 2){
-		
-	}else if(count($rArr) == 3){
+	if(count($rArr) > 0){
+		$base = $rArr[0];
+		foreach($bArr as $item){
+			if($item->ref != $base && !in_array($item->ref, $rArr))
+				${$item->ref} = (${$base}-($base_r/100))+($item->rate/100);
+		}
+	}else{
 		
 	}
-	
-	//if($imdb == '' || $imdb == NULL) $imdb = 1;
-	//if($tmt == '' || $tmt == NULL) $tmt = 1;
-	//if($meta == '' || $meta == NULL) $meta = 1;
 	
 	return number_format((($imdb*59.13)+($tmt*23.64)+($meta*17.23))/100, 2, '.', '');
 	
