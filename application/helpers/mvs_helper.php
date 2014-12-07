@@ -90,6 +90,7 @@ function rate_math($imdb, $tmt, $meta){
 	$rArr = array();
 	$base = $bArr[0]->ref;
 	$base_r = $bArr[0]->rate;
+	$base = $bArr[0]->ref; $base_r = $bArr[0]->rate;
 	
 	if($imdb != '' && $imdb != NULL){
 		array_push($rArray, 'imdb');
