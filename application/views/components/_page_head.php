@@ -23,7 +23,7 @@
     <title><?php echo $temp_title; ?></title>
     <link href="<?php echo site_url('css/main.css'); ?>" rel="stylesheet">
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>
-    <script src="<?php echo site_url('js/location.plugin.min.js'); ?>"></script>
+    <script src="<?php echo site_url('js/qs_manager.js'); ?>"></script>
     <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
 		<script src="<?php echo site_url('js/ng-infinite-scroll.min.js'); ?>"></script>
 		<script src="<?php echo site_url('js/jquery.lazyload.min.js'); ?>"></script>

@@ -23,4 +23,29 @@ if(exist($('.pageMovies'))){
 		
 	});
 	
+	$('.filterList > li').mouseenter(function(){
+		$(this).addClass("active");
+	}).mouseleave(function(){
+		$(this).removeClass("active");
+	});
+	
+	var qs = window.location.search, fg, fi;
+	
+	if(qs != ''){
+		qObj = qsManager.qto(qs);
+		
+		for(var e in qObj){
+			for(var i in qObj[e]){
+				$('.filters ul.multi[rel="'+e+'"] li a[rel="'+qObj[e][i]+'"]').addClass("selected");
+			}
+		}
+	}
+	
+	$('.filters .submenu a').click(function(){
+		fg = $(this).parents('ul.multi').attr("rel"),
+		fi = $(this).attr("rel");
+
+		qsManager.mput(fg, fi);
+	});
+	
 }

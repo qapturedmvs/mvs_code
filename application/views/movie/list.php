@@ -1,15 +1,17 @@
 <div class="pageDefault pageMovies">
 	<div class="controllers">
-		<div class="view">
+		<?php $this->load->view('components/filterbox'); ?>
+		<section class="view">
 			<a class="row" href="javascript:void(0);">Row View</a>
 			<a class="grid" href="javascript:void(0);">Grid View</a>
-		</div>
+		</section>
+		<hr class="qFixer" />
 	</div>
 	<div ng-app='myApp' ng-controller='DemoController' class="movieListHolder row">
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items' class="movieItem">
 		    <div ng-if="item.type == 0 ">
-		      <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><img class="lazy" data-original="<?php echo $site_url ?>data/movies/thumbs/{{item.mvs_imdb_id}}_175x240_.jpg" alt="{{item.mvs_title}}" /></a></span>
+		      <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><img class="lazy" data-original="<?php echo $site_url ?>{{item.mvs_poster}}" alt="{{item.mvs_title}}" /></a></span>
 					<span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span>
 		      <span class='year'>{{item.mvs_year}}</span>
 					<span class='runtime'>{{item.mvs_runtime}} min.</span>
@@ -24,7 +26,7 @@
 	  </div>
 	</div>
 <script type="text/javascript">
-var site_url = $('#mvs_site_url').val();
+var site_url = $('#mvs_site_url').val(), qs = window.location.search;
 /* http://binarymuse.github.io/ngInfiniteScroll/demo_async.html */
 
 var myApp = angular.module('myApp', ['infinite-scroll']);
@@ -48,7 +50,7 @@ myApp.factory('Reddit', function($http) {
   Reddit.prototype.nextPage = function() {
     if (this.busy) return;
     this.busy = true;	
-	var url = site_url+"ajx/movie_ajx/lister/" + this.after;
+	var url = site_url+"ajx/movie_ajx/lister/" + this.after+qs;
     $http.get(url).success(function(d) {
 
 	  if( d['result'] == 'OK' ){

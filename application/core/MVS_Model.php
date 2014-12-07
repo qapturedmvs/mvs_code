@@ -17,25 +17,27 @@ class MVS_Model extends CI_Model {
 	
 	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL, $cache = FALSE){
 
-				$method = 'result';
 				$chk_filters = is_array($filters);
+				$method = 'result';
 				
 				if($chk_filters || $id != NULL){
 					
 					$this->db->start_cache();
 					
-					if($chk_filters){
-						foreach($filters as $key => $val){
-							if(is_array($val) && count($val) > 1){
-								call_user_func_array(array(&$this->db, $key), $val);
-							}else{
-								if($key == 'from')
-									$this->_table_name = $val;
-								else
-									$this->db->{$key}($val);
-							}
+				if($chk_filters){
+					foreach($filters as $key => $val){
+						if(is_array($val) && count($val) > 1){
+							call_user_func_array(array(&$this->db, $key), $val);
+						}else{
+							if($key == 'from')
+								$this->_table_name = $val;
+							elseif($key == 'method')
+								$method = $val;
+							else
+								$this->db->{$key}($val);
 						}
 					}
+				}
 					
 					if($id != NULL){
 						$this->db->where($this->_primary_key, $id);

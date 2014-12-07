@@ -14,11 +14,13 @@
 		
 		public function lister($p = NULL){
 			
+			$vars = ($this->get_vars) ? $this->get_vars : NULL;
+			
 			if($this->input->is_ajax_request()){
 				$p = $this->movie_m->cleaner($p);
 				$curPage = ($p != '') ? $p : 1;
 				$offset = ($curPage-1) * $this->movie_m->per_page;
-				$db_data = $this->movie_m->movies_json($offset);
+				$db_data = $this->movie_m->movies_json($offset, $vars);
 				$movies = $db_data['data'];
 				$db_data = $this->movie_m->_countries();
 				$countries = $db_data['data'];
@@ -29,8 +31,8 @@
 				if($movies){
 					foreach($movies as $movie){
 							
-						$g = explode('|', $movie->gnr_id);
-						$c = explode('|', $movie->cntry_id);
+						$g = explode('||', trim($movie->gnr_id, '|'));
+						$c = explode('||', trim($movie->cntry_id, '|'));
 						$temp = array();
 					
 						for($i=0; $i<count($g); $i++){
@@ -46,7 +48,9 @@
 							array_push($temp, trim($key, ' '));
 						}
 							
-						$movie->mvs_country = $temp;
+						$movie->mvs_country = $temp;				
+						$movie->mvs_poster = (file_exists(FCPATH."data\movies\\thumbs\\".$movie->mvs_imdb_id."_175x240_.jpg")) ? "data/movies/thumbs/".$movie->mvs_imdb_id."_175x240_.jpg" : NULL;
+						
 					}
 					
 					$json->result = 'OK';
@@ -57,12 +61,11 @@
 				}
 				
 				$data['json'] = json_encode($json);
-				$this->load->view('json/movies_json', $data);
 			}else{
-				$data['json'] = FALSE;
-				$this->load->view('json/movies_json', $data);
+				$data['json'] = FALSE;	
 			}
 			
+			$this->load->view('json/movies_json', $data);
 		}
 			
 	}

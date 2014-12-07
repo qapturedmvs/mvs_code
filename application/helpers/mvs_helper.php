@@ -88,7 +88,8 @@ function rate_math($imdb, $tmt, $meta){
 	
 	$bArr = array(array('ref' => 'imdb', 'rate' => 59.13), array('ref' => 'tmt', 'rate' => 23.64), array('ref' => 'meta', 'rate' => 17.23));
 	$rArr = array();
-	$base = $bArr[0]->ref, $base_r = $bArr[0]->rate;
+	$base = $bArr[0]->ref;
+	$base_r = $bArr[0]->rate;
 	
 	if($imdb != '' && $imdb != NULL){
 		array_push($rArray, 'imdb');
@@ -107,7 +108,7 @@ function rate_math($imdb, $tmt, $meta){
 				${$item->ref} = (${$base}-($base_r/100))+($item->rate/100);
 		}
 	}else{
-		
+		// Eğer filmin hiçbir ratingi yoksa???
 	}
 	
 	return number_format((($imdb*59.13)+($tmt*23.64)+($meta*17.23))/100, 2, '.', '');
