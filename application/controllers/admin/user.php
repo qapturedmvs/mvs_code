@@ -30,12 +30,12 @@ class User extends Backend_Controller {
 			$this->data['user'] = $this->user_m->get_new();
 		}
 		
-		// Set up the form
-		$rules = $this->user_m->rules_admin;
+		// Set up the form	
+		$rules = $this->config->config['adm_user'];
 		$id || $rules['password']['rules'] .= '|required';
 		$this->form_validation->set_rules($rules);
-		//$id || $this->config->config['adm_user']['password']['rules'] .= '|required';
-
+		
+		
 		// Process the form
 		if ($this->form_validation->run() == TRUE) {			
 			$data = $this->user_m->array_from_post(array('name', 'email', 'password', 'note'));
@@ -67,12 +67,10 @@ class User extends Backend_Controller {
 		$this->user_m->loggedin() == FALSE || redirect($dashboard);
 		
 		// Set form
-		//$rules = $this->user_m->rules;
-		//$this->form_validation->set_rules($rules);
+		$rules = $this->config->config['adm_login'];
+		$this->form_validation->set_rules($rules);
 
 		// Process form
-		$rules = $this->user_m->rules;
-		$this->form_validation->set_rules($rules);
 		if ($this->form_validation->run() == TRUE){
 			
 			// We can login and redirect
