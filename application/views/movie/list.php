@@ -7,18 +7,22 @@
 	</div>
 	<div ng-app='myApp' ng-controller='DemoController' class="movieListHolder row">
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
-	    <div ng-repeat='item in reddit.items' class="movieItem">
-		    <div ng-if="item.type == 0 ">
-		      <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><img class="lazy" data-original="<?php echo $site_url ?>data/movies/thumbs/{{item.mvs_imdb_id}}_175x240_.jpg" alt="{{item.mvs_title}}" /></a></span>
-					<span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span>
-		      <span class='year'>{{item.mvs_year}}</span>
-					<span class='runtime'>{{item.mvs_runtime}} min.</span>
-					<span class='rating'>{{item.mvs_rating}}</span>
-		      <span class='genre'>{{item.mvs_genre}}</span>
-		      <span class='country'>{{item.mvs_country}}</span>
-		      <hr class="qFixer" />
-	      </div>
-	      <div ng-if="item.type == 1 " class="seperator"><b>PAGE {{item.paging}}</b></div>
+	    <div ng-repeat='item in reddit.items' ng-class="{movieItem:item.type == 0, seperator:item.type == 1}">
+		  
+          <div ng-switch="item.type">
+          <div ng-switch-when='0'> 
+            <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><div class="lazy" data-original="<?php echo $site_url ?>data/movies/thumbs/{{item.mvs_imdb_id}}_175x240_.jpg"></div></a></span> 
+            <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span> 
+            <span class='year'>{{item.mvs_year}}</span> 
+            <span class='runtime'>{{item.mvs_runtime}} min.</span> 
+            <span class='rating'>{{item.mvs_rating}}</span> 
+            <span class='genre'>{{item.mvs_genre}}</span> 
+            <span class='country'>{{item.mvs_country}}</span>
+            <hr class="qFixer" />
+          </div>
+          <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>
+		</div>  
+	      
 	    </div>
 	    <div ng-show='reddit.busy'>Loading data...</div>
 	  </div>
@@ -66,8 +70,8 @@ myApp.factory('Reddit', function($http) {
 		
 		// TRIGGER LAZYLOAD
 		setTimeout(function(){
-			if( $("img.lazy").length > 0 )
-				$("img.lazy").lazyload();
+			if( $("div.lazy").length > 0 )
+				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
 		}, 1);
 	  }
     }.bind(this));
