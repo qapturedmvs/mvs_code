@@ -18,8 +18,8 @@ if(exist($('.pageMovies'))){
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
 		
-		if( $("img.lazy").length > 0 )
-				$("img.lazy").lazyload();
+		if( $("div.lazy").length > 0 )
+				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
 		
 	});
 	

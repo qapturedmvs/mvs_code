@@ -61,7 +61,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies{}
 .pageMovies .movieListHolder.row .movieItem{padding:0 0 15px; margin:0 0 15px; border-bottom:1px solid #e6e6e6;}
 .pageMovies .movieListHolder.row .movieItem span{display:block; margin-bottom:10px;}
-.pageMovies .movieListHolder.row .movieItem .poster{float:left; margin:0 20px 0 0;}
+.pageMovies .movieListHolder.row .movieItem .poster{float:left; margin:0 20px 0 0; width:175px;}
 .pageMovies .movieListHolder.row .movieItem .poster img{width:100px;}
 .pageMovies .movieListHolder.row .movieItem .title{margin-bottom:15px; line-height: 16px;}
 .pageMovies .movieListHolder.row .movieItem .title a{font-size:24px;}
@@ -76,7 +76,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .movieListHolder.grid .movieItem .runtime, .pageMovies .movieListHolder.grid .movieItem .rating, .pageMovies .movieListHolder.grid .movieItem .genre, .pageMovies .movieListHolder.grid .movieItem .country{display:none;}
 .pageMovies .movieListHolder.grid .seperator{width:100%;}
 
-.pageMovies .movieListHolder .movieItem .lazy{ background:url(../back/images/ajax-loader.gif) no-repeat center center; width:175px; height:240px; }
+.pageMovies .movieListHolder .movieItem .lazy{ background:url(../back/images/ajax-loader.gif) no-repeat center center; width:100%; height:200px; }
 .pageMovies .movieListHolder .movieItem.loaded .lazy{ background-size:cover; }
 
 
