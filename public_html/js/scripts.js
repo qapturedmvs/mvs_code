@@ -13,8 +13,13 @@ function exist(obj){
 // Movies List
 if(exist($('.pageMovies'))){
 	
+	if(sessionStorage.viewType == "grid")
+    $('.movieListHolder').removeClass("row").addClass(sessionStorage.viewType);
+	
 	$('.controllers .view a').click(function(){
 		var view = $(this).attr("class");
+		
+		sessionStorage.viewType = view;
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
 		
