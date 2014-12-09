@@ -27,7 +27,7 @@
 				</tbody>
 			</table>
 		<?php else: ?>
-			<?php echo getMessage('info', 'Actor`s movie data not found.'); ?>
+			<?php echo getMessage('info', 'Actor data not found.'); ?>
 		<?php endif; ?>
 	</div>
 </div>

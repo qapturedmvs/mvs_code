@@ -22,7 +22,7 @@ class Actors_M extends MVS_Model
 		{
 			if($id == NULL){
 				
-				$db_data = $this->get_data($id, $offset, TRUE);
+				$db_data = $this->get_data($id, $offset, FALSE);
 				
 			}else{
 				
@@ -44,7 +44,7 @@ class Actors_M extends MVS_Model
 						'like' => array('str_name', $_search_name, 'both')
 				);
 				
-				$db_data = $this->get_data(NULL, 0, TRUE, $filters);
+				$db_data = $this->get_data(NULL, 0, FALSE, $filters);
 				
 			}
 			else

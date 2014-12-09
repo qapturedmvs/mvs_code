@@ -24,7 +24,7 @@ class Movie_M extends MVS_Model
 	public function movies($offset = 0){
 		
 		$filters = array('order_by' => array($this->_order_by, $this->_order_rule));
-		$movies = $this->get_data(NULL, $offset, TRUE, $filters);
+		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
 		
 		if (count($movies['data']))
 			return $movies;
