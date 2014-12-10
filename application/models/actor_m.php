@@ -5,7 +5,7 @@ class Actor_M extends MVS_Model
 	
 	protected $_table_name = 'mvs_stars';
 	protected $_primary_key = 'str_slug';
-	protected $_order_by = 'str_id';
+	//protected $_order_by = 'str_id';
 	public $per_page = 0;
 	
 	function __construct ()

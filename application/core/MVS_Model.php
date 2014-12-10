@@ -4,9 +4,9 @@ class MVS_Model extends CI_Model {
 	
 	protected $_table_name = '';
 	protected $_primary_key = 'id';
-	protected $_primary_filter = 'intval';
-	protected $_order_by = '';
-	protected $_order_rule = 'ASC';
+	//protected $_primary_filter = 'intval';
+	//protected $_order_by = '';
+	//protected $_order_rule = 'ASC';
 	public $rules = array();
 	public $per_page = 0;
 	protected $_timestamps = FALSE;
@@ -24,21 +24,21 @@ class MVS_Model extends CI_Model {
 					
 					$this->db->start_cache();
 					
-				if($chk_filters){
-					foreach($filters as $key => $val){
-						if(is_array($val) && count($val) > 1){
-							call_user_func_array(array(&$this->db, $key), $val);
-						}else{
-							if($key == 'from')
-								$this->_table_name = $val;
-							elseif($key == 'method')
-								$method = $val;
-							else
-								$this->db->{$key}($val);
+					if($chk_filters){
+						foreach($filters as $key => $val){
+							if(is_array($val) && count($val) > 1){
+								call_user_func_array(array(&$this->db, $key), $val);
+							}else{
+								if($key == 'from')
+									$this->_table_name = $val;
+								elseif($key == 'method')
+									$method = $val;
+								else
+									$this->db->{$key}($val);
+							}
 						}
 					}
-				}
-					
+						
 					if($id != NULL){
 						$this->db->where($this->_primary_key, $id);
 						$method = 'row';

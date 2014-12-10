@@ -5,8 +5,8 @@ class Movie_M extends MVS_Model
 	
 	protected $_table_name = 'mvs_movies';
 	protected $_primary_key = 'mvs_slug';
-	protected $_order_by = 'mvs_id';
-	public $per_page = 100;
+	//protected $_order_by = 'mvs_id';
+	public $per_page = 105;
 	public $_allFilters = array('like' => array("mfg" => "gnr_id", "mfc" => "cntry_id"), 'between' => array("mfy" => "mvs_year", "mfr" => "mvs_rating"), 'equal' => array("mfa" => "aud_id"));
 	
 	function __construct ()
