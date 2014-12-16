@@ -66,16 +66,15 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .movieListHolder.row .movieItem .title{margin-bottom:15px; line-height: 16px;}
 .pageMovies .movieListHolder.row .movieItem .title a{font-size:24px;}
 
-.pageMovies .movieListHolder.grid .movieItem{padding:8px; margin:0 10px 20px 0; background:#E6E6E6; display:inline-block; width:118px; height:250px; vertical-align:top;}
+.pageMovies .movieListHolder.grid .movieItem{padding:8px; margin:0 10px 20px 0; background:#E6E6E6; display:inline-block; width:118px; height:300px; vertical-align:top;}
 .pageMovies .movieListHolder.grid .movieItem:nth-child(7n){margin-right:0;}
 .pageMovies .movieListHolder.grid .movieItem span{display:block; margin-bottom:10px;}
 .pageMovies .movieListHolder.grid .movieItem .poster{text-align:center; max-height:240px; overflow: hidden;}
 .pageMovies .movieListHolder.grid .movieItem .poster img{max-width:100%; min-height:200px; margin:0 auto;}
-.pageMovies .movieListHolder.grid .movieItem .title{margin-bottom:15px; line-height: 16px;}
-.pageMovies .movieListHolder.grid .movieItem .title a{}
+.pageMovies .movieListHolder.grid .movieItem .title{margin-bottom:10px; line-height: 16px; overflow:hidden; max-height:50px;}
 .pageMovies .movieListHolder.grid .movieItem .runtime, .pageMovies .movieListHolder.grid .movieItem .rating, .pageMovies .movieListHolder.grid .movieItem .genre, .pageMovies .movieListHolder.grid .movieItem .country{display:none;}
 /* .pageMovies .movieListHolder.grid .seperator{clear:both; padding:8px 10px; margin-bottom:20px; background:#000; color:#fff;}*/
-.pageMovies .movieListHolder.grid .seperator{padding:8px; margin:0 10px 20px 0; background:#E6E6E6; display:inline-block; width:118px; height:250px; vertical-align:top;}
+.pageMovies .movieListHolder.grid .seperator{padding:8px; margin:0 10px 20px 0; background:none; border:8px solid #E6E6E6; display:inline-block; width:102px; height:284px; vertical-align:top;}
 
 .pageMovies .movieListHolder .movieItem .posterImg{ background:url(../back/images/ajax-loader.gif) no-repeat center center; width:100%; height:200px; }
 .pageMovies .movieListHolder .movieItem.loaded .posterImg{ background-size:cover; }
