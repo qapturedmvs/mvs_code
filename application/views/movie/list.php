@@ -23,11 +23,12 @@
           </div>
           <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>
           <div ng-switch-when='2'><b>{{item.result}}</b></div>
-		</div>  
+				</div>  
 	    </div>
 	    <div ng-show='reddit.busy'>Loading data...</div>
 	  </div>
 	</div>
+</div>
 <script type="text/javascript">
 var site_url = $('#mvs_site_url').val(), qs = window.location.search;
 /* http://binarymuse.github.io/ngInfiniteScroll/demo_async.html */
