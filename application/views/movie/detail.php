@@ -58,7 +58,7 @@
 				<hr class="qFixer" />
 			</div>
 			<div class="social">
-				<?php $this->load->view('components/comment'); ?>
+				<?php $this->load->view('components/_comment'); ?>
 			</div>
 		</aside>
 		<aside class="sidebar right">
