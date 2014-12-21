@@ -23,8 +23,10 @@ class Movie_M extends MVS_Model
 				'order_by' => 'mvs_year DESC, mvs_rating DESC'
 		);
 		
-		if($vars != NULL)
+		if($vars != NULL){
+				$vars = filter_qs_fn($vars, $this->_allFilters);
 				$filters['where'] = movies_where($vars, $this->_allFilters);
+		}
 		
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
 		
@@ -49,14 +51,20 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Get all genres
-	public function _genres($ids = NULL){
+	public function _genres($ids = NULL, $type = NULL){
 	
 		$this->_table_name = 'mvs_genres';
 		$this->_primary_key = 'gnr_id';
 		$this->_order_by = 'gnr_id';
 		$this->per_page = 0;
+		$filters = NULL;
 		
-		$filters = ($ids == NULL) ? NULL : array('where' => $ids);
+		if($type != NULL)
+				$filters['method'] = 'result_array';
+
+    if($ids != NULL)
+				$filters['where'] = $ids;
+
 		$genres = $this->get_data(NULL, 0, FALSE, $filters);
 	
 		if (count($genres['data']))
@@ -67,14 +75,20 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Get all countries
-	public function _countries($ids = NULL){
+	public function _countries($ids = NULL, $type = NULL){
 	
 		$this->_table_name = 'mvs_country';
 		$this->_primary_key = 'cntry_id';
 		$this->_order_by = 'cntry_id';
 		$this->per_page = 0;
+		$filters = NULL;
 		
-		$filters = ($ids == NULL) ? NULL : array('where' => $ids);
+		if($type != NULL)
+				$filters['method'] = 'result_array';	
+
+    if($ids != NULL)
+				$filters['where'] = $ids;
+			
 		$countries = $this->get_data(NULL, 0, FALSE, $filters);
 
 		if (count($countries['data']))
@@ -108,19 +122,19 @@ class Movie_M extends MVS_Model
 				
 				$this->per_page = 0;
 				$filters = array(
-								"select" => "gnr_id, cntry_id, aud_id, mvs_year, mvs_rating",
-								"from" => "mvs_movies"
+								'select' => 'gnr_id, cntry_id, aud_id, mvs_year, mvs_rating',
+								'from' => 'mvs_movies'
 				);
 				
 				if($vars != NULL)
-				$filters['where'] = movies_where($vars, $this->_allFilters);
-		
+								$filters['where'] = movies_where($vars, $this->_allFilters);
+
 				$movies = $this->get_data(NULL, 0, FALSE, $filters);
 				
 				if (count($movies['data']))
 					return $movies;
 				else
-				return FALSE;
+				  return FALSE;
 				
 	}
 	

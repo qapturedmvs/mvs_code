@@ -1,107 +1,273 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 	class Movies extends Frontend_Controller{
+		
+		private $defF = array('like' => array('mfg' => 'gnr_id', 'mfc' => 'cntry_id'), 'between' => array('mfy' => 'mvs_year', 'mfr' => 'mvs_rating'), 'equal' => array('mfa' => 'aud_id'));
+		
 		function __construct(){
 			parent::__construct();
 			
 			$this->load->model('movie_m');
+			
 		}
 		
 		public function index(){
-			
-			//$allFilters = $this->movie_m->_allFilters;
-			$db_data['genres'] = $this->movie_m->_genres();
-			$db_data['countries'] = $this->movie_m->_countries();
-			
-			//if($this->get_vars){
-			//	$movies = $this->movie_m->_filters($this->get_vars);
-			//	$tables['gnr_id'] = $db_data['genres']['data'];
-			//	$tables['cntry_id'] = $db_data['countries']['data'];
-			//	$fFilters = $this->_filter_filters($movies['data'], $tables);
-			//	
-			//	foreach($allFilters['like'] as $item){
-			//		if(count($fFilters[$item]) == 0){
-			//			$fFilters[$item] = $tables[$item];
-			//		}
-			//	}
-			//	
-			//}else{
-				$fFilters['gnr_id'] = $db_data['genres']['data'];
-				$fFilters['cntry_id'] = $db_data['countries']['data'];
-			//}
 
-			$this->data['filters'] = $fFilters;
+			$vars = $this->_filter_qs($this->get_vars);
+			$act = $this->_qs_compare($vars);
+			$db_data['genres'] = $this->movie_m->_genres(NULL, 'result_array');
+			$db_data['countries'] = $this->movie_m->_countries(NULL, 'result_array');
+			$tables = $this->set_tables($db_data);
+			$tables['mfy'] = array('min' => 1950, 'max' => 2014);
+			$tables['mfr'] = array('min' => 1, 'max' => 10);
+			$filters = $this->session->userdata('filters');
+
+			if(isset($act['plus'])){
+				$movies = $this->movie_m->_filters($act['current']);
+				$filters = $this->_filter_filters($movies['data'], $act, $tables, $filters);
+			}elseif(isset($act['minus']) && $this->get_vars){
+				
+				$filters = $this->_rebuild_filters($act, $filters);
+			}else{
+				$filters['old'] = $this->_set_tables($tables);
+				echo 'GİRDİ';
+			}
+			
+			if(isset($filters['diff']))
+				unset($filters['diff']);
+				
+			$this->data['tables'] = $tables;
+			$this->data['filters'] = $filters;
 			$this->data['subview'] = 'movie/list';
-			$this->load->view('_main_body_layout', $this->data);	
+			//var_dump($filters);
+			$this->load->view('_main_body_layout', $this->data);
 			
 		}
 		
-		public function _filter_filters($data, $tables){
+		// TEMP FUNCTION
+		private function set_tables($data){
 			
-			$fArr = movies_where($this->get_vars, $this->movie_m->_allFilters, TRUE);
-			$tArr = array();
+			$tables = array();
 			
-			if(!array_key_exists('gnr_id', $fArr)){
-				$tArr['gnr_id'] = FALSE;
-				$fArr['gnr_id'] = array();
+			foreach($data['genres']['data'] as $item){
+				$tables['mfg'][$item['gnr_id']] = $item['gnr_title'];
 			}
 			
-			if(!array_key_exists('cntry_id', $fArr)){
-				$tArr['cntry_id'] = FALSE;
-				$fArr['cntry_id'] = array();
+			foreach($data['countries']['data'] as $item){
+				$tables['mfc'][$item['cntry_id']] = $item['cntry_title'];
 			}
 			
-			if(!array_key_exists('aud_id', $fArr)){
-				$tArr['aud_id'] = FALSE;
-				$fArr['aud_id'] = array();
-			}
+			return $tables;
+			
+		}
+		
+		// SET 'CURRENT' & 'OLD'
+		private function _filter_qs($qs){
+			
+			$vars['old'] = $this->session->userdata('qs');
+			$vars['current'] = array();
+			
+			if($qs){
+
+				$vars['current']= filter_qs_fn($qs, $this->defF);
 				
-			if(!array_key_exists('mvs_year', $fArr)){
-				$tArr['mvs_year'] = FALSE;
-				$fArr['mvs_year'] = array();
-			}
-			
-			if(!array_key_exists('mvs_rating', $fArr)){
-				$tArr['mvs_rating'] = FALSE;
-				$fArr['mvs_rating'] = array();
+				if($vars['old'] != $vars['current'])
+					$this->session->set_userdata(array('qs' => $vars['current']));
+
+			}else{
+				$this->session->unset_userdata('qs');
 			}
 
+			return $vars;
+		}
+		
+		// COMPARE 'CURRENT' & 'OLD'
+		private function _qs_compare($vars){
+			
+			$vars['plus'] = array();
+			$vars['minus'] = array();
+			
+			if($vars['old'] != $vars['current']){ // SAYFA REFRESH Mİ OLMUŞ KONTROLÜ
+				if($vars['old']){ // İLK GİDİLEN SAYFA MI KONTROLÜ
+					$temp = '';
+					
+					foreach($vars['old'] as $key => $val){
+						 if(isset($vars['current'][$key])){
+							 if($val != $vars['current'][$key]){
+									$temp = array_diff($vars['current'][$key], $val);
+									
+									if(count($temp) > 0)
+										$vars['plus'][$key] = $temp;
+										
+									$temp = array_diff($val, $vars['current'][$key]);
+									
+									if(count($temp) > 0)
+										$vars['minus'][$key] = $temp;
+		
+							 }
+						 }else{
+								if(count($val) > 0)
+									$vars['minus'][$key] = $val;
+						 }
+					}
+					
+					foreach($vars['current'] as $key => $val){
+						 if(!isset($vars['old'][$key]) && count($val) > 0){
+								$vars['plus'][$key] = $val;
+						 }
+					}
+				}else{
+					$vars['plus'] = $vars['current'];
+				}
+			}
+			
+			if(!count($vars['minus'])) unset($vars['minus']);
+			if(!count($vars['plus'])) unset($vars['plus']);
+			
+			return $vars;
+			
+		}
+		
+		public function _filter_filters($data, $vars, $tables, $fltrs){
+			
+			$normal = (count($vars['plus']) == 1) ? TRUE : FALSE;
+			$filters['current'] = array('mfg' => array(), 'mfc' => array(), 'mfy' => array(), 'mfr' => array());
+			$temp = '';
+			
 			foreach($data as $movie){
 				
-				if(array_key_exists('gnr_id', $tArr) && !$tArr['gnr_id']){
-					 $ids = explode('||', trim($movie->gnr_id, '|'));
-					 
-					 foreach($ids as $id){
-						 if(!array_key_exists($id, $fArr['gnr_id'])){
-								$key = getItemFromObj($tables['gnr_id'], $id, 'gnr_id', 'gnr_title');
-								$fArr['gnr_id'][$id] = $key;
-						 }
-					 }
+				if(!$normal || !isset($vars['plus']['mfg'])){
+					if($movie->gnr_id != '' && $movie->gnr_id != '||'){ // DÜZGÜN DATA OLUNCA KALDIRILACAK
+						$temp = explode('||', trim($movie->gnr_id, '|'));
+						foreach($temp as $t){
+							if(!in_array($t, $filters['current']['mfg']))
+								array_push($filters['current']['mfg'], $t);
+						}
+					}
 				}
 				
-				if(array_key_exists('cntry_id', $tArr) && !$tArr['cntry_id']){
-					 $ids = explode('||', trim($movie->cntry_id, '|'));
-					 
-					 foreach($ids as $id){
-						 if(!array_key_exists($id, $fArr['cntry_id'])){
-								$key = getItemFromObj($tables['cntry_id'], $id, 'cntry_id', 'cntry_title');
-								$fArr['cntry_id'][$id] = $key;
-						 }
-					 }
+				if(!$normal || !isset($vars['plus']['mfc'])){
+					if($movie->cntry_id != '' && $movie->cntry_id != '||'){ // DÜZGÜN DATA OLUNCA KALDIRILACAK
+						$temp = explode('||', trim($movie->cntry_id, '|'));
+						foreach($temp as $t){
+							if(!in_array($t, $filters['current']['mfc']))
+								array_push($filters['current']['mfc'], $t);
+						}
+					}
 				}
 				
-				if(array_key_exists('aud_id', $tArr) && !$tArr['aud_id'] && !in_array($movie->aud_id, $fArr['aud_id']))
-					array_push($fArr['aud_id'], $movie->aud_id);
+				if(!$normal || !isset($vars['plus']['mfy'])){
+					if(!in_array($movie->mvs_year, $filters['current']['mfy']))
+						array_push($filters['current']['mfy'], $movie->mvs_year);
+				}
 				
-				if(array_key_exists('mvs_year', $tArr) && !$tArr['mvs_year'] && !in_array($movie->mvs_year, $fArr['mvs_year']))
-					array_push($fArr['mvs_year'], $movie->mvs_year);
-				
-				if(array_key_exists('mvs_rating', $tArr) && !$tArr['mvs_rating'] && !in_array($movie->mvs_rating, $fArr['mvs_rating']))
-					array_push($fArr['mvs_rating'], $movie->mvs_rating);
+				if(!$normal || !isset($vars['plus']['mfr'])){
+					if(!in_array($movie->mvs_rating, $filters['current']['mfr']))
+						array_push($filters['current']['mfr'], $movie->mvs_rating);
+				}
 				
 			}
+			
+			$temp = array();
+			
+			if(!empty($filters['current']['mfy'])){
+				$temp['min'] = min($filters['current']['mfy']);
+				$temp['max'] = max($filters['current']['mfy']);
+				$filters['current']['mfy'] = $temp;
+			}
+			
+			if(!empty($filters['current']['mfr'])){
+				$temp['min'] = floor(min($filters['current']['mfr']));
+				$temp['max'] = ceil(max($filters['current']['mfr']));
+				$filters['current']['mfr'] = $temp;
+			}
+			
+			if($normal){
+				
+				$temp = $fltrs;
+				$filters['old'] = $fltrs['old'];
+				
+				if(isset($temp['diff']))
+					$filters['diff'] = $temp['diff'];
 
-			return $fArr;
+				foreach($filters['current'] as $key => $val){
+					if(!empty($filters['current'][$key])){
+						foreach($vars['plus'] as $k => $v){
+							if(count($v) == 1 && $key != $k){
+								if($filters['old']){
+									$temp[0] = array_diff($filters['old'][$key], $val);
+									$temp[1] = array_diff($val, $filters['old'][$key]);
+									if(count($temp[0]))
+										$filters['diff'][$k.'-'.implode('', $v)][$key]['m'] = $temp[0];
+										
+									if(count($temp[1]))
+										$filters['diff'][$k.'-'.implode('', $v)][$key]['p'] = $temp[1];
+										
+								}else{
+									$temp[0] = array_diff($tables[$key], $val);
+									
+									if(count($temp[0]))
+										$filters['diff'][$k.'-'.implode('', $v)][$key]['m'] = $temp[0];
+										
+								}
+							}
+	
+							$filters['current'][$k] = ($filters['old']) ? $filters['old'][$k] : $tables[$k];
+						}
+					}
+				}
+			
+			}else{
+				$this->session->unset_userdata('filters');
+			}
+			
+			$filters['old'] = $filters['current'];
+			unset($filters['current']);
+
+			$this->session->set_userdata(array('filters' => $filters));
+			
+			return $filters;
+			
+		}
+		
+		private function _rebuild_filters($vars, $filters){
+			//var_dump($filters);
+			if($filters){
+				foreach($vars['minus'] as $key => $val){
+					foreach($val as $value){
+						if(isset($filters['diff'][$key.'-'.$value])){
+							foreach($filters['diff'][$key.'-'.$value] as $k => $v){
+								if(isset($filters['diff'][$key.'-'.$value][$k]['m']))
+									array_push($filters['old'][$k], $filters['diff'][$key.'-'.$value][$k]['m']);
+									
+								if(isset($filters['diff'][$key.'-'.$value][$k]['p']))
+									$filters['old'][$k] = array_diff($filters['old'][$k], $filters['diff'][$key.'-'.$value][$k]['p']);
+							}
+						}
+					}
+				}
+			}
+			
+			$this->session->set_userdata(array('filters' => $filters));
+			
+			return $filters;
+		}
+		
+		private function _set_tables($tables){
+			
+			$filters = array();
+			
+			foreach($tables as $key => $val){
+				if($key != 'mfy' && $key != 'mfr')
+					$filters[$key] = array_keys($val);
+				else{
+					foreach($val as $k => $v){
+						$filters[$key][$k] = $v;
+					}
+				}
+			}
+			
+			return $filters;
 			
 		}
 	

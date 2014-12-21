@@ -23,44 +23,71 @@
 	
 	}
 	
-	function movies_where($vars, $allFilters, $filterArray = FALSE){
+	function movies_where($vars, $allFilters){
 		
-		$fArr = array();
-		$where = "";
-		
+		$where = '';
+
 		foreach($vars as $key => $val){
-			 if(array_key_exists($key, $allFilters['like'])){
-					$items = explode(',', $val);
-					$where_or = "";
-					$sep = ($where == '') ? "" : " AND ";
- 
-					foreach($items as $item){
-						 if(is_numeric($item)){
-								$sSep = ($where_or == '') ? "" : " OR ";
-								$where_or .= $sSep.$allFilters['like'][$key]." LIKE '%|".$item."|%'";
-						 }
+			 if(isset($allFilters['like'][$key])){
+					$where_or = '';
+					$sep = ($where == '') ? '' : ' AND ';
+					$sSep = '';
+		
+					foreach($val as $v){
+								$sSep = ($where_or == '') ? '' : ' OR ';
+								$where_or .= $sSep.$allFilters['like'][$key]." LIKE '%|".$v."|%'";
 					}
 					
 					if($where_or != ''){
-						 $fArr[$allFilters['like'][$key]] = array();
-						 $where .= $sep."(".$where_or.")";
+						 $where .= $sep.'('.$where_or.')';
 					}
 						 
-			 }else if(array_key_exists($key, $allFilters['between'])){
-					$items = explode(',', $val);
-					$sep = ($where == '') ? "" : " AND ";
-					if(is_numeric($items[0]) && is_numeric($items[1])){
-						 $fArr[$allFilters['between'][$key]] = array();
-						 $where .= $sep."(".$allFilters['between'][$key]." BETWEEN ".$items[0]." AND ".$items[1].")";
+			 }else if(isset($allFilters['equal'][$key])){
+					$where_or = '';
+					$sep = ($where == '') ? '' : ' AND ';
+					$sSep = '';
+					
+					foreach($val as $v){
+						$sSep = ($where_or == '') ? '' : ' OR ';
+						$where_or .= $sSep.$allFilters['equal'][$key].' = '.$v;
 					}
-			 }else if(array_key_exists($key, $allFilters['equal']) && is_numeric($val)){
-					$sep = ($where == '') ? "" : " AND ";
-					$fArr[$allFilters['equal'][$key]] = array();
-					$where .= $sep."(".$allFilters['equal'][$key]." = ".$items[0].")";
+					
+					if($where_or != ''){
+						 $where .= $sep.'('.$where_or.')';
+					}
+		
+			 }else if(isset($allFilters['between'][$key])){
+					$sep = ($where == '') ? '' : ' AND ';
+					$where .= $sep.'('.$allFilters['between'][$key].' BETWEEN '.$val[0].' AND '.$val[1].')';
 			 }
 			 
 		}
-
-		return (!$filterArray) ? $where : $fArr;
 		
+		return $where;
+		
+	}
+	
+	function array_is_numeric($e){
+		if(is_numeric($e))
+			return $e;
+		else
+			return false;
+	}
+	
+	function filter_qs_fn($qs, $defs){
+		$vars = array();
+
+		foreach($qs as $key => $val){
+			$val = explode(',', $val);
+			foreach($defs as $def){
+				if(isset($def[$key])){
+					sort($val);
+					$vars[$key] = array_filter($val, "array_is_numeric");
+				}
+			}
+		}
+
+		ksort($vars);
+		
+		return $vars;
 	}
