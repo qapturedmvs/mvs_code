@@ -25,12 +25,10 @@
 			if(isset($act['plus'])){
 				$movies = $this->movie_m->_filters($act['current']);
 				$filters = $this->_filter_filters($movies['data'], $act, $tables, $filters);
-			}elseif(isset($act['minus']) && $this->get_vars){
-				
+			}elseif(isset($act['minus'])){
 				$filters = $this->_rebuild_filters($act, $filters);
 			}else{
 				$filters['old'] = $this->_set_tables($tables);
-				echo 'GİRDİ';
 			}
 			
 			if(isset($filters['diff']))
