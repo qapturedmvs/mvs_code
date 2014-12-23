@@ -2,8 +2,6 @@
 
 	class Movies extends Frontend_Controller{
 		
-		private $defF = array('like' => array('mfg' => 'gnr_id', 'mfc' => 'cntry_id'), 'between' => array('mfy' => 'mvs_year', 'mfr' => 'mvs_rating'), 'equal' => array('mfa' => 'aud_id'));
-		
 		function __construct(){
 			parent::__construct();
 			
@@ -23,7 +21,7 @@
 			$filters = $this->session->userdata('filters');
 
 			if(isset($act['plus'])){
-				$movies = $this->movie_m->_filters($act['current']);
+				$movies = $this->movie_m->_filters($act['current'], $this->filter_def);
 				$filters = $this->_filter_filters($movies['data'], $act, $tables, $filters);
 			}elseif(isset($act['minus'])){
 				$filters = $this->_rebuild_filters($act, $filters);

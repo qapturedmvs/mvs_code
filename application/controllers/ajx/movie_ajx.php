@@ -20,7 +20,7 @@
 				$p = $this->movie_m->cleaner($p);
 				$curPage = ($p != '') ? $p : 1;
 				$offset = ($curPage-1) * $this->movie_m->per_page;
-				$db_data = $this->movie_m->movies_json($offset, $vars);
+				$db_data = $this->movie_m->movies_json($offset, $vars, $this->filter_def);
 				$movies = $db_data['data'];
 				$db_data = $this->movie_m->_countries();
 				$countries = $db_data['data'];

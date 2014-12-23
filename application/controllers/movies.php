@@ -2,8 +2,6 @@
 
 	class Movies extends Frontend_Controller{
 		
-		private $filter_def = array('like' => array('mfc' => 'cntry_id', 'mfg' => 'gnr_id'), 'between' => array('mfr' => 'mvs_rating', 'mfy' => 'mvs_year'), 'equal' => array('mfa' => 'aud_id'));
-		
 		function __construct(){
 			parent::__construct();
 			
@@ -46,6 +44,7 @@
 			
 		}
 		
+		// VARS
 		private function _set_vars($qs){
 			
 			$vars['old'] = $this->session->userdata('qs');
@@ -55,6 +54,7 @@
 				$vars['current'] = qs_filter($qs, $this->filter_def);
 				
 				if(count($vars['current']) > 0 && $vars['old'] != $vars['current']){
+					
 					$this->session->set_userdata(array('qs' => $vars['current']));
 					
 					if($vars['old']){
@@ -82,9 +82,8 @@
 						}
 						
 						foreach($vars['current'] as $key => $val){
-							 if(!isset($vars['old'][$key])){
+							 if(!isset($vars['old'][$key]))
 									$vars['plus'][$key] = $val;
-							 }
 						}
 					
 					}else{

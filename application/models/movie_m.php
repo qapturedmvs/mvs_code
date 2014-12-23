@@ -7,7 +7,6 @@ class Movie_M extends MVS_Model
 	protected $_primary_key = 'mvs_slug';
 	//protected $_order_by = 'mvs_id';
 	public $per_page = 105;
-	public $_allFilters = array('like' => array("mfg" => "gnr_id", "mfc" => "cntry_id"), 'between' => array("mfy" => "mvs_year", "mfr" => "mvs_rating"), 'equal' => array("mfa" => "aud_id"));
 	
 	function __construct ()
 	{
@@ -16,7 +15,7 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Movie list JSON
-	public function movies_json($offset = 0, $vars){
+	public function movies_json($offset = 0, $vars, $defs){
 				
 		$filters = array(
 				'select' => 'mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id, mvs_rating',
@@ -24,8 +23,8 @@ class Movie_M extends MVS_Model
 		);
 		
 		if($vars != NULL){
-				$vars = filter_qs_fn($vars, $this->_allFilters);
-				$filters['where'] = movies_where($vars, $this->_allFilters);
+				$vars = qs_filter($vars, $defs);
+				$filters['where'] = movies_where($vars, $defs);
 		}
 		
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
@@ -118,7 +117,7 @@ class Movie_M extends MVS_Model
 	
 	}
 	
-	public function _filters($vars){
+	public function _filters($vars, $defs){
 				
 				$this->per_page = 0;
 				$filters = array(
@@ -127,7 +126,7 @@ class Movie_M extends MVS_Model
 				);
 				
 				if($vars != NULL)
-								$filters['where'] = movies_where($vars, $this->_allFilters);
+					$filters['where'] = movies_where($vars, $defs);
 
 				$movies = $this->get_data(NULL, 0, FALSE, $filters);
 				
