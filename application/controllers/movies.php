@@ -14,7 +14,10 @@
 			$tables = $this->_set_tables();
 			$vars = $this->_set_vars($this->get_vars);
 			
-			var_dump($vars);
+			if($this->get_vars)
+				$filters = $this->_filter_filters($vars, $tables);
+			
+			var_dump($filters);
 			
 			
 			$this->data['subview'] = 'movie/list';
@@ -102,6 +105,62 @@
 			return $vars;
 		}
 		
+		
+		public function _filter_filters($vars, $tables){
+
+			$movies = $this->movie_m->_filters((isset($vars['current'])) ? $vars['current'] : $vars['old'], $this->filter_def);
+			$filters['old'] = $this->session->userdata('filters');
+			$filters['current'] = array('mfg' => array(), 'mfc' => array(), 'mfy' => array(), 'mfr' => array());
+			$temp = '';
+			
+			foreach($movies['data'] as $movie){
+				
+				if($movie->gnr_id != '' && $movie->gnr_id != '||'){ // DÜZGÜN DATA OLUNCA KALDIRILACAK
+					$temp = explode('||', trim($movie->gnr_id, '|'));
+					foreach($temp as $t){
+						if(!in_array($t, $filters['current']['mfg']))
+							array_push($filters['current']['mfg'], $t);
+					}
+				}
+				
+				if($movie->cntry_id != '' && $movie->cntry_id != '||'){ // DÜZGÜN DATA OLUNCA KALDIRILACAK
+					$temp = explode('||', trim($movie->cntry_id, '|'));
+					foreach($temp as $t){
+						if(!in_array($t, $filters['current']['mfc']))
+							array_push($filters['current']['mfc'], $t);
+					}
+				}
+				
+				if(!in_array($movie->mvs_year, $filters['current']['mfy']))
+					array_push($filters['current']['mfy'], $movie->mvs_year);
+
+				if(!in_array($movie->mvs_rating, $filters['current']['mfr']))
+					array_push($filters['current']['mfr'], $movie->mvs_rating);
+
+			}
+			
+			$temp = array();
+			
+			if(!empty($filters['current']['mfy'])){
+				$temp['min'] = min($filters['current']['mfy']);
+				$temp['max'] = max($filters['current']['mfy']);
+				$filters['current']['mfy'] = $temp;
+			}
+			
+			if(!empty($filters['current']['mfr'])){
+				$temp['min'] = floor(min($filters['current']['mfr']));
+				$temp['max'] = ceil(max($filters['current']['mfr']));
+				$filters['current']['mfr'] = $temp;
+			}
+			
+			$filters['old'] = $filters['current'];
+			unset($filters['current']);
+
+			$this->session->set_userdata(array('filters' => $filters));
+			
+			return $filters;
+			
+		}
 		
 	
 	}
