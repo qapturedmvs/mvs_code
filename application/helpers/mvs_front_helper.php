@@ -74,7 +74,7 @@
 			return false;
 	}
 	
-	function filter_qs_fn($qs, $defs){
+	function qs_filter($qs, $defs){
 		$vars = array();
 
 		foreach($qs as $key => $val){
