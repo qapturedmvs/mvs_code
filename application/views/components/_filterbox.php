@@ -2,7 +2,7 @@
   <div class="boxHeader"></div>
   <div class="boxBody"> 
     <?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING'); ?>
-   <?php foreach($filters['old'] as $group => $filter): ?>
+   <?php foreach($filters as $group => $filter): ?>
    <ul class="filterList">
    <li class="filter <?php echo strtolower($labels[$group]); ?>">
       <a href="javascript:void(0);" class="title"><?php echo $labels[$group]; ?></a>

@@ -75,19 +75,30 @@
 	}
 	
 	function qs_filter($qs, $defs){
-		$vars = array();
-
-		foreach($qs as $key => $val){
-			$val = explode(',', $val);
-			foreach($defs as $def){
-				if(isset($def[$key])){
-					sort($val);
-					$vars[$key] = array_filter($val, "array_is_numeric");
+		
+		$vars = FALSE;
+		
+		if($qs){
+			
+			$vars = array();
+			
+			foreach($qs as $key => $val){
+				$val = explode(',', $val);
+				foreach($defs as $def){
+					if(isset($def[$key])){
+						sort($val);
+						$vars[$key] = array_map('intval', array_filter($val, "array_is_numeric"));
+					}
 				}
 			}
+			
+			if(count($vars) > 0)
+				ksort($vars);
+			else
+				$vars = FALSE;
+			
+			
 		}
-
-		ksort($vars);
 		
 		return $vars;
 	}
