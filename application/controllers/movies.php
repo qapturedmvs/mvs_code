@@ -12,15 +12,15 @@
 		public function index(){
 			
 			$tables = $this->_set_tables();
-			$vars = qs_filter($this->get_vars, $this->filter_def);
-			$history['filters'] = $this->session->userdata('filters');
-			$history['vars'] = $this->_set_vars($vars);
+			$vars = $this->_set_vars($this->get_vars);
 			
-			if($vars){
-				$filters = $this->_filter_filters($vars);
+			if(isset($vars['plus']) || isset($vars['minus'])){
+				$filters = $this->_filter_filters($vars['current']);
 				
-				if(count($vars) == 1)
-					$filters = $this->_get_sel($filters, $vars, $tables['filter']);
+				if(isset($vars['plus']) && !isset($vars['minus']) && count($vars['plus']) == 1)
+					$filters = $this->_get_sel($filters, $vars['plus']);
+				elseif(isset($vars['minus']) && !isset($vars['plus']) && count($vars['minus']) == 1)
+					$filters = $this->_get_sel($filters, $vars['minus']);
 					
 			}else{
 				
@@ -29,13 +29,11 @@
 			}
 			
 			$this->session->set_userdata(array('filters' => $filters));
-			$this->session->set_userdata(array('vars' => $vars));
-			
-			var_dump($vars);
+
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;
 			$this->data['subview'] = 'movie/list';
-			//$this->load->view('_main_body_layout', $this->data);
+			$this->load->view('_main_body_layout', $this->data);
 			
 		}
 		
@@ -64,13 +62,13 @@
 		}
 		
 		// VARS
-		private function _set_vars($vars){
+		private function _set_vars($qs){
 			
 			$vars['old'] = $this->session->userdata('qs');
 			
-			if($vars){
+			if($qs){
 
-				$vars['current'] = $vars;
+				$vars['current'] = qs_filter($qs, $this->filter_def);
 				
 				if(count($vars['current']) > 0 && $vars['old'] != $vars['current']){
 					
@@ -106,7 +104,11 @@
 						}
 					
 					}else{
-						$vars['plus'] = $vars['current'];
+						
+						foreach($vars['current'] as $key => $val){
+									$vars['plus'][] = $key;
+						}
+						
 					}
 					
 				}else{
@@ -116,6 +118,8 @@
 			}elseif($vars['old']){
 					$this->session->unset_userdata('qs');
 			}
+			
+			
 
 			return $vars;
 		}
@@ -167,10 +171,15 @@
 			
 		}
 		
-		private function _get_sel($filters, $vars, $tables){
+		private function _get_sel($filters, $vars){
 			
-			foreach($vars as $key => $val)
-				$filters[$key] = $tables[$key];
+			$temp = $this->session->userdata('filters');
+
+			if(!$temp)
+				$temp = $tables['filter'];
+			
+			foreach($vars as $var)
+				$filters[$var] = $temp[$var];
 			
 			return $filters;
 			
