@@ -102,6 +102,8 @@
 							 if(!isset($vars['old'][$key]))
 									$vars['plus'][] = $key;
 						}
+						
+						unset($temp);
 					
 					}else{
 						
@@ -118,8 +120,6 @@
 			}elseif($vars['old']){
 					$this->session->unset_userdata('qs');
 			}
-			
-			
 
 			return $vars;
 		}
@@ -153,19 +153,11 @@
 
 			}
 			
-			$temp = array();
+			if(!empty($filters['mfy']))
+				$filters['mfy'] = array('min' => min($filters['mfy']), 'max' => max($filters['mfy']));
 			
-			if(!empty($filters['mfy'])){
-				$temp['min'] = min($filters['mfy']);
-				$temp['max'] = max($filters['mfy']);
-				$filters['mfy'] = $temp;
-			}
-			
-			if(!empty($filters['mfr'])){
-				$temp['min'] = floor(min($filters['mfr']));
-				$temp['max'] = ceil(max($filters['mfr']));
-				$filters['mfr'] = $temp;
-			}
+			if(!empty($filters['mfr']))
+				$filters['mfr'] = array('min' => floor(min($filters['mfr'])), 'max' => ceil(max($filters['mfr'])));
 			
 			return $filters;
 			
@@ -180,6 +172,8 @@
 			
 			foreach($vars as $var)
 				$filters[$var] = $temp[$var];
+				
+			unset($temp);
 			
 			return $filters;
 			
