@@ -5,6 +5,7 @@
 		function __construct(){
 			parent::__construct();
 			
+			//$this->output->enable_profiler(TRUE);
 			$this->load->model('movie_m');
 			
 		}
@@ -12,23 +13,16 @@
 		public function index(){
 			
 			$tables = $this->_set_tables();
-			$vars = $this->_set_vars($this->get_vars);
+			$vars = qs_filter($this->get_vars, $this->filter_def);
+			$filter_col = array('mfg' => 'gnr_id', 'mfc' => 'cntry_id', 'mfy' => 'mvs_year', 'mfr' => 'mvs_rating');
 			
-			if(isset($vars['plus']) || isset($vars['minus'])){
-				$filters = $this->_filter_filters($vars['current']);
-				
-				if(isset($vars['plus']) && !isset($vars['minus']) && count($vars['plus']) == 1)
-					$filters = $this->_get_sel($filters, $vars['plus']);
-				elseif(isset($vars['minus']) && !isset($vars['plus']) && count($vars['minus']) == 1)
-					$filters = $this->_get_sel($filters, $vars['minus']);
-					
+			if($vars){
+				$filters = $this->_get_unsel($vars, $filter_col, $tables['filter']);
 			}else{
-				
 				$filters = $tables['filter'];
-				
 			}
 			
-			$this->session->set_userdata(array('filters' => $filters));
+			//var_dump($filters);
 
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;
@@ -61,124 +55,103 @@
 			
 		}
 		
-		// VARS
-		private function _set_vars($qs){
+		private function _get_unsel($vars, $filter_col, $tables){
 			
-			$vars['old'] = $this->session->userdata('qs');
-			
-			if($qs){
-
-				$vars['current'] = qs_filter($qs, $this->filter_def);
-				
-				if(count($vars['current']) > 0 && $vars['old'] != $vars['current']){
-					
-					$this->session->set_userdata(array('qs' => $vars['current']));
-					
-					if($vars['old']){
-					
-						$temp = '';
-						
-						foreach($vars['old'] as $key => $val){
-							if(!isset($vars['current'][$key])){
-									
-								$vars['minus'][] = $key;
-									
-							}elseif($vars['current'][$key] != $val){
-								
-								$temp = array_diff($vars['current'][$key], $val);
-									
-								if(count($temp) > 0)
-									$vars['plus'][] = $key;
-									
-								$temp = array_diff($val, $vars['current'][$key]);
-								
-								if(count($temp) > 0)
-									$vars['minus'][] = $key;
-								
-							}
-						}
-						
-						foreach($vars['current'] as $key => $val){
-							 if(!isset($vars['old'][$key]))
-									$vars['plus'][] = $key;
-						}
-						
-						unset($temp);
-					
-					}else{
-						
-						foreach($vars['current'] as $key => $val){
-									$vars['plus'][] = $key;
-						}
-						
-					}
-					
-				}else{
-					unset($vars['current']);
-				}
-
-			}elseif($vars['old']){
-					$this->session->unset_userdata('qs');
-			}
-
-			return $vars;
-		}
-		
-		private function _filter_filters($vars){
-
-			$movies = $this->movie_m->_filters($vars, $this->filter_def);
 			$filters = array('mfc' => array(), 'mfg' => array(), 'mfr' => array(), 'mfy' => array());
+			$unfils = array();
+			
+			foreach($filters as $key => $val){
+				if(!isset($vars[$key]))
+					$unfils[] = $key;
+			}
+			
+			$movies = $this->movie_m->_filters($vars, $this->filter_def);
 			$temp = '';
 			
 			foreach($movies['data'] as $movie){
 				
-				if($movie->gnr_id != '' && $movie->gnr_id != '||'){ // DÜZGÜN DATA OLUNCA KALDIRILACAK
-					$temp = explode('||', trim($movie->gnr_id, '|'));
-					foreach($temp as $t){
-						if(!in_array($t, $filters['mfg']))
-							$filters['mfg'][] = (int)$t;
+				foreach($unfils as $u){
+					$temp = $movie->{$filter_col[$u]};
+					
+					if($temp != '' && $temp != '||' && strpos($temp, '||')){
+						
+						$temp = explode('||', trim($temp, '|'));
+						
+						foreach($temp as $t){
+							
+							$filters[$u][] = $t;
+ 							
+						}
+						
+					}elseif($temp != ''){
+						
+						$filters[$u][] = (int)trim($temp, '|');
+						
 					}
+					
+					if($u != 'mfy' && $u != 'mfr')
+						$filters[$u] = array_filter(array_unique($filters[$u]));
+					else
+						$filters[$u] = array('min' => floor(min($filters[$u])), 'max' => ceil(max($filters[$u])));
 				}
 				
-				if($movie->cntry_id != '' && $movie->cntry_id != '||'){ // DÜZGÜN DATA OLUNCA KALDIRILACAK
-					$temp = explode('||', trim($movie->cntry_id, '|'));
-					foreach($temp as $t){
-						if(!in_array($t, $filters['mfc']))
-							$filters['mfc'][] = (int)$t;
-					}
-				}
-				
-				$filters['mfy'][] = (int)$movie->mvs_year;
-				$filters['mfr'][] = (int)$movie->mvs_rating;
-
 			}
 			
-			if(!empty($filters['mfy']))
-				$filters['mfy'] = array('min' => min($filters['mfy']), 'max' => max($filters['mfy']));
-			
-			if(!empty($filters['mfr']))
-				$filters['mfr'] = array('min' => floor(min($filters['mfr'])), 'max' => ceil(max($filters['mfr'])));
+			if(count($vars) > 1){
+				$filters = $this->_build_filters($vars, $filters, $filter_col);
+			}else{
+				foreach($vars as $key => $val)
+					$filters[$key] = $tables[$key];
+			}
 			
 			return $filters;
 			
 		}
 		
-		private function _get_sel($filters, $vars){
+		private function _build_filters($vars, $filters, $filter_col){
 			
-			$temp = $this->session->userdata('filters');
-
-			if(!$temp)
-				$temp = $tables['filter'];
-			
-			foreach($vars as $var)
-				$filters[$var] = $temp[$var];
+			foreach($vars as $key => $val){
 				
-			unset($temp);
+				$vars_t = $vars;
+				
+				unset($vars_t[$key]);
+				
+				$movies = $this->movie_m->_filters($vars_t, $this->filter_def);
+				$temp = '';
+				
+				foreach($movies['data'] as $movie){
+					
+					$temp = $movie->{$filter_col[$key]};
+					
+					if($temp != '' && $temp != '||' && strpos($temp, '||')){
+						
+						$temp = explode('||', trim($temp, '|'));
+						
+						foreach($temp as $t){
+								$filters[$key][] = (int)$t;
+						}
+						
+					}elseif($temp != ''){
+						
+						$filters[$key][] = (int)trim($temp, '|');
+						
+					}
+					
+					if($key != 'mfy' && $key != 'mfr'){
+						$filters[$key] = array_filter(array_unique($filters[$key]));
+					}else{
+						$filters['mfy'] = array('min' => min($filters['mfy']), 'max' => max($filters['mfy']));
+						$filters['mfr'] = array('min' => floor(min($filters['mfr'])), 'max' => ceil(max($filters['mfr'])));
+					}
+					
+				}
+				
+			}
 			
 			return $filters;
-			
+		
 		}
-	
 	}
+
 
 ?>

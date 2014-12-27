@@ -92,11 +92,8 @@
 				}
 			}
 			
-			if(count($vars) > 0)
-				ksort($vars);
-			else
+			if(count($vars) == 0)
 				$vars = FALSE;
-			
 			
 		}
 		
