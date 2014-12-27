@@ -80,16 +80,19 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .movieListHolder .movieItem.loaded .posterImg{ background-size:cover; }
 
 
-.pageMovies .controllers{height:40px;}
+.pageMovies .controllers{height:60px;}
 .pageMovies .controllers .view{float:right;}
 .pageMovies .filters{}
 .pageMovies .filters .filterList{}
-.pageMovies .filters .filterList > li{position:relative; float:left; width:100px; height:16px;}
+.pageMovies .filters .filterList > li{position:relative; float:left; width:150px; height:16px;}
 .pageMovies .filters .filterList > li > a{}
-.pageMovies .filters .filterList > li .submenu{display:none; height:200px; overflow:auto; width:500px; position:absolute; top:15px; left:0; background:#fff; padding:10px; border:1px solid #ddd;}
+.pageMovies .filters .filterList > li .submenu{display:none; height:200px; overflow:auto; width:500px; position:absolute; top:15px; left:0; background:#fff; padding:10px; border:1px solid #ddd; z-index:3;}
 .pageMovies .filters .filterList > li.active .submenu{display:block;}
 .pageMovies .filters .filterList > li .submenu li{width:100px; float: left; margin-bottom:8px;}
 .pageMovies .filters .filterList > li .submenu li a.selected{color:#ff0000;}
+.pageMovies .filters .filterList > li .sliderHolder{padding:0 10px;}
+.pageMovies .filters .filterList > li .sliderHolder > a{display:block; margin-bottom:15px;}
+.pageMovies .filters .filterList > li.year, .pageMovies .filters .filterList > li.rating{margin-right:20px;}
 
 /* MOVIE DETAIL */
 .pageMovie{}
