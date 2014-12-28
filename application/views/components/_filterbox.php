@@ -1,6 +1,19 @@
 <link href="<?php echo site_url('js/jquery-ui/jquery-ui.css'); ?>" rel="stylesheet">
 <script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
 <section class="filters">
+  <?php if($vars): ?>
+  <div class="choicesHolder none">
+    <div class="chHeader"><span>SELECTIONS</span><a class="clrChoices" href="javascript:void(0);">Clear All</a></div>
+    <div class="choices">
+      <?php foreach($vars as $key => $val): ?>
+        <?php foreach($val as $v): ?>
+            <a grp="<?php echo $key; ?>" rel="<?php echo $v; ?>" href="javascript:void(0);"><span><?php echo $tables[$key][$v]; ?></span></a>
+        <?php endforeach; ?>
+      <?php endforeach; ?>
+    </div>
+    <hr class="qFixer" />
+  </div>
+  <?php endif; ?>
   <div class="boxHeader"></div>
   <div class="boxBody"> 
     <?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING'); ?>
@@ -19,7 +32,7 @@
       </div>
       <?php else: ?>
       <div class="sliderHolder" rel="<?php echo $group; ?>">
-        <a href="javascript:void(0);" class="title"><?php echo $labels[$group]; ?></a>
+        <a class="title"><?php echo $labels[$group]; ?></a>
         <div min="<?php echo $filter['min']; ?>" max="<?php echo $filter['max']; ?>" class="slider"></div>
       </div>
       <?php endif; ?>

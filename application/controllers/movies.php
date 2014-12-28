@@ -13,13 +13,10 @@
 		public function index(){
 			
 			$tables = $this->_set_tables();
-			//$vars = $this->_set_vars($this->get_vars);
-			//$vars['current'] = qs_filter($qs, $this->filter_def);
-			
-
+			$vars = qs_filter($this->get_vars, $this->filter_def);
 			$filters = $tables['filter'];
 
-
+			$this->data['vars'] = $vars;
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;
 			$this->data['subview'] = 'movie/list';

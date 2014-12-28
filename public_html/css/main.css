@@ -15,7 +15,9 @@ hr{display:block;height:0;border:0;margin:0;padding:0;}
 input,select{vertical-align:middle}
 ol,ul,li{list-style:none;}
 
-.qFixer{display:block; width:100%; height:0 !important; font-size:0  !important; overflow:hidden; visibility:hidden; clear:both; float:none !important;}
+.qFixer{display:block; width:100%; height:0 !important; font-size:0  !important; visibility:hidden; clear:both; float:none !important;}
+.none{display:none;}
+.hidden{visibilty:hidden;}
 
 
 /* TEMP CSS */
@@ -59,12 +61,13 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 /* MOVIE LIST */
 .pageMovies{}
-.pageMovies .movieListHolder.row .movieItem{padding:0 0 15px; margin:0 0 15px; border-bottom:1px solid #e6e6e6;}
+.pageMovies .movieListHolder.row .movieItem{padding:0 0 15px; margin:15px 0 0; border-bottom:1px solid #e6e6e6;}
 .pageMovies .movieListHolder.row .movieItem span{display:block; margin-bottom:10px;}
-.pageMovies .movieListHolder.row .movieItem .poster{float:left; margin:0 20px 0 0; width:175px;}
+.pageMovies .movieListHolder.row .movieItem .poster{float:left; margin:0 20px 0 0; width:175px; height:200px;}
 .pageMovies .movieListHolder.row .movieItem .poster img{width:100px;}
-.pageMovies .movieListHolder.row .movieItem .title{margin-bottom:15px; line-height: 16px;}
+.pageMovies .movieListHolder.row .movieItem .title{margin-bottom:15px; line-height:25px;}
 .pageMovies .movieListHolder.row .movieItem .title a{font-size:24px;}
+.pageMovies .movieListHolder.row .seperator{padding:10px; margin:0 0 15px; background:#e6e6e6; display:block; font-size:16px;}
 
 .pageMovies .movieListHolder.grid .movieItem{padding:8px; margin:0 10px 20px 0; background:#E6E6E6; display:inline-block; width:118px; height:300px; vertical-align:top;}
 .pageMovies .movieListHolder.grid > div > div:nth-child(7n){margin-right:0;}
@@ -80,19 +83,27 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .movieListHolder .movieItem.loaded .posterImg{ background-size:cover; }
 
 
-.pageMovies .controllers{height:60px;}
+.pageMovies .controllers{margin-bottom:30px;}
 .pageMovies .controllers .view{float:right;}
 .pageMovies .filters{}
 .pageMovies .filters .filterList{}
-.pageMovies .filters .filterList > li{position:relative; float:left; width:150px; height:16px;}
+.pageMovies .filters .filterList > li{position:relative; float:left; width:150px;}
 .pageMovies .filters .filterList > li > a{}
-.pageMovies .filters .filterList > li .submenu{display:none; height:200px; overflow:auto; width:500px; position:absolute; top:15px; left:0; background:#fff; padding:10px; border:1px solid #ddd; z-index:3;}
+.pageMovies .filters .filterList > li .submenu{display:none; width:978px; position:absolute; top:15px; left:0; background:#fff; padding:10px; border:1px solid #ddd; z-index:3;}
 .pageMovies .filters .filterList > li.active .submenu{display:block;}
-.pageMovies .filters .filterList > li .submenu li{width:100px; float: left; margin-bottom:8px;}
+.pageMovies .filters .filterList > li.active > a{color:#ff0000;}
+.pageMovies .filters .filterList > li .submenu li{width:112px; float: left; margin-bottom:8px; padding-right:8px;}
+.pageMovies .filters .filterList > li .submenu li a{font-size:11px; line-height:15px;}
 .pageMovies .filters .filterList > li .submenu li a.selected{color:#ff0000;}
 .pageMovies .filters .filterList > li .sliderHolder{padding:0 10px;}
 .pageMovies .filters .filterList > li .sliderHolder > a{display:block; margin-bottom:15px;}
 .pageMovies .filters .filterList > li.year, .pageMovies .filters .filterList > li.rating{margin-right:20px;}
+.pageMovies .filters .filterList > li.genre .submenu{left:-150px;}
+.pageMovies .filters .choicesHolder{margin-bottom:20px; padding:15px; border:1px solid #ccc; background:#e6e6e6;}
+.pageMovies .filters .choicesHolder .chHeader{margin-bottom:20px;}
+.pageMovies .filters .choicesHolder .chHeader span{font-weight:bold; padding-right:40px;}
+.pageMovies .filters .choicesHolder .choices a{background:url(../images/choice.png) right top no-repeat; padding-right:20px; display:inline-block; height:26px; vertical-align:middle; margin-right:10px;}
+.pageMovies .filters .choicesHolder .choices a span{background:#fff; padding:5px; height:15px; display:inline-block;}
 
 /* MOVIE DETAIL */
 .pageMovie{}

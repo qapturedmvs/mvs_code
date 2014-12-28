@@ -85,10 +85,8 @@
 			foreach($qs as $key => $val){
 				$val = explode(',', $val);
 				foreach($defs as $def){
-					if(isset($def[$key])){
-						sort($val);
+					if(isset($def[$key]))
 						$vars[$key] = array_map('intval', array_filter($val, "array_is_numeric"));
-					}
 				}
 			}
 			
