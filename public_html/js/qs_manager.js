@@ -1,6 +1,6 @@
 /*
 	
-	QS Manager v2.3 - 2014
+	QS Manager v2.5 - 2014
 	
 */
 
@@ -47,14 +47,18 @@ var qsManager = {
 		var q = this.qto(this.gdata()), url = this.url.replace(this.hash, ''), rUrl;
 				prop = prop.split('|'),
 				param = param.split('|');
+		
+		if(remove == undefined)
+			remove = true;
 				
 		for(var i=0; i<prop.length; i++){
 			if(q[prop[i]] != undefined){
 				sParam = param[i].split(",");
 				for(var j=0; j<sParam.length; j++){
 					if(q[prop[i]].indexOf(sParam[j]) != -1){
-						q[prop[i]].splice(q[prop[i]].indexOf(sParam[j]), 1);
-						
+						if(remove)
+							q[prop[i]].splice(q[prop[i]].indexOf(sParam[j]), 1);
+							
 						if(q[prop[i]] == '')
 							delete q[prop[i]];
 					}else{
@@ -81,10 +85,10 @@ var qsManager = {
 				param = param.split('|');
 		
 		for(var i=0; i<prop.length; i++){
-			if(q[prop[i]] == undefined)
-				q[prop[i]] = param[i];
-			else
+			if(q[prop[i]] != undefined && q[prop[i]] == param[i])
 				delete q[prop[i]];
+			else
+				q[prop[i]] = param[i];
 		}
 		
 		url = (this.query == '') ? url+this.otq(q)+this.hash : url.replace(this.query, this.otq(q))+this.hash;

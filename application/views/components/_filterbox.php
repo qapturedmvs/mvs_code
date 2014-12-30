@@ -65,7 +65,7 @@
       if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
         qsManager.remove(fg);
       else
-        qsManager.mput(fg, ui.values[0]+','+ui.values[1]);
+        qsManager.put(fg, ui.values[0]+','+ui.values[1]);
         //console.log('Group:'+fg+' | defs: '+defs[fg][0]+','+defs[fg][1]+' | vals: '+ui.values[0]+','+ui.values[1]);
     }});
   });
