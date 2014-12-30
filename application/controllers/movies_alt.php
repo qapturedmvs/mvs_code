@@ -23,7 +23,7 @@
 			}
 			
 			//var_dump($filters);
-
+			$this->data['vars'] = $vars;
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;
 			$this->data['subview'] = 'movie/lister';

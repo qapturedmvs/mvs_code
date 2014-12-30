@@ -43,7 +43,7 @@ var qsManager = {
 		}
 		return qs;
 	},
-	mput: function(prop, param, history){
+	mput: function(prop, param, remove, history){
 		var q = this.qto(this.gdata()), url = this.url.replace(this.hash, ''), rUrl;
 				prop = prop.split('|'),
 				param = param.split('|');
@@ -54,6 +54,7 @@ var qsManager = {
 				for(var j=0; j<sParam.length; j++){
 					if(q[prop[i]].indexOf(sParam[j]) != -1){
 						q[prop[i]].splice(q[prop[i]].indexOf(sParam[j]), 1);
+						
 						if(q[prop[i]] == '')
 							delete q[prop[i]];
 					}else{

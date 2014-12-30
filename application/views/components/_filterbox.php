@@ -1,14 +1,16 @@
 <link href="<?php echo site_url('js/jquery-ui/jquery-ui.css'); ?>" rel="stylesheet">
 <script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
 <section class="filters">
-  <?php if($vars): ?>
+  <?php if($vars && (isset($vars['mfg']) || isset($vars['mfc']) || isset($vars['mfa']))): ?>
   <div class="choicesHolder none">
     <div class="chHeader"><span>SELECTIONS</span><a class="clrChoices" href="javascript:void(0);">Clear All</a></div>
     <div class="choices">
       <?php foreach($vars as $key => $val): ?>
-        <?php foreach($val as $v): ?>
-            <a grp="<?php echo $key; ?>" rel="<?php echo $v; ?>" href="javascript:void(0);"><span><?php echo $tables[$key][$v]; ?></span></a>
-        <?php endforeach; ?>
+        <?php if($key != 'mfr' && $key != 'mfy'): ?>
+          <?php foreach($val as $v): ?>
+              <a grp="<?php echo $key; ?>" rel="<?php echo $v; ?>" href="javascript:void(0);"><span><?php echo $tables[$key][$v]; ?></span></a>
+          <?php endforeach; ?>
+        <?php endif; ?>
       <?php endforeach; ?>
     </div>
     <hr class="qFixer" />
@@ -46,19 +48,25 @@
 <script type="text/javascript">
   var defs = [], vals, fg, qs = window.location.search;
   $('.sliderHolder').each(function(){
-    defs['min'] = parseFloat($('.slider', this).attr("min"));
-    defs['max'] = parseFloat($('.slider', this).attr("max"));
     fg = $(this).attr("rel");
+    defs[fg] = [];
+    defs[fg][0] = parseFloat($('.slider', this).attr("min"));
+    defs[fg][1] = parseFloat($('.slider', this).attr("max"));
+    
     if(qs.indexOf(fg+'=') != -1){
       vals = qsManager.get(fg).split(',');
     }else{
-      vals = [defs['min'],defs['max']];
+      vals = [defs[fg][0],defs[fg][1]];
     }
     
-    
-    $('.slider', this).slider({max:defs['max'], min:defs['min'], range:true, values:vals, change:function(event, ui){
+    $('.slider', this).slider({max:defs[fg][1], min:defs[fg][0], range:true, values:vals, change:function(event, ui){
       fg = $(this).parents('.sliderHolder').attr("rel");
-      qsManager.mput(fg, ui.values[0]+','+ui.values[1]);
+      
+      if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
+        qsManager.remove(fg);
+      else
+        qsManager.mput(fg, ui.values[0]+','+ui.values[1]);
+        //console.log('Group:'+fg+' | defs: '+defs[fg][0]+','+defs[fg][1]+' | vals: '+ui.values[0]+','+ui.values[1]);
     }});
   });
 </script>
