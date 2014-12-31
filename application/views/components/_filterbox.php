@@ -35,7 +35,10 @@
       <?php else: ?>
       <div class="sliderHolder" rel="<?php echo $group; ?>">
         <a class="title"><?php echo $labels[$group]; ?></a>
+        <span class="limits min"></span>
         <div min="<?php echo $filter['min']; ?>" max="<?php echo $filter['max']; ?>" class="slider"></div>
+        <span class="limits max"></span>
+        <hr class="qFixer" />
       </div>
       <?php endif; ?>
     </li>
@@ -46,7 +49,7 @@
   <div class="boxFooter"></div>
 </section>
 <script type="text/javascript">
-  var defs = [], vals, fg, qs = window.location.search;
+  var defs = [], vals = [], fg, qs = window.location.search;
   $('.sliderHolder').each(function(){
     fg = $(this).attr("rel");
     defs[fg] = [];
@@ -54,19 +57,20 @@
     defs[fg][1] = parseFloat($('.slider', this).attr("max"));
     
     if(qs.indexOf(fg+'=') != -1){
-      vals = qsManager.get(fg).split(',');
+      vals[fg] = qsManager.get(fg).split(',');
     }else{
-      vals = [defs[fg][0],defs[fg][1]];
+      vals[fg] = [defs[fg][0],defs[fg][1]];
     }
     
-    $('.slider', this).slider({max:defs[fg][1], min:defs[fg][0], range:true, values:vals, change:function(event, ui){
+    $('.slider', this).slider({max:defs[fg][1], min:defs[fg][0], range:true, values:vals[fg], change:function(event, ui){
       fg = $(this).parents('.sliderHolder').attr("rel");
       
-      if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
-        qsManager.remove(fg);
-      else
-        qsManager.put(fg, ui.values[0]+','+ui.values[1]);
-        //console.log('Group:'+fg+' | defs: '+defs[fg][0]+','+defs[fg][1]+' | vals: '+ui.values[0]+','+ui.values[1]);
+      if(ui.values[0] != vals[fg][0] || ui.values[1] != vals[fg][1]){
+        if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
+          qsManager.remove(fg);
+        else
+          qsManager.put(fg, ui.values[0]+','+ui.values[1], false);
+      }
     }});
   });
 </script>
