@@ -50,6 +50,12 @@
 </section>
 <script type="text/javascript">
   var defs = [], vals = [], fg, qs = window.location.search;
+  
+  function set_slider_vals(obj, min, max){
+    $('span.min', obj).text(min);
+    $('span.max', obj).text(max);
+  }
+  
   $('.sliderHolder').each(function(){
     fg = $(this).attr("rel");
     defs[fg] = [];
@@ -58,12 +64,15 @@
     
     if(qs.indexOf(fg+'=') != -1){
       vals[fg] = qsManager.get(fg).split(',');
+      set_slider_vals(this, vals[fg][0], vals[fg][1]);
     }else{
       vals[fg] = [defs[fg][0],defs[fg][1]];
+      set_slider_vals(this, defs[fg][0], defs[fg][1]);
     }
     
     $('.slider', this).slider({max:defs[fg][1], min:defs[fg][0], range:true, values:vals[fg], change:function(event, ui){
       fg = $(this).parents('.sliderHolder').attr("rel");
+      
       
       if(ui.values[0] != vals[fg][0] || ui.values[1] != vals[fg][1]){
         if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
@@ -71,6 +80,11 @@
         else
           qsManager.put(fg, ui.values[0]+','+ui.values[1], false);
       }
-    }});
+    },
+    slide:function(event, ui){
+      var obj = $(this).parents('.sliderHolder');
+      set_slider_vals(obj, ui.values[0], ui.values[1]);
+    }
+    });
   });
 </script>

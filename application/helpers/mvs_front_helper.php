@@ -97,3 +97,26 @@
 		
 		return $vars;
 	}
+	
+	// Creating cache id by query string
+	function get_cache_id($vars){
+		
+		$id = '';
+		
+		if($vars){
+			
+			ksort($vars);
+			
+			foreach($vars as $key => $val){
+				
+				sort($val);
+				$sep = ($id == '') ? '' : '_';
+				$id .= $sep.$key.'-'.implode('-', $val);
+				
+			}
+		}
+		
+		return $id;
+		
+	}
+	

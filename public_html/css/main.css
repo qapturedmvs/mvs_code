@@ -88,16 +88,21 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .filters{}
 .pageMovies .filters .filterList{}
 .pageMovies .filters .filterList > li{position:relative; float:left; width:150px;}
-.pageMovies .filters .filterList > li > a{}
+.pageMovies .filters .filterList > li > a{display:inline-block; height:15px;}
 .pageMovies .filters .filterList > li .submenu{display:none; width:978px; position:absolute; top:15px; left:0; background:#fff; padding:10px; border:1px solid #ddd; z-index:3;}
 .pageMovies .filters .filterList > li.active .submenu{display:block;}
 .pageMovies .filters .filterList > li.active > a{color:#ff0000;}
 .pageMovies .filters .filterList > li .submenu li{width:112px; float: left; margin-bottom:8px; padding-right:8px;}
 .pageMovies .filters .filterList > li .submenu li a{font-size:11px; line-height:15px;}
 .pageMovies .filters .filterList > li .submenu li a.selected{color:#ff0000;}
-.pageMovies .filters .filterList > li .sliderHolder{padding:0 10px;}
+.pageMovies .filters .filterList > li.year{width:200px;}
+.pageMovies .filters .filterList > li.rating .sliderHolder{padding:0 25px;}
+.pageMovies .filters .filterList > li.year .sliderHolder{padding:0 45px;}
 .pageMovies .filters .filterList > li .sliderHolder > a{display:block; margin-bottom:15px;}
-.pageMovies .filters .filterList > li.year, .pageMovies .filters .filterList > li.rating{margin-right:20px;}
+.pageMovies .filters .filterList > li .sliderHolder span.limits{position:absolute; bottom:0;}
+.pageMovies .filters .filterList > li .sliderHolder span.limits.min{left:0;}
+.pageMovies .filters .filterList > li .sliderHolder span.limits.max{right:0;}
+.pageMovies .filters .filterList > li.year, .pageMovies .filters .filterList > li.rating{margin-right:40px;}
 .pageMovies .filters .filterList > li.genre .submenu{left:-150px;}
 .pageMovies .filters .choicesHolder{margin-bottom:20px; padding:15px; border:1px solid #ccc; background:#e6e6e6;}
 .pageMovies .filters .choicesHolder .chHeader{margin-bottom:20px;}

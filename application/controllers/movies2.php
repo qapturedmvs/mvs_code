@@ -1,12 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Movies extends Frontend_Controller{
+	class Movies2 extends Frontend_Controller{
 		
 		function __construct(){
 			parent::__construct();
 			
 			$this->output->enable_profiler(TRUE);
 			$this->load->model('movie_m');
+			$this->load->driver('cache', array('adapter' => 'file', 'backup' => 'apc'));
 			
 		}
 		
@@ -15,14 +16,17 @@
 			$tables = $this->_set_tables();
 			$vars = qs_filter($this->get_vars, $this->filter_def);
 			$filter_col = array('mfg' => 'gnr_id', 'mfc' => 'cntry_id', 'mfy' => 'mvs_year', 'mfr' => 'mvs_rating');
+			$cache_id = get_cache_id($vars);
 			
 			if($vars){
-				$filters = $this->_get_unsel($vars, $filter_col, $tables['filter']);
+				if(!$filters = $this->cache->get($cache_id)){
+					$filters = $this->_get_unsel($vars, $filter_col, $tables['filter']);
+					$this->cache->save($cache_id, $filters, 600);
+				}
 			}else{
 				$filters = $tables['filter'];
 			}
-			
-			//var_dump($filters);
+
 			$this->data['vars'] = $vars;
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;
@@ -48,8 +52,8 @@
 				$tables['filter']['mfg'][] = (int)$item['gnr_id'];
 			}
 
-			$tables['table']['mfr'] = $tables['filter']['mfr'] = array('min' => 1, 'max' => 10);
-			$tables['table']['mfy'] = $tables['filter']['mfy'] = array('min' => 1950, 'max' => 2014);
+			$tables['table']['mfr'] = $tables['filter']['mfr'] = array('min' => 1, 'max' => 6);
+			$tables['table']['mfy'] = $tables['filter']['mfy'] = array('min' => 1950, 'max' => 2002);
 			
 			return $tables;
 			
@@ -79,7 +83,7 @@
 						
 						foreach($temp as $t){
 							
-							$filters[$u][] = $t;
+							$filters[$u][] = (int)$t;
  							
 						}
 						
@@ -89,10 +93,12 @@
 						
 					}
 					
-					if($u != 'mfy' && $u != 'mfr')
+					if($u != 'mfy' && $u != 'mfr'){
 						$filters[$u] = array_filter(array_unique($filters[$u]));
-					else
+						sort($filters[$u]);
+					}else{
 						$filters[$u] = array('min' => floor(min($filters[$u])), 'max' => ceil(max($filters[$u])));
+					}
 				}
 				
 			}
@@ -139,6 +145,7 @@
 					
 					if($key != 'mfy' && $key != 'mfr'){
 						$filters[$key] = array_filter(array_unique($filters[$key]));
+						sort($filters[$key]);
 					}else{
 						$filters['mfy'] = array('min' => min($filters['mfy']), 'max' => max($filters['mfy']));
 						$filters['mfr'] = array('min' => floor(min($filters['mfr'])), 'max' => ceil(max($filters['mfr'])));
