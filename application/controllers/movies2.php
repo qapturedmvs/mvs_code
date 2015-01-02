@@ -30,7 +30,7 @@
 			$this->data['vars'] = $vars;
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;
-			$this->data['subview'] = 'movie/lister';
+			$this->data['subview'] = 'movie/list';
 			$this->load->view('_main_body_layout', $this->data);
 			
 		}
@@ -147,8 +147,7 @@
 						$filters[$key] = array_filter(array_unique($filters[$key]));
 						sort($filters[$key]);
 					}else{
-						$filters['mfy'] = array('min' => min($filters['mfy']), 'max' => max($filters['mfy']));
-						$filters['mfr'] = array('min' => floor(min($filters['mfr'])), 'max' => ceil(max($filters['mfr'])));
+						$filters[$key] = array('min' => floor(min($filters[$key])), 'max' => ceil(max($filters[$key])));
 					}
 					
 				}

@@ -56,14 +56,23 @@ if(exist($('.pageMovies'))){
 				temp += (i == 0) ? grp : '|'+grp;
 		});
 		
+		if(qs.indexOf('mfy') != -1)
+			temp += '|mfy';
+		
+		if(qs.indexOf('mfr') != -1)
+			temp += '|mfr';
+		
 		qsManager.remove(temp);
 	});
 	
 	$('.choices a').click(function(){
 		id = $(this).attr("rel"),
 		grp = $(this).attr("grp");
-
-		qsManager.mput(grp, id);
+		
+		if(id != undefined)
+			qsManager.mput(grp, id);
+		else
+			qsManager.remove(grp);
 	});
 	
 	$('.filters .submenu a').click(function(){

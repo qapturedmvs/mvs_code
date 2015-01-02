@@ -78,18 +78,6 @@ class Movie_M extends MVS_Model
 	}
 	
 	public function getCastList($id){
-// 		$query = "SELECT mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name FROM mvs_cast 
-// 					INNER JOIN mvs_stars ON mvs_cast.str_id = mvs_stars.str_id
-// 					WHERE mvs_id = 510;";
-		
-// 		$casts = $this->db->query($query)->result();
-
-		//$this->db->cache_on();
-// 		$this->db->select('mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name');
-// 		$this->db->from('mvs_cast');
-// 		$this->db->join('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner');
-// 		$this->db->where('mvs_id', $id);
-// 		$casts = $this->db->get()->result();
 
 		$filters = array(
 				'select' => 'mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name', 

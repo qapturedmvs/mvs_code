@@ -1,3 +1,8 @@
+<style type="text/css">
+#ci_profiler_benchmarks{position:absolute; top:0; margin:0 !important; width:97%;}
+#qContainer{margin-top:100px;}
+</style>
+
 <div class="pageDefault pageMovies">
 	<div class="controllers">
 		<?php $this->load->view('components/_filterbox'); ?>
