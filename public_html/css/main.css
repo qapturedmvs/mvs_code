@@ -165,3 +165,18 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageActor .detail .movies .filmography li span.movie{display:inline-block; width:300px; float:left;}
 .pageActor .detail .movies .filmography li span.movie a:hover{text-decoration:underline;}
 .pageActor .detail .movies .filmography li span.character{color:#555; float:left;}
+
+/* SEARCH */
+.pageSearch{}
+.pageSearch h1{margin-bottom:30px; font-size:18px;}
+.pageSearch h4{margin-bottom:15px; font-size:16px;}
+.pageSearch .results{}
+.pageSearch .results a.more{font-weight:bold;}
+.pageSearch .results .movies{padding-bottom:20px; border-bottom:1px solid #e6e6e6;}
+.pageSearch .results .movies ul{margin-bottom:15px;}
+.pageSearch .results .movies li{margin-bottom:10px;}
+.pageSearch .results .movies li a span{font-size:14px;}
+.pageSearch .results .stars{margin-top:20px;}
+.pageSearch .results .stars ul{margin-bottom:15px;}
+.pageSearch .results .stars li{margin-bottom:10px;}
+.pageSearch .results .stars li a span{font-size:14px;}

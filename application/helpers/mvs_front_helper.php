@@ -17,7 +17,17 @@
 	
 	function getCoverPath($slug, $size){
 		
-		$size = ($size == 'medium') ? '_175x240_' : '';
+		switch($size){
+			
+			case 'medium':
+				$size = '_175x240_';
+				break;
+			
+			case 'small':
+				$size = '_60X85_';
+			break;
+			
+		}
 		
 		return 'data/movies/thumbs/'.$slug.$size.'.jpg';
 	

@@ -41,6 +41,7 @@ class MVS_Model extends CI_Model {
 						
 					if($id != NULL){
 						$this->db->where($this->_primary_key, $id);
+						$this->per_page = 1;
 						$method = 'row';
 					}
 				
@@ -52,7 +53,7 @@ class MVS_Model extends CI_Model {
 				
 				if($count != 'ONLY'){
 								
-					if($this->per_page !== 0 && $id == NULL)
+					if($this->per_page !== 0)
 						$this->db->limit($this->per_page, $offset);
 					
 					if($cache) $this->db->cache_on(); // File cache for query results
