@@ -1,5 +1,5 @@
-
-var siteUrl = $('#hdnSiteUrl').val();
+// GLOBAL VARIABLE
+var site_url = $('#mvs_site_url').val(), qs = window.location.search;
 
 // Obj Exist
 function exist(obj){
@@ -34,7 +34,7 @@ if(exist($('.pageMovies'))){
 		$(this).removeClass("active");
 	});
 	
-	var qs = window.location.search, fg, fi;
+	var fg, fi;
 	
 	if(qs != ''){
 		var qObj = qsManager.qto(qs), id, grp, temp;
@@ -82,4 +82,67 @@ if(exist($('.pageMovies'))){
 		qsManager.mput(fg, fi);
 	});
 	
+	// infinite-Scroll
+	infiniteScroll('ajx/movie_ajx/lister/');
+}
+
+
+
+function infiniteScroll( uri ){
+	var myApp = angular.module('infiniteScrollApp', ['infinite-scroll']);
+		myApp.config(['$httpProvider', function( $httpProvider ){ $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'; }]);
+		myApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
+		myApp.factory('Reddit', function( $http ){
+		  var Reddit = function() {
+			this.items = [];
+			this.busy = false;
+			this.noResult = false;
+			this.after = 1;
+		  };
+		  Reddit.prototype.nextPage = function() {
+			if( this.busy || this.noResult ) return;
+				this.busy = true;	
+			
+			var url = site_url + uri + this.after + qs;
+			
+			$http.get(url).success(function(d) {
+		
+			  if( d['result'] == 'OK' ){
+				
+				//
+				for(var i = 0; i < d['data'].length; ++i){
+					var items = d['data'][ i ];
+						items['type'] = 0;
+						items['mvs_genre'] = items['mvs_genre'].toString();
+						items['mvs_country'] = items['mvs_country'].toString();					
+						if( items['mvs_poster'] == null )
+							items['mvs_poster'] = 'images/placeHolder.jpg';
+					this.items.push( items );
+				}
+				
+				//
+				if( d['data'].length < 100 ){
+					this.busy = false;
+					this.noResult = true;
+				}else{
+					this.after++;
+					this.busy = false;
+					this.items.push( { 'type': 1, 'paging': this.after } );
+				}
+				
+				// TRIGGER LAZYLOAD
+				setTimeout(function(){
+					if( $("div.lazy").length > 0 )
+						$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
+				}, 1);
+				
+			  }else{
+				this.busy = false;
+				this.noResult = true;
+				this.items.push( { 'type': 2, 'result': 'No Result' } );
+			  }
+			}.bind(this));
+		  };
+		  return Reddit;
+		});
 }
