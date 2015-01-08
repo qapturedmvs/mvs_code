@@ -2,10 +2,13 @@
 
 	class Movies2 extends Frontend_Controller{
 		
+		private $filter_defs;
+		
 		function __construct(){
 			parent::__construct();
 			
 			$this->output->enable_profiler(TRUE);
+			$this->filter_defs = $this->filter_def;
 			$this->load->model('movie_m');
 			$this->load->driver('cache', array('adapter' => 'file', 'backup' => 'apc'));
 			
@@ -13,8 +16,8 @@
 		
 		public function index(){
 			
-			$tables = $this->_set_tables();
-			$vars = qs_filter($this->get_vars, $this->filter_def);
+			$tables = $this->_set_tables($this->filter_defs);
+			$vars = qs_filter($this->get_vars, $this->filter_defs);
 			$filter_col = array('mfg' => 'gnr_id', 'mfc' => 'cntry_id', 'mfy' => 'mvs_year', 'mfr' => 'mvs_rating');
 			$cache_id = get_cache_id($vars);
 			
@@ -36,24 +39,23 @@
 		}
 		
 		// TEMP FUNCTION
-		private function _set_tables(){
+		private function _set_tables($filter_def){
 			
 			$tables = array();
-			$db_data['genres'] = $this->movie_m->_genres(NULL, 'result_array');
-			$db_data['countries'] = $this->movie_m->_countries(NULL, 'result_array');
 			
-			foreach($db_data['countries']['data'] as $item){
-				$tables['table']['mfc'][(int)$item['cntry_id']] = $item['cntry_title'];
-				$tables['filter']['mfc'][] = (int)$item['cntry_id'];
-			}
-			
-			foreach($db_data['genres']['data'] as $item){
-				$tables['table']['mfg'][(int)$item['gnr_id']] = $item['gnr_title'];
-				$tables['filter']['mfg'][] = (int)$item['gnr_id'];
+			foreach($filter_def['like'] as $key => $val){
+				
+				$db_data[$val[1]] = $this->movie_m->{$val[1]}(NULL, 'result_array');
+				
+				foreach($db_data[$val[1]]['data'] as $item){
+					$tables['table'][$key][(int)$item[$val[0]]] = $item[$val[2]];
+					$tables['filter'][$key][] = (int)$item[$val[0]];
+				}
+				
 			}
 
-			$tables['table']['mfr'] = $tables['filter']['mfr'] = array('min' => 1, 'max' => 6);
-			$tables['table']['mfy'] = $tables['filter']['mfy'] = array('min' => 1950, 'max' => 2002);
+			$tables['table']['mfr'] = $tables['filter']['mfr'] = array('min' => 1, 'max' => 10);
+			$tables['table']['mfy'] = $tables['filter']['mfy'] = array('min' => 1950, 'max' => 2014);
 			
 			return $tables;
 			
@@ -69,7 +71,7 @@
 					$unfils[] = $key;
 			}
 			
-			$movies = $this->movie_m->_filters($vars, $this->filter_def);
+			$movies = $this->movie_m->_filters($vars, $this->filter_defs);
 			$temp = '';
 			
 			foreach($movies['data'] as $movie){
@@ -122,7 +124,7 @@
 				
 				unset($vars_t[$key]);
 				
-				$movies = $this->movie_m->_filters($vars_t, $this->filter_def);
+				$movies = $this->movie_m->_filters($vars_t, $this->filter_defs);
 				$temp = '';
 				
 				foreach($movies['data'] as $movie){

@@ -45,7 +45,7 @@
 		
 					foreach($val as $v){
 								$sSep = ($where_or == '') ? '' : ' OR ';
-								$where_or .= $sSep.$allFilters['like'][$key]." LIKE '%|".$v."|%'";
+								$where_or .= $sSep.$allFilters['like'][$key][0]." LIKE '%|".$v."|%'";
 					}
 					
 					if($where_or != ''){
@@ -59,7 +59,7 @@
 					
 					foreach($val as $v){
 						$sSep = ($where_or == '') ? '' : ' OR ';
-						$where_or .= $sSep.$allFilters['equal'][$key].' = '.$v;
+						$where_or .= $sSep.$allFilters['equal'][$key][0].' = '.$v;
 					}
 					
 					if($where_or != ''){

@@ -50,7 +50,7 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Get all genres
-	public function _genres($ids = NULL, $type = NULL){
+	public function genres($ids = NULL, $type = NULL){
 	
 		$this->_table_name = 'mvs_genres';
 		$this->_primary_key = 'gnr_id';
@@ -74,7 +74,7 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Get all countries
-	public function _countries($ids = NULL, $type = NULL){
+	public function countries($ids = NULL, $type = NULL){
 	
 		$this->_table_name = 'mvs_country';
 		$this->_primary_key = 'cntry_id';

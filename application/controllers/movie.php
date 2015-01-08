@@ -38,13 +38,13 @@
 					
 					if($movie['data']->cntry_id != ''){
 								$cntId = str_replace('||', ',', trim($movie['data']->cntry_id, '|'));
-								$countries = $this->movie_m->_countries('cntry_id IN('.$cntId.')');
+								$countries = $this->movie_m->countries('cntry_id IN('.$cntId.')');
 								$this->data['countries'] = $countries['data'];
 					}
 					
 					if($movie['data']->gnr_id != ''){
 								$gnrId = str_replace('||', ',', trim($movie['data']->gnr_id, '|'));
-								$genres = $this->movie_m->_genres('gnr_id IN('.$gnrId.')');
+								$genres = $this->movie_m->genres('gnr_id IN('.$gnrId.')');
 								$this->data['genres'] = $genres['data'];
 					}
 					

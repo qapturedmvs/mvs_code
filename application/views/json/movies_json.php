@@ -6,7 +6,7 @@
 		
 	}else{
 		
-		echo "Access Denied";
+		show_404();
 		
 	} 
 
