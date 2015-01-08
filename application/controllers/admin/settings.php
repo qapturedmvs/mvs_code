@@ -17,7 +17,7 @@ class Settings extends Backend_Controller {
 		
 		if ($this->form_validation->run('adm_settings_general') == TRUE) {
 			
-			// Settings'deki yeni alanlar buradaki array'e, settings_m'deki rules array'ine ve mvs_adm_config dosyasına eklenmeli
+			// Settings'deki yeni alanlar buradaki array'e, settings_m'deki rules array'ine ve mvs_config dosyasına eklenmeli
 			$temp = $this->settings_m->array_from_post(array('mvs_site_name', 'mvs_cache_expire', 'mvs_img_path', 'mvs_img_l_size', 'mvs_img_d_size'));
 			$sets = array();
 

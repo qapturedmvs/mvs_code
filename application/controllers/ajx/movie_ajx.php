@@ -23,9 +23,9 @@
 				$db_data = $this->movie_m->movies_json($offset, $vars, $this->filter_def);
 				$movies = $db_data['data'];
 				$db_data = $this->movie_m->countries();
-				$countries = $db_data['data'];
+				$countries = $db_data;
 				$db_data = $this->movie_m->genres();
-				$genres = $db_data['data'];
+				$genres = $db_data;
 				$json = (object) array();
 		
 				if($movies){
@@ -36,7 +36,7 @@
 						$temp = array();
 					
 						for($i=0; $i<count($g); $i++){
-							$key = getItemFromObj($genres, $g[$i], 'gnr_id', 'gnr_title');
+							$key = getItemFromArray($genres, $g[$i], 'gnr_id', 'gnr_title');
 							array_push($temp, trim($key, ' '));
 						}
 							
@@ -44,7 +44,7 @@
 						$temp = array();
 							
 						for($i=0; $i<count($c); $i++){
-							$key = getItemFromObj($countries, $c[$i], 'cntry_id', 'cntry_title');
+							$key = getItemFromArray($countries, $c[$i], 'cntry_id', 'cntry_title');
 							array_push($temp, trim($key, ' '));
 						}
 							

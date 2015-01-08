@@ -15,6 +15,21 @@
 	
 	}
 	
+	function getItemFromArray($arrs, $val, $key1, $key2){
+		
+		$item = NULL;
+		
+		foreach($arrs as $arr) {
+			if ($arr[$key1] == $val){
+				$item = $arr[$key2];
+				break;
+			}
+		}
+		
+		return $item;
+	
+	}
+	
 	function getCoverPath($slug, $size){
 		
 		switch($size){

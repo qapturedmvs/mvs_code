@@ -10,7 +10,6 @@
 			$this->output->enable_profiler(TRUE);
 			$this->filter_defs = $this->filter_def;
 			$this->load->model('movie_m');
-			$this->load->driver('cache', array('adapter' => 'file', 'backup' => 'apc'));
 			
 		}
 		
@@ -45,9 +44,9 @@
 			
 			foreach($filter_def['like'] as $key => $val){
 				
-				$db_data[$val[1]] = $this->movie_m->{$val[1]}(NULL, 'result_array');
+				$db_data[$val[1]] = $this->movie_m->{$val[1]}();
 				
-				foreach($db_data[$val[1]]['data'] as $item){
+				foreach($db_data[$val[1]] as $item){
 					$tables['table'][$key][(int)$item[$val[0]]] = $item[$val[2]];
 					$tables['filter'][$key][] = (int)$item[$val[0]];
 				}

@@ -39,13 +39,13 @@
 					if($movie['data']->cntry_id != ''){
 								$cntId = str_replace('||', ',', trim($movie['data']->cntry_id, '|'));
 								$countries = $this->movie_m->countries('cntry_id IN('.$cntId.')');
-								$this->data['countries'] = $countries['data'];
+								$this->data['countries'] = $countries;
 					}
 					
 					if($movie['data']->gnr_id != ''){
 								$gnrId = str_replace('||', ',', trim($movie['data']->gnr_id, '|'));
 								$genres = $this->movie_m->genres('gnr_id IN('.$gnrId.')');
-								$this->data['genres'] = $genres['data'];
+								$this->data['genres'] = $genres;
 					}
 					
 					// Setting meta_tags object

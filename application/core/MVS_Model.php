@@ -13,6 +13,9 @@ class MVS_Model extends CI_Model {
 	
 	function __construct() {
 		parent::__construct();
+
+		$this->load->driver('cache', $this->config->item('cache_sets'));
+		
 	}
 	
 	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL, $cache = FALSE){

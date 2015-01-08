@@ -10,7 +10,7 @@
 						<div class="genre">
 							<ul>
 								<?php foreach($genres as $genre): ?>
-								<li><?php echo $genre->gnr_title; ?></li>
+								<li><?php echo $genre['gnr_title']; ?></li>
 								<?php endforeach; ?>
 							</ul>
 							<hr class="qFixer" />
@@ -18,7 +18,7 @@
 						<div class="country">
 							<ul>
 								<?php foreach($countries as $country): ?>
-								<li><?php echo $country->cntry_title; ?></li>
+								<li><?php echo $country['cntry_title']; ?></li>
 								<?php endforeach; ?>
 							</ul>
 							<hr class="qFixer" />

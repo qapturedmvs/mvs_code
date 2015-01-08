@@ -29,7 +29,7 @@ class Movie_M extends MVS_Model
 		
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
 		
-		if (count($movies['data']))
+		if(count($movies['data']))
 			return $movies;
 		else
 			return FALSE;
@@ -42,7 +42,7 @@ class Movie_M extends MVS_Model
 		$id = $this->cleaner($id);
 		$movie = $this->get_data($id, 0, FALSE, NULL);
 	
-		if (count($movie['data']) == 1)
+		if(count($movie['data']) == 1)
 			return $movie;
 		else
 			return FALSE;
@@ -50,23 +50,26 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Get all genres
-	public function genres($ids = NULL, $type = NULL){
+	public function genres($ids = NULL){
 	
 		$this->_table_name = 'mvs_genres';
 		$this->_primary_key = 'gnr_id';
 		$this->_order_by = 'gnr_id';
 		$this->per_page = 0;
-		$filters = NULL;
+		$filters['method'] = 'result_array';
 		
-		if($type != NULL)
-				$filters['method'] = 'result_array';
-
-    if($ids != NULL)
+		if($ids != NULL){
 				$filters['where'] = $ids;
-
-		$genres = $this->get_data(NULL, 0, FALSE, $filters);
+				$genres = $this->get_data(NULL, 0, FALSE, $filters);
+				$genres = $genres['data'];
+		}else{
+				if(!$genres = $this->cache->get('genres')){
+						$genres = $this->get_data(NULL, 0, FALSE, $filters);
+						$this->cache->save('genres', $genres['data'], 600);
+				}
+		}
 	
-		if (count($genres['data']))
+		if(count($genres))
 			return $genres;
 		else
 			return FALSE;
@@ -74,23 +77,26 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Get all countries
-	public function countries($ids = NULL, $type = NULL){
+	public function countries($ids = NULL){
 	
 		$this->_table_name = 'mvs_country';
 		$this->_primary_key = 'cntry_id';
 		$this->_order_by = 'cntry_id';
 		$this->per_page = 0;
-		$filters = NULL;
-		
-		if($type != NULL)
-				$filters['method'] = 'result_array';	
+		$filters['method'] = 'result_array';	
 
-    if($ids != NULL)
+    if($ids != NULL){
 				$filters['where'] = $ids;
-			
-		$countries = $this->get_data(NULL, 0, FALSE, $filters);
+				$countries = $this->get_data(NULL, 0, FALSE, $filters);
+				$countries = $countries['data'];
+    }else{
+				if(!$countries = $this->cache->get('countries')){
+						$countries = $this->get_data(NULL, 0, FALSE, $filters);
+						$this->cache->save('countries', $countries['data'], 600);
+				}
+		}
 
-		if (count($countries['data']))
+		if(count($countries))
 			return $countries;
 		else
 			return FALSE;
@@ -110,7 +116,7 @@ class Movie_M extends MVS_Model
 
 		$casts = $this->get_data(NULL, 0, FALSE, $filters);
 	
-		if (count($casts['data']))
+		if(count($casts['data']))
 			return $casts;
 		else
 			return FALSE;
@@ -130,7 +136,7 @@ class Movie_M extends MVS_Model
 
 				$movies = $this->get_data(NULL, 0, FALSE, $filters);
 				
-				if (count($movies['data']))
+				if(count($movies['data']))
 					return $movies;
 				else
 				  return FALSE;
