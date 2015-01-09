@@ -66,6 +66,7 @@ class Movie_M extends MVS_Model
 				if(!$genres = $this->cache->get('genres')){
 						$genres = $this->get_data(NULL, 0, FALSE, $filters);
 						$this->cache->save('genres', $genres['data'], 600);
+						$genres = $genres['data'];
 				}
 		}
 	
@@ -93,6 +94,7 @@ class Movie_M extends MVS_Model
 				if(!$countries = $this->cache->get('countries')){
 						$countries = $this->get_data(NULL, 0, FALSE, $filters);
 						$this->cache->save('countries', $countries['data'], 600);
+						$countries = $countries['data'];
 				}
 		}
 
