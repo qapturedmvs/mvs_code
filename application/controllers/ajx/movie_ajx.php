@@ -36,7 +36,7 @@
 						$temp = array();
 					
 						for($i=0; $i<count($g); $i++){
-							$key = getItemFromArray($genres, $g[$i], 'gnr_id', 'gnr_title');
+							$key = getItemFromObj($genres, $g[$i], 'gnr_id', 'gnr_title');
 							array_push($temp, trim($key, ' '));
 						}
 							
@@ -44,7 +44,7 @@
 						$temp = array();
 							
 						for($i=0; $i<count($c); $i++){
-							$key = getItemFromArray($countries, $c[$i], 'cntry_id', 'cntry_title');
+							$key = getItemFromObj($countries, $c[$i], 'cntry_id', 'cntry_title');
 							array_push($temp, trim($key, ' '));
 						}
 							

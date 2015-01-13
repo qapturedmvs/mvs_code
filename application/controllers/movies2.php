@@ -47,8 +47,8 @@
 				$db_data[$val[1]] = $this->movie_m->{$val[1]}();
 				
 				foreach($db_data[$val[1]] as $item){
-					$tables['table'][$key][(int)$item[$val[0]]] = $item[$val[2]];
-					$tables['filter'][$key][] = (int)$item[$val[0]];
+					$tables['table'][$key][(int)$item->{$val[0]}] = $item->{$val[2]};
+					$tables['filter'][$key][] = (int)$item->{$val[0]};
 				}
 				
 			}

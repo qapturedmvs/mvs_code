@@ -56,7 +56,7 @@ class Movie_M extends MVS_Model
 		$this->_primary_key = 'gnr_id';
 		$this->_order_by = 'gnr_id';
 		$this->per_page = 0;
-		$filters['method'] = 'result_array';
+		$filters = NULL;
 		
 		if($ids != NULL){
 				$filters['where'] = $ids;
@@ -84,7 +84,7 @@ class Movie_M extends MVS_Model
 		$this->_primary_key = 'cntry_id';
 		$this->_order_by = 'cntry_id';
 		$this->per_page = 0;
-		$filters['method'] = 'result_array';	
+		$filters = NULL;	
 
     if($ids != NULL){
 				$filters['where'] = $ids;
