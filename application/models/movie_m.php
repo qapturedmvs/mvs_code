@@ -6,7 +6,7 @@ class Movie_M extends MVS_Model
 	protected $_table_name = 'mvs_movies';
 	protected $_primary_key = 'mvs_slug';
 	//protected $_order_by = 'mvs_id';
-	public $per_page = 105;
+	public $per_page = 100;
 	
 	function __construct ()
 	{

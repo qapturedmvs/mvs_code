@@ -12,7 +12,7 @@
 			
 		}
 		
-		public function lister($p = NULL){
+		public function lister($p = 1){
 			
 			$vars = ($this->get_vars) ? $this->get_vars : NULL;
 			

@@ -62,5 +62,17 @@ $config = array(
 			'label' => 'Detail Image Sizes',
 			'rules' => 'trim|required'
 		)
-	)
+	),
+  'usr_login' => array(
+        'email' => array(
+          'field' => 'email',
+          'label' => 'Email',
+          'rules' => 'trim|required|valid_email|xss_clean'
+        ),
+        'password' => array(
+          'field' => 'password',
+          'label' => 'Password',
+          'rules' => 'trim|required'
+        )
+      ),
 );
