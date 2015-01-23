@@ -23,7 +23,7 @@ class MVS_Model extends CI_Model {
 				$chk_filters = is_array($filters);
 				$method = 'result';
 				
-				if($chk_filters || $id != NULL){
+				if($chk_filters || $id !== NULL){
 					
 					$this->db->start_cache();
 					
@@ -32,9 +32,9 @@ class MVS_Model extends CI_Model {
 							if(is_array($val) && count($val) > 1){
 								call_user_func_array(array(&$this->db, $key), $val);
 							}else{
-								if($key == 'from')
+								if($key === 'from')
 									$this->_table_name = $val;
-								elseif($key == 'method')
+								elseif($key === 'method')
 									$method = $val;
 								else
 									$this->db->{$key}($val);
@@ -42,7 +42,7 @@ class MVS_Model extends CI_Model {
 						}
 					}
 						
-					if($id != NULL){
+					if($id !== NULL){
 						$this->db->where($this->_primary_key, $id);
 						$this->per_page = 1;
 						$method = 'row';
@@ -54,7 +54,7 @@ class MVS_Model extends CI_Model {
 				
 				$db_data['total_count'] = (!$count) ? FALSE : $this->db->count_all_results($this->_table_name);
 				
-				if($count != 'ONLY'){
+				if($count !== 'ONLY'){
 								
 					if($this->per_page !== 0)
 						$this->db->limit($this->per_page, $offset);

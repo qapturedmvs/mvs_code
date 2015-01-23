@@ -6,7 +6,7 @@ class User_M extends MVS_Model
   protected $_table_name = 'mvs_feeds';
 	protected $_primary_key = 'act_id';
 	protected $_order_by = 'act_time';
-	public $per_page = 100;
+	public $per_page = 0;
   
 	function __construct (){
 		parent::__construct();
@@ -31,12 +31,15 @@ class User_M extends MVS_Model
 	
 	}
   
-  public function login()
+  public function login($email, $password)
 	{
+		$this->per_page = 1;
+		$password = $this->hash($password);
+		
 		$filters = array(
                 'select' => '*',
                 'from' => 'mvs_users',
-                'where' => array('usr_email' => $this->input->post('email'), 'usr_password' => $this->hash($this->input->post('password')))
+                'where' => array('usr_email' => $email, 'usr_password' => $password)
                 );
 		
 		$user = $this->get_data(NULL, 0, FALSE, $filters);

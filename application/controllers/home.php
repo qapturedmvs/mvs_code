@@ -19,9 +19,9 @@
 				
 				// Process form
 				if ($this->form_validation->run() == TRUE){
-					
+					$inputs = $this->input->post(NULL, TRUE);
 					// We can login and redirect
-					if ($this->user_m->login() == TRUE) {
+					if ($this->user_m->login($inputs['email'], $inputs['password']) == TRUE) {
 						redirect($home);
 					}
 					else {
