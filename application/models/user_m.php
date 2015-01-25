@@ -39,7 +39,7 @@ class User_M extends MVS_Model
 		$filters = array(
                 'select' => '*',
                 'from' => 'mvs_users',
-                'where' => array('usr_email' => $email, 'usr_password' => $password)
+                'where' => "usr_email = '$email' AND usr_password = '$password'"
                 );
 		
 		$user = $this->get_data(NULL, 0, FALSE, $filters);
