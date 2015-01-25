@@ -14,10 +14,10 @@
       
       $keyword = $this->input->post('keyword', TRUE);
       $type = $this->input->get('type', TRUE);
-
+		
       $limited = ($type == 'movie' || $type == 'star') ? FALSE : TRUE;
       $results = array('status' => 'none');
-      
+
       if($keyword){ 
         if($type == 'movie' || $type == NULL){
           $results['movies'] = $this->_movies($keyword, $limited);

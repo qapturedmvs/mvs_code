@@ -9,6 +9,8 @@ function exist(obj){
 		return false;
 }
 
+// Login Form
+if(exist($('.loginHolder'))) $('.loginHolder .loginForm').minusDropDown();
 
 // Movies List
 if(exist($('.pageMovies'))){
@@ -89,7 +91,7 @@ if(exist($('.pageMovies'))){
 
 
 function infiniteScroll( uri ){
-	var myApp = angular.module('infiniteScrollApp', ['infinite-scroll']);
+	var myApp = angular.module('qapturedApp', ['infinite-scroll']);
 		myApp.config(['$httpProvider', function( $httpProvider ){ $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'; }]);
 		myApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		myApp.factory('Reddit', function( $http ){
