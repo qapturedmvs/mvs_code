@@ -52,8 +52,12 @@ class User_M extends MVS_Model
 				'usr_id' => $user['data'][0]->usr_id,
 				'usr_loggedin' => TRUE,
 			);
-			
+
 			$this->session->set_userdata($data);
+			
+			return TRUE;
+		}else{
+			return FALSE;
 		}
 	}
 
