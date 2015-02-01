@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Wall extends Frontend_Controller{
+	class Feeds extends Frontend_Controller{
     
 		function __construct(){
 			parent::__construct();
@@ -11,6 +11,9 @@
 		}
     
     public function index(){
+			
+			$this->data['subview'] = 'user/feeds';
+			$this->load->view('_main_body_layout', $this->data);
       
     }
   

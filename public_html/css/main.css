@@ -192,3 +192,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .angucomplete-image-holder{padding-top:2px;float:left;margin-right:10px;margin-left:5px}
 .angucomplete-image{height:34px;width:34px;border-radius:50%;border-color:#ececec;border-style:solid;border-width:1px}
 .angucomplete-image-default{background-position:center;background-size:contain;height:34px;width:34px}
+
+/* HOME */
+.userboxes{width:300px;}
+.userboxes .loginbox{margin-bottom:20px;}

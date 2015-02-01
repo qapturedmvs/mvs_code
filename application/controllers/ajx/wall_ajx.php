@@ -6,7 +6,7 @@
 			parent::__construct();
 			
 			//$this->output->enable_profiler();
-			$this->load->model('user_m');
+			$this->load->model('feed_m');
       
 		}
     
@@ -18,8 +18,8 @@
       
       $json = (object) array();
       $p = $this->user_m->cleaner($p);
-      $offset = ($p-1) * $this->user_m->per_page;
-      $db_data = $this->user_m->feeds_json($this->usr_id, $offset);
+      $offset = ($p-1) * $this->feed_m->per_page;
+      $db_data = $this->feed_m->feeds_json($this->usr_id, $offset);
       $feeds = $db_data['data'];
       
       if($feeds){

@@ -130,3 +130,21 @@
 		
 	}
 	
+	// Change array key prefix
+	function changePrefix($array, $prefOld, $prefNew){
+		
+		$prefLen = strlen($prefOld);
+		$data = array();
+		
+		if(count($array)){
+			foreach($array as $key => $val){
+				if(substr($key, 0, $prefLen) === $prefOld){
+					$data[str_replace($prefOld, $prefNew, $key)] = $val;
+				}
+			}
+		}
+		
+		return $data;
+		
+	}
+	

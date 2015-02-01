@@ -2,14 +2,19 @@
 <div id="qContainer">
 	<div id="qHeader">
 		<div class="logo">
-			<a href="#">Qaptured</a>
+			<a href="<?php echo $site_url; ?>">Qaptured</a>
 		</div>
 		<div class="mainMenu">
 			<nav>
 				<ul>
-					<li><a href="#">me</a></li>
+					<?php if($logged_in): ?>
+					<li><a href="<?php echo $site_url.'user/profile'; ?>">me</a></li>
 					<li><a href="#">explore</a></li>
-					<li><a href="#">home</a></li>
+					<li><a href="<?php echo $site_url.'user/feeds'; ?>">home</a></li>
+					<li><a href="<?php echo $site_url.'user/logout'; ?>">logout</a></li>
+					<?php endif; ?>
+					<li><a href="<?php echo $site_url.'movies'; ?>">Movies 1</a></li>
+					<li><a href="<?php echo $site_url.'movies2'; ?>">Movies 2</a></li>
 				</ul>
 			</nav>
 		</div>

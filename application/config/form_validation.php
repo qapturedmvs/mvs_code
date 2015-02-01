@@ -64,15 +64,54 @@ $config = array(
 		)
 	),
   'usr_login' => array(
-        'email' => array(
-          'field' => 'email',
+        'lgn_email' => array(
+          'field' => 'lgn_email',
           'label' => 'Email',
           'rules' => 'trim|required|valid_email|xss_clean'
         ),
-        'password' => array(
-          'field' => 'password',
+        'lgn_password' => array(
+          'field' => 'lgn_password',
           'label' => 'Password',
           'rules' => 'trim|required'
         )
       ),
+  'usr_signup' => array(
+        'sgn_name' => array(
+          'field' => 'sgn_name',
+          'label' => 'Name',
+          'rules' => 'trim|required|xss_clean'
+        ),
+        'sgn_email' => array(
+          'field' => 'sgn_email',
+          'label' => 'Email',
+          'rules' => 'trim|required|valid_email|xss_clean|is_unique[mvs_users.usr_email]'
+        ),
+        'sgn_password' => array(
+          'field' => 'sgn_password',
+          'label' => 'Password',
+          'rules' => 'trim|required|min_length[4]|max_length[10]'
+        )
+      ),
+  'usr_profile' => array(
+        'prf_name' => array(
+          'field' => 'prf_name',
+          'label' => 'Name',
+          'rules' => 'trim|required|xss_clean'
+        ),
+        'prf_email' => array(
+          'field' => 'prf_email',
+          'label' => 'Email',
+          'rules' => 'trim|required|valid_email|xss_clean|callback__unique_email'
+        ),
+        'prf_password' => array(
+          'field' => 'prf_password',
+          'label' => 'Password',
+          'rules' => 'trim|min_length[4]|max_length[10]|matches[repassword]'
+        ),
+        'repassword' => array(
+          'field' => 'repassword',
+          'label' => 'Re-enter Password',
+          'rules' => 'trim|min_length[4]|max_length[10]|matches[prf_password]'
+        )
+      )
 );

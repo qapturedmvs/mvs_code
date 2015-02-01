@@ -3,41 +3,21 @@
 class User_M extends MVS_Model
 {
 	
-  protected $_table_name = 'mvs_feeds';
-	protected $_primary_key = 'act_id';
-	protected $_order_by = 'act_time';
-	public $per_page = 0;
+  protected $_table_name = 'mvs_users';
+	protected $_primary_key = 'usr_id';
+	protected $_order_by = 'usr_id';
+	public $per_page = 1;
   
 	function __construct (){
 		parent::__construct();
 	}
   
-  //FEEDS JSON
-	public function feeds_json($usr_id, $offset = 0){
-				
-		$filters = array(
-				'select' => '*',
-        'from' => $this->_table_name,
-        'where' => array('usr_id' => $usr_id),
-				'order_by' => $this->_order_by.' DESC'
-		);
-		
-		$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
-		
-		if(count($feeds['data']))
-			return $feeds;
-		else
-			return FALSE;
-	
-	}
-  
-  public function login($email, $password)
-	{
-		$this->per_page = 1;
+  public function login($email, $password){
+    
 		$password = $this->hash($password);
 		
 		$filters = array(
-                'select' => '*',
+                'select' => 'usr_id, usr_name, usr_email',
                 'from' => 'mvs_users',
                 'where' => "usr_email = '$email' AND usr_password = '$password'"
                 );
@@ -60,19 +40,64 @@ class User_M extends MVS_Model
 			return FALSE;
 		}
 	}
-
-	public function logout()
-	{
-		$this->session->sess_destroy();
-	}
-
-	public function loggedin()
-	{
-		return (bool) $this->session->userdata('usr_loggedin');
+  
+  public function signup($name, $email, $password){
+    
+		$password = $this->hash($password);
+    $user = array(
+      'usr_name' => $name,
+      'usr_email' => $email,
+      'usr_password' => $password,
+      'usr_avatar' => '',
+      'usr_account' => 'qp',
+      'usr_time' => date('Y-m-d')
+    );
+		
+    $this->db->insert('mvs_users', $user);
+    
+    return TRUE;
 	}
   
-  public function hash($string)
-	{
+  public function profile($id){
+    
+    $user = $this->get_data($id);
+    
+    if(count($user['data']))
+      return $user;
+    else
+      return FALSE;
+    
+  }
+  
+  public function update_profile($id, $data){
+    
+    if(isset($data['usr_password']))
+      $data['usr_password'] = $this->hash($data['usr_password']);
+          
+    $this->db->where('usr_id', $id);
+    $this->db->update('mvs_users', $data);
+    
+    return TRUE;
+  }
+  
+  public function check_usr($email, $id){
+    
+    $filters = array(
+      'select' => 'usr_id',
+      'from' => 'mvs_users',
+      'where' => "usr_email = '$email' AND usr_id != $id"
+    );
+    
+    $user = $this->get_data(NULL, 0, FALSE, $filters);
+    
+    if(count($user['data']) === 0)
+      return TRUE;
+    else
+      return FALSE;
+    
+  }
+  
+  public function hash($string){
 		return hash('sha512', $string . config_item('encryption_key'));
 	}
   
