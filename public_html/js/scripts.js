@@ -1,6 +1,40 @@
 // GLOBAL VARIABLE
 var site_url = $('#mvs_site_url').val(), qs = window.location.search;
 
+// GLOBAL ANGULAR MODULE
+var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
+	qapturedApp.config(['$httpProvider', function( $httpProvider ){ $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'; }]);
+	
+// AUTOCOMPLETE
+if( $('#search_keyword').length > 0 )
+	$('#search_keyword').autocomplete({
+		  source: function( request, response ) {
+			$.ajax({
+			  url: "ajx/search_ajx/lister/" + request.term,
+			  success: function( d ) {
+				if( d.data.movies )
+					response( d.data.movies );
+			  }
+			});
+		  },
+		  minLength: 3,
+		  open: function(event, ui) {
+			//$('ul.ui-autocomplete').append('<li class="ui-menu-item tumunuGoster"><a href="javascript:void(0);">Tümünü Göster</a></li>');
+		   },
+		    focus: function(event, ui) {
+				event.preventDefault();
+			},
+			select: function(event, ui) {
+			   event.preventDefault();
+				//window.open('/mvs_code/public_html/movie/' + ui.item.mvs_slug);
+			}
+
+		}).data('ui-autocomplete')._renderItem = function( ul, item ){
+			return $('<li></li>').data('item.autocomplete', item).append('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>').appendTo( ul );
+			};
+
+
+
 // Obj Exist
 function exist(obj){
 	if(obj.html() != undefined) 
@@ -86,15 +120,23 @@ if(exist($('.pageMovies'))){
 	
 	// infinite-Scroll
 	infiniteScroll('ajx/movie_ajx/lister/');
+	
+	//-->getAjx({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/' });
 }
 
 
+function getAjx( obj ){
+	var url = site_url + obj['uri']
+	qapturedApp.controller(obj['controller'], function( $scope,  $http ){ 
+		$http.get( url ).success(function( d ){
+			$scope.items = d['data'];
+		});
+	});
+}
 
 function infiniteScroll( uri ){
-	var myApp = angular.module('qapturedApp', ['infinite-scroll']);
-		myApp.config(['$httpProvider', function( $httpProvider ){ $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'; }]);
-		myApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
-		myApp.factory('Reddit', function( $http ){
+		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
+		qapturedApp.factory('Reddit', function( $http ){
 		  var Reddit = function() {
 			this.items = [];
 			this.busy = false;
@@ -148,3 +190,49 @@ function infiniteScroll( uri ){
 		  return Reddit;
 		});
 }
+
+/* FORM VALIDATION */
+if ($('.form-signin').length > 0) 
+	$('.form-signin').validate({
+		rules: {
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			email: 'Please enter a valid email address',
+			password: {
+				required: 'Please provide a password',
+				minlength: 'Your password must be at least 6 characters long'
+			}
+		}
+	});
+
+if ($('.form-signup').length > 0) 
+	$('.form-signup').validate({
+		rules: {
+			name: 'required',
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			name: 'Please name',
+			email: 'Please enter a valid email address',
+			password: {
+				required: 'Please provide a password',
+				minlength: 'Your password must be at least 6 characters long'
+			}
+		}
+	});	
+

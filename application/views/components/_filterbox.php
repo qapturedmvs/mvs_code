@@ -1,5 +1,4 @@
-<link href="<?php echo site_url('js/jquery-ui/jquery-ui.css'); ?>" rel="stylesheet">
-<script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
+
 <?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING'); ?>
 <section class="filters">
   <?php if($vars): ?>
