@@ -24,7 +24,9 @@
     <link href="<?php echo site_url('css/main.css'); ?>" rel="stylesheet">
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
-		<script src="<?php echo site_url('js/plugins.js'); ?>"></script>
+    <link href="<?php echo site_url('js/jquery-ui/jquery-ui.css'); ?>" rel="stylesheet">
+	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    <script src="<?php echo site_url('js/plugins.js'); ?>"></script>
   </head>
-  <body ng-app='qapturedApp'>
+  <body ng-app="qapturedApp">
   <input type="hidden" value="<?php echo $site_url; ?>" id="mvs_site_url" />
