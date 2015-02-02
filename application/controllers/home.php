@@ -10,18 +10,16 @@
 		
 		public function index(){
 				
-				// Redirect a user if he's already logged in
-				$login_home = 'user/feeds';
 				$this->logged_in === FALSE || redirect($login_home);
 				$inputs = $this->input->post(NULL, TRUE);
 				
 				// LOGIN FORM CONTROLS
 				if(isset($inputs['lgn_submit']))
-				    $this->_login($inputs, $login_home);
+				  $this->_login($inputs, 'user/feeds');
 				
 				// SIGNUP FORM CONTROLS
 				if(isset($inputs['sgn_submit']))
-				    $this->_signup($inputs, $login_home);
+				  $this->_signup($inputs, 'user/profile/success');
 				
 			$this->data['subview'] = 'home';
 			$this->load->view('_main_body_layout', $this->data);	
@@ -57,9 +55,9 @@
 				// Process form
 				if($this->form_validation->run() === TRUE){
 					
-					$signup = $this->user_m->signup($data['sgn_name'], $data['sgn_email'], $data['sgn_password']);
+					$new_usr_id = $this->user_m->signup($data['sgn_name'], $data['sgn_email'], $data['sgn_password']);
 					
-					if($signup === TRUE){
+					if($new_usr_id){
 						redirect($login_home);
 					}else{
 						$this->data['signup_error'] = 'This email is already registered. Want to login or recover your password?';

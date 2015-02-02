@@ -61,7 +61,15 @@
 			
 			return $db_data;
 		
-	}
+		}
+		
+		public function success(){
+			
+			
+			$this->data['subview'] = 'user/signup_success';
+			$this->load->view('_main_body_layout', $this->data);
+			
+		}
   
   }
 

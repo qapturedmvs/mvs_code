@@ -3,4 +3,3 @@
   <?php echo form_close(); ?>
   <hr class="qFixer" />
 </div>
-<div>

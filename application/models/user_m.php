@@ -50,12 +50,13 @@ class User_M extends MVS_Model
       'usr_password' => $password,
       'usr_avatar' => '',
       'usr_account' => 'qp',
+			'usr_account_act' => random_string('alnum', 30),
       'usr_time' => date('Y-m-d')
     );
 		
     $this->db->insert('mvs_users', $user);
     
-    return TRUE;
+    return $this->db->insert_id();
 	}
   
   public function profile($id){

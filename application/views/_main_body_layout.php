@@ -18,6 +18,9 @@
 				</ul>
 			</nav>
 		</div>
+		<div class="userHolder">
+			<?php $this->load->view('components/_userbox'); ?>
+		</div>
 		<div class="searchHolder">
 			<?php $this->load->view('components/_searchbox'); ?>
 		</div>
