@@ -24,8 +24,8 @@ class User_M extends MVS_Model
 		
 		$user = $this->get_data(NULL, 0, FALSE, $filters);
 
-		if (count($user['data'])) {
-			// Log in user
+		if(count($user['data'])){
+
 			$data = array(
 				'usr_name' => $user['data'][0]->usr_name,
 				'usr_email' => $user['data'][0]->usr_email,
@@ -44,19 +44,20 @@ class User_M extends MVS_Model
   public function signup($name, $email, $password){
     
 		$password = $this->hash($password);
+		$usr_act_key = $this->hash($email); 
     $user = array(
       'usr_name' => $name,
       'usr_email' => $email,
       'usr_password' => $password,
       'usr_avatar' => '',
       'usr_account' => 'qp',
-			'usr_account_act' => random_string('alnum', 30),
+			'usr_act_key' => $usr_act_key,
       'usr_time' => date('Y-m-d')
     );
 		
     $this->db->insert('mvs_users', $user);
     
-    return $this->db->insert_id();
+    return array('usr_id' => $this->db->insert_id(), 'usr_act_key' => $usr_act_key);
 	}
   
   public function profile($id){
@@ -74,6 +75,8 @@ class User_M extends MVS_Model
     
     if(isset($data['usr_password']))
       $data['usr_password'] = $this->hash($data['usr_password']);
+		
+		$data['usr_act_key'] = $this->hash($data['usr_email']);
           
     $this->db->where('usr_id', $id);
     $this->db->update('mvs_users', $data);
@@ -97,6 +100,27 @@ class User_M extends MVS_Model
       return FALSE;
     
   }
+	
+	public function get_usr_act_key($usr_id){
+		
+		$user = $this->get_data($usr_id);
+		
+		if(count($user['data']))
+			return $user;
+		else
+			return FALSE;
+		
+	}
+	
+	public function activate_account($usr_act_key){
+		
+		$this->db->where('usr_act_key', $usr_act_key);
+		$this->db->set('usr_act', 1);
+    $this->db->update('mvs_users');
+    
+    return TRUE;
+		
+	}
   
   public function hash($string){
 		return hash('sha512', $string . config_item('encryption_key'));
