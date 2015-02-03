@@ -9,7 +9,7 @@
 		}
 		
 		public function index(){
-				
+
 				$this->logged_in === FALSE || redirect('user/feeds');
 				$inputs = $this->input->post(NULL, TRUE);
 				
@@ -28,15 +28,26 @@
 		
 		private function _login($data, $successPage){
 				
-				// Set form
 				$rules = $this->config->config['usr_login'];
 				$this->form_validation->set_rules($rules);
 				
-				// Process form
 				if($this->form_validation->run() === TRUE){
-					// We can login and redirect
-					if($this->user_m->login($data['lgn_email'], $data['lgn_password']) === TRUE){
-						redirect($successPage);
+								$db_data = $this->user_m->login($data['lgn_email'], $data['lgn_password']);
+					if($db_data && $db_data['data']->usr_act == 1){
+				
+								$data = array(
+								  'usr_name' => $user['data'][0]->usr_name,
+								  'usr_email' => $user['data'][0]->usr_email,
+								  'usr_id' => $user['data'][0]->usr_id,
+								  'usr_loggedin' => TRUE,
+								);
+									
+								$this->session->set_userdata($data);
+												
+								redirect($successPage);
+										
+					}elseif($db_data && $db_data['data']->usr_act == 0){
+								$this->data['login_error'] = 'Please activate your account.';
 					}else{
 						$this->data['login_error'] = 'That email/password combination does not exist';
 					}
@@ -48,11 +59,9 @@
 		
 		private function _signup($data, $successPage){
 				
-				// Set form
 				$rules = $this->config->config['usr_signup'];
 				$this->form_validation->set_rules($rules);
 				
-				// Process form
 				if($this->form_validation->run() === TRUE){
 					
 					$new_user = $this->user_m->signup($data['sgn_name'], $data['sgn_email'], $data['sgn_password']);

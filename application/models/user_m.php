@@ -17,25 +17,15 @@ class User_M extends MVS_Model
 		$password = $this->hash($password);
 		
 		$filters = array(
-                'select' => 'usr_id, usr_name, usr_email',
-                'from' => 'mvs_users',
-                'where' => "usr_email = '$email' AND usr_password = '$password'"
-                );
+      'select' => 'usr_id, usr_name, usr_email',
+      'from' => 'mvs_users',
+      'where' => "usr_email = '$email' AND usr_password = '$password'"
+    );
 		
 		$user = $this->get_data(NULL, 0, FALSE, $filters);
 
-		if(count($user['data'])){
-
-			$data = array(
-				'usr_name' => $user['data'][0]->usr_name,
-				'usr_email' => $user['data'][0]->usr_email,
-				'usr_id' => $user['data'][0]->usr_id,
-				'usr_loggedin' => TRUE,
-			);
-
-			$this->session->set_userdata($data);
-			
-			return TRUE;
+		if(count($user['data'])){	
+			return $user;
 		}else{
 			return FALSE;
 		}
@@ -46,6 +36,7 @@ class User_M extends MVS_Model
 		$password = $this->hash($password);
 		$usr_act_key = $this->hash($email); 
     $user = array(
+      'usr_nick' => generateUserSlug('user'),
       'usr_name' => $name,
       'usr_email' => $email,
       'usr_password' => $password,
@@ -101,9 +92,10 @@ class User_M extends MVS_Model
     
   }
 	
-	public function get_usr_act_key($usr_id){
+	public function get_user_data($usr, $usr_primary_key){
 		
-		$user = $this->get_data($usr_id);
+    $this->_primary_key = $usr_primary_key;
+		$user = $this->get_data($usr);
 		
 		if(count($user['data']))
 			return $user;
@@ -114,16 +106,16 @@ class User_M extends MVS_Model
 	
 	public function activate_account($usr_act_key){
 		
-		$this->db->where('usr_act_key', $usr_act_key);
-		$this->db->set('usr_act', 1);
+    $this->db->where('usr_act_key', $usr_act_key);
+    $this->db->set('usr_act', 1);
     $this->db->update('mvs_users');
     
     return TRUE;
-		
+
 	}
   
   public function hash($string){
-		return hash('sha512', $string . config_item('encryption_key'));
+		return hash('sha512', $string.config_item('encryption_key'));
 	}
   
 }

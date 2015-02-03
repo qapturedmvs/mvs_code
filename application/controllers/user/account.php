@@ -27,12 +27,17 @@
 		}
 		
 		public function activate(){
-
-      if($this->user_m->activate_account($this->get_vars['act']))
-        $this->data['act'] = TRUE;
-      else
-        $this->data['act'] = FALSE;
-        
+			
+			$db_data = $this->user_m->get_user_data($this->get_vars['act'], 'usr_act_key');
+			
+			if(count($db_data['data']) && $db_data['data']->usr_act == 0){		
+				$this->data['act'] = $this->user_m->activate_account($this->get_vars['act']);
+			}elseif(count($db_data['data']) && $db_data['data']->usr_act == 1){
+        $this->data['act'] = 'activatedBefore';
+			}else{
+				$this->data['act'] = 'noAccount';
+			}
+			
 			$this->data['subview'] = 'account/account_activate';
 			$this->load->view('_main_body_layout', $this->data);
 			
