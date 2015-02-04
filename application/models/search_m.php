@@ -24,7 +24,7 @@ class Search_M extends MVS_Model
     
     $movies = $this->get_data(NULL, 0, FALSE, $filters);
     
-    if(count($movies['data']))
+    if(isset($movies['data']))
       return $movies;
     else
       return FALSE;
@@ -43,7 +43,7 @@ class Search_M extends MVS_Model
     
     $stars = $this->get_data(NULL, 0, FALSE, $filters);
     
-    if(count($stars['data']))
+    if(isset($stars['data']))
       return $stars;
     else
       return FALSE;

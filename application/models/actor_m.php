@@ -18,9 +18,9 @@ class Actor_M extends MVS_Model
 	public function actor($id){
 		
 		$id = $this->cleaner($id);
-		$actor = $this->get_data($id, 0, FALSE, NULL);
+		$actor = $this->get_data($id);
 	
-		if (count($actor['data']) == 1)
+		if (isset($actor['data']))
 			return $actor;
 		else
 			return FALSE;

@@ -24,7 +24,7 @@ class Feed_M extends MVS_Model
 		
 		$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
 		
-		if(count($feeds['data']))
+		if(isset($feeds['data']))
 			return $feeds;
 		else
 			return FALSE;

@@ -8,7 +8,7 @@
     
     public function index(){
       $this->session->sess_destroy();
-      redirect('home', 'refresh');
+      redirect('', 'refresh');
     }
   
   }

@@ -118,7 +118,7 @@ class Movie_M extends MVS_Model
 
 		$casts = $this->get_data(NULL, 0, FALSE, $filters);
 	
-		if(count($casts['data']))
+		if(isset($casts['data']))
 			return $casts;
 		else
 			return FALSE;
@@ -138,7 +138,7 @@ class Movie_M extends MVS_Model
 
 				$movies = $this->get_data(NULL, 0, FALSE, $filters);
 				
-				if(count($movies['data']))
+				if(isset($movies['data']))
 					return $movies;
 				else
 				  return FALSE;

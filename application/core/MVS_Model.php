@@ -64,9 +64,10 @@ class MVS_Model extends CI_Model {
 					$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
 					
 					if($cache) $this->db->cache_off();
+					
+					if(count($db_data['data']) === 0)
+						unset($db_data['data']);
 								
-				}else{
-					$db_data['data'] = NULL;
 				}
 				
 				$this->db->flush_cache();

@@ -18,7 +18,7 @@
         $this->session->unset_userdata('tmp_usr_act_key');
 				$this->data['mail_link'] = $this->data['site_url'].'user/account/activate?act='.$usr_act_key;
 			}else{
-				$this->data['mail_link'] = FALSE;
+				redirect('', 'refresh');
 			}
 			
 			$this->data['subview'] = 'account/signup_success';

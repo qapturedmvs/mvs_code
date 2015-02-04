@@ -28,7 +28,7 @@
 		protected function session_check(){
 				
 			if($this->logged_in === FALSE)
-				redirect('home');
+				redirect('', 'refresh');
 			
 		}
 		

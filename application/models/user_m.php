@@ -14,17 +14,18 @@ class User_M extends MVS_Model
   
   public function login($email, $password){
     
-		$password = $this->hash($password);
+		$password = $this->hash($password, 'sha512');
+		$this->_primary_key = 'usr_email';
 		
 		$filters = array(
-      'select' => 'usr_id, usr_name, usr_email',
+      'select' => 'usr_id, usr_name, usr_email, usr_act',
       'from' => 'mvs_users',
-      'where' => "usr_email = '$email' AND usr_password = '$password'"
+      'where' => "usr_password = '$password'"
     );
 		
-		$user = $this->get_data(NULL, 0, FALSE, $filters);
+		$user = $this->get_data($email, 0, FALSE, $filters);
 
-		if(count($user['data'])){	
+		if(isset($user['data'])){	
 			return $user;
 		}else{
 			return FALSE;
@@ -33,10 +34,10 @@ class User_M extends MVS_Model
   
   public function signup($name, $email, $password){
     
-		$password = $this->hash($password);
-		$usr_act_key = $this->hash($email); 
+		$password = $this->hash($password, 'sha512');
+		$usr_act_key = $this->hash($email, 'sha1');
     $user = array(
-      'usr_nick' => generateUserSlug('user'),
+      'usr_nick' => gnrtSlug('user'),
       'usr_name' => $name,
       'usr_email' => $email,
       'usr_password' => $password,
@@ -55,7 +56,7 @@ class User_M extends MVS_Model
     
     $user = $this->get_data($id);
     
-    if(count($user['data']))
+    if(isset($user['data']))
       return $user;
     else
       return FALSE;
@@ -65,9 +66,9 @@ class User_M extends MVS_Model
   public function update_profile($id, $data){
     
     if(isset($data['usr_password']))
-      $data['usr_password'] = $this->hash($data['usr_password']);
+      $data['usr_password'] = $this->hash($data['usr_password'], 'sha512');
 		
-		$data['usr_act_key'] = $this->hash($data['usr_email']);
+		$data['usr_act_key'] = $this->hash($data['usr_email'], 'sha1');
           
     $this->db->where('usr_id', $id);
     $this->db->update('mvs_users', $data);
@@ -85,7 +86,7 @@ class User_M extends MVS_Model
     
     $user = $this->get_data(NULL, 0, FALSE, $filters);
     
-    if(count($user['data']) === 0)
+    if(!isset($user['data']))
       return TRUE;
     else
       return FALSE;
@@ -97,7 +98,7 @@ class User_M extends MVS_Model
     $this->_primary_key = $usr_primary_key;
 		$user = $this->get_data($usr);
 		
-		if(count($user['data']))
+		if(isset($user['data']))
 			return $user;
 		else
 			return FALSE;
@@ -114,8 +115,8 @@ class User_M extends MVS_Model
 
 	}
   
-  public function hash($string){
-		return hash('sha512', $string.config_item('encryption_key'));
+  public function hash($string, $type){
+		return hash($type, $string.config_item('encryption_key'));
 	}
   
 }

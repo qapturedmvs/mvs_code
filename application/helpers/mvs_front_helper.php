@@ -149,7 +149,7 @@
 	}
 	
 	
-	function generateUserSlug($type){
+	function gnrtSlug($type){
 	
 		$prefix = ($type == 'user') ? 'qu' : 'ql';
 		$slug = $prefix.str_shuffle(strtolower(random_string('alpha', 5)).random_string('numeric', 3));
