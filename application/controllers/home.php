@@ -49,8 +49,8 @@
 					redirect($successPage, 'refresh');
 									
 				}elseif($user && $user['data']->usr_act == 0){
-					
-					$this->data['login_error'] = 'Please activate your account.';
+
+					$this->data['login_error'] = 'Please activate your account. <a href="'.$this->data['site_url'].'user/account/activate?act='.$user['data']->usr_act_key.'">Click here</a> for sending activation email.';
 					
 				}else{
 					
