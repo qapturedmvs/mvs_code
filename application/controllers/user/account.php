@@ -25,7 +25,7 @@
 				
 			}
 			
-			$this->data['subview'] = 'account/signup_success';
+			$this->data['subview'] = 'user/account/signup_success';
 			$this->load->view('_main_body_layout', $this->data);
 			
 		}
@@ -34,7 +34,7 @@
 			
 			$db_data = $this->user_m->get_user_data($this->get_vars['act'], 'usr_act_key');
 			
-			if(count($db_data['data']) && $db_data['data']->usr_act == 0){
+			if(isset($db_data['data']) && $db_data['data']->usr_act == 0){
 				
 				$this->data['act'] = $this->user_m->activate_account($this->get_vars['act']);
 				
@@ -44,7 +44,7 @@
 				
 			}
 			
-			$this->data['subview'] = 'account/account_activate';
+			$this->data['subview'] = 'user/account/account_activate';
 			$this->load->view('_main_body_layout', $this->data);
 			
 		}

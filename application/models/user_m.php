@@ -68,7 +68,8 @@ class User_M extends MVS_Model
     if(isset($data['usr_password']))
       $data['usr_password'] = $this->hash($data['usr_password'], 'sha512');
 		
-		$data['usr_act_key'] = $this->hash($data['usr_email'], 'sha1');
+    if(isset($data['usr_email']))
+      $data['usr_act_key'] = $this->hash($data['usr_email'], 'sha1');
           
     $this->db->where('usr_id', $id);
     $this->db->update('mvs_users', $data);
