@@ -18,7 +18,7 @@ class User_M extends MVS_Model
 		$this->_primary_key = 'usr_email';
 		
 		$filters = array(
-      'select' => 'usr_id, usr_name, usr_email, usr_act',
+      'select' => 'usr_id, usr_name, usr_email, usr_act, usr_act_key',
       'from' => 'mvs_users',
       'where' => "usr_password = '$password'"
     );

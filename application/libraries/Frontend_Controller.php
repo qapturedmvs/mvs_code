@@ -21,8 +21,8 @@
 			$this->logged_in = $this->data['logged_in'] = (bool) $this->session->userdata('usr_loggedin');
 			
 			if($this->logged_in === TRUE)
-				$this->usr_id = (int) $this->session->userdata('usr_id');
-			
+				$this->user = $this->data['user'] = $this->session->all_userdata();
+
 		}
 		
 		protected function session_check(){
