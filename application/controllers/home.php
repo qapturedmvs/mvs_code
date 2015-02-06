@@ -38,9 +38,11 @@
 				if($user && $user['data']->usr_act == 1){
 			
 					$data = array(
+						'usr_id' => $user['data']->usr_id,
+						'usr_nick' => $user['data']->usr_nick,
 						'usr_name' => $user['data']->usr_name,
 						'usr_email' => $user['data']->usr_email,
-						'usr_id' => $user['data']->usr_id,
+						'usr_avatar' => $user['data']->usr_avatar,
 						'usr_loggedin' => TRUE,
 					);
 						

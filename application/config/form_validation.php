@@ -115,15 +115,15 @@ $config = array(
         )
       ),
   'usr_password_reset' => array(
-        'prf_password' => array(
+        'pwr_password' => array(
           'field' => 'pwr_password',
           'label' => 'Password',
-          'rules' => 'trim|min_length[4]|max_length[10]|matches[repassword]'
+          'rules' => 'trim|required|min_length[4]|max_length[10]|matches[repassword]'
         ),
         'repassword' => array(
           'field' => 'repassword',
           'label' => 'Re-enter Password',
-          'rules' => 'trim|min_length[4]|max_length[10]|matches[pwr_password]'
+          'rules' => 'trim|required|min_length[4]|max_length[10]|matches[pwr_password]'
         )
       )
 );

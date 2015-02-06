@@ -19,7 +19,7 @@
 			if(isset($inputs['prf_submit']))
 				$this->_save_data($inputs);
 			
-			$db_data = $this->user_m->profile($this->usr_id);
+			$db_data = $this->user_m->profile($this->user['usr_id']);
 			
 			if($db_data)
 				$this->data['user_data'] = $db_data['data'];
@@ -32,6 +32,7 @@
 		private function _save_data($data){
 			
 			$rules = $this->config->config['usr_profile'];
+			$this->form_validation->set_message('_unique_email', 'That email used in another account.');
 			$this->form_validation->set_rules($rules);
 			unset($data['prf_submit']);
 			
@@ -44,23 +45,39 @@
 
 				$data = changePrefix($data, 'prf', 'usr');
 
-				if($this->user_m->update_profile($this->usr_id, $data) === TRUE){
+				if($this->user_m->update_profile($this->user['usr_id'], $data) === TRUE){
+					
+					$this->_update_session($data);
 					$this->data['profile_error'] = 'Profile saved.';
+					
 				}else{
+					
 					$this->data['profile_error'] = 'An error occured. Please try again later.';
+					
 				}
 			}else{
+				
 				$this->data['profile_error'] = validation_errors();
+				
 			}
 			
 		}
 		
 		public function _unique_email($email){
 			
-			$db_data = $this->user_m->check_usr($email, $this->usr_id);
+			$db_data = $this->user_m->check_usr($email, $this->user['usr_id']);
 			
 			return $db_data;
 		
+		}
+		
+		private function _update_session($data){
+			
+			unset($data['prf_password']);
+			unset($data['repassword']);
+			
+			$this->session->set_userdata($data);
+			
 		}
   
   }

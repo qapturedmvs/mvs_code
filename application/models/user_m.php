@@ -18,7 +18,7 @@ class User_M extends MVS_Model
 		$this->_primary_key = 'usr_email';
 		
 		$filters = array(
-      'select' => 'usr_id, usr_name, usr_email, usr_act, usr_act_key',
+      'select' => '*',
       'from' => 'mvs_users',
       'where' => "usr_password = '$password'"
     );
@@ -55,7 +55,7 @@ class User_M extends MVS_Model
   public function profile($id){
     
     $user = $this->get_data($id);
-    
+
     if(isset($user['data']))
       return $user;
     else
@@ -68,11 +68,21 @@ class User_M extends MVS_Model
     if(isset($data['usr_password']))
       $data['usr_password'] = $this->hash($data['usr_password'], 'sha512');
 		
-    if(isset($data['usr_email']))
-      $data['usr_act_key'] = $this->hash($data['usr_email'], 'sha1');
+    $data['usr_act_key'] = $this->hash($data['usr_email'], 'sha1');
           
     $this->db->where('usr_id', $id);
     $this->db->update('mvs_users', $data);
+    
+    return TRUE;
+  }
+	
+	public function reset_password($id, $data){
+    
+    $password = $this->hash($data['usr_password'], 'sha512');
+          
+    $this->db->where('usr_id', $id);
+		$this->db->set('usr_password', $password);
+    $this->db->update('mvs_users');
     
     return TRUE;
   }
