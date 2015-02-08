@@ -19,7 +19,7 @@
       $json = (object) array();
       $p = $this->user_m->cleaner($p);
       $offset = ($p-1) * $this->feed_m->per_page;
-      $db_data = $this->feed_m->feeds_json($this->usr_id, $offset);
+      $db_data = $this->feed_m->feeds_json($this->user['usr_id'], $offset);
       $feeds = $db_data['data'];
       
       if($feeds){

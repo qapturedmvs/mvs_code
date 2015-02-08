@@ -86,6 +86,19 @@ class User_M extends MVS_Model
     
     return TRUE;
   }
+    
+  public function forget_password($email){
+    
+    $this->_primary_key = 'usr_email';
+    
+    $user = $this->get_data($email);
+    
+    if(isset($user['data']))
+      return $user;
+    else
+      return FALSE;
+    
+  }
   
   public function check_usr($email, $id){
     

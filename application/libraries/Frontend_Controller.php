@@ -4,7 +4,7 @@
 	{
 		protected $get_vars = array();
 		protected $data = array();
-		protected $usr_id = 0;
+		protected $user = NULL;
 		protected $logged_in = FALSE;
 		
 		// TEMP

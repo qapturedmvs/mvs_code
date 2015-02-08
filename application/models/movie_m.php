@@ -42,7 +42,7 @@ class Movie_M extends MVS_Model
 		$id = $this->cleaner($id);
 		$movie = $this->get_data($id, 0, FALSE, NULL);
 	
-		if(count($movie['data']) == 1)
+		if(isset($movie['data']))
 			return $movie;
 		else
 			return FALSE;
@@ -105,7 +105,7 @@ class Movie_M extends MVS_Model
 	
 	}
 	
-	public function getCastList($id){
+	public function getCastList($cst_ids){
 		
 		$this->per_page = 0;
 		
@@ -113,7 +113,7 @@ class Movie_M extends MVS_Model
 				'select' => 'mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug, mvs_stars.str_photo',
 				'from' => 'mvs_cast',
 				'join' => array('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner'),
-				'where' => array('mvs_id', $id)
+				'where' => "cst_id IN($cst_ids)"
 		);
 
 		$casts = $this->get_data(NULL, 0, FALSE, $filters);

@@ -2,8 +2,8 @@
 	<section class="hero"></section>
 	<section class="body">
 		<aside class="mainCol left">
-			<div class="details">
-				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url."data/movies/thumbs/".$movie->mvs_imdb_id."_175X240_.jpg"?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
+			<div rel="<?php echo $movie->mvs_id; ?>" class="details">
+				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
 				<div class="text left">
 					<div class="posArea">
 						<h1><?php echo $movie->mvs_title.' ('.$movie->mvs_year.')'; ?></h1>
@@ -38,19 +38,9 @@
 					</div>
 					<div class="cast">
 						<ul>
-							<?php 
-								$i = 0;
-								foreach($casts as $cast): 
-									if($i < 3):
-							?>
-							<li class="topBilled"><a href="<?php echo $site_url.'actor/'.$cast->str_slug; ?>"><img src="<?php if($cast->str_photo != '') echo $cast->str_photo; else echo $site_url."images/actor.jpg"; ?>" alt="<?php echo $cast->str_name; ?>" title="<?php echo $cast->str_name; ?>" /></a></li>
-							<?php else:?>
+							<?php foreach($casts as $cast): ?>
 							<li><span class="actor"><a href="<?php echo $site_url.'actor/'.$cast->str_slug; ?>"><?php echo $cast->str_name; ?></a></span><span class="character"><?php echo $cast->char_name; ?></span></li>
-							<?php endif; ?>
-							<?php 
-								$i++;
-								endforeach; 
-							?>
+							<?php endforeach; ?>
 						</ul>
 						<hr class="qFixer" />
 					</div>

@@ -56,7 +56,7 @@ class Settings extends Backend_Controller {
 	
 	//Thumb generate
 	private function _image_thumbs($path, $width, $height){
-		
+		set_time_limit(6000);
 		if (file_exists(FCPATH.$path)){
 			
 			$this->load->library('image_lib');
@@ -70,27 +70,36 @@ class Settings extends Backend_Controller {
 			$marker = "_".$width."X".$height."_";
 
 			foreach($imgMap as $item){
-		
-				if(!is_array($item) && !in_array(str_replace(".jpg", $marker.".jpg", $item), $thumbMap)){
-					
-					$config['thumb_marker'] = $marker;
-					$config['image_library'] = 'gd2';
-					$config['source_image'] = $path."\\".$item;
-					$config['new_image'] = $path."\\thumbs";
-					$config['create_thumb'] = TRUE;
-					$config['maintain_ratio'] = TRUE;
-					$config['width'] = $width;
-					$config['height'] = $height;
+				$img = @imagecreatefromjpeg($path."\\".$item);
+				if($img){
+					if(!is_array($item) && !in_array(str_replace(".jpg", $marker.".jpg", $item), $thumbMap)){
 
-					$this->image_lib->initialize($config);
-		
-					if (!$this->image_lib->resize())
-					{
-						return "<p>".$item." -> ".$this->image_lib->display_errors()."</p>";
+						$config['thumb_marker'] = $marker;
+						$config['image_library'] = 'gd2';
+						$config['source_image'] = $path."\\".$item;
+						$config['new_image'] = $path."\\thumbs";
+						$config['create_thumb'] = TRUE;
+						$config['maintain_ratio'] = TRUE;
+						$config['width'] = $width;
+						$config['height'] = $height;
+	
+						$this->image_lib->initialize($config);
+			
+						if (!$this->image_lib->resize())
+						{
+							return "<p>".$item." -> ".$this->image_lib->display_errors()."</p>";
+						}
+			
+						$this->image_lib->clear();
+			
 					}
+				}else{
+					
+					$logFile = fopen(FCPATH.'data/logs/logs.txt', 'a+') or die('Unable to open file!');
 		
-					$this->image_lib->clear();
-		
+					fwrite($logFile, $item."\r\n");
+					fclose($logFile);
+					
 				}
 		
 			}

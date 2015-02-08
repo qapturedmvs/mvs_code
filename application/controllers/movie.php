@@ -23,8 +23,8 @@
 				
 				$movie = $this->movie_m->movie($id);
 		
-				if($movie['data']){
-					$movie['data']->mvs_cover = $this->data['site_url']."data/movies/thumbs/".$movie['data']->mvs_imdb_id."_".$this->config->item('mvs_img_suffix_m')."_.jpg";
+				if($movie){
+					//$movie['data']->mvs_cover = $this->data['site_url'].'data/movies/thumbs/'.$movie['data']->mvs_slug.'_'.$this->config->item('mvs_img_suffix_m').'_.jpg';
 					$this->data['movie'] = $movie['data'];
 					
 					// Eğer filmin cast, genre, country bilgilerinden olmayan var ise view'daki loop hata vermesin
@@ -32,18 +32,19 @@
 					$this->data['genres'] = array();
 					$this->data['countries'] = array();
 					
-					$casts = $this->movie_m->getCastList($movie['data']->mvs_id);
-					
-					if($casts) $this->data['casts'] = $casts['data'];
+					$casts = $this->movie_m->getCastList(str_replace('|', ',', trim($movie['data']->cst_id, '|')));
+
+					if($casts)
+								$this->data['casts'] = $casts['data'];
 					
 					if($movie['data']->cntry_id != ''){
-								$cntId = str_replace('||', ',', trim($movie['data']->cntry_id, '|'));
+								$cntId = str_replace('|', ',', trim($movie['data']->cntry_id, '|'));
 								$countries = $this->movie_m->countries('cntry_id IN('.$cntId.')');
 								$this->data['countries'] = $countries;
 					}
 					
 					if($movie['data']->gnr_id != ''){
-								$gnrId = str_replace('||', ',', trim($movie['data']->gnr_id, '|'));
+								$gnrId = str_replace('|', ',', trim($movie['data']->gnr_id, '|'));
 								$genres = $this->movie_m->genres('gnr_id IN('.$gnrId.')');
 								$this->data['genres'] = $genres;
 					}

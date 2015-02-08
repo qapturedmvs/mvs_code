@@ -9,6 +9,45 @@
       
 		}
 		
+		public function forget(){
+			
+			$inputs = $this->input->post(NULL, TRUE);
+			$this->data['pwf_result'] = '';
+			
+			if(isset($inputs['pwf_submit'])){
+
+				$rules = $this->config->config['usr_password_forget'];
+        $this->form_validation->set_rules($rules);
+				unset($inputs['pwf_submit']);
+				
+				if($this->form_validation->run() === TRUE){
+					
+					$account = $this->user_m->forget_password($inputs['pwf_email']);
+					
+					if($account){
+						
+						$this->data['mail_link'] = $this->data['site_url'].'user/password/reset?act='.$account['data']->usr_act_key;
+						$this->data['pwf_result'] = 'success';
+						
+					}else{
+						
+						$this->data['pwf_result'] = 'no-user';
+						
+					}
+					
+				}else{
+					
+					$this->data['pwf_result'] = validation_errors();
+					
+				}
+				
+			}
+			
+			$this->data['subview'] = 'user/account/password_forget';
+      $this->load->view('_main_body_layout', $this->data);
+			
+		}
+		
 		public function reset(){
 			
       $this->data['act'] = $this->get_vars['act'];

@@ -60,12 +60,12 @@
 					$json->data = '';
 				}
 				
-				$data['json'] = json_encode($json);
+				$this->data['json'] = json_encode($json);
 			}else{
-				$data['json'] = FALSE;	
+				$this->data['json'] = FALSE;	
 			}
 			
-			$this->load->view('json/movies_json', $data);
+			$this->load->view('json/movies_json', $this->data);
 		}
 			
 	}

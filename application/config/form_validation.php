@@ -125,5 +125,12 @@ $config = array(
           'label' => 'Re-enter Password',
           'rules' => 'trim|required|min_length[4]|max_length[10]|matches[pwr_password]'
         )
+      ),
+  'usr_password_forget'=> array(
+        'pwf_email' => array(
+          'field' => 'pwf_email',
+          'label' => 'Email',
+          'rules' => 'trim|required|valid_email|xss_clean'
+        )
       )
 );
