@@ -5,34 +5,60 @@ var site_url = $('#mvs_site_url').val(), qs = window.location.search;
 var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
 	qapturedApp.config(['$httpProvider', function( $httpProvider ){ $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'; }]);
 	
-// AUTOCOMPLETE
+// Qaptured AutoComplete
+$.widget( "custom.qapturedComplete", $.ui.autocomplete, {
+	_create: function() {
+		this._super();
+		this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+	},
+	_renderMenu: function( ul, items ) {
+			
+		var that = this,
+			currentCategory = "";
+		$.each( items, function( index, item ) {
+			var li;
+			if ( item.category != currentCategory ){
+				ul.append('<li class="ui-autocomplete-category '+ item.category +'"><h2>' + item.category + '</h2></li>' );
+				currentCategory = item.category;
+			}
+			
+			li = that._renderItemData( ul, item );
+			
+			if( item.category == 'movies' ){
+				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>');
+			}else if( item.category == 'stars' ){
+				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '">'+ item.str_name +'</a></span><hr class="qFixer" /></div>');
+			}
+			
+		});
+		
+	}
+});
+
+
+function mergeData( data ){ 
+	for( var i = 0; i < data['movies'].length; ++i )
+		data['movies'][i]['category'] = 'movies';
+			
+	for( var j = 0; j < data['stars'].length; ++j )
+		data['stars'][j]['category'] = 'stars';	
+
+	return data['movies'].concat( data['stars'] );
+}
+
 if( $('#search_keyword').length > 0 )
-	$('#search_keyword').autocomplete({
-		  source: function( request, response ) {
+	$('#search_keyword').qapturedComplete({
+		source: function( request, response ) {
 			$.ajax({
-			  url: "ajx/search_ajx/lister/" + request.term,
-			  success: function( d ) {
-				if( d.data.movies )
-					response( d.data.movies );
+			  url: site_url + "ajx/search_ajx/lister/" + request.term,
+			  success: function( d ) {  
+			  	if( d.result == 'OK' )
+			  		response( mergeData( d.data ) );
 			  }
 			});
 		  },
-		  minLength: 3,
-		  open: function(event, ui) {
-			//$('ul.ui-autocomplete').append('<li class="ui-menu-item tumunuGoster"><a href="javascript:void(0);">Tümünü Göster</a></li>');
-		   },
-		    focus: function(event, ui) {
-				event.preventDefault();
-			},
-			select: function(event, ui) {
-			   event.preventDefault();
-				//window.open('/mvs_code/public_html/movie/' + ui.item.mvs_slug);
-			}
-
-		}).data('ui-autocomplete')._renderItem = function( ul, item ){
-			return $('<li></li>').data('item.autocomplete', item).append('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>').appendTo( ul );
-			};
-
+		  minLength: 3
+	});
 
 
 // Obj Exist
