@@ -50,7 +50,7 @@
 								<?php usort($chars, "sortByYear"); ?>
 										<ul>
 												<?php foreach($chars as $char): ?>
-												<li><span class="year"><?php echo $char->mvs_year; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$char->mvs_slug; ?>"><?php echo $char->mvs_title; ?></a></span><span class="character"><?php echo $char->char_name; ?></span><hr class="qFixer" /></li>
+												<li><span class="year"><?php echo $char->mvs_year; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$char->mvs_slug; ?>"><?php echo $char->mvs_title; ?></a></span><hr class="qFixer" /></li>
 												<?php endforeach; ?>
 										</ul>
 								</div>

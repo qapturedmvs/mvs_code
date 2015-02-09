@@ -21,9 +21,9 @@
 
 			if($this->uri->segment(2) != 'index'){	// Url'den index ile cagirilirsa 404 dönmeli
 				
-				$actor = $this->actor_m->actor($id);             
+				$actor = $this->actor_m->actor($id);
 		
-				if($actor['data']){
+				if($actor){
                     
 								$db_data = $this->actor_m->get_chars($actor['data']->str_id);
 								$type_unq = array(); 

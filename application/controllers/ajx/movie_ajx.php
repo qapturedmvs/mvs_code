@@ -49,7 +49,7 @@
 						}
 							
 						$movie->mvs_country = $temp;				
-						$movie->mvs_poster = (file_exists(FCPATH."data\movies\\thumbs\\".$movie->mvs_imdb_id."_175x240_.jpg")) ? "data/movies/thumbs/".$movie->mvs_imdb_id."_175x240_.jpg" : NULL;
+						$movie->mvs_poster = (file_exists(FCPATH."data\movies\\thumbs\\".$movie->mvs_slug."_175x240_.jpg")) ? "data/movies/thumbs/".$movie->mvs_slug."_175x240_.jpg" : NULL;
 						
 					}
 					

@@ -37,18 +37,28 @@
 						<p><?php echo $movie->mvs_plot; ?></p>
 					</div>
 					<div class="cast">
-						<ul>
-							<?php foreach($casts as $cast): ?>
-							<li><span class="actor"><a href="<?php echo $site_url.'actor/'.$cast->str_slug; ?>"><?php echo $cast->str_name; ?></a></span><span class="character"><?php echo $cast->char_name; ?></span></li>
-							<?php endforeach; ?>
-						</ul>
+						<span class="title">Stars: </span>
+							<?php
+								$i = 0;
+								
+								foreach($casts as $cast){
+									if($i == 0)
+										echo '<a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
+									elseif($i < 4)
+										echo ', <a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
+									else
+										break;
+
+									$i++;
+								}
+							?>
 						<hr class="qFixer" />
 					</div>
 				</div>
 				<hr class="qFixer" />
 			</div>
 			<div class="social">
-				<?php $this->load->view('components/_comment'); ?>
+				<?php $this->load->view('components/_comment_movie'); ?>
 			</div>
 		</aside>
 		<aside class="sidebar right">

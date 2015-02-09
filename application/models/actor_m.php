@@ -30,7 +30,7 @@ class Actor_M extends MVS_Model
     public function get_chars($id){
         
 			$filters = array(
-					'select' => 'mvs_id, type_id, char_name',
+					'select' => 'mvs_id, type_id',
 					'from' => 'mvs_cast',
 					'where' => 'str_id = '.$id,
 					'order_by' => array('mvs_id', 'ASC')
