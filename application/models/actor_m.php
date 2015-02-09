@@ -28,7 +28,8 @@ class Actor_M extends MVS_Model
 	}
     
     public function get_chars($id){
-        
+      
+			$this->per_page = 0;
 			$filters = array(
 					'select' => 'mvs_id, type_id',
 					'from' => 'mvs_cast',
@@ -36,6 +37,7 @@ class Actor_M extends MVS_Model
 					'order_by' => array('mvs_id', 'ASC')
 			);
 			$chars = $this->get_data(NULL, 0, FALSE, $filters);
+
 			$temp = '';
 									
 			foreach($chars['data'] as $char)

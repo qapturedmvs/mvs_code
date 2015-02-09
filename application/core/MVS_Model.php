@@ -51,7 +51,7 @@ class MVS_Model extends CI_Model {
 					$this->db->stop_cache();
 					
 				}
-				
+
 				$db_data['total_count'] = (!$count) ? FALSE : $this->db->count_all_results($this->_table_name);
 				
 				if($count !== 'ONLY'){

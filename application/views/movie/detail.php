@@ -44,10 +44,8 @@
 								foreach($casts as $cast){
 									if($i == 0)
 										echo '<a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
-									elseif($i < 4)
-										echo ', <a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
 									else
-										break;
+										echo ', <a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
 
 									$i++;
 								}
