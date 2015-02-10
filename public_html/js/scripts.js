@@ -146,16 +146,19 @@ if(exist($('.pageMovies'))){
 	
 	// infinite-Scroll
 	infiniteScroll('ajx/movie_ajx/lister/');
-	
-	//-->getAjx({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/' });
 }
 
+if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/muh' }, function(){});
 
-function getAjx( obj ){
+
+function getAjx( obj, callback ){
 	var url = site_url + obj['uri']
 	qapturedApp.controller(obj['controller'], function( $scope,  $http ){ 
 		$http.get( url ).success(function( d ){
-			$scope.items = d['data'];
+			if( d['result'] == 'OK' ){
+				$scope.items = d['data'];
+				if( callback != undefined ) callback();
+			}
 		});
 	});
 }
