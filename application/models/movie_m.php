@@ -11,7 +11,6 @@ class Movie_M extends MVS_Model
 	function __construct ()
 	{
 		parent::__construct();
-	
 	}
 	
 	// Movie list JSON

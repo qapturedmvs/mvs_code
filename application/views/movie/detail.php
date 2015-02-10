@@ -56,6 +56,17 @@
 				<hr class="qFixer" />
 			</div>
 			<div class="social">
+				<div ng-controller='movieFeedsController' class="movieFeedsHolder">
+								<div class="feedsTabs"><ul><li><a href="javascript:void(0);">Top Rated</a></li><li><a href="javascript:void(0);">My Network</a></li></ul></div>
+								<div class="feedsContent">
+												
+								<div ng-repeat='item in items'> 
+								<span class='text'>{{item.act_text}}</span> 
+								<span class='time'>{{item.act_time}}</span>
+								</div>
+								
+								</div>
+				</div>
 				<?php $this->load->view('components/_comment_movie'); ?>
 			</div>
 		</aside>

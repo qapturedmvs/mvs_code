@@ -150,6 +150,12 @@ if(exist($('.pageMovies'))){
 
 if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/muh' }, function(){});
 
+// Movie Detail Feeds
+if( $('.movieFeedsHolder').length > 0 ){
+		var mvs_id = $('.pageMovie .details').attr("rel");
+		getAjx({ controller: 'movieFeedsController', uri: 'ajx/feeds_ajx/movie_all?mvs_id='+mvs_id }, function(){});
+	}
+
 
 function getAjx( obj, callback ){
 	var url = site_url + obj['uri']
@@ -241,6 +247,8 @@ if ($('.form-signin').length > 0)
 			}
 		}
 	});
+	
+	
 
 if ($('.form-signup').length > 0) 
 	$('.form-signup').validate({

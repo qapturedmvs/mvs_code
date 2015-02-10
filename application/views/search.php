@@ -44,12 +44,14 @@
     <ul>
       <li ng-repeat='item in items.movies'> 
       <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span> 
-      <span class='year'>{{item.mvs_year}}</span> 
+      <span class='year'>{{item.mvs_year}}</span>
+      </li>
     </ul>
      <h4>ANGULAR SEARCH RESULT ARTIST</h4>
     <ul>
       <li ng-repeat='item in items.stars'> 
-      <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.str_slug}}'>{{item.str_name}}</a></span> 
+      <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.str_slug}}'>{{item.str_name}}</a></span>
+      </li>
     </ul>
   </div>
 </div>
