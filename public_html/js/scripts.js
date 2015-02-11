@@ -151,9 +151,9 @@ if(exist($('.pageMovies'))){
 if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/muh' }, function(){});
 
 // Movie Detail Feeds
-if( $('.movieFeedsHolder').length > 0 ){
+if( $('.movieCommentsHolder').length > 0 ){
 		var mvs_id = $('.pageMovie .details').attr("rel");
-		getAjx({ controller: 'movieFeedsController', uri: 'ajx/feeds_ajx/movie_detail?type=all&mvs_id='+mvs_id }, function(){});
+		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=all&mvs_id='+mvs_id }, function(){});
 	}
 
 

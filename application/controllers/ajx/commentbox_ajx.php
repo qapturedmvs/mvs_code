@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Comment_Ajx extends Frontend_Controller{
+	class Commentbox_Ajx extends Frontend_Controller{
     
 		function __construct(){
 			parent::__construct();

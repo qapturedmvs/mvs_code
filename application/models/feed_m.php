@@ -30,35 +30,6 @@ class Feed_M extends MVS_Model
 			return FALSE;
 	
 	}
-	
-	// MOVIE DETAIL FEEDS
-	public function movie_feeds_json($mvs_id, $usr_id = NULL, $offset = 0){
-		
-		$filters = array(
-			'select' => '*',
-			'from' => $this->_table_name,
-			'where' => "mvs_id = $mvs_id",
-			'order_by' => $this->_order_by.' DESC'
-		);
-		
-		if($usr_id != NULL){		
-			
-			$filters['where'] .= " AND usr_id = $usr_id";
-			$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
-		
-		}else{
-			
-			$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
-			
-		}
-		
-		if(isset($feeds['data']))
-			return $feeds;
-		else
-			return FALSE;
-	
-	}
-  
   
 }
 

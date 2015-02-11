@@ -56,8 +56,9 @@
 				<hr class="qFixer" />
 			</div>
 			<div class="social">
-				<div ng-controller='movieFeedsController' class="movieFeedsHolder">
-								<div class="feedsTabs">
+				<div ng-controller='movieCommentController' class="movieCommentsHolder">
+								<div class="commentsTabs">
+								<h4>Comments</h4>
 									<ul>
 										<li><a href="javascript:void(0);">Top Rated</a></li>
 										<?php if($logged_in): ?>
@@ -65,16 +66,17 @@
 										<?php endif; ?>
 									</ul>
 								</div>
-								<div class="feedsContent">
+								<div class="commentsContent">
 												
-								<div ng-repeat='item in items'> 
+								<div ng-repeat='item in items'>
+								<span class='user'><b>{{item.usr_name}}</b></span>
 								<span class='text'>{{item.act_text}}</span> 
 								<span class='time'>{{item.act_time}}</span>
 								</div>
 								
 								</div>
 				</div>
-				<?php $this->load->view('components/_comment_movie'); ?>
+				<?php $this->load->view('components/_commentbox_movie'); ?>
 			</div>
 		</aside>
 		<aside class="sidebar right">

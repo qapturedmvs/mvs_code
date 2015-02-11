@@ -4,7 +4,7 @@ function add_comment(id, type, text){
 	
 	$.ajax({
 		type:'POST',
-		url:site_url+'ajx/comment_ajx/add_comment',
+		url:site_url+'ajx/commentbox_ajx/add_comment',
 		data:{id:id, type:type, text:text},
 		success:function(result){
 			$('.cmtResult').text(result.data['message']);
