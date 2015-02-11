@@ -57,7 +57,14 @@
 			</div>
 			<div class="social">
 				<div ng-controller='movieFeedsController' class="movieFeedsHolder">
-								<div class="feedsTabs"><ul><li><a href="javascript:void(0);">Top Rated</a></li><li><a href="javascript:void(0);">My Network</a></li></ul></div>
+								<div class="feedsTabs">
+									<ul>
+										<li><a href="javascript:void(0);">Top Rated</a></li>
+										<?php if($logged_in): ?>
+										<li><a href="javascript:void(0);">My Network</a></li>
+										<?php endif; ?>
+									</ul>
+								</div>
 								<div class="feedsContent">
 												
 								<div ng-repeat='item in items'> 
