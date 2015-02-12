@@ -25,11 +25,21 @@ class User_M extends MVS_Model
 		
 		$user = $this->get_data($email, 0, FALSE, $filters);
 
-		if(isset($user['data'])){	
+		if(isset($user['data'])){
+			$this->set_last_login($user['data']->usr_id);
+			
 			return $user;
 		}else{
 			return FALSE;
 		}
+	}
+	
+	public function set_last_login($id){
+		
+		$this->db->where('usr_id', $id);
+		$this->db->set('usr_last_login', time());
+    $this->db->update('mvs_users');
+		
 	}
   
   public function signup($name, $email, $password){

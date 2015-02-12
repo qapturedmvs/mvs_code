@@ -30,7 +30,11 @@ class MVS_Model extends CI_Model {
 					if($chk_filters){
 						foreach($filters as $key => $val){
 							if(is_array($val) && count($val) > 1){
-								call_user_func_array(array(&$this->db, $key), $val);
+								if(is_array($val[0]))
+									foreach($val as $subVal)
+										call_user_func_array(array(&$this->db, $key), $subVal);
+								else
+									call_user_func_array(array(&$this->db, $key), $val);
 							}else{
 								if($key === 'from')
 									$this->_table_name = $val;

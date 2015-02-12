@@ -25,11 +25,14 @@
 				$p = $this->comments_m->cleaner($p);
 				$offset = ($p-1) * $per_page;
 				$db_data = $this->comments_m->movie_comments_json($mvs_id, $usr_id, $offset);
-				$feeds = $db_data['data'];
 				
-				if($feeds){
+				if(isset($db_data['data'])){
+					
+					foreach($db_data['data'] as $comment)
+						$comment->act_time = time_calculator($comment->act_time);
+
 					$json->result = 'OK';
-					$json->data = $feeds;
+					$json->data = $db_data['data'];
 				}else{
 					$json->result = 'FALSE';
 					$json->data = '';

@@ -38,7 +38,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .titleDefault{font-size:18px; font-weight:bold; margin-bottom:20px;}
 
 .commentForm{margin:10px 0;}
-.commentForm textarea{width:100%; height:95px; margin:0 0 5px;}
+.commentForm textarea{width:694px; height:95px; margin:0 0 5px;}
 .commentForm a{float:left; margin-right:5px;}
 
 #qContainer{width:1000px; margin:0 auto;}
@@ -145,6 +145,16 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .sidebar .lists{}
 .pageMovie .body .sidebar .lists .sectionTitle{font-weight:bold; display:block; margin-bottom:20px;}
 .pageMovie .body .sidebar .lists li{margin-bottom:7px;}
+
+/* MOVIE DETAIL COMMENT */
+.movieCommentsHolder{}
+.movieCommentsHolder h4{font-size:18px; margin-bottom:15px;}
+.movieCommentsHolder .commentsTabs{margin-bottom:10px;}
+.movieCommentsHolder .commentsTabs li{float:left; margin-right:15px;}
+.movieCommentsHolder .commentItem{margin-bottom:5px; background:#e6e6e6; padding:15px 20px; border:1px solid #ddd;}
+.movieCommentsHolder .commentItem .user{display:block; margin-bottom: 5px;}
+.movieCommentsHolder .commentItem .text{display:block; margin-bottom: 5px;}
+.movieCommentsHolder .commentItem .time{display:block; text-align: right;}
 
 /* ACTOR DETAIL */
 .pageActor{padding-top:30px;}

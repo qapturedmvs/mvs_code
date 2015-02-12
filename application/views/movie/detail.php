@@ -60,19 +60,21 @@
 								<div class="commentsTabs">
 								<h4>Comments</h4>
 									<ul>
-										<li><a href="javascript:void(0);">Top Rated</a></li>
+										<li class="selected"><a href="javascript:void(0);">Top Rated</a></li>
 										<?php if($logged_in): ?>
 										<li><a href="javascript:void(0);">My Network</a></li>
 										<?php endif; ?>
 									</ul>
+									<hr class="qFixer" />
 								</div>
 								<div class="commentsContent">
 												
-								<div ng-repeat='item in items'>
-								<span class='user'><b>{{item.usr_name}}</b></span>
-								<span class='text'>{{item.act_text}}</span> 
-								<span class='time'>{{item.act_time}}</span>
-								</div>
+									<div act-id="{{item.act_id}}" act-ref-id="{{item.act_ref_id}}" class="commentItem" ng-repeat='item in items'>
+										<span class='user'><b>{{item.usr_name}}</b></span>
+										<span class='text'>{{item.act_text}}</span> 
+										<span class='time'>{{item.act_time}} ago</span>
+										<hr class="qFixer" />
+									</div>
 								
 								</div>
 				</div>
