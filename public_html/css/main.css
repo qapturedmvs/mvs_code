@@ -82,6 +82,8 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .movieListHolder .movieItem .posterImg{ background:url(../back/images/ajax-loader.gif) no-repeat center center; width:100%; height:200px; }
 .pageMovies .movieListHolder .movieItem.loaded .posterImg{ background-size:cover; }
 
+.pageMovies .movieListHolder .movieItem .seen a[rel="1"]{text-decoration:underline;}
+
 
 .pageMovies .controllers{margin-bottom:30px;}
 .pageMovies .controllers .view{float:right;}
@@ -110,6 +112,8 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovies .filters .choicesHolder .choices a{background:url(../images/choice.png) right top no-repeat; padding-right:20px; display:inline-block; height:26px; vertical-align:middle; margin-right:10px;}
 .pageMovies .filters .choicesHolder .choices a span{background:#fff; padding:5px; height:15px; display:inline-block;}
 
+.btnMultiSeen{position:fixed; margin-left:-170px;}
+
 /* MOVIE DETAIL */
 .pageMovie{}
 .pageMovie .hero{width:100%; height:225px; background:#bbb;}
@@ -126,11 +130,13 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .mainCol .details .text .country{float:left; margin:0 0 25px 0;}
 .pageMovie .body .mainCol .details .text .country li{float:left; height:15px; line-height:15px; border-left:2px; solid #000; padding:0 10px; font-size:12px;}
 .pageMovie .body .mainCol .details .text .country li:first-child{padding-left:0; border-left:none;}
-.pageMovie .body .mainCol .details .text .actions{border:2px solid #000; display:inline-block; margin-bottom:30px;}
+.pageMovie .body .mainCol .details .text .actions{display:inline-block; margin-bottom:30px; height:30px; }
+.pageMovie .body .mainCol .details .text .actions ul{border:2px solid #000; height:30px;}
 .pageMovie .body .mainCol .details .text .actions li{float:left;}
 .pageMovie .body .mainCol .details .text .actions li a{padding:7px 22px; font-size:14px; line-height:16px; background:#E6E6E6; border:none; border-left:2px solid #000; cursor:pointer; cursor:hand; display:inline-block;}
 .pageMovie .body .mainCol .details .text .actions li:first-child a{border-left:none;}
 .pageMovie .body .mainCol .details .text .actions li a:hover{background:#fff; text-decoration:none;}
+.pageMovie .body .mainCol .details .text .actions li[rel=unseen] a{background:#000; color:#fff;}
 .pageMovie .body .mainCol .details .text .plot{margin-bottom:20px;}
 .pageMovie .body .mainCol .details .text .cast{}
 .pageMovie .body .mainCol .details .text .cast li{clear:both; margin-bottom:10px;}
@@ -151,10 +157,20 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .movieCommentsHolder h4{font-size:18px; margin-bottom:15px;}
 .movieCommentsHolder .commentsTabs{margin-bottom:10px;}
 .movieCommentsHolder .commentsTabs li{float:left; margin-right:15px;}
-.movieCommentsHolder .commentItem{margin-bottom:5px; background:#e6e6e6; padding:15px 20px; border:1px solid #ddd;}
-.movieCommentsHolder .commentItem .user{display:block; margin-bottom: 5px;}
-.movieCommentsHolder .commentItem .text{display:block; margin-bottom: 5px;}
-.movieCommentsHolder .commentItem .time{display:block; text-align: right;}
+.movieCommentsHolder .commentItem{margin-bottom:5px; background:#e6e6e6; border:1px solid #ddd; padding-bottom:15px;}
+.movieCommentsHolder .commentItem.more{padding-bottom:0;}
+.movieCommentsHolder .commentItem:hover{background:#e9e9e9;}
+.movieCommentsHolder .commentItem .user{display:block; margin:15px 0 5px 0; padding:0 15px;}
+.movieCommentsHolder .commentItem .text{display:block; margin-bottom: 5px; padding:0 15px;}
+.movieCommentsHolder .commentItem .time{display:block; text-align: right; padding:0 15px;}
+.movieCommentsHolder .commentItem .btnHolder{display:block; padding:0 15px;}
+.movieCommentsHolder .commentItem a.btnShowReplies:hover, .movieCommentsHolder .commentItem a.btnShowReplies:hover span{text-decoration:none;}
+.replyForm{padding-top:10px;}
+.replyForm textarea{width:100%; margin-bottom:5px; height:90px;}
+.commentReplies{margin:10px 0 0;  padding:10px; background:#ddd; display:none;}
+.commentItem.more .commentReplies{display:block;}
+.commentReplies .subComment{border:none; background:none;}
+.movieCommentsHolder .subComment:hover{background:none;}
 
 /* ACTOR DETAIL */
 .pageActor{padding-top:30px;}

@@ -159,7 +159,7 @@
 	
 	function time_calculator($time){
 		
-    $time = time() - $time; // to get the time since that moment
+    $time = time() - strtotime($time);
 
     $tokens = array (
         31536000 => 'year',

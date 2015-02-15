@@ -9,3 +9,7 @@ $config['mvs_img_d_size'] = '';
 
 //Global cache settings
 $config['cache_sets'] = array('adapter' => 'file', 'backup' => 'memcached');
+
+// Time Formats
+$config['mvs_db_time'] = 'Y-m-d H:i:s';
+$config['mvs_user_time'] = 'Y-m-d H:i:s';

@@ -14,12 +14,52 @@ class Action_M extends MVS_Model
   
 	public function add_comment($data){
 		
-		$this->db->insert('mvs_feeds', $data);
+		$this->db->insert($this->_table_name, $data);
 		
 		return $this->db->insert_id();
 	
 	}
   
+	public function seen_movie($data){
+		
+		if($data['action'] === 'seen'){
+			unset($data['action']);
+			$this->db->insert('mvs_seen', $data);
+		}else{
+			$this->db->where('usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id']);
+			$this->db->delete('mvs_seen');
+		}
+		
+		return TRUE;
+	
+	}
+	
+	public function multi_seen($data){
+		
+		$this->db->insert_batch('mvs_seen', $data);
+		
+		return TRUE;
+	
+	}
+	
+	public function check_seen($data){
+		
+		$filters = array(
+			'select' => '*',
+			'from' => 'mvs_seen',
+			'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
+			'limit' => 1
+		);
+		
+		$seen = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		if(isset($seen['data']))
+			return TRUE;
+		else
+			return FALSE;
+		
+	}
+	
   
 }
 

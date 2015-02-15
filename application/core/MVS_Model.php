@@ -4,30 +4,26 @@ class MVS_Model extends CI_Model {
 	
 	protected $_table_name = '';
 	protected $_primary_key = 'id';
-	//protected $_primary_filter = 'intval';
-	//protected $_order_by = '';
-	//protected $_order_rule = 'ASC';
 	public $rules = array();
 	public $per_page = 0;
-	protected $_timestamps = FALSE;
+	public $_timestamp = '';
 	
 	function __construct() {
 		parent::__construct();
 
 		$this->load->driver('cache', $this->config->item('cache_sets'));
+		$this->_timestamp = $this->config->item('mvs_db_time');
 		
 	}
 	
 	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL, $cache = FALSE){
 
-				$chk_filters = is_array($filters);
 				$method = 'result';
 				
-				if($chk_filters || $id !== NULL){
-					
+				if($filters !== NULL || $id !== NULL){
+
 					$this->db->start_cache();
-					
-					if($chk_filters){
+					if($filters !== NULL){
 						foreach($filters as $key => $val){
 							if(is_array($val) && count($val) > 1){
 								if(is_array($val[0]))
@@ -63,11 +59,11 @@ class MVS_Model extends CI_Model {
 					if($this->per_page !== 0)
 						$this->db->limit($this->per_page, $offset);
 					
-					if($cache) $this->db->cache_on(); // File cache for query results
+					//if($cache) $this->db->cache_on(); // File cache for query results
 					
 					$db_data['data'] = $this->db->get($this->_table_name)->{$method}();
 					
-					if($cache) $this->db->cache_off();
+					//if($cache) $this->db->cache_off();
 					
 					if(count($db_data['data']) === 0)
 						unset($db_data['data']);

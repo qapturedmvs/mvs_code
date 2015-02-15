@@ -29,6 +29,10 @@
 				$json = (object) array();
 		
 				if($movies){
+					
+					// Getting User's Seen Movies
+					$usr_seen = $this->_get_user_seen();
+					
 					foreach($movies as $movie){
 							
 						$g = explode('||', trim($movie->gnr_id, '|'));
@@ -51,6 +55,12 @@
 						$movie->mvs_country = $temp;				
 						$movie->mvs_poster = (file_exists(FCPATH."data\movies\\thumbs\\".$movie->mvs_slug."_175x240_.jpg")) ? "data/movies/thumbs/".$movie->mvs_slug."_175x240_.jpg" : NULL;
 						
+						// Users Seen Check
+						if(isset($usr_seen['list'][$movie->mvs_id]))
+							$movie->usr_seen = 1;
+						else
+							$movie->usr_seen = 0;
+						
 					}
 					
 					$json->result = 'OK';
@@ -66,6 +76,27 @@
 			}
 			
 			$this->load->view('json/movies_json', $this->data);
+		}
+		
+		private function _get_user_seen(){
+			
+			$this->load->model('list_m');
+			
+			$seen = $this->list_m->get_user_seen($this->user['usr_id']);
+			$usr_seen = array('count' => $seen['total_count'], 'list' => array());
+			
+			if($seen){
+				
+				foreach($seen['data'] as $movie){
+					
+					$usr_seen['list'][$movie->mvs_id] = $movie->seen_id;
+					
+				}
+				
+			}
+			
+			return $usr_seen;
+			
 		}
 			
 	}

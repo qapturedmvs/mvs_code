@@ -26,20 +26,18 @@ class User_M extends MVS_Model
 		$user = $this->get_data($email, 0, FALSE, $filters);
 
 		if(isset($user['data'])){
-			$this->set_last_login($user['data']->usr_id);
+
+      $this->db->where('usr_id', $user['data']->usr_id);
+      $this->db->set('usr_last_login', date($this->_timestamp));
+      $this->db->update('mvs_users');
 			
 			return $user;
+    
 		}else{
+      
 			return FALSE;
+    
 		}
-	}
-	
-	public function set_last_login($id){
-		
-		$this->db->where('usr_id', $id);
-		$this->db->set('usr_last_login', time());
-    $this->db->update('mvs_users');
-		
 	}
   
   public function signup($name, $email, $password){
@@ -54,7 +52,7 @@ class User_M extends MVS_Model
       'usr_avatar' => '',
       'usr_account' => 'qp',
 			'usr_act_key' => $usr_act_key,
-      'usr_time' => date('Y-m-d')
+      'usr_time' => date($this->_timestamp)
     );
 		
     $this->db->insert('mvs_users', $user);

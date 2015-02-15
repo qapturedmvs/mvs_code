@@ -6,6 +6,7 @@
 			
 			$this->output->enable_profiler();
 			$this->load->model('movie_m');
+			
 		}
 
 		public function _remap($method,$args){
@@ -35,27 +36,30 @@
 					$casts = $this->movie_m->getCastList(str_replace('|', ',', trim($movie['data']->cst_id, '|')));
 
 					if($casts)
-								$this->data['casts'] = $casts['data'];
+						$this->data['casts'] = $casts['data'];
 					
 					if($movie['data']->cntry_id != ''){
-								$cntId = str_replace('|', ',', trim($movie['data']->cntry_id, '|'));
-								$countries = $this->movie_m->countries('cntry_id IN('.$cntId.')');
-								$this->data['countries'] = $countries;
+						$cntId = str_replace('|', ',', trim($movie['data']->cntry_id, '|'));
+						$countries = $this->movie_m->countries('cntry_id IN('.$cntId.')');
+						$this->data['countries'] = $countries;
 					}
 					
 					if($movie['data']->gnr_id != ''){
-								$gnrId = str_replace('|', ',', trim($movie['data']->gnr_id, '|'));
-								$genres = $this->movie_m->genres('gnr_id IN('.$gnrId.')');
-								$this->data['genres'] = $genres;
+						$gnrId = str_replace('|', ',', trim($movie['data']->gnr_id, '|'));
+						$genres = $this->movie_m->genres('gnr_id IN('.$gnrId.')');
+						$this->data['genres'] = $genres;
 					}
 					
 					// Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(
-																'title' => $movie['data']->mvs_title.' ('.$movie['data']->mvs_year.')',
-																'description' => $movie['data']->mvs_plot,
-																'type' => 'movie',
-																'image' => $movie['data']->mvs_poster
-												);
+						'title' => $movie['data']->mvs_title.' ('.$movie['data']->mvs_year.')',
+						'description' => $movie['data']->mvs_plot,
+						'type' => 'movie',
+						'image' => $movie['data']->mvs_poster
+					);
+					
+					if(isset($this->user['usr_id']))
+						$this->data['actions'] = $this->_set_actions($movie['data']->mvs_id);
 					
 					// Load view
 					$this->data['subview'] = 'movie/detail';
@@ -69,6 +73,17 @@
 				show_404();
 			}
 			
+		}
+		
+		private function _set_actions($mvs_id){
+			
+			$this->load->model('action_m');
+			
+			// Seen Movie Check
+			$db_data['seen'] = $this->action_m->check_seen(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			
+			return $db_data;
+	
 		}
 	}
 

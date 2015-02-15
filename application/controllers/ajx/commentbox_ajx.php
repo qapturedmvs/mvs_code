@@ -16,15 +16,15 @@
 				if(isset($this->user['usr_id'])){
 				
 					$vars = $this->input->post(NULL, TRUE);
-					$data = array('act_type_id' => (int) $vars['type'], 'act_text' => $vars['text'], 'usr_id' => $this->user['usr_id']);
+					$data = array('act_type_id' => (int) $vars['type'], 'act_text' => $vars['text'], 'usr_id' => $this->user['usr_id'], 'act_ref_id' => isset($vars['ref']) ? $vars['ref'] : 0);
 					$col = '';
-					
+
 					switch((int) $vars['type']) {
 						case 2:
 								$col = 'mvs_id';
 								break;
-						case 7:
-								$col = 'act_ref_id';
+						case 8:
+								$col = 'list_id';
 								break;
 					}
 					

@@ -170,7 +170,7 @@ if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 
 // Movie Detail Feeds
 if( $('.movieCommentsHolder').length > 0 ){
 		var mvs_id = $('.pageMovie .details').attr("rel");
-		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=all&mvs_id='+mvs_id }, function(){});
+		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=myn&mvs_id='+mvs_id }, function(){});
 	}
 
 
@@ -288,5 +288,56 @@ if ($('.form-signup').length > 0)
 				minlength: 'Your password must be at least 6 characters long'
 			}
 		}
-	});	
+	});
+	
+// MOVIE DETAIL ACTIONS
+
+$('li.seenMovie a').click(function(){
+		var action = $(this).parent('li').attr("rel");
+		
+		$.ajax({
+			type:'POST',
+			url:site_url+'ajx/add_to_list_ajx/seen_unseen_movie/'+action,
+			data:{id:mvs_id},
+			success:function(result){
+				if(result == 'seen' || result == 'unseen')
+					$('li.seenMovie').attr("rel", result);
+				else
+					alert(result);
+			}
+		});
+});
+
+// MOVIE LIST SEEN
+var seenList = [];
+function select_seen(obj){
+	
+	var rel = $(obj).attr("rel"), id = $(obj).parents(".movieItemInner").attr("rel");
+	
+	if(rel == 0){
+		
+		seenList.push(id);
+		$(obj).attr("rel", 1);
+		
+	}else{
+		
+		seenList.splice(seenList.indexOf(id), 1);
+		$(obj).attr("rel", 0);
+		
+	}
+
+}
+
+$('a.btnMultiSeen').click(function(){
+		
+		$.ajax({
+			type:'POST',
+			url:site_url+'ajx/add_to_list_ajx/mark_all_seen/',
+			data:{ids:seenList},
+			success:function(result){
+				alert(result);
+			}
+		});
+		
+});
 

@@ -14,18 +14,20 @@ class Comments_M extends MVS_Model
 	
 	// MOVIE DETAIL COMMENTS
 	public function movie_comments_json($mvs_id, $usr_id = NULL, $offset = 0){
-		
-		
-		
+
 		if($usr_id != NULL){		
 			
 			$filters = array(
 				'select' => 'flwd_usr_id, u.usr_id, usr_name, usr_nick, act_id, act_ref_id, act_type_id, act_text, act_time',
 				'from' => 'mvs_follows fl',
-				'join' => array(array('mvs_users u', 'u.usr_id = fl.flwd_usr_id', 'left'), array('mvs_feeds f', "f.usr_id = fl.flwd_usr_id AND f.mvs_id = $mvs_id", 'inner')),
+				'join' => array(
+										array('mvs_users u', 'u.usr_id = fl.flwd_usr_id', 'left'),
+										array('mvs_feeds f', "f.usr_id = fl.flwd_usr_id AND f.mvs_id = $mvs_id", 'inner')
+									),
 				'where' => "fl.flwr_usr_id = $usr_id",
 				'order_by' => $this->_order_by.' DESC'
 			);
+			
 			$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
 		
 		}else{
@@ -37,10 +39,11 @@ class Comments_M extends MVS_Model
 				'where' => "mvs_id = $mvs_id",
 				'order_by' => $this->_order_by.' DESC'
 			);
-			$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
+			
+			$feeds = $this->get_data(NULL, $offset, TRUE, $filters);
 			
 		}
-		
+
 		if(isset($feeds['data']))
 			return $feeds;
 		else
