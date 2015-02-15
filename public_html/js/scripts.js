@@ -15,9 +15,11 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 			
 		var that = this,
 			currentCategory = "";
+			
 		$.each( items, function( index, item ) {
 			var li;
 			if ( item.category != currentCategory ){
+				
 				ul.append('<li class="ui-autocomplete-category '+ item.category +'"><h2>' + item.category + '</h2></li>' );
 				currentCategory = item.category;
 			}
@@ -28,6 +30,8 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>');
 			}else if( item.category == 'stars' ){
 				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '">'+ item.str_name +'</a></span><hr class="qFixer" /></div>');
+			}else if( item.category == 'noResult' ){
+				li.html('<div class="row">No Result</div>');
 			}
 			
 		});
@@ -36,14 +40,27 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 });
 
 
-function mergeData( data ){ 
-	for( var i = 0; i < data['movies'].length; ++i )
-		data['movies'][i]['category'] = 'movies';
-			
-	for( var j = 0; j < data['stars'].length; ++j )
-		data['stars'][j]['category'] = 'stars';	
-
-	return data['movies'].concat( data['stars'] );
+function mergeData( data ){
+	
+	var obj = [], m = data['movies'] , s = data['stars'];
+	
+	if( m.length > 0 ){
+		for( var i = 0; i < m.length; ++i )
+			m[i]['category'] = 'movies';
+		
+		obj = obj.concat( m );	
+	}
+	
+	if( s.length > 0 ){
+		for( var j = 0; j < s.length; ++j )
+			s[j]['category'] = 'stars';	
+		
+		obj = obj.concat( s );	
+	}
+	
+	if( obj.length > 0 ) return obj 
+	else return [{ 'category': 'noResult' }];
+	
 }
 
 if( $('#search_keyword').length > 0 )
