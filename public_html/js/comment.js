@@ -2,14 +2,10 @@ var site_url = $('#mvs_site_url').val(), cmtText, comm;
 
 function add_comment(id, type, text, ref_id){
 	
-	ref_id = (ref_id == undefined) ? 0 : ref_id;
-	
-	if(ref_id == undefined){
-		ref_id = 0;
+	if(ref_id == 0)
 		commentType = 'comment';
-	}else{
+	else
 		commentType = 'reply';
-	}
 	
 	$.ajax({
 		type:'POST',
@@ -27,7 +23,7 @@ $('a.btnComment').click(function(){
 		cmtText = $('#comment_text').val();
 		
 		if(cmtText != '')
-			add_comment(mvs_id, 2, cmtText);
+			add_comment(mvs_id, 2, cmtText, 0);
 });
 
 

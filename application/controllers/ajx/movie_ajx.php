@@ -31,7 +31,8 @@
 				if($movies){
 					
 					// Getting User's Seen Movies
-					$usr_seen = $this->_get_user_seen();
+					if($this->logged_in)
+						$usr_seen = $this->_get_user_seen();
 					
 					foreach($movies as $movie){
 							

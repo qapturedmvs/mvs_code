@@ -289,9 +289,9 @@ if ($('.form-signup').length > 0)
 			}
 		}
 	});
-	
-// MOVIE DETAIL ACTIONS
 
+
+// MOVIE DETAIL ACTIONS
 $('li.seenMovie a').click(function(){
 		var action = $(this).parent('li').attr("rel");
 		
