@@ -336,8 +336,17 @@ $('a.btnMultiSeen').click(function(){
 			data:{ids:seenList},
 			success:function(result){
 				alert(result);
+				removeSeen();
+				seenList = [];
 			}
 		});
 		
 });
+
+function removeSeen(){
+	
+	for(var i=0, l=seenList.length; i<l; i++)
+		$('.movieItemInner[rel="'+seenList[i]+'"] .seen a').remove();
+	
+}
 

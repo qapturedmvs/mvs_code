@@ -20,15 +20,23 @@
 					$col = '';
 
 					switch((int) $vars['type']) {
+						case 1:
+								$col = '';
+								break;
 						case 2:
 								$col = 'mvs_id';
 								break;
-						case 8:
+						case 3:
+								$col = 'act_ref_id';
+								break;
+						case 4:
 								$col = 'list_id';
 								break;
 					}
 					
-					$data[$col] = $vars['id'];
+					if($col !== '')
+						$data[$col] = $vars['id'];
+					
 					$feed = $this->action_m->add_comment($data);
 					
 					if($feed){
