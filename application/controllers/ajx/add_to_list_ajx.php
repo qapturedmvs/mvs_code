@@ -56,7 +56,7 @@
 					foreach($ids as $id)
 						$data[] = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $id);
 					
-					$this->data['seen_result'] = $this->action_m->multi_seen($data);
+					$this->data['seen_result'] = $this->action_m->seen_movie_multi($data);
 
 				}else{
 					

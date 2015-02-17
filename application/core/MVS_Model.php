@@ -6,7 +6,7 @@ class MVS_Model extends CI_Model {
 	protected $_primary_key = 'id';
 	public $rules = array();
 	public $per_page = 0;
-	public $_timestamp = '';
+	protected $_timestamp = '';
 	
 	function __construct() {
 		parent::__construct();

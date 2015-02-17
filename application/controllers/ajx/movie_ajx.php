@@ -81,9 +81,9 @@
 		
 		private function _get_user_seen(){
 			
-			$this->load->model('list_m');
+			$this->load->model('action_m');
 			
-			$seen = $this->list_m->get_user_seen($this->user['usr_id']);
+			$seen = $this->action_m->get_user_seen($this->user['usr_id']);
 			$usr_seen = array('count' => $seen['total_count'], 'list' => array());
 			
 			if($seen){

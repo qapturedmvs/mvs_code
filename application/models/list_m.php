@@ -12,22 +12,7 @@ class List_M extends MVS_Model
 		parent::__construct();
 	}
 	
-	public function get_user_seen($usr_id){
-		
-		$filters = array(
-			'select' => 'seen_id, mvs_id',
-			'from' => 'mvs_seen',
-			'where' => 'usr_id = '.$usr_id
-		);
-		
-		$seen = $this->get_data(NULL, 0, TRUE, $filters);
-		
-		if(isset($seen['data']))
-			return $seen;
-		else
-			return FALSE;
-		
-	}
+	
   
 }
 
