@@ -25,12 +25,14 @@ class Action_M extends MVS_Model
 		if($data['action'] === 'seen'){
 			unset($data['action']);
 			$this->db->insert('mvs_seen', $data);
+			$result = $this->db->insert_id();
 		}else{
-			$this->db->where('usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id']);
+			$this->db->where('seen_id = '.$data['seen_id'].' AND usr_id = '.$data['usr_id']);
 			$this->db->delete('mvs_seen');
+			$result = 'unseen';
 		}
 		
-		return TRUE;
+		return $result;
 	
 	}
 	
@@ -38,7 +40,7 @@ class Action_M extends MVS_Model
 		
 		$this->db->insert_batch('mvs_seen', $data);
 		
-		return TRUE;
+		return 'mseen';
 	
 	}
 	
@@ -71,9 +73,43 @@ class Action_M extends MVS_Model
 		$seen = $this->get_data(NULL, 0, FALSE, $filters);
 		
 		if(isset($seen['data']))
-			return TRUE;
+			return $seen['data'];
 		else
 			return FALSE;
+		
+	}
+	
+	public function check_watchlist($data){
+		
+		$filters = array(
+			'select' => '*',
+			'from' => 'mvs_watchlist',
+			'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
+			'limit' => 1
+		);
+		
+		$wtc = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		if(isset($wtc['data']))
+			return $wtc['data'];
+		else
+			return FALSE;
+		
+	}
+	
+	public function add_remove_watchlist($data){
+		
+		if($data['action'] === 'awtc'){
+			unset($data['action']);
+			$this->db->insert('mvs_watchlist', $data);
+			$result = $this->db->insert_id();
+		}else{
+			$this->db->where('wtc_id = '.$data['wtc_id'].' AND usr_id = '.$data['usr_id']);
+			$this->db->delete('mvs_watchlist');
+			$result = 'rwtc';
+		}
+		
+		return $result;
 		
 	}
 	

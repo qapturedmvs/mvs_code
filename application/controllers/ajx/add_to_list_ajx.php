@@ -20,13 +20,15 @@
 				if(isset($this->user['usr_id'])){
 					
 					$this->data['action'] = $action;
-					$mvs_id = (int) $this->input->post('id', TRUE);
+					$id = $this->input->post('id', TRUE);
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
 					
 					if($action === 'seen')
-						$this->data['seen_result'] = ($mvs_id) ? $this->action_m->seen_movie(array('usr_id' => $this->user['usr_id'], 'mvs_id' => $mvs_id, 'action' => $action)) : 'no-movie';
-						
-					elseif($action === 'unseen')
-						$this->data['seen_result'] = ($mvs_id) ? $this->action_m->seen_movie(array('usr_id' => $this->user['usr_id'], 'mvs_id' => $mvs_id, 'action' => $action)) : 'no-movie';
+						$data['mvs_id'] = $id;
+					else
+						$data['seen_id'] = $id;
+
+					$this->data['seen_result'] = $this->action_m->seen_movie($data);
 					
 				}else{
 					
@@ -71,6 +73,39 @@
 			}
 				
 			$this->load->view('results/_seen_movie', $this->data);
+			
+		}
+		
+		public function add_remove_watchlist($action){
+			
+			if($this->input->is_ajax_request()){
+				
+				if(isset($this->user['usr_id'])){
+					
+					$this->data['action'] = $action;
+					$id = $this->input->post('id', TRUE);
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
+					
+					if($action === 'awtc')
+						$data['mvs_id'] = $id;
+					else
+						$data['wtc_id'] = $id;
+						
+					$this->data['wtc_result'] = $this->action_m->add_remove_watchlist($data);
+						
+				}else{
+					
+					$this->data['wtc_result'] = 'no-user';
+					
+				}
+			
+			}else{
+				
+				$this->data['wtc_result'] = FALSE;
+				
+			}
+				
+			$this->load->view('results/_add_to_watchlist', $this->data);
 			
 		}
   

@@ -170,7 +170,7 @@ if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 
 // Movie Detail Feeds
 if( $('.movieCommentsHolder').length > 0 ){
 		var mvs_id = $('.pageMovie .details').attr("rel");
-		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=myn&mvs_id='+mvs_id }, function(){});
+		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+mvs_id }, function(){});
 	}
 
 
@@ -291,19 +291,30 @@ if ($('.form-signup').length > 0)
 	});
 
 
-// MOVIE DETAIL ACTIONS
+/* MOVIE ACTIONS */
+// MOVIE DETAIL SEEN
 $('li.seenMovie a').click(function(){
-		var action = $(this).parent('li').attr("rel");
+		var action = $(this).parent('li').attr("rel"),
+				id = (action == 'seen') ? mvs_id : $(this).parent('li').attr("seen-id");
 		
 		$.ajax({
 			type:'POST',
 			url:site_url+'ajx/add_to_list_ajx/seen_unseen_movie/'+action,
-			data:{id:mvs_id},
-			success:function(result){
-				if(result == 'seen' || result == 'unseen')
-					$('li.seenMovie').attr("rel", result);
-				else
-					alert(result);
+			data:{id:id},
+			success:function(e){
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'seen')
+						$('li.seenMovie').removeAttr("seen-id");
+					else{
+						$('li.seenMovie').attr("seen-id", e['seen-id']);
+						if($('li.wtc').attr("rel") === 'rwtc')
+							$('li.wtc a').click();
+					}
+						
+					$('li.seenMovie').attr("rel", e['action']);
+					
+				}else
+					alert(e['msg']);
 			}
 		});
 });
@@ -334,8 +345,8 @@ $('a.btnMultiSeen').click(function(){
 			type:'POST',
 			url:site_url+'ajx/add_to_list_ajx/mark_all_seen/',
 			data:{ids:seenList},
-			success:function(result){
-				alert(result);
+			success:function(e){
+				alert(e['msg']);
 				removeSeen();
 				seenList = [];
 			}
@@ -349,4 +360,35 @@ function removeSeen(){
 		$('.movieItemInner[rel="'+seenList[i]+'"] .seen a').remove();
 	
 }
+
+// MOVIE DETAIL WATCHLIST
+$('li.wtc a').click(function(){
+		var action = $(this).parent('li').attr("rel"),
+				id = (action == 'awtc') ? mvs_id : $(this).parent('li').attr("wtc-id");
+		
+		$.ajax({
+			type:'POST',
+			url:site_url+'ajx/add_to_list_ajx/add_remove_watchlist/'+action,
+			data:{id:id},
+			success:function(e){
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'awtc')
+						$('li.wtc').removeAttr("wtc-id");
+					else{
+						$('li.wtc').attr("wtc-id", e['wtc-id']);
+						if($('li.seenMovie').attr("rel") === 'unseen')
+							$('li.seenMovie a').click();
+					}
+						
+					$('li.wtc').attr("rel", e['action']);
+					
+				}else
+					alert(e['msg']);
+			}
+		});
+});
+
+$('.cnl a').click(function(){
+	$('.listCreate').toggleClass("none");	
+});
 

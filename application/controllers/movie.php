@@ -82,6 +82,9 @@
 			// Seen Movie Check
 			$db_data['seen'] = $this->action_m->check_seen(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
 			
+			// Watchlist Movie Check
+			$db_data['watchlist'] = $this->action_m->check_watchlist(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			
 			return $db_data;
 	
 		}

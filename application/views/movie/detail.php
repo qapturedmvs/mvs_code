@@ -30,9 +30,23 @@
 						<div class="actions">
 							<?php if($logged_in): ?>
 							<ul>
-								<li class="seenMovie" rel="<?php echo ($actions['seen']) ? 'unseen' : 'seen'; ?>"><a href="javascript:void(0);">Seen</a></li>
+								<li class="seenMovie"<?php echo ($actions['seen']) ? ' rel="unseen" seen-id="'.$actions['seen'][0]->seen_id.'"' : ' rel="seen"'; ?>><a href="javascript:void(0);">Seen</a></li>
 								<li><a href="javascript:void(0);">Qapture</a></li>
-								<li><a href="javascript:void(0);">Add to list</a></li>
+								<li><a href="javascript:void(0);">Add to list</a>
+									<div class="listSelection">
+										<ul class="dLists">
+											<li class="wtc" <?php echo ($actions['watchlist']) ? 'wtc-id="'.$actions['watchlist'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?>><a href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
+											<li class="cnl"><a href="javascript:void(0);">Add to New Custom List</a>
+											<div class="listCreate none"><input placeholder="Enter list title" type="text" /><a href="javascript:void(0);">Add</a></div>
+											</li>
+										</ul>
+										<div class="cLists none">
+										<h5>My Lists</h5>
+										<ul></ul>
+										</div>
+										<hr class="qFixer" />
+									</div>
+								</li>
 							</ul>
 							<hr class="qFixer" />
 							<?php endif; ?>
