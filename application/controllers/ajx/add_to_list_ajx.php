@@ -105,7 +105,44 @@
 				
 			}
 				
-			$this->load->view('results/_add_to_watchlist', $this->data);
+			$this->load->view('results/_add_remove_watchlist', $this->data);
+			
+		}
+		
+		public function create_delete_custom_list($action){
+			
+			if($this->input->is_ajax_request()){
+				
+				if(isset($this->user['usr_id'])){
+					
+					$this->data['action'] = $action;
+					$vars = $this->input->post(NULL, TRUE);
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
+					
+					if($action === 'cncl')
+						$data['list_title'] = $vars['title'];
+					else
+						$data['list_id'] = $vars['id'];
+						
+					$this->data['lst_result'] = $this->action_m->create_delete_list($data);
+						
+				}else{
+					
+					$this->data['lst_result'] = 'no-user';
+					
+				}
+			
+			}else{
+				
+				$this->data['lst_result'] = FALSE;
+				
+			}
+				
+			$this->load->view('results/_create_delete_custom_list', $this->data);
+			
+		}
+		
+		private function _add_to_custom_list($data){
 			
 		}
   

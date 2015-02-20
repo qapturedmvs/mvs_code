@@ -291,7 +291,7 @@ if ($('.form-signup').length > 0)
 	});
 
 
-/* MOVIE ACTIONS */
+//////* MOVIE ACTIONS *//////
 // MOVIE DETAIL SEEN
 $('li.seenMovie a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
@@ -388,7 +388,35 @@ $('li.wtc a').click(function(){
 		});
 });
 
-$('.cnl a').click(function(){
-	$('.listCreate').toggleClass("none");	
+/////* MOVIE DETAIL CUSTOM LIST ACTIONS */////
+$('.cnl > a').click(function(){
+	$('.listCreate').toggleClass("none");
+	$('.listCreate input').val('');	
+});
+
+// MOVIE DETAIL CREATE NEW CUSTOM LIST
+$('.listCreate a').click(function(){
+		var action = $(this).attr("rel"),
+				title = $(this).siblings('input').val();
+		
+		if(title.length > 255)
+			title = title.substring(0, 254);
+
+		$.ajax({
+			type:'POST',
+			url:site_url+'ajx/add_to_list_ajx/create_delete_custom_list/'+action,
+			data:{id:mvs_id,title:title},
+			success:function(e){
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'dcl'){
+						$('.cnl > a').click();
+						$('.cLists ul').append('<li list-id="'+e['list-id']+'"><a href="javascript:void(0);">'+title+'</a></li>');
+						$('.cLists.none').removeClass('none');
+					}
+					
+				}else
+					alert(e['msg']);
+			}
+		});
 });
 

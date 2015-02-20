@@ -113,6 +113,22 @@ class Action_M extends MVS_Model
 		
 	}
 	
+	public function create_delete_list($data){
+		
+		if($data['action'] === 'cncl'){
+			unset($data['action']);
+			$this->db->insert('mvs_custom_lists', $data);
+			$result = $this->db->insert_id();
+		}else{
+			$this->db->where('list_id = '.$data['list_id'].' AND usr_id = '.$data['usr_id']);
+			$this->db->delete('mvs_custom_lists');
+			$result = 'dcl';
+		}
+		
+		return $result;
+		
+	}
+	
   
 }
 
