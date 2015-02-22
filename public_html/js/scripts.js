@@ -163,7 +163,7 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/');
+	infiniteScroll('ajx/movie_ajx/lister/', 'ml');
 }
 
 if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/muh' }, function(){});
@@ -181,7 +181,7 @@ function getAjx( obj, callback ){
 	});
 }
 
-function infiniteScroll( uri ){
+function infiniteScroll( uri, listType, cstVar ){
 		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		qapturedApp.factory('Reddit', function( $http ){
 		  var Reddit = function() {
@@ -194,7 +194,9 @@ function infiniteScroll( uri ){
 			if( this.busy || this.noResult ) return;
 				this.busy = true;	
 			
-			var url = site_url + uri + this.after + qs;
+			cstVar = (cstVar == undefined) ? '' : cstVar;
+			
+			var sep = (qs === '') ? '?' : '&', url = site_url + uri + this.after + qs + sep + 'type=' + listType + cstVar;
 			
 			$http.get(url).success(function(d) {
 		
@@ -443,4 +445,31 @@ function getAjax( obj, callback, error ){
 			if( callback != undefined ) callback( e );
 		}
 	});
+}
+
+//////* USER PAGES *//////
+
+// Custom List Page
+if( exist($('.pageCustomList')) )
+		getAjx({ controller: 'userCustomList', uri: 'ajx/user_custom_list_ajx/list_lister' }, function(){});
+		
+if( exist($('.pageCustomListDetail')) ){
+	
+	if(sessionStorage.viewType == "grid")
+    $('.movieListHolder').removeClass("row").addClass(sessionStorage.viewType);
+	
+	$('.controllers .view a').click(function(){
+		var view = $(this).attr("class");
+		
+		sessionStorage.viewType = view;
+		
+		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
+		
+		if( $("div.lazy").length > 0 )
+				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
+		
+	});
+	
+	// infinite-Scroll
+	infiniteScroll('ajx/movie_ajx/lister/', 'ucl', '&list='+list_id);
 }

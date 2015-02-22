@@ -14,13 +14,34 @@
 		
 		public function lister($p = 1){
 			
-			$vars = ($this->get_vars) ? $this->get_vars : NULL;
-			
 			if($this->input->is_ajax_request()){
+				
+				$vars = $this->get_vars;
+				$type = $vars['type'];
 				$p = $this->movie_m->cleaner($p);
 				$curPage = ($p != '') ? $p : 1;
 				$offset = ($curPage-1) * $this->movie_m->per_page;
-				$db_data = $this->movie_m->movies_json($offset, $vars, $this->filter_def);
+				$m_set = NULL;
+				
+				unset($vars['type']);
+				
+				switch($type){
+					
+					case 'ml':
+							$m_set = array('fn' => $type);
+							break;
+						
+					case 'ucl':
+							$m_set = array('fn' => $type, 'list_id' => $vars['list']);
+							unset($vars['list']);
+							break;
+
+				}
+				
+				if(count($vars) == 0)
+					$vars = NULL;	
+				
+				$db_data = $this->movie_m->movies_json($offset, $vars, $this->filter_def, $m_set);
 				$movies = $db_data['data'];
 				$db_data = $this->movie_m->countries();
 				$countries = $db_data;
@@ -99,7 +120,7 @@
 			return $usr_seen;
 			
 		}
-			
+
 	}
 
 ?>
