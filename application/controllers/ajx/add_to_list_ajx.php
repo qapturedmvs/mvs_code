@@ -109,7 +109,7 @@
 			
 		}
 		
-		public function create_delete_custom_list($action){
+		public function create_new_list($action){
 			
 			if($this->input->is_ajax_request()){
 				
@@ -117,15 +117,17 @@
 					
 					$this->data['action'] = $action;
 					$vars = $this->input->post(NULL, TRUE);
-					$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title']);
+						
+					$this->data['lst_result'] = array('lst' => $this->action_m->create_delete_list($data));
 					
-					if($action === 'cncl')
-						$data['list_title'] = $vars['title'];
-					else
-						$data['list_id'] = $vars['id'];
-						
-					$this->data['lst_result'] = $this->action_m->create_delete_list($data);
-						
+					if(is_numeric($this->data['lst_result']['lst'])){
+						unset($data);
+						$data = array('action' => 'atcl', 'mvs_id' => $vars['id'], 'list_id' => $this->data['lst_result']['lst']);
+						$this->data['lst_result']['ldt'] = $this->action_m->add_remove_from_list($data);
+					}else{
+						$this->data['lst_result'] = 'no-list';
+					}
 				}else{
 					
 					$this->data['lst_result'] = 'no-user';
@@ -138,11 +140,58 @@
 				
 			}
 				
-			$this->load->view('results/_create_delete_custom_list', $this->data);
+			$this->load->view('results/_create_new_list', $this->data);
 			
 		}
 		
-		private function _add_to_custom_list($data){
+		public function add_remove_from_list($action){
+			
+			if($this->input->is_ajax_request()){
+				
+				if(isset($this->user['usr_id'])){
+					
+					$this->data['action'] = $action;
+					$vars = $this->input->post(NULL, TRUE);
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['mvs']);
+					
+					if($action === 'atcl'){
+						
+						$data['list_id'] = $vars['id'];
+						$check = $this->action_m->check_custom_list($data);
+						
+						if($check === NULL){
+							unset($data['usr_id']);
+							$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
+						}elseif($check === FALSE)
+							$this->data['lst_result'] = 'no-list';
+						else
+							$this->data['lst_result'] = 'movie-in-list';
+							
+					}else{
+						
+						$data['ldt_id'] = $vars['id'];
+						$check = $this->action_m->check_custom_list($data);
+						
+						if($check)
+							$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
+						else
+							$this->data['lst_result'] = 'no-list';
+							
+					}
+
+				}else{
+					
+					$this->data['lst_result'] = 'no-user';
+					
+				}
+			
+			}else{
+				
+				$this->data['lst_result'] = FALSE;
+				
+			}
+				
+			$this->load->view('results/_add_remove_from_list', $this->data);
 			
 		}
   

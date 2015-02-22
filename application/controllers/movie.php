@@ -85,6 +85,9 @@
 			// Watchlist Movie Check
 			$db_data['watchlist'] = $this->action_m->check_watchlist(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
 			
+			// User's Custom Lists
+			$db_data['custom_lists'] = $this->action_m->get_custom_lists(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			
 			return $db_data;
 	
 		}

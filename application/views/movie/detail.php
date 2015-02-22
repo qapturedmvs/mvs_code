@@ -5,7 +5,7 @@
 	<section class="hero"></section>
 	<section class="body">
 		<aside class="mainCol left">
-			<div rel="<?php echo $movie->mvs_id; ?>" class="details">
+			<div class="details">
 				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
 				<div class="text left">
 					<div class="posArea">
@@ -32,7 +32,7 @@
 							<ul>
 								<li class="seenMovie"<?php echo ($actions['seen']) ? ' rel="unseen" seen-id="'.$actions['seen'][0]->seen_id.'"' : ' rel="seen"'; ?>><a href="javascript:void(0);">Seen</a></li>
 								<li><a href="javascript:void(0);">Qapture</a></li>
-								<li><a href="javascript:void(0);">Add to list</a>
+								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
 										<ul class="dLists">
 											<li class="wtc" <?php echo ($actions['watchlist']) ? 'wtc-id="'.$actions['watchlist'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?>><a href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
@@ -42,7 +42,13 @@
 										</ul>
 										<div class="cLists none">
 										<h5>My Lists</h5>
-										<ul></ul>
+										<ul>
+											<?php if($actions['custom_lists']): ?>
+												<?php foreach($actions['custom_lists'] as $list): ?>
+													<li <?php echo ($list->ldt_id !== NULL) ? 'ldt-id="'.$list->ldt_id.'" rel="rfcl"' : 'rel="atcl"'; ?> list-id="<?php echo $list->list_id; ?>"><a href="javascript:void(0);"><?php echo $list->list_title; ?></a></li>
+												<?php endforeach; ?>
+											<?php endif; ?>
+										</ul>
 										</div>
 										<hr class="qFixer" />
 									</div>

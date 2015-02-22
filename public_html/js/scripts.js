@@ -167,12 +167,6 @@ if(exist($('.pageMovies'))){
 
 if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/muh' }, function(){});
 
-// Movie Detail Feeds
-if( $('.movieCommentsHolder').length > 0 ){
-		var mvs_id = $('.pageMovie .details').attr("rel");
-		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+mvs_id }, function(){});
-	}
-
 
 function getAjx( obj, callback ){
 	var url = site_url + obj['uri']
@@ -292,7 +286,12 @@ if ($('.form-signup').length > 0)
 
 
 //////* MOVIE ACTIONS *//////
-// MOVIE DETAIL SEEN
+
+// Movie Detail Feeds
+if( $('.movieCommentsHolder').length > 0 )
+		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+mvs_id }, function(){});
+
+// Movie Detail Seen
 $('li.seenMovie a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'seen') ? mvs_id : $(this).parent('li').attr("seen-id");
@@ -319,7 +318,7 @@ $('li.seenMovie a').click(function(){
 		});
 });
 
-// MOVIE LIST SEEN
+// Movie List Seen
 var seenList = [];
 function select_seen(obj){
 	
@@ -361,7 +360,7 @@ function removeSeen(){
 	
 }
 
-// MOVIE DETAIL WATCHLIST
+// Movie Detail Watchlist
 $('li.wtc a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'awtc') ? mvs_id : $(this).parent('li').attr("wtc-id");
@@ -388,13 +387,16 @@ $('li.wtc a').click(function(){
 		});
 });
 
-/////* MOVIE DETAIL CUSTOM LIST ACTIONS */////
+// Movie Detail Custom List
 $('.cnl > a').click(function(){
 	$('.listCreate').toggleClass("none");
 	$('.listCreate input').val('');	
 });
 
-// MOVIE DETAIL CREATE NEW CUSTOM LIST
+if($('.cLists ul li').length > 0)
+	$('.cLists.none').removeClass('none');
+
+// Movie Detail Create New Custom List
 $('.listCreate a').click(function(){
 		var action = $(this).attr("rel"),
 				title = $(this).siblings('input').val();
@@ -404,15 +406,35 @@ $('.listCreate a').click(function(){
 
 		$.ajax({
 			type:'POST',
-			url:site_url+'ajx/add_to_list_ajx/create_delete_custom_list/'+action,
+			url:site_url+'ajx/add_to_list_ajx/create_new_list/'+action,
 			data:{id:mvs_id,title:title},
 			success:function(e){
 				if(e['result'] == 'OK'){
-					if(e['action'] == 'dcl'){
-						$('.cnl > a').click();
-						$('.cLists ul').append('<li list-id="'+e['list-id']+'"><a href="javascript:void(0);">'+title+'</a></li>');
-						$('.cLists.none').removeClass('none');
-					}
+					$('.cnl > a').click();
+					$('.cLists ul').append('<li rel="rfcl" list-id="'+e['list-id']+'" ldt-id="'+e['ldt-id']+'"><a href="javascript:void(0);">'+title+'</a></li>');
+					$('.cLists.none').removeClass('none');
+					
+				}else
+					alert(e['msg']);
+			}
+		});
+});
+
+// Movie Detail Add to Custom List
+$('.cLists li a').click(function(){
+		var action = $(this).parent('li').attr("rel"),
+				id = (action == 'atcl') ? $(this).parent('li').attr("list-id") : $(this).parent('li').attr("ldt-id");
+		
+		$.ajax({
+			type:'POST',
+			url:site_url+'ajx/add_to_list_ajx/add_remove_from_list/'+action,
+			data:{id:id, mvs:mvs_id},
+			success:function(e){
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'atcl')
+						$('.cLists li[ldt-id="'+id+'"]').removeAttr("ldt-id").attr("rel", e['action']);
+					else
+						$('.cLists li[list-id="'+id+'"]').attr("ldt-id", e['ldt-id']).attr("rel", e['action']);
 					
 				}else
 					alert(e['msg']);
