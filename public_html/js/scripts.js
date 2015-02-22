@@ -66,13 +66,14 @@ function mergeData( data ){
 if( $('#search_keyword').length > 0 )
 	$('#search_keyword').qapturedComplete({
 		source: function( request, response ) {
-			$.ajax({
-			  url: site_url + "ajx/search_ajx/lister/" + request.term,
-			  success: function( d ) {  
-			  	if( d.result == 'OK' )
+			
+			getAjax( { uri: site_url + "ajx/search_ajx/lister/" + request.term, param: null }, function( d ){
+				
+				if( d.result == 'OK' )
 			  		response( mergeData( d.data ) );
-			  }
-			});
+					
+		    });
+			
 		  },
 		  minLength: 3
 	});
@@ -296,11 +297,8 @@ $('li.seenMovie a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'seen') ? mvs_id : $(this).parent('li').attr("seen-id");
 		
-		$.ajax({
-			type:'POST',
-			url:site_url+'ajx/add_to_list_ajx/seen_unseen_movie/'+action,
-			data:{id:id},
-			success:function(e){
+		getAjax( { uri: site_url+'ajx/add_to_list_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
+				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'seen')
 						$('li.seenMovie').removeAttr("seen-id");
@@ -314,7 +312,7 @@ $('li.seenMovie a').click(function(){
 					
 				}else
 					alert(e['msg']);
-			}
+					
 		});
 });
 
@@ -340,17 +338,13 @@ function select_seen(obj){
 
 $('a.btnMultiSeen').click(function(){
 		
-		$.ajax({
-			type:'POST',
-			url:site_url+'ajx/add_to_list_ajx/mark_all_seen/',
-			data:{ids:seenList},
-			success:function(e){
+		getAjax( { uri: site_url+'ajx/add_to_list_ajx/mark_all_seen/', param: {ids:seenList} }, function( e ){
+				
 				alert(e['msg']);
 				removeSeen();
 				seenList = [];
-			}
+					
 		});
-		
 });
 
 function removeSeen(){
@@ -365,11 +359,9 @@ $('li.wtc a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'awtc') ? mvs_id : $(this).parent('li').attr("wtc-id");
 		
-		$.ajax({
-			type:'POST',
-			url:site_url+'ajx/add_to_list_ajx/add_remove_watchlist/'+action,
-			data:{id:id},
-			success:function(e){
+		
+		getAjax( { uri: site_url+'ajx/add_to_list_ajx/add_remove_watchlist/'+action, param: {id:id} }, function( e ){
+				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'awtc')
 						$('li.wtc').removeAttr("wtc-id");
@@ -383,8 +375,9 @@ $('li.wtc a').click(function(){
 					
 				}else
 					alert(e['msg']);
-			}
+					
 		});
+		
 });
 
 // Movie Detail Custom List
@@ -404,11 +397,10 @@ $('.listCreate a').click(function(){
 		if(title.length > 255)
 			title = title.substring(0, 254);
 
-		$.ajax({
-			type:'POST',
-			url:site_url+'ajx/add_to_list_ajx/create_new_list/'+action,
-			data:{id:mvs_id,title:title},
-			success:function(e){
+		
+		
+		getAjax( { uri: site_url+'ajx/add_to_list_ajx/create_new_list/'+action, param: {id:mvs_id,title:title} }, function( e ){
+				
 				if(e['result'] == 'OK'){
 					$('.cnl > a').click();
 					$('.cLists ul').append('<li rel="rfcl" list-id="'+e['list-id']+'" ldt-id="'+e['ldt-id']+'"><a href="javascript:void(0);">'+title+'</a></li>');
@@ -416,8 +408,9 @@ $('.listCreate a').click(function(){
 					
 				}else
 					alert(e['msg']);
-			}
+					
 		});
+		
 });
 
 // Movie Detail Add to Custom List
@@ -425,20 +418,29 @@ $('.cLists li a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'atcl') ? $(this).parent('li').attr("list-id") : $(this).parent('li').attr("ldt-id");
 		
-		$.ajax({
-			type:'POST',
-			url:site_url+'ajx/add_to_list_ajx/add_remove_from_list/'+action,
-			data:{id:id, mvs:mvs_id},
-			success:function(e){
+		getAjax( { uri: site_url+'ajx/add_to_list_ajx/add_remove_from_list/'+action, param: {id: id, mvs: mvs_id} }, function( e ){
+				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'atcl')
 						$('.cLists li[ldt-id="'+id+'"]').removeAttr("ldt-id").attr("rel", e['action']);
 					else
-						$('.cLists li[list-id="'+id+'"]').attr("ldt-id", e['ldt-id']).attr("rel", e['action']);
-					
+						$('.cLists li[list-id="'+id+'"]').attr("ldt-id", e['ldt-id']).attr("rel", e['action']);	
 				}else
 					alert(e['msg']);
-			}
+					
 		});
+	
 });
 
+
+function getAjax( obj, callback, error ){
+	$.ajax({
+		type:'POST',
+		url:obj['uri'] || null,
+		data:obj['param'] || null,
+		error: function( e ){ if( error != undefined ) error( e ); },
+		success:function( e ){
+			if( callback != undefined ) callback( e );
+		}
+	});
+}
