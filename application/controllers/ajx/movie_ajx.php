@@ -21,7 +21,8 @@
 				$p = $this->movie_m->cleaner($p);
 				$curPage = ($p != '') ? $p : 1;
 				$offset = ($curPage-1) * $this->movie_m->per_page;
-				$m_set = NULL;
+				$cst_str = '';
+				$model = '';
 				
 				unset($vars['type']);
 				
@@ -29,19 +30,19 @@
 					
 					case 'ml':
 							$m_set = array('fn' => $type);
+							$model = 'movie_m';
 							break;
 						
 					case 'ucl':
-							$m_set = array('fn' => $type, 'list_id' => $vars['list']);
+							$model = 'user_custom_list_m';
+							$this->load->model($model);
+							$cst_str =  array('usr_id' => $this->user['usr_id'], 'list_id' => $vars['list']);
 							unset($vars['list']);
 							break;
 
 				}
 				
-				if(count($vars) == 0)
-					$vars = NULL;	
-				
-				$db_data = $this->movie_m->movies_json($offset, $vars, $this->filter_def, $m_set);
+				$db_data = $this->{$model}->movies_json($offset, $vars, $this->filter_def, $cst_str);
 				$movies = $db_data['data'];
 				$db_data = $this->movie_m->countries();
 				$countries = $db_data;

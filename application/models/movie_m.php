@@ -13,27 +13,16 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Movie list JSON
-	public function movies_json($offset = 0, $vars, $defs, $set){
+	public function movies_json($offset = 0, $vars, $defs, $cst_str){
 
-		switch($set['fn']){
-					
-			case 'ml':
-					$filters = array(
-						'select' => 'mvs_id, mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id, mvs_rating',
-						'order_by' => 'mvs_year DESC, mvs_rating DESC'
-					);
-					break;
-				
-			case 'ucl':
-					$filters = array(
-						'select' => 'mvs_id, mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id, mvs_rating',
-						'order_by' => 'mvs_year DESC, mvs_rating DESC'
-					);
-					break;
 
-		}
+		$filters = array(
+			'select' => 'mvs_id, mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id, mvs_rating',
+			'order_by' => 'mvs_year DESC, mvs_rating DESC'
+		);
+
 		
-		if($vars !== NULL){
+		if(count($vars) > 0){
 				$vars = qs_filter($vars, $defs);
 				$filters['where'] = (isset($filters['where'])) ? $filters['where'].' AND '.movies_where($vars, $defs) : movies_where($vars, $defs);
 		}

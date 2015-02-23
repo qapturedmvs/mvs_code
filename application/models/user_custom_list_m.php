@@ -6,7 +6,7 @@ class User_Custom_List_M extends MVS_Model
 	protected $_table_name = 'mvs_custom_lists';
 	protected $_primary_key = 'list_id';
 	protected $_order_by = 'list_time';
-	public $per_page = 50;
+	public $per_page = 30;
   
 	function __construct (){
 		parent::__construct();
@@ -41,6 +41,35 @@ class User_Custom_List_M extends MVS_Model
 		else
 			return FALSE;
 		
+	}
+	
+	// Custom Movie list JSON
+	public function movies_json($offset = 0, $vars, $defs, $cst_str){
+		
+		$filters = array(
+			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating',
+			'from' => 'mvs_custom_list_data c',
+			'join' => array(
+				array('mvs_custom_lists cl', 'cl.list_id = c.list_id AND cl.usr_id = '.$cst_str['usr_id'], 'inner'),
+				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner')
+			),
+			'where' => 'c.list_id = '.$cst_str['list_id'],
+			'order_by' => 'c.ldt_list_order ASC, c.ldt_id DESC'
+		);
+
+		
+		if(count($vars) > 0){
+				$vars = qs_filter($vars, $defs);
+				$filters['where'] = (isset($filters['where'])) ? $filters['where'].' AND '.movies_where($vars, $defs) : movies_where($vars, $defs);
+		}
+		
+		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
+		
+		if(count($movies['data']))
+			return $movies;
+		else
+			return FALSE;
+	
 	}
 	
 	public function create_delete_list($data){
