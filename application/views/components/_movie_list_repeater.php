@@ -11,6 +11,11 @@
             <span class='rating'>{{item.mvs_rating}}</span> 
             <span class='genre'>{{item.mvs_genre}}</span> 
             <span class='country'>{{item.mvs_country}}</span>
+						<?php if($logged_in): ?>
+							<?php if($actions['seen']): ?>
+							<div class='seen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
+							<?php endif; ?>
+						<?php endif; ?>
             <hr class="qFixer" />
           </div>
           <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>

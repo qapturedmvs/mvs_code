@@ -18,7 +18,8 @@
 			$tables = $this->_set_tables($this->filter_defs);
 			$vars = qs_filter($this->get_vars, $this->filter_defs);
 			$filters = $tables['filter'];
-
+			
+			$this->data['actions'] = array('seen' => TRUE);
 			$this->data['vars'] = $vars;
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;

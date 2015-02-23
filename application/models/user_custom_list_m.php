@@ -30,8 +30,9 @@ class User_Custom_List_M extends MVS_Model
 	
 	public function get_list_detail($list_id, $usr_id){
 		
+		$this->per_page = 1;
 		$filters = array(
-			'where' => 'usr_id = '.$usr_id.' AND list_id = '.$list_id,
+			'where' => 'usr_id = '.$usr_id.' AND list_id = '.$list_id
 		);
 		
 		$list = $this->get_data(NULL, 0, FALSE, $filters);

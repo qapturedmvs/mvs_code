@@ -26,6 +26,7 @@
 				
 				if($list){
 					
+					$this->data['actions'] = array('seen' => FALSE);
 					$this->data['list'] = $list[0];
 					$this->data['subview'] = 'user/custom_list_detail';
 					$this->load->view('_main_body_layout', $this->data);
