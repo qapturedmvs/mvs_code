@@ -11,6 +11,22 @@ class User_Custom_List_M extends MVS_Model
 	function __construct (){
 		parent::__construct();
 	}
+  
+	public function get_lists($usr_id){
+		
+		$filters = array(
+			'where' => 'usr_id = '.$usr_id,
+			'order_by' => 'list_time DESC'
+		);
+		
+		$lists = $this->get_data(NULL, 0, TRUE, $filters);
+		
+		if(isset($lists['data']))
+			return $lists;
+		else
+			return FALSE;
+		
+	}
 	
 	public function get_list_detail($list_id, $usr_id){
 		
