@@ -6,21 +6,39 @@
 			parent::__construct();
 			
 			$this->output->enable_profiler();
+			$this->load->model('user_custom_list_m');
 
 		}
-    
-    public function lister(){
+		
+		public function _remap($method,$args){
+		
+			if (method_exists($this, $method))
+				$this->$method($args);
+			else
+				$this->index($method,$args);
 			
-			$this->data['subview'] = 'user/custom_list';
-			$this->load->view('_main_body_layout', $this->data);
+		}
+    
+    public function index($slug = NULL){
+			
+			if($this->uri->segment(3) != 'index'){
+				
+				if($slug !== NULL){
+					var_dump($slug);
+				}
+				
+				$this->data['subview'] = 'user/custom_list';
+				$this->load->view('_main_body_layout', $this->data);
+				
+			}else{
+				show_404();
+			}
 			
     }
 		
 		public function detail($list_id){
 			
 			if(is_numeric($list_id)){
-				
-				$this->load->model('user_custom_list_m');
 				
 				$list = $this->user_custom_list_m->get_list_detail($list_id, $this->user['usr_id']);
 				
