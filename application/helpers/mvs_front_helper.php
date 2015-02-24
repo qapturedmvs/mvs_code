@@ -150,9 +150,17 @@
 	
 	
 	function gnrtSlug($type){
-	
-		$prefix = ($type == 'user') ? 'qu' : 'ql';
-		$slug = $prefix.str_shuffle(strtolower(random_string('alpha', 5)).random_string('numeric', 3));
+		
+		$len = array(5,3);
+
+		if($type == 'user')
+			$prefix = 'qu';
+		else{
+			$prefix = 'ql';
+			$len = array(9,7);
+		}
+		
+		$slug = $prefix.str_shuffle(strtolower(random_string('alpha', $len[0])).random_string('numeric', $len[1]));
 		return $slug;
 		
 	}

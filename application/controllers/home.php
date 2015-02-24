@@ -12,7 +12,7 @@
 
 			$this->logged_in === FALSE || redirect('user/feeds');
 			$inputs = $this->input->post(NULL, TRUE);
-			
+
 			// LOGIN FORM CONTROLS
 			if(isset($inputs['lgn_submit']))
 				$this->_login($inputs, 'user/feeds');

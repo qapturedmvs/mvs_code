@@ -19,7 +19,7 @@ class MVS_Model extends CI_Model {
 	public function get_data($id = NULL, $offset = 0, $count = FALSE, $filters = NULL, $cache = FALSE){
 
 				$method = 'result';
-				
+
 				if($filters !== NULL || $id !== NULL){
 
 					$this->db->start_cache();

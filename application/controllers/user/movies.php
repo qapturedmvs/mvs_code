@@ -24,7 +24,7 @@
 			if($this->uri->segment(3) != 'index'){
 				
 				if($slug !== NULL){
-					var_dump($slug);
+					
 				}
 				
 				$this->data['subview'] = 'user/custom_list';
@@ -36,16 +36,17 @@
 			
     }
 		
-		public function detail($list_id){
+		public function detail($list_slug = NULL){
 			
-			if(is_numeric($list_id)){
-				
-				$list = $this->user_custom_list_m->get_list_detail($list_id, $this->user['usr_id']);
+			if(count($list_slug) > 0){
+
+				$list = $this->user_custom_list_m->get_list_detail($list_slug[0], $this->user['usr_id']);
 				
 				if($list){
 					
-					$this->data['actions'] = array('seen' => FALSE);
-					$this->data['list'] = $list[0];
+					// Kullanıcı, başka birinin listesini mi görüntülüyor?
+					$this->data['controls'] = array('page' => 'custom', 'seen' => 'single', 'permission' => ($list->usr_id === $this->user['usr_id']) ? TRUE : FALSE);
+					$this->data['list'] = $list;
 					$this->data['subview'] = 'user/custom_list_detail';
 					$this->load->view('_main_body_layout', $this->data);
 					

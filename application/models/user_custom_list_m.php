@@ -28,17 +28,14 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
-	public function get_list_detail($list_id, $usr_id){
+	public function get_list_detail($list_slug, $usr_id){
 		
 		$this->per_page = 1;
-		$filters = array(
-			'where' => 'usr_id = '.$usr_id.' AND list_id = '.$list_id
-		);
-		
-		$list = $this->get_data(NULL, 0, FALSE, $filters);
-		
-		if(isset($list['data']))
-			return $list['data'];
+		$list_slug = $this->cleaner($list_slug);
+		$list = $this->db->get_where('mvs_custom_lists', array('list_slug' => $list_slug), 1)->row();
+
+		if(isset($list->list_id))
+			return $list;
 		else
 			return FALSE;
 		
@@ -48,11 +45,12 @@ class User_Custom_List_M extends MVS_Model
 	public function movies_json($offset = 0, $vars, $defs, $cst_str){
 		
 		$filters = array(
-			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating',
+			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating, s.seen_id',
 			'from' => 'mvs_custom_list_data c',
 			'join' => array(
-				array('mvs_custom_lists cl', 'cl.list_id = c.list_id AND cl.usr_id = '.$cst_str['usr_id'], 'inner'),
-				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner')
+				array('mvs_custom_lists cl', 'cl.list_id = c.list_id', 'inner'),
+				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner'),
+				array('mvs_seen s', 's.mvs_id = c.mvs_id AND s.usr_id = '.$cst_str['usr_id'], 'left')
 			),
 			'where' => 'c.list_id = '.$cst_str['list_id'],
 			'order_by' => 'c.ldt_list_order ASC, c.ldt_id DESC'
@@ -89,6 +87,7 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
+	// Movie Detail Custom Lists
 	public function get_custom_lists($data){
 		
 		$filters = array(

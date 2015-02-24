@@ -12,8 +12,13 @@
             <span class='genre'>{{item.mvs_genre}}</span> 
             <span class='country'>{{item.mvs_country}}</span>
 						<?php if($logged_in): ?>
-							<?php if($actions['seen']): ?>
-							<div class='seen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
+							<?php if($controls['seen'] === 'multi'): ?>
+							<div class='seen multiSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
+							<?php elseif($controls['seen'] === 'single'): ?>
+							<div class='seen singleSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
+							<?php endif; ?>
+							<?php if($controls['permission'] === TRUE): ?>
+							<div class="remove"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>
             <hr class="qFixer" />
