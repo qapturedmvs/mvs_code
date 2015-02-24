@@ -306,8 +306,8 @@ $('li.seenMovie a').click(function(){
 						$('li.seenMovie').removeAttr("seen-id");
 					else{
 						$('li.seenMovie').attr("seen-id", e['seen-id']);
-						if($('li.wtc').attr("rel") === 'rwtc')
-							$('li.wtc a').click();
+						//if($('li.wtc').attr("rel") === 'rwtc')
+							//$('li.wtc a').click();
 					}
 						
 					$('li.seenMovie').attr("rel", e['action']);

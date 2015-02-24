@@ -26,6 +26,18 @@ class Action_M extends MVS_Model
 			unset($data['action']);
 			$this->db->insert('mvs_seen', $data);
 			$result = $this->db->insert_id();
+			$filters = array(
+				'select' => 'wtc_id',
+				'from' => 'mvs_watchlist',
+				'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
+				'limit' => 1
+			);
+			$wtc_chk = $this->get_data(NULL, 0, FALSE, $filters);
+
+			if(isset($wtc_chk['data'])){
+				$this->db->where('wtc_id = '.$wtc_chk['data'][0]->wtc_id);
+				$this->db->delete('mvs_watchlist');
+			}
 		}else{
 			$this->db->where('seen_id = '.$data['seen_id'].' AND usr_id = '.$data['usr_id']);
 			$this->db->delete('mvs_seen');
