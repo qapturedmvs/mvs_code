@@ -163,7 +163,7 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/', 'ml');
+	infiniteScroll('ajx/movie_ajx/lister/', 'ml', 100);
 }
 
 if( $('.pageSearch').length > 0 ) getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/muh' }, function(){});
@@ -181,7 +181,7 @@ function getAjx( obj, callback ){
 	});
 }
 
-function infiniteScroll( uri, listType, cstVar ){
+function infiniteScroll( uri, listType, pageSize, cstVar ){
 		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		qapturedApp.factory('Reddit', function( $http ){
 		  var Reddit = function() {
@@ -214,7 +214,7 @@ function infiniteScroll( uri, listType, cstVar ){
 				}
 				
 				//
-				if( d['data'].length < 100 ){
+				if( d['data'].length < pageSize ){
 					this.busy = false;
 					this.noResult = true;
 				}else{
@@ -471,7 +471,7 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/', 'ucl', '&list='+list_id);
+	infiniteScroll('ajx/movie_ajx/lister/', 'ucl', 30, '&list='+list_id);
 }
 
 // Custom List Detail Remove from Custom List
@@ -489,4 +489,32 @@ function removeFromList(obj){
 					
 		});
 	
+}
+
+$('.editHolder a').click(function(){
+	
+	if($('.pageDefault').hasClass('edit')){
+		edit_custom_list();
+		$('.titleCustomList h4').text($('input.listTitle').val());
+		$('.pageDefault').removeClass('edit');
+	}else{
+		$('.pageDefault').addClass('edit');
+		$('.titleCustomList input').focus();
+	}
+	
+});
+
+function edit_custom_list(){
+	var title = $('input.listTitle').val(), text = $('.titleCustomList h4').text();
+		
+		if(title !== text){
+
+			getAjax( { uri: site_url+'ajx/user_custom_list_ajx/edit_list_detail', param: {id: list_id, title:title} }, function( e ){
+					
+					if(e['result'] == 'FALSE')
+						alert(e['msg']);
+						
+			});
+		
+		}
 }

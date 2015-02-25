@@ -18,7 +18,7 @@
 							<div class='seen singleSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" href="javascript:void(0);">Seen</a></div>
 							<?php endif; ?>
 							<?php if($controls['permission'] === TRUE): ?>
-							<div class="remove"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" href="javascript:void(0);">Remove</a></div>
+							<div class="remove edit-mode"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>
             <hr class="qFixer" />

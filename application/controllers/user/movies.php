@@ -26,7 +26,7 @@
 				if($slug !== NULL){
 					
 				}
-				
+
 				$this->data['subview'] = 'user/custom_list';
 				$this->load->view('_main_body_layout', $this->data);
 				

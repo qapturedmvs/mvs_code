@@ -45,17 +45,20 @@ class User_Custom_List_M extends MVS_Model
 	public function movies_json($offset = 0, $vars, $defs, $cst_str){
 		
 		$filters = array(
-			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating, s.seen_id',
+			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating',
 			'from' => 'mvs_custom_list_data c',
 			'join' => array(
 				array('mvs_custom_lists cl', 'cl.list_id = c.list_id', 'inner'),
-				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner'),
-				array('mvs_seen s', 's.mvs_id = c.mvs_id AND s.usr_id = '.$cst_str['usr_id'], 'left')
+				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner')
 			),
 			'where' => 'c.list_id = '.$cst_str['list_id'],
 			'order_by' => 'c.ldt_list_order ASC, c.ldt_id DESC'
 		);
-
+		
+		if($cst_str['usr_id'] !== NULL){
+			$filters['select'] .= ', s.seen_id';
+			$filters['join'][] = array('mvs_seen s', 's.mvs_id = c.mvs_id AND s.usr_id = '.$cst_str['usr_id'], 'left');
+		}
 		
 		if(count($vars) > 0){
 				$vars = qs_filter($vars, $defs);
@@ -63,7 +66,7 @@ class User_Custom_List_M extends MVS_Model
 		}
 
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
-		
+
 		if(count($movies['data']))
 			return $movies;
 		else
@@ -151,6 +154,13 @@ class User_Custom_List_M extends MVS_Model
 		
 		return $result;
 		
+	}
+	
+	public function edit_custom_list($data){
+		
+		$this->db->update('mvs_custom_lists', array('list_title' => $data['list_title']), 'list_id = '.$data['list_id'].' AND usr_id = '.$data['usr_id']);
+		return TRUE;
+	
 	}
 	
   
