@@ -3,7 +3,7 @@
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items' ng-class="{movieItem:item.type == 0, seperator:item.type == 1}">
           <div ng-switch="item.type">
-          <div ng-switch-when='0' rel="{{item.mvs_id}}" class="movieItemInner"> 
+          <div ng-switch-when='0' mvs-id="{{item.mvs_id}}" class="movieItemInner"> 
             <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><div class="lazy posterImg" data-original="<?php echo $site_url ?>{{item.mvs_poster}}"></div></a></span> 
             <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span> 
             <span class='year'>{{item.mvs_year}}</span> 

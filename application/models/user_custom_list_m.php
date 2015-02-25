@@ -61,7 +61,7 @@ class User_Custom_List_M extends MVS_Model
 				$vars = qs_filter($vars, $defs);
 				$filters['where'] = (isset($filters['where'])) ? $filters['where'].' AND '.movies_where($vars, $defs) : movies_where($vars, $defs);
 		}
-		
+
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
 		
 		if(count($movies['data']))

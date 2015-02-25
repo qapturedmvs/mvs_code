@@ -415,7 +415,7 @@ $('.listCreate a').click(function(){
 		
 });
 
-// Movie Detail Add to Custom List
+// Movie Detail Add/Remove to/from Custom List
 $('.cLists li a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'atcl') ? $(this).parent('li').attr("list-id") : $(this).parent('li').attr("ldt-id");
@@ -472,4 +472,21 @@ if( exist($('.pageCustomListDetail')) ){
 	
 	// infinite-Scroll
 	infiniteScroll('ajx/movie_ajx/lister/', 'ucl', '&list='+list_id);
+}
+
+// Custom List Detail Remove from Custom List
+function removeFromList(obj){
+		var id = $(obj).attr("ldt-id"), mvs = $(obj).parents('.movieItemInner').attr("mvs-id");
+		
+		getAjax( { uri: site_url+'ajx/add_to_list_ajx/add_remove_from_list/rfcl', param: {id: id, mvs:mvs} }, function( e ){
+				
+				if(e['result'] == 'OK')
+					$(obj).parents('div.movieItem').fadeOut(333, function(){
+						$(obj).parents('div.movieItem').remove();
+					});
+				else
+					alert(e['msg']);
+					
+		});
+	
 }

@@ -9,6 +9,8 @@
 		</section>
 		<hr class="qFixer" />
 	</div>
-	<h4><?php echo $list->list_title; ?></h4>
+	<div class="titleDefault titleCustomList">
+		<h4><?php echo $list->list_title; ?></h4>
+	</div>
 	<?php $this->load->view('components/_movie_list_repeater'); ?>
 </div>

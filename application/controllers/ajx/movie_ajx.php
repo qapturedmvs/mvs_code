@@ -18,9 +18,6 @@
 				
 				$vars = $this->get_vars;
 				$type = $vars['type'];
-				$p = $this->movie_m->cleaner($p);
-				$curPage = ($p != '') ? $p : 1;
-				$offset = ($curPage-1) * $this->movie_m->per_page;
 				$cst_str = '';
 				$model = '';
 				
@@ -42,6 +39,9 @@
 
 				}
 				
+				$p = $this->{$model}->cleaner($p);
+				$curPage = ($p != '') ? $p : 1;
+				$offset = ($curPage-1) * $this->{$model}->per_page;
 				$db_data = $this->{$model}->movies_json($offset, $vars, $this->filter_def, $cst_str);
 				$movies = $db_data['data'];
 				$db_data = $this->movie_m->countries();
