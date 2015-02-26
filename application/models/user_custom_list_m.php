@@ -140,27 +140,25 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
-	public function add_remove_from_list($data){
-		
-		if($data['action'] === 'atcl'){
-			unset($data['action']);
-			$this->db->insert('mvs_custom_list_data', $data);
-			$result = $this->db->insert_id();
-		}else{
-			$this->db->where('ldt_id = '.$data['ldt_id'].' AND mvs_id = '.$data['mvs_id']);
-			$this->db->delete('mvs_custom_list_data');
-			$result = 'rfcl';
-		}
-		
-		return $result;
-		
-	}
-	
 	public function edit_custom_list($data){
 		
 		$this->db->update('mvs_custom_lists', array('list_title' => $data['list_title']), 'list_id = '.$data['list_id'].' AND usr_id = '.$data['usr_id']);
 		return TRUE;
 	
+	}
+	
+	public function multi_remove_from_list($data){
+		
+		$data = $this->cleaner($data);
+		$sql = 'DELETE cl
+						FROM mvs_custom_list_data cl
+						INNER JOIN mvs_custom_lists c ON c.list_id = cl.list_id AND usr_id = '.$data['usr_id'].
+						' WHERE cl.ldt_id IN('.$data['ldt_id'].')';
+		
+		$this->db->query($sql);
+		
+		return TRUE;
+		
 	}
 	
   

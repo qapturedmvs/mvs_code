@@ -30,6 +30,7 @@
         }
       }
       
+			$this->data['keyword'] = $keyword;
       $this->data['results'] = $results;
 			$this->data['subview'] = 'search';
 			$this->load->view('_main_body_layout', $this->data);

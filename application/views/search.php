@@ -1,4 +1,6 @@
-
+<script type="text/javascript">
+  var keyword = "<?php echo $keyword; ?>";
+</script>
 <div class="pageDefault pageSearch">
   <h1>SEARCH RESULTS</h1>
   <div class="results">

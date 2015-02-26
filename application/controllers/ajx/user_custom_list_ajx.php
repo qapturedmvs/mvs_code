@@ -60,7 +60,34 @@
 				
 			}
 			
-			$this->load->view('results/_edit_custom_list_detail', $this->data);
+			$this->load->view('results/_cl_edit_list', $this->data);
+			
+		}
+		
+		public function cl_remove_multi_item(){
+			
+			if($this->input->is_ajax_request()){
+				
+				if(isset($this->user['usr_id'])){
+					
+					$ids = $this->input->post('ids', TRUE);
+					$data = array('usr_id' => $this->user['usr_id'], 'ldt_id' => implode(',', $ids));
+					
+					$this->data['lst_result'] = $this->user_custom_list_m->multi_remove_from_list($data);
+
+				}else{
+					
+					$this->data['lst_result'] = 'no-user';
+					
+				}
+			
+			}else{
+				
+				$this->data['lst_result'] = FALSE;
+				
+			}
+				
+			$this->load->view('results/_cl_multi_remove', $this->data);
 			
 		}
   

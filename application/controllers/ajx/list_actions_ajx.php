@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Add_To_List_Ajx extends Frontend_Controller{
+	class List_Actions_Ajx extends Frontend_Controller{
     
 		function __construct(){
 			parent::__construct();
@@ -105,7 +105,7 @@
 				
 			}
 				
-			$this->load->view('results/_add_remove_watchlist', $this->data);
+			$this->load->view('results/_wtc_add_remove', $this->data);
 			
 		}
 		
@@ -140,7 +140,7 @@
 				
 			}
 				
-			$this->load->view('results/_create_new_list', $this->data);
+			$this->load->view('results/_cl_create_new_list', $this->data);
 			
 		}
 		
@@ -191,9 +191,10 @@
 				
 			}
 				
-			$this->load->view('results/_add_remove_from_list', $this->data);
+			$this->load->view('results/_cl_add_remove_from_list', $this->data);
 			
 		}
+		
   
   }
 
