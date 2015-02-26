@@ -36,11 +36,11 @@
 			
     }
 		
-		public function detail($list_slug = NULL){
-			
-			if(count($list_slug) > 0){
+		public function detail($slug = NULL){
 
-				$list = $this->user_custom_list_m->get_list_detail($list_slug[0], $this->user['usr_id']);
+			if(count($slug) > 0){
+
+				$list = $this->user_custom_list_m->get_list_detail($slug[0], $this->user['usr_id']);
 				
 				if($list){
 					
@@ -62,6 +62,42 @@
 				
 			}
     }
+		
+		public function seen($slug = NULL){
+			
+			if(count($slug) > 0){
+				
+				$usr_id = $this->user_custom_list_m->user_id_from_slug($slug[0]);
+				
+				if($usr_id){
+					
+					// Kullanıcı, başka birinin listesini mi görüntülüyor?
+					$this->data['controls'] = array('page' => 'seen', 'seen' =>  'single', 'permission' => FALSE);
+					
+					if($usr_id->usr_id === $this->user['usr_id']){
+						$this->data['controls']['seen'] = 'none';
+						$this->data['controls']['permission'] = TRUE;
+					}
+					
+					$this->data['usr_id'] = $usr_id;
+					
+					
+				}else{
+					
+					show_404();
+					
+				}
+				
+			}else{
+				
+				$this->data['usr_id'] = $this->user['usr_id'];
+				
+			}
+			
+			$this->data['subview'] = 'user/seen';
+			$this->load->view('_main_body_layout', $this->data);
+			
+		}
   
   }
 

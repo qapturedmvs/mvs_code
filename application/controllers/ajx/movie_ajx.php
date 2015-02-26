@@ -36,6 +36,13 @@
 							$cst_str =  array('usr_id' => $this->user['usr_id'], 'list_id' => $vars['list']);
 							unset($vars['list']);
 							break;
+					
+					case 'us':
+							$model = 'seen_m';
+							$this->load->model($model);
+							$cst_str =  array('usr_id' => $vars['usr']);
+							unset($vars['usr_id']);
+							break;
 
 				}
 				
