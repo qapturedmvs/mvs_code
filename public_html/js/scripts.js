@@ -167,7 +167,7 @@ if(exist($('.pageMovies'))){
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
-	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/'+keyword }, function(){});
+	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister?q='+keyword }, function(){});
 
 
 function getAjx( obj, callback ){
@@ -307,8 +307,28 @@ $('li.seenMovie a').click(function(){
 						$('li.seenMovie').removeAttr("seen-id");
 					else{
 						$('li.seenMovie').attr("seen-id", e['seen-id']);
-						//if($('li.wtc').attr("rel") === 'rwtc')
-							//$('li.wtc a').click();
+					}
+						
+					$('li.seenMovie').attr("rel", e['action']);
+					
+				}else
+					alert(e['msg']);
+					
+		});
+});
+
+// Movie Detail Seen
+$('li.seenMovie a').click(function(){
+		var action = $(this).parent('li').attr("rel"),
+				id = (action == 'seen') ? mvs_id : $(this).parent('li').attr("seen-id");
+		
+		getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'seen')
+						$('li.seenMovie').removeAttr("seen-id");
+					else{
+						$('li.seenMovie').attr("seen-id", e['seen-id']);
 					}
 						
 					$('li.seenMovie').attr("rel", e['action']);
@@ -552,4 +572,67 @@ if( exist($('.pageSeen')) ){
 	
 	// infinite-Scroll
 	infiniteScroll('ajx/movie_ajx/lister/', 'us', 30, '&usr='+usr);
+}
+
+function unseen(obj){
+
+		var id = $(obj).attr("seen-id");
+
+		getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/unseen', param: {id:id} }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					$(obj).parents('div.movieItem').fadeOut(333, function(){
+						$(obj).parents('div.movieItem').remove();
+					});
+					
+				}else
+					alert(e['msg']);
+					
+		});
+	
+}
+
+function single_seen(obj){
+
+	var action = $(obj).attr("rel"),
+				id = (action == 'seen') ? $(obj).parents('.movieItemInner').attr("mvs-id") : $(obj).attr("seen-id");
+				
+	getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'seen')
+						$(obj).removeAttr("seen-id");
+					else{
+						$(obj).attr("seen-id", e['seen-id']);
+					}
+						
+					$(obj).attr("rel", e['action']);
+					
+				}else
+					alert(e['msg']);
+					
+		});
+
+}
+
+// Watchlist Page
+if( exist($('.pageWatchlist')) ){
+	
+	if(sessionStorage.viewType == "grid")
+    $('.movieListHolder').removeClass("row").addClass(sessionStorage.viewType);
+	
+	$('.controllers .view a').click(function(){
+		var view = $(this).attr("class");
+		
+		sessionStorage.viewType = view;
+		
+		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
+		
+		if( $("div.lazy").length > 0 )
+				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
+		
+	});
+	
+	// infinite-Scroll
+	infiniteScroll('ajx/movie_ajx/lister/', 'uwl', 30, '&usr='+usr);
 }

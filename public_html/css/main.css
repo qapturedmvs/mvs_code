@@ -53,6 +53,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 #qHeader .mainMenu{float:left; padding-top:5px;}
 #qHeader .mainMenu li{float:left; margin-right:20px;}
 #qHeader .mainMenu li a{font-size:16px;}
+#qHeader .userHolder{float:left;}
 #qHeader .searchHolder{float:right; padding-top:5px; width:240px;}
 #qHeader .searchHolder .searchbox{border:2px solid #000; position:relative; padding-left:35px;}
 #qHeader .searchHolder .searchbox input[type=text]{border:none; width:185px;}
@@ -87,6 +88,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .movieListHolder .movieItem.loaded .posterImg{ background-size:cover; }
 
 .movieListHolder .movieItem .seen a[rel="1"]{text-decoration:underline;}
+
+.movieListHolder .movieItem .seen.singleSeen a span{display:none;}
+.movieListHolder .movieItem .seen.singleSeen a[rel=seen] .actSeen{display:inline;}
+.movieListHolder .movieItem .seen.singleSeen a[rel=unseen] .actUnseen{display:inline;}
 
 
 .controllers{margin-bottom:30px;}

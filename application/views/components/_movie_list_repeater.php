@@ -1,4 +1,4 @@
-	<div class="listHolder">
+<div class="listHolder">
 	<div ng-controller='infiniteScrollController' class="movieListHolder row">
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items' ng-class="{movieItem:item.type == 0, seperator:item.type == 1}">
@@ -15,9 +15,10 @@
 							<?php if($controls['seen'] === 'multi'): ?>
 							<div class='seen multiSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
 							<?php elseif($controls['seen'] === 'single'): ?>
-							<div class='seen singleSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" href="javascript:void(0);">Seen</a></div>
+							<div class='seen singleSeen'><a ng-if="item.usr_seen==0" rel="seen" onclick="single_seen(this)" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a>
+							<a ng-if="item.usr_seen==1" rel="unseen" seen-id="{{item.seen_id}}" onclick="<?php echo ($controls['page'] == 'seen') ? 'unseen(this)' : 'single_seen(this)'; ?>" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></div>
 							<?php endif; ?>
-							<?php if($controls['permission'] === TRUE): ?>
+							<?php if($controls['permission'] === TRUE && $controls['page'] === 'custom'): ?>
 							<div class="remove edit-mode"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" rel="0" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>

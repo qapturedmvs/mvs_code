@@ -41,7 +41,14 @@
 							$model = 'seen_m';
 							$this->load->model($model);
 							$cst_str =  array('usr_id' => $vars['usr']);
-							unset($vars['usr_id']);
+							unset($vars['usr']);
+							break;
+						
+					case 'uwl':
+							$model = 'watchlist_m';
+							$this->load->model($model);
+							$cst_str =  array('usr_id' => $vars['usr']);
+							unset($vars['usr']);
 							break;
 
 				}

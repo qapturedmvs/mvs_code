@@ -135,7 +135,8 @@ class MVS_Model extends CI_Model {
 	
 	public function user_id_from_slug($slug){
 		
-		$this->_primary_key = 'usr_slug';
+		$this->_primary_key = 'usr_nick';
+		$this->_table_name = 'mvs_users';
 		$user = $this->get_data($slug);
 		
 		if(isset($user['data']))
