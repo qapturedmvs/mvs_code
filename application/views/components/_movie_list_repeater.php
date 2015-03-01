@@ -22,6 +22,7 @@
 							<div class="remove edit-mode"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" rel="0" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>
+            <a class="trailerBtn button" onclick="watch_trailer(this)" href="javascript:void(0);">Trailer</a>
             <hr class="qFixer" />
           </div>
           <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>

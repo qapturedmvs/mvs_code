@@ -103,8 +103,7 @@ if(exist($('.pageMovies'))){
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
 		
-		if( $("div.lazy").length > 0 )
-				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
+		lazyLoadActive();
 		
 	});
 	
@@ -163,7 +162,7 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/', 'ml', 100);
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '' });
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
@@ -182,7 +181,8 @@ function getAjx( obj, callback ){
 	});
 }
 
-function infiniteScroll( uri, listType, pageSize, cstVar ){
+
+function infiniteScroll( obj ){
 		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		qapturedApp.factory('Reddit', function( $http ){
 		  var Reddit = function() {
@@ -194,10 +194,8 @@ function infiniteScroll( uri, listType, pageSize, cstVar ){
 		  Reddit.prototype.nextPage = function() {
 			if( this.busy || this.noResult ) return;
 				this.busy = true;	
-			
-			cstVar = (cstVar == undefined) ? '' : cstVar;
-			
-			var sep = (qs === '') ? '?' : '&', url = site_url + uri + this.after + qs + sep + 'type=' + listType + cstVar;
+						
+			var sep = (qs === '') ? '?' : '&', url = site_url + obj['uri'] + this.after + qs + sep + 'type=' + obj['listType'] + obj['cstVar'];
 			
 			$http.get(url).success(function(d) {
 		
@@ -215,7 +213,7 @@ function infiniteScroll( uri, listType, pageSize, cstVar ){
 				}
 				
 				//
-				if( d['data'].length < pageSize ){
+				if( d['data'].length < obj['pageSize'] ){
 					this.busy = false;
 					this.noResult = true;
 				}else{
@@ -226,8 +224,7 @@ function infiniteScroll( uri, listType, pageSize, cstVar ){
 				
 				// TRIGGER LAZYLOAD
 				setTimeout(function(){
-					if( $("div.lazy").length > 0 )
-						$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
+					lazyLoadActive();
 				}, 1);
 				
 			  }else{
@@ -454,12 +451,11 @@ $('.cLists li a').click(function(){
 		});
 	
 });
-
-
 function getAjax( obj, callback, error ){
 	$.ajax({
 		type:'POST',
 		url:obj['uri'] || null,
+		dataType: obj['dataType'] || null,
 		data:obj['param'] || null,
 		error: function( e ){ if( error != undefined ) error( e ); },
 		success:function( e ){
@@ -486,13 +482,12 @@ if( exist($('.pageCustomListDetail')) ){
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
 		
-		if( $("div.lazy").length > 0 )
-				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
+		lazyLoadActive();
 		
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/', 'ucl', 30, '&list='+list_id);
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id });
 }
 
 // Custom List Detail Remove from Custom List
@@ -565,13 +560,12 @@ if( exist($('.pageSeen')) ){
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
 		
-		if( $("div.lazy").length > 0 )
-				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
+		lazyLoadActive();
 		
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/', 'us', 30, '&usr='+usr);
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr });
 }
 
 function unseen(obj){
@@ -628,11 +622,43 @@ if( exist($('.pageWatchlist')) ){
 		
 		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
 		
-		if( $("div.lazy").length > 0 )
-				$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).parents('.movieItem').addClass('loaded'); } });
+		lazyLoadActive();
 		
 	});
 	
 	// infinite-Scroll
-	infiniteScroll('ajx/movie_ajx/lister/', 'uwl', 30, '&usr='+usr);
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr });
+}
+
+
+function lazyLoadActive(){
+	if( $("div.lazy").length > 0 )
+		$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
+}
+
+//////////////////// YOUTUBE
+function watch_trailer( t ){
+	var _this = $( t );
+	if( _this.hasClass('yt') ) return false;
+		_this.addClass('yt');
+
+	var movieName = cleanText( _this.siblings('.title').text() ),
+		year = cleanText( _this.siblings('.year').text() ),
+		uri ='https://gdata.youtube.com/feeds/api/videos/?q={{movieName}}+{{year}}+official+trailer&max-results=1&orderby=relevance&format=5&v=2&alt=jsonc&duration=short';
+		uri = uri.replace('{{movieName}}', encodeURIComponent( movieName )).replace('{{year}}', encodeURIComponent( year ));
+		
+	getAjax({ 'uri': uri, 'dataType': 'JSONP' }, 
+	function( d ){
+		// success
+		var ytID = d['data']['items'][0]['id'], hrf = 'https://www.youtube.com/watch?v=' + ytID;
+		_this.attr('href', hrf).addClass('yt').nivoLightbox({ auto: true });
+	},
+	function(){
+		// error
+		_this.removeClass('yt');
+	});	 
+}
+
+function cleanText( k ){
+	return k.replace(/(^\s+|\s+$)/g,'');
 }
