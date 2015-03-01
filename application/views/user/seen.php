@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	var usr = '<?php echo $usr_id; ?>';
+	var usr = '<?php echo $the_user->usr_id; ?>';
 </script>
 <div class="pageDefault pageSeen">
 	<div class="controllers">

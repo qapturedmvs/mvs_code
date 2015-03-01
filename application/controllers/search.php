@@ -13,25 +13,8 @@
     public function index($type = NULL){
       
       $keyword = $this->input->post('keyword', TRUE);
-      $type = $this->input->get('type', TRUE);
-		
-      $limited = ($type == 'movie' || $type == 'star') ? FALSE : TRUE;
-      $results = array('status' => 'none');
 
-      if($keyword){ 
-        if($type == 'movie' || $type == NULL){
-          $results['movies'] = $this->_movies($keyword, $limited);
-          $results['status'] = ($type == NULL) ? 'both' : 'movie';
-        }
-        
-        if($type == 'star' || $type == NULL){
-          $results['stars'] = $this->_stars($keyword, $limited);
-          $results['status'] = ($type == NULL) ? 'both' : 'star';
-        }
-      }
-      
 			$this->data['keyword'] = $keyword;
-      $this->data['results'] = $results;
 			$this->data['subview'] = 'search';
 			$this->load->view('_main_body_layout', $this->data);
       

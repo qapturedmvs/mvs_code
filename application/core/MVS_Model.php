@@ -133,14 +133,27 @@ class MVS_Model extends CI_Model {
 	
 	}
 	
-	public function user_id_from_slug($slug){
+	public function get_user_from_slug($slug, $user = FALSE){
 		
-		$this->_primary_key = 'usr_nick';
-		$this->_table_name = 'mvs_users';
-		$user = $this->get_data($slug);
+		$this->per_page = 1;
 		
-		if(isset($user['data']))
-			return $user['data']->usr_id;
+		$filters = array(
+			'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar',
+			'from' => 'mvs_users u',
+			'where' => "u.usr_nick = '$slug'"
+		);
+		
+		if($user){
+			
+			$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
+			$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
+			
+		}
+		
+		$the_user = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		if(isset($the_user['data']))
+			return $the_user['data'][0];
 		else
 			return FALSE;
 		

@@ -12,26 +12,25 @@
 		}
 		
 		public function lister($keyword = NULL){
-			
+
 			if($this->input->is_ajax_request()){
 				
-              
 			  $type = NULL;
 			  $limited = TRUE;
 			  $results = array('status' => 'none');
 			 
 			  if($keyword){
-				$keyword = $this->search_m->cleaner($keyword);
-				   
-				if($type == 'movie' || $type == NULL){
-				  $results['movies'] = $this->_movies($keyword, $limited);
-				  $results['status'] = ($type == NULL) ? 'both' : 'movie';
-				}
-				
-				if($type == 'star' || $type == NULL){
-				  $results['stars'] = $this->_stars($keyword, $limited);
-				  $results['status'] = ($type == NULL) ? 'both' : 'star';
-				}
+					$keyword = $this->search_m->cleaner($keyword);
+						 
+					if($type == 'movie' || $type == NULL){
+						$results['movies'] = $this->_movies($keyword, $limited);
+						$results['status'] = ($type == NULL) ? 'both' : 'movie';
+					}
+					
+					if($type == 'star' || $type == NULL){
+						$results['stars'] = $this->_stars($keyword, $limited);
+						$results['status'] = ($type == NULL) ? 'both' : 'star';
+					}
 			  }
 
 				$json = (object) array();
