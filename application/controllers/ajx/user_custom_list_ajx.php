@@ -14,7 +14,8 @@
 			if($this->input->is_ajax_request()){
 				
 				$json = (object) array();
-				$lists = $this->user_custom_list_m->get_lists($this->user['usr_id']);
+				$usr_id = (isset($this->get_vars['usr'])) ? $this->get_vars['usr'] : $this->user['usr_id'];
+				$lists = $this->user_custom_list_m->get_lists($usr_id);
 				
 				if($lists){
 					$json->result = 'OK';

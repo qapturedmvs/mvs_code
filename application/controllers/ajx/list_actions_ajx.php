@@ -117,7 +117,7 @@
 					
 					$this->data['action'] = $action;
 					$vars = $this->input->post(NULL, TRUE);
-					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title']);
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
 						
 					$this->data['lst_result'] = array('lst' => $this->action_m->create_delete_list($data));
 					

@@ -28,19 +28,6 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
-	public function get_list_detail($list_slug, $usr_id){
-		
-		$this->per_page = 1;
-		$list_slug = $this->cleaner($list_slug);
-		$list = $this->db->get_where('mvs_custom_lists', array('list_slug' => $list_slug), 1)->row();
-
-		if(isset($list->list_id))
-			return $list;
-		else
-			return FALSE;
-		
-	}
-	
 	// Custom Movie list JSON
 	public function movies_json($offset = 0, $vars, $defs, $cst_str){
 		

@@ -468,7 +468,7 @@ function getAjax( obj, callback, error ){
 
 // Custom List Page
 if( exist($('.pageCustomList')) )
-		getAjx({ controller: 'userCustomList', uri: 'ajx/user_custom_list_ajx/list_lister' }, function(){});
+	getAjx({ controller: 'userCustomList', uri: 'ajx/user_custom_list_ajx/list_lister?usr='+usr }, function(){});
 		
 if( exist($('.pageCustomListDetail')) ){
 	
