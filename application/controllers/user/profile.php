@@ -65,7 +65,15 @@
 		
 		public function _unique_email($email){
 			
-			$db_data = $this->user_m->check_usr($email, $this->user['usr_id']);
+			$db_data = $this->user_m->check_usr_unique_field('usr_email', $email, $this->user['usr_id']);
+			
+			return $db_data;
+		
+		}
+		
+		public function _unique_nick($nick){
+			
+			$db_data = $this->user_m->check_usr_unique_field('usr_nick', $nick, $this->user['usr_id']);
 			
 			return $db_data;
 		

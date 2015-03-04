@@ -630,6 +630,30 @@ if( exist($('.pageWatchlist')) ){
 	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr });
 }
 
+// Follow Unfollow
+function follow_unfollow(obj){
+
+	var action = $(obj).attr("rel"),
+				id = (action == 'follow') ? $(obj).parents('.user-box').attr("usr-id") : $(obj).attr("flw-id");
+				
+	getAjax( { uri: site_url+'ajx/follow_actions_ajx/follow_unfollow_user/'+action, param: {id:id} }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					if(e['action'] == 'follow')
+						$(obj).removeAttr("flw-id");
+					else{
+						$(obj).attr("flw-id", e['flw-id']);
+					}
+						
+					$(obj).attr("rel", e['action']);
+					
+				}else
+					alert(e['msg']);
+					
+		});
+
+}
+
 
 function lazyLoadActive(){
 	if( $("div.lazy").length > 0 )

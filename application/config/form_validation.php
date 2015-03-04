@@ -96,12 +96,22 @@ $config = array(
         'prf_name' => array(
           'field' => 'prf_name',
           'label' => 'Name',
-          'rules' => 'trim|required|xss_clean'
+          'rules' => 'trim|required|xss_clean|max_length[255]'
         ),
         'prf_email' => array(
           'field' => 'prf_email',
           'label' => 'Email',
-          'rules' => 'trim|required|valid_email|xss_clean|callback__unique_email'
+          'rules' => 'trim|required|valid_email|xss_clean|max_length[255]|callback__unique_email'
+        ),
+        'prf_nick' => array(
+          'field' => 'prf_nick',
+          'label' => 'Nick',
+          'rules' => 'trim|required|xss_clean|max_length[20]|callback__unique_nick'
+        ),
+        'prf_slogan' => array(
+          'field' => 'prf_slogan',
+          'label' => 'Slogan',
+          'rules' => 'trim|xss_clean|max_length[255]'
         ),
         'prf_password' => array(
           'field' => 'prf_password',

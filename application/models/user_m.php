@@ -50,6 +50,7 @@ class User_M extends MVS_Model
       'usr_email' => $email,
       'usr_password' => $password,
       'usr_avatar' => '',
+			'usr_slogan' => '',
       'usr_account' => 'qp',
 			'usr_act_key' => $usr_act_key,
       'usr_time' => date($this->_timestamp)
@@ -108,12 +109,12 @@ class User_M extends MVS_Model
     
   }
   
-  public function check_usr($email, $id){
+  public function check_usr_unique_field($field, $value, $id){
     
     $filters = array(
       'select' => 'usr_id',
       'from' => 'mvs_users',
-      'where' => "usr_email = '$email' AND usr_id != $id"
+      'where' => "$field = '$value' AND usr_id != $id"
     );
     
     $user = $this->get_data(NULL, 0, FALSE, $filters);

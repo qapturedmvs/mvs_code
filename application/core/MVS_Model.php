@@ -140,7 +140,7 @@ class MVS_Model extends CI_Model {
 		if(!$cl){
 			
 			$filters = array(
-				'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar',
+				'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan',
 				'from' => 'mvs_users u',
 				'where' => "u.usr_nick = '$slug'"
 			);
@@ -155,7 +155,7 @@ class MVS_Model extends CI_Model {
 		}else{
 		
 		$filters = array(
-				'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, cl.list_id, cl.list_title',
+				'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, cl.list_id, cl.list_title',
 				'from' => 'mvs_custom_lists cl',
 				'where' => "cl.list_slug = '$slug'"
 			);
