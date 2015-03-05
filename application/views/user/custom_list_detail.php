@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	var list_id = <?php echo $the_user->list_id; ?>;
+	var list_id = <?php echo $list['list_id']; ?>;
 </script>
 <div class="pageDefault pageCustomListDetail">
 	<?php $this->load->view('components/_the_user'); ?>
@@ -14,8 +14,8 @@
 		<hr class="qFixer" />
 	</div>
 	<div class="titleDefault titleCustomList">
-		<h4 class="normal-mode"><?php echo $the_user->list_title; ?></h4>
-		<input type="text" class="listTitle edit-mode" value="<?php echo $the_user->list_title; ?>" />
+		<h4 class="normal-mode"><?php echo $list['list_title']; ?></h4>
+		<input type="text" class="listTitle edit-mode" value="<?php echo $list['list_title']; ?>" />
 	</div>
 	<?php $this->load->view('components/_movie_list_repeater'); ?>
 </div>
