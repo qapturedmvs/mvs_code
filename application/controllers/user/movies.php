@@ -9,106 +9,119 @@
 
 		}
 		
-		public function _remap($method,$args){
-		
-			if (method_exists($this, $method))
-				$this->$method($args);
-			else
-				$this->index($method,$args);
-			
-		}
+		//public function _remap($method,$args){
+		//
+		//	if (method_exists($this, $method))
+		//		$this->$method($args);
+		//	else
+		//		$this->index($method,$args);
+		//	
+		//}
     
-    public function index($slug = NULL){
-			
-			if($this->uri->segment(3) != 'index'){
-				
-				if(isset($this->user['usr_id']))
-					$this->data['the_user']['login_user'] = $this->user['usr_id'];
-				elseif(count($slug) === 0)
-					show_404();
-				
+    public function lister($slug){
+
 				if(count($slug) > 0){
 					
 					$this->load->model('user_custom_list_m');
 					
-					$this->data['the_user']['view_user'] = $this->user_custom_list_m->get_user_from_slug($slug[0], $this->user['usr_id']);
-				}
+					$this->data['controls'] = array('page' => 'cl', 'cl_action' => TRUE, 'owner' => TRUE);
+					$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug[0], $this->user['usr_id']);
 
-				$this->data['subview'] = 'user/custom_list';
-				$this->load->view('_main_body_layout', $this->data);
-				
-			}else{
-				show_404();
-			}
-			
-    }
+					if(isset($this->user['usr_nick']) && $this->user['usr_nick'] !== $slug[0]){
+	
+						
+						$this->data['controls']['owner'] = FALSE;
+						$this->data['controls']['cl_action'] = FALSE;
+
+					}
 		
-		public function detail($slug = NULL){	
-
-			if(count($slug) > 0){
+					$this->data['subview'] = 'user/custom_list';
+					//$this->load->view('_main_body_layout', $this->data);
 				
-				if(isset($this->user['usr_id']))
-					$this->data['the_user']['login_user'] = $this->user['usr_id'];
-				
-				$this->load->model('user_custom_list_m');
-				
-				$this->data['the_user']['view_user'] = $this->user_custom_list_m->get_user_from_slug($slug[0], $this->user['usr_id'], TRUE);
-				
-				if($this->data['the_user']['view_user']){
-					
-					// Kullanıcı, başka birinin listesini mi görüntülüyor?
-					$this->data['controls'] = array('page' => 'custom', 'seen' => 'single', 'permission' => ($this->data['the_user']['view_user']->usr_id === $this->user['usr_id']) ? TRUE : FALSE);
-					$this->data['subview'] = 'user/custom_list_detail';
-					$this->load->view('_main_body_layout', $this->data);
-					
 				}else{
 					
 					show_404();
 					
 				}
 			
+    }
+		
+		public function detail($slug){
+			
+			if(count($slug) > 0){
+				
+				$this->load->model('user_custom_list_m');
+				
+				$this->data['controls'] = array('page' => 'cld', 'seen_action' =>  'single', 'cld_action' => TRUE, 'owner' => TRUE);
+				$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug[0], $this->user['usr_id'], TRUE);
+				
+				if(isset($this->user['usr_id']) && $this->user['usr_id'] !== $this->data['the_user']->usr_id){
+
+					$this->data['controls']['owner'] = FALSE;
+					$this->data['controls']['cld_action'] = FALSE;
+					
+				}
+	
+				$this->data['subview'] = 'user/custom_list_detail';
+				$this->load->view('_main_body_layout', $this->data);
+			
 			}else{
 				
 				show_404();
 				
 			}
+
     }
 		
-		public function seen($slug = NULL){		
-			
-			if(isset($this->user['usr_id']))
-				$this->data['the_user']['login_user'] = $this->user['usr_id'];	
-			elseif(count($slug) === 0)
-				show_404();
+		public function seen($slug){		
 			
 			if(count($slug) > 0){
-				$this->load->model('seen_m');
 				
-				$this->data['the_user']['view_user'] = $this->seen_m->get_user_from_slug($slug[0], $this->user['usr_id']);
-			}
+				$this->data['controls'] = array('page' => 'seen', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
+				
+				if(isset($this->user['usr_nick']) && $this->user['usr_nick'] !== $slug[0]){
 
-			$this->data['controls'] = array('page' => 'seen', 'seen' =>  'single', 'permission' => FALSE);	
-			$this->data['subview'] = 'user/seen';
-			$this->load->view('_main_body_layout', $this->data);
+					$this->load->model('seen_m');
+					
+					$this->data['the_user'] = $this->seen_m->get_user_from_slug($slug[0], $this->user['usr_id']);
+					$this->data['controls']['owner'] = FALSE;
+					
+				}
+	
+				$this->data['subview'] = 'user/seen';
+				$this->load->view('_main_body_layout', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
 			
 		}
 		
-		public function watchlist($slug = NULL){
-			
-			if(isset($this->user['usr_id']))
-				$this->data['the_user']['login_user'] = $this->user['usr_id'];
-			elseif(count($slug) === 0)
-				show_404();
+		public function watchlist($slug){
 			
 			if(count($slug) > 0){
-				$this->load->model('watchlist_m');
 				
-				$this->data['the_user']['view_user'] = $this->watchlist_m->get_user_from_slug($slug[0], $this->user['usr_id']);
-			}
+				$this->data['controls'] = array('page' => 'wtc', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
+				
+				if(isset($this->user['usr_nick']) && $this->user['usr_nick'] !== $slug[0]){
 
-			$this->data['controls'] = array('page' => 'wtc', 'seen' =>  'single', 'permission' => FALSE);
-			$this->data['subview'] = 'user/watchlist';
-			$this->load->view('_main_body_layout', $this->data);
+					$this->load->model('watchlist_m');
+					
+					$this->data['the_user'] = $this->watchlist_m->get_user_from_slug($slug[0], $this->user['usr_id']);
+					$this->data['controls']['owner'] = FALSE;
+					
+				}
+	
+				$this->data['subview'] = 'user/watchlist';
+				$this->load->view('_main_body_layout', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
 			
 		}
   

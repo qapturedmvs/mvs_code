@@ -12,13 +12,13 @@
             <span class='genre'>{{item.mvs_genre}}</span> 
             <span class='country'>{{item.mvs_country}}</span>
 						<?php if($logged_in): ?>
-							<?php if($controls['seen'] === 'multi'): ?>
+							<?php if($controls['seen_action'] === 'multi'): ?>
 							<div class='seen multiSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
-							<?php elseif($controls['seen'] === 'single'): ?>
+							<?php elseif($controls['seen_action'] === 'single'): ?>
 							<div class='seen singleSeen'><a ng-if="item.usr_seen==0" rel="seen" onclick="single_seen(this)" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a>
 							<a ng-if="item.usr_seen==1" rel="unseen" seen-id="{{item.seen_id}}" onclick="<?php echo ($controls['page'] == 'seen') ? 'unseen(this)' : 'single_seen(this)'; ?>" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></div>
 							<?php endif; ?>
-							<?php if($controls['permission'] === TRUE && $controls['page'] === 'custom'): ?>
+							<?php if($controls['cld_action'] === TRUE && $controls['page'] === 'custom'): ?>
 							<div class="remove edit-mode"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" rel="0" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>

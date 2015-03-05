@@ -19,7 +19,7 @@
 			$vars = qs_filter($this->get_vars, $this->filter_defs);
 			$filters = $tables['filter'];
 			
-			$this->data['controls'] = array('page' => 'movies', 'seen' => 'multi', 'permission' => FALSE);
+			$this->data['controls'] = array('page' => 'movies', 'seen_action' => 'multi', 'cl_action' => FALSE);
 			$this->data['vars'] = $vars;
 			$this->data['tables'] = $tables['table'];
 			$this->data['filters'] = $filters;

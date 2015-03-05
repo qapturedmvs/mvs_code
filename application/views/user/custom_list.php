@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	var usr = <?php echo ($the_user['view_user']) ? $the_user['view_user']->usr_id : $the_user['login_user']; ?>;
+	var usr = <?php echo (isset($the_user)) ? $the_user->usr_id : $user['usr_id']; ?>;
 </script>
 <div class="pageDefault pageCustomList">
 	<?php $this->load->view('components/_the_user'); ?>
