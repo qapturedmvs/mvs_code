@@ -9,7 +9,7 @@
 				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
 				<div class="text left">
 					<div class="posArea">
-						<h1><?php echo $movie->mvs_title.' ('.$movie->mvs_year.')'; ?></h1>
+						<h1 title="<?php echo $movie->mvs_title; ?>"><?php echo $movie->mvs_title.' (<small>'.$movie->mvs_year.'</small>)'; ?></h1>
 						<div class="genre">
 							<ul>
 								<?php foreach($genres as $genre): ?>
@@ -26,6 +26,7 @@
 							</ul>
 							<hr class="qFixer" />
 						</div>
+						<div class="trailer"><a class="trailerBtn button" onclick="watch_trailer(this)" href="javascript:void(0);">Trailer</a></div>
 						<hr class="qFixer" />
 						<div class="actions">
 							<?php if($logged_in): ?>

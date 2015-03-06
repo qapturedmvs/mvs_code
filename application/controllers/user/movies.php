@@ -9,7 +9,7 @@
 
 		}
     
-    public function lister($slug = NULL){
+    public function lists($slug = NULL){
 
 				if($slug){
 

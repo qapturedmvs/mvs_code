@@ -3,6 +3,7 @@
 </script>
 <div class="pageDefault pageCustomList">
 	<?php $this->load->view('components/_the_user'); ?>
+	<?php $this->load->view('components/menus/_user_movies_menu'); ?>
 	<div class="listHolder" ng-controller='userCustomList'>
 		<h4>My Movie Lists</h4>
 		<ul>

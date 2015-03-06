@@ -660,14 +660,14 @@ function lazyLoadActive(){
 		$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
 }
 
-//////////////////// YOUTUBE
+// YOUTUBE TRAILER
 function watch_trailer( t ){
 	var _this = $( t );
 	if( _this.hasClass('yt') ) return false;
 		_this.addClass('yt');
 
-	var movieName = cleanText( _this.siblings('.title').text() ),
-		year = cleanText( _this.siblings('.year').text() ),
+	var movieName = cleanText( $('h1').attr('title') ),
+		year = cleanText( $('h1 small').text() ),
 		uri ='https://gdata.youtube.com/feeds/api/videos/?q={{movieName}}+{{year}}+official+trailer&max-results=1&orderby=relevance&format=5&v=2&alt=jsonc&duration=short';
 		uri = uri.replace('{{movieName}}', encodeURIComponent( movieName )).replace('{{year}}', encodeURIComponent( year ));
 		
