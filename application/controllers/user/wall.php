@@ -6,7 +6,6 @@
 			parent::__construct();
 			
 			$this->output->enable_profiler();
-			$this->session_check();
 			$this->load->model('feed_m');
       
 		}

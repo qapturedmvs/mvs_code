@@ -45,6 +45,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .commentForm textarea{width:694px; height:95px; margin:0 0 5px;}
 .commentForm a{float:left; margin-right:5px;}
 
+.loading{background:url(../images/ajax-loader.gif) right center no-repeat #fff;}
+.available{background:url(../images/available.png) right center no-repeat #fff;}
+.unavailable{background:url(../images/unavailable.png) right center no-repeat #fff;}
+
 #qContainer{width:1000px; margin:0 auto;}
 
 #qHeader{padding:10px 0 20px; border-bottom:1px solid #ccc;}
@@ -230,6 +234,12 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageSearch .results .stars li{margin-bottom:10px;}
 .pageSearch .results .stars li a span{font-size:14px;}
 
+/* PROFILE */
+.pageProfile{}
+.pageProfile .profileForm{}
+.pageProfile .profileForm li{margin-bottom:10px; width:280px;}
+.pageProfile .profileForm li input{width:250px;}
+
 /* AUTOCOMPLETE */
 .ui-autocomplete-category.noResult{ display:none; }
 
@@ -249,15 +259,15 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .theUserBox .followHolder a[rel=unfollow] span.flw{display:none;}
 
 /* LIGHTBOX */
-.nivo-lightbox-overlay{position:fixed;top:0;left:0;z-index:99998;width:100%;height:100%;overflow:hidden;visibility:hidden;opacity:0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.nivo-lightbox-overlay{position:fixed;top:0;left:0;z-index:99998;width:100%;height:100%;overflow:hidden;visibility:hidden;opacity:0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box; background:url(../images/overlay.gif) repeat;}
 .nivo-lightbox-overlay.nivo-lightbox-open{visibility:visible;opacity:1}
-.nivo-lightbox-wrap{position:absolute;top:10%;bottom:10%;left:10%;right:10%}
+.nivo-lightbox-wrap{position:absolute;top:10%;bottom:10%;left:10%;right:10%; background:url(../images/trailer-loader.gif) center center no-repeat;}
 .nivo-lightbox-content{width:100%;height:100%}
 .nivo-lightbox-title-wrap{position:absolute;bottom:0;left:0;width:100%;z-index:99999;text-align:center}
 .nivo-lightbox-nav{display:none}
 .nivo-lightbox-prev{position:absolute;top:50%;left:0}
 .nivo-lightbox-next{position:absolute;top:50%;right:0}
-.nivo-lightbox-close{position:absolute;top:2%;right:2%}
+.nivo-lightbox-close{position:absolute;top:2%;right:2%; color:#fff;}
 .nivo-lightbox-image{text-align:center}
 .nivo-lightbox-image img{max-width:100%;max-height:100%;width:auto;height:auto;vertical-align:middle}
 .nivo-lightbox-content iframe{width:100%;height:100%}

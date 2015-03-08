@@ -133,43 +133,93 @@ class MVS_Model extends CI_Model {
 	
 	}
 	
-	public function get_user_from_slug($slug, $user = FALSE, $cl = FALSE){
+	public function get_user_from_slug($slug, $user = FALSE, $page){
 		
 		$this->per_page = 1;
 		
-		if(!$cl){
+		switch($page){
 			
-			$filters = array(
-				'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan',
-				'from' => 'mvs_users u',
-				'where' => "u.usr_nick = '$slug'"
-			);
-			
-			if($user){
-				
-				$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
-				$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
-				
-			}
-			
-		}else{
-		
-		$filters = array(
-				'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, cl.list_id, cl.list_title',
-				'from' => 'mvs_custom_lists cl',
-				'where' => "cl.list_slug = '$slug'"
-			);
-			
-			if($user){
-				
-				$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
-				$filters['join'] = array(
-					array('mvs_users u', 'u.usr_id = cl.usr_id', 'inner'),
-					array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left')
+			case 'profile':
+				$filters = array(
+					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, u.usr_email, u.usr_last_login',
+					'from' => 'mvs_users u',
+					'where' => "u.usr_nick = '$slug'"
 				);
 				
-			}
+				if($user){
+					
+					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
+					$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
+					
+				}
+			break;
+					
+			case 'seen':
+				$filters = array(
+					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan',
+					'from' => 'mvs_users u',
+					'where' => "u.usr_nick = '$slug'"
+				);
+				
+				if($user){
+					
+					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
+					$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
+					
+				}
+			break;
+				
+			case 'wtc':
+				$filters = array(
+					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan',
+					'from' => 'mvs_users u',
+					'where' => "u.usr_nick = '$slug'"
+				);
+				
+				if($user){
+					
+					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
+					$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
+					
+				}
+			break;
+				
+			case 'cl':
+				$filters = array(
+					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, cl.list_id, cl.list_title',
+					'from' => 'mvs_custom_lists cl',
+					'where' => "cl.list_slug = '$slug'"
+				);
+				
+				if($user){
+					
+					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
+					$filters['join'] = array(
+						array('mvs_users u', 'u.usr_id = cl.usr_id', 'inner'),
+						array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left')
+					);
+					
+				}
+			break;
 			
+			case 'cld':
+				$filters = array(
+					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, cl.list_id, cl.list_title',
+					'from' => 'mvs_custom_lists cl',
+					'where' => "cl.list_slug = '$slug'"
+				);
+				
+				if($user){
+					
+					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
+					$filters['join'] = array(
+						array('mvs_users u', 'u.usr_id = cl.usr_id', 'inner'),
+						array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left')
+					);
+					
+				}
+			break;
+						
 		}
 		
 		$the_user = $this->get_data(NULL, 0, FALSE, $filters);

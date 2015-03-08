@@ -51,3 +51,20 @@ b.attr("data-lightbox-type"))a.ajax({url:f,cache:!1,success:function(b){var d=a(
 constructLightbox:function(){if(a(".nivo-lightbox-overlay").length)return a(".nivo-lightbox-overlay");var c=a("<div>",{"class":"nivo-lightbox-overlay nivo-lightbox-theme-"+this.options.theme+" nivo-lightbox-effect-"+this.options.effect}),b=a("<div>",{"class":"nivo-lightbox-wrap"}),e=a("<div>",{"class":"nivo-lightbox-content"}),f=a('<a href="#" class="nivo-lightbox-nav nivo-lightbox-prev">Previous</a><a href="#" class="nivo-lightbox-nav nivo-lightbox-next">Next</a>'),d=a('<a href="#" class="nivo-lightbox-close" title="Close">Close</a>'),
 g=a("<div>",{"class":"nivo-lightbox-title-wrap"});b.append(e);b.append(g);c.append(b);c.append(f);c.append(d);a("body").append(c);var h=this;if(h.options.clickOverlayToClose)c.on("click",function(b){(b.target===this||a(b.target).hasClass("nivo-lightbox-content")||a(b.target).hasClass("nivo-lightbox-image"))&&h.destructLightbox()});d.on("click",function(a){a.preventDefault();h.destructLightbox()});return c},destructLightbox:function(){this.options.beforeHideLightbox.call(this);a(".nivo-lightbox-overlay").removeClass("nivo-lightbox-open");
 a(".nivo-lightbox-nav").hide();a("body").removeClass("nivo-lightbox-body-effect-"+this.options.effect);a(".nivo-lightbox-prev").off("click");a(".nivo-lightbox-next").off("click");a(".nivo-lightbox-content").empty();this.options.afterHideLightbox.call(this)},isHidpi:function(){return!1}};a.fn.nivoLightbox=function(c){return this.each(function(){a.data(this,"nivoLightbox")||a.data(this,"nivoLightbox",new m(this,c))})}})(jQuery,window,document);
+ 
+ 
+ // Profile Submit Changes
+function profile_save(data){
+	var	modify = JSON.parse(data),
+			prf_url = site_url+'user/profile/general/'+modify['prf_nick'],
+			userbox = '<div class="usrInfo">'+modify['prf_name']+'</div><div class="userMenu"><ul><li><a href="'+site_url+'user/profile/general/'+modify['prf_nick']+'">Profile</a></li><li><a href="'+site_url+'user/movies/lists/'+modify['prf_nick']+'">My Movie Lists</a></li></ul></div><div class="usrLogout"><a href="'+site_url+'user/logout">logout</a></div>';
+	
+	$('form.form-profile').attr('action', prf_url);
+	$('.userbox').html(userbox);
+	
+	for(var i in modify)
+		$('#'+i).val(modify[i]);
+
+	history.pushState({nick:"modify"}, "", prf_url);
+	window.history.forward();
+}

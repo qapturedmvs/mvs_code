@@ -170,12 +170,7 @@
 					}else{
 						
 						$data['ldt_id'] = $vars['id'];
-						$check = $this->action_m->check_custom_list($data);
-						
-						if($check)
-							$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
-						else
-							$this->data['lst_result'] = 'no-list';
+						$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
 							
 					}
 

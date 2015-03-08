@@ -1,5 +1,5 @@
 // GLOBAL VARIABLE
-var site_url = $('#mvs_site_url').val(), qs = window.location.search;
+var qs = window.location.search;
 
 // GLOBAL ANGULAR MODULE
 var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
@@ -653,6 +653,27 @@ function follow_unfollow(obj){
 		});
 
 }
+
+// Profile Page Check User Nick
+$('#prf_nick').blur(function(){
+	var val = $(this).val(), rel = $(this).attr('rel');
+	
+	if(val !== rel){
+		$(this).parent('li').addClass('loading');
+		getAjax( { uri: site_url+'ajx/user_ajx/check_nick/'+val }, function( e ){			
+				if(e['result'] == 'OK'){
+					if(e['status'] == 'DONE')
+						$('#prf_nick').parent('li').removeClass('loading').addClass('available');
+					else{
+						$('#prf_nick').parent('li').removeClass('loading').addClass('unavailable');
+					}
+					
+				}else
+					alert(e['msg']);
+					
+		});
+	}
+});
 
 
 function lazyLoadActive(){

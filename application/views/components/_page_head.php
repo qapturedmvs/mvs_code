@@ -21,6 +21,9 @@
 			<meta property="og:description" content="<?php echo $meta_tags->description; ?>" />
 		<?php endif; ?>
     <title><?php echo $temp_title; ?></title>
+			<script type="text/javascript">
+				var site_url = '<?php echo $site_url; ?>';
+			</script>
     <link href="<?php echo site_url('css/main.css'); ?>" rel="stylesheet">
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
@@ -29,4 +32,3 @@
     <script src="<?php echo site_url('js/plugins.js'); ?>"></script>
   </head>
   <body ng-app="qapturedApp">
-  <input type="hidden" value="<?php echo $site_url; ?>" id="mvs_site_url" />
