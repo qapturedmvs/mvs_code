@@ -154,22 +154,7 @@ class MVS_Model extends CI_Model {
 				}
 			break;
 					
-			case 'seen':
-				$filters = array(
-					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan',
-					'from' => 'mvs_users u',
-					'where' => "u.usr_nick = '$slug'"
-				);
-				
-				if($user){
-					
-					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
-					$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
-					
-				}
-			break;
-				
-			case 'wtc':
+			case 'main':
 				$filters = array(
 					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan',
 					'from' => 'mvs_users u',

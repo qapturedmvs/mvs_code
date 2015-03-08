@@ -43,13 +43,16 @@
 					$json->data = '';
 				}
 				
-				$data['json'] = json_encode($json);
+				$this->data['json'] = json_encode($json);
+				
+				$this->load->view('json/main_json_view', $this->data);
 			
 			}else{
-				$data['json'] = FALSE;	
+				
+				show_404();
+					
 			}
 			
-			$this->load->view('json/search_json', $data);
 		}
 		
 		

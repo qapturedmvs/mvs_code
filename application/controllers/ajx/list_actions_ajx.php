@@ -35,15 +35,15 @@
 					$this->data['seen_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_seen_movie', $this->data);
 			
 			}else{
 				
-				$this->data['seen_result'] = FALSE;
+				show_404();
 				
 			}
-				
-			$this->load->view('results/_seen_movie', $this->data);
-			
+
 		}
 		
 		public function mark_all_seen(){
@@ -65,15 +65,15 @@
 					$this->data['seen_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_seen_movie', $this->data);
 			
 			}else{
 				
-				$this->data['seen_result'] = FALSE;
+				show_404();
 				
 			}
-				
-			$this->load->view('results/_seen_movie', $this->data);
-			
+
 		}
 		
 		public function add_remove_watchlist($action){
@@ -98,15 +98,15 @@
 					$this->data['wtc_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_wtc_add_remove', $this->data);
 			
 			}else{
 				
-				$this->data['wtc_result'] = FALSE;
+				show_404();
 				
 			}
-				
-			$this->load->view('results/_wtc_add_remove', $this->data);
-			
+
 		}
 		
 		public function create_new_list($action){
@@ -133,14 +133,14 @@
 					$this->data['lst_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_cl_create_new_list', $this->data);
 			
 			}else{
 				
-				$this->data['lst_result'] = FALSE;
+				show_404();
 				
 			}
-				
-			$this->load->view('results/_cl_create_new_list', $this->data);
 			
 		}
 		
@@ -179,15 +179,15 @@
 					$this->data['lst_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_cl_add_remove_from_list', $this->data);
 			
 			}else{
 				
-				$this->data['lst_result'] = FALSE;
+				show_404();
 				
 			}
-				
-			$this->load->view('results/_cl_add_remove_from_list', $this->data);
-			
+
 		}
 		
   

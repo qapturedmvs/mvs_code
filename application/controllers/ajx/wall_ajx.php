@@ -16,6 +16,8 @@
     
     public function lister($p = 1){
       
+      if($this->input->is_ajax_request()){
+        
       $json = (object) array();
       $p = $this->user_m->cleaner($p);
       $offset = ($p-1) * $this->feed_m->per_page;
@@ -31,7 +33,12 @@
       }
 
       $data['json'] = json_encode($json);
-      $this->load->view('json/feeds_json', $data);
+      
+      $this->load->view('json/main_json_view', $data);
+      
+    }else{
+      
+      show_404();
       
     }
   

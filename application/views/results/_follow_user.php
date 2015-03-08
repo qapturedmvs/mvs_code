@@ -1,5 +1,4 @@
 <?php 
-	if($follow_result){
 		
 		$this->output->set_header('Content-Type: application/json; charset=utf-8');
 		
@@ -11,11 +10,5 @@
 			
 		elseif($seen_result === 'no-user')
 			echo '{"result":"FALSE", "msg":"User not found"}';
-		
-	}else{
-		
-		show_404();
-		
-	} 
 
 ?>

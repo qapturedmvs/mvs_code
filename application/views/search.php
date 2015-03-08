@@ -19,7 +19,7 @@
       <h4>STARS</h4>
       <ul>
         <li ng-repeat='item in items.stars'> 
-        <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.str_slug}}'>{{item.str_name}}</a></span>
+        <span class='title'><a ng-href='/mvs_code/public_html/actor/{{item.str_slug}}'>{{item.str_name}}</a></span>
         </li>
       </ul>
       <a class="more" href="javascript:void(0);">Get More Results</a>

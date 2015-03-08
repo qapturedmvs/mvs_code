@@ -31,15 +31,15 @@
 					$this->data['follow_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_follow_user', $this->data);
 			
 			}else{
 				
-				$this->data['follow_result'] = FALSE;
+				show_404();
 				
 			}
 				
-			$this->load->view('results/_follow_user', $this->data);
-      
     }
     
   }

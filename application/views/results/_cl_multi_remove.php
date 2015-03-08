@@ -1,5 +1,4 @@
 <?php 
-	if($lst_result){
 		
 		$this->output->set_header('Content-Type: application/json; charset=utf-8');
 		
@@ -11,11 +10,5 @@
 			
 		else
 			echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
-			
-	}else{
-		
-		show_404();
-		
-	} 
 
 ?>

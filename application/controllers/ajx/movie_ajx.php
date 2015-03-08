@@ -108,11 +108,15 @@
 				}
 				
 				$this->data['json'] = json_encode($json);
+				
+				$this->load->view('json/main_json_view', $this->data);
+				
 			}else{
-				$this->data['json'] = FALSE;	
+				
+				show_404();
+					
 			}
 			
-			$this->load->view('json/movies_json', $this->data);
 		}
 		
 		private function _get_user_seen(){

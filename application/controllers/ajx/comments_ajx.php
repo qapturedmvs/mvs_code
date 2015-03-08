@@ -39,14 +39,14 @@
 				}
 	
 				$data['json'] = json_encode($json);
+				
+				$this->load->view('json/main_json_view', $data);
 			
 			}else{
 				
-				$data['json'] = FALSE;
+				show_404();
 				
 			}
-			
-      $this->load->view('json/movie_comments_json', $data);
       
     }
 		

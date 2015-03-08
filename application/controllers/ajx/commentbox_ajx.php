@@ -55,15 +55,15 @@
 					$this->data['comment_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('json/comment_json', $this->data);
 			
 			}else{
 				
-				$this->data['comment_result'] = FALSE;
+				show_404();
 				
 			}
 				
-			$this->load->view('json/comment_json', $this->data);
-			
     }
   
   }

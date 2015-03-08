@@ -2,22 +2,20 @@
 
 	$this->output->set_header('Content-Type: application/json; charset=utf-8');
 	
-	if($comment_result === 'success'){
+	switch($comment_result){
 		
-		echo '{"result":"OK","data":{"message":"Your comment posted successfully.","post":'.$feed.'}}';
+		case 'success':
+			echo '{"result":"OK","data":{"message":"Your comment posted successfully.","post":'.$feed.'}}';
+		break;
 		
-	}elseif($comment_result === 'error'){
+		case 'error':
+			echo '{"result":"FALSE","data":{"message":"An error occured. Please try again later."}}';
+		break;
 		
-		echo '{"result":"FALSE","data":{"message":"An error occured. Please try again later."}}';
+		case 'no-user':
+			echo '{"result":"FALSE","data":{"message":"Please login before post a comment."}}';
+		break;
 		
-	}elseif($comment_result === 'no-user'){
-		
-		echo '{"result":"FALSE","data":{"message":"Please login before post a comment."}}';
-		
-	}else{
-		
-		show_404();
-		
-	} 
+	}
 
 ?>

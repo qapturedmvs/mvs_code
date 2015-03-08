@@ -11,31 +11,31 @@
     
     public function lists($slug = NULL){
 
-				if($slug){
+			if($slug){
 
-					$this->load->model('user_custom_list_m');
-					
-					$this->data['controls'] = array('page' => 'cl', 'cl_action' => TRUE, 'owner' => TRUE);
-
-					if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
-	
-						$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'cl');
-						$this->data['controls']['owner'] = FALSE;
-						$this->data['controls']['cl_action'] = FALSE;
-						
-						if(!$this->data['the_user'])
-							show_404();
-
-					}
-		
-					$this->data['subview'] = 'user/custom_list';
-					$this->load->view('_main_body_layout', $this->data);
+				$this->load->model('user_custom_list_m');
 				
-				}else{
+				$this->data['controls'] = array('page' => 'cl', 'cl_action' => TRUE, 'owner' => TRUE);
+
+				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+
+					$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'cl');
+					$this->data['controls']['owner'] = FALSE;
+					$this->data['controls']['cl_action'] = FALSE;
 					
-					show_404();
-					
+					if(!$this->data['the_user'])
+						show_404();
+
 				}
+	
+				$this->data['subview'] = 'user/custom_list';
+				$this->load->view('_main_body_layout', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
 			
     }
 		
@@ -85,7 +85,7 @@
 					
 					$this->load->model('seen_m');
 					
-					$this->data['the_user'] = $this->seen_m->get_user_from_slug($slug, $this->user['usr_id'], 'seen');
+					$this->data['the_user'] = $this->seen_m->get_user_from_slug($slug, $this->user['usr_id'], 'main');
 					$this->data['controls']['owner'] = FALSE;
 					
 					if(!$this->data['the_user'])
@@ -114,7 +114,7 @@
 
 					$this->load->model('watchlist_m');
 					
-					$this->data['the_user'] = $this->watchlist_m->get_user_from_slug($slug, $this->user['usr_id'], 'wtc');
+					$this->data['the_user'] = $this->watchlist_m->get_user_from_slug($slug, $this->user['usr_id'], 'main');
 					$this->data['controls']['owner'] = FALSE;
 					
 					if(!$this->data['the_user'])

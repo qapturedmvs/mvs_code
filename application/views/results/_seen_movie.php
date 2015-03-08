@@ -1,27 +1,32 @@
 <?php 
-	if($seen_result){
 		
 		$this->output->set_header('Content-Type: application/json; charset=utf-8');
 		
-		if(is_numeric($seen_result))
+		if(is_numeric($seen_result)){
 			echo '{"result":"OK", "action":"unseen", "msg":"Movie marked as seen", "seen-id":"'.$seen_result.'"}';
+		
+		}else{
 			
-		elseif($seen_result === 'unseen')
-			echo '{"result":"OK", "action":"seen", "msg":"Movie marked as unseen"}';
+			switch($seen_result){
+				
+				case 'unseen':
+					echo '{"result":"OK", "action":"seen", "msg":"Movie marked as unseen"}';
+				break;
+					
+				case 'mseen':
+					echo '{"result":"OK", "action":"mseen", "msg":"All selected movies marked as seen"}';
+				break;
+				
+				case 'no-movie':
+					echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
+				break;
+					
+				case 'no-user':
+					echo '{"result":"FALSE", "msg":"User not found"}';
+				break;
+				
+			}
 			
-		elseif($seen_result === 'mseen')
-			echo '{"result":"OK", "action":"mseen", "msg":"All selected movies marked as seen"}';
-		
-		elseif($seen_result === 'no-movie')
-			echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
-			
-		elseif($seen_result === 'no-user')
-			echo '{"result":"FALSE", "msg":"User not found"}';
-		
-	}else{
-		
-		show_404();
-		
-	} 
+		}
 
 ?>

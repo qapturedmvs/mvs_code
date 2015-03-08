@@ -28,13 +28,13 @@
 				
 				$this->data['json'] = json_encode($json);
 				
+				$this->load->view('json/main_json_view', $this->data);
+				
 			}else{
 				
-				$this->data['json'] = FALSE;
+				show_404();
 				
 			}
-			
-			$this->load->view('json/user_custom_list_json', $this->data);
 			
     }
 		
@@ -55,14 +55,14 @@
 					
 				}
 				
+				$this->load->view('results/_cl_edit_list', $this->data);
+				
 			}else{
 				
-				$this->data['ecl_result'] = FALSE;
+				show_404();
 				
 			}
-			
-			$this->load->view('results/_cl_edit_list', $this->data);
-			
+
 		}
 		
 		public function cl_remove_multi_item(){
@@ -81,15 +81,15 @@
 					$this->data['lst_result'] = 'no-user';
 					
 				}
+				
+				$this->load->view('results/_cl_multi_remove', $this->data);
 			
 			}else{
 				
-				$this->data['lst_result'] = FALSE;
+				show_404();
 				
 			}
-				
-			$this->load->view('results/_cl_multi_remove', $this->data);
-			
+
 		}
   
   }

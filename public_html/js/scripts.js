@@ -675,6 +675,16 @@ $('#prf_nick').blur(function(){
 	}
 });
 
+// Followers
+if( exist($('.pageNetwork')) ){
+	var action = $('.pageNetwork').attr('rel'), page = 1;
+	
+	getAjx({ controller: 'userNetwork', uri: 'ajx/user_ajx/get_ff_list/'+page+'?act='+action+'&nick='+nick }, function(){
+		
+		$(".lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.userItem').addClass('loaded'); } });	
+	
+	});
+}
 
 function lazyLoadActive(){
 	if( $("div.lazy").length > 0 )
