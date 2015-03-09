@@ -634,7 +634,7 @@ if( exist($('.pageWatchlist')) ){
 function follow_unfollow(obj){
 
 	var action = $(obj).attr("rel"),
-				id = (action == 'follow') ? $(obj).parents('.user-box').attr("usr-id") : $(obj).attr("flw-id");
+				id = (action == 'follow') ? $(obj).attr("usr-id") : $(obj).attr("flw-id");
 				
 	getAjax( { uri: site_url+'ajx/follow_actions_ajx/follow_unfollow_user/'+action, param: {id:id} }, function( e ){
 				
@@ -681,7 +681,7 @@ if( exist($('.pageNetwork')) ){
 	
 	getAjx({ controller: 'userNetwork', uri: 'ajx/user_ajx/get_ff_list/'+page+'?act='+action+'&nick='+nick }, function(){
 		
-		$(".lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.userItem').addClass('loaded'); } });	
+		setTimeout(lazyLoadActive, 1);
 	
 	});
 }

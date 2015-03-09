@@ -78,6 +78,9 @@
 				$user->usr_avatar = ($user->usr_avatar === '') ? 'images/user.jpg' : $user->usr_avatar;
 				$user->flw_id = ($user->flw_id === NULL) ? 0 : $user->flw_id;
 				
+				if($user->usr_id === $this->user['usr_id'])
+					$user->me = TRUE;
+				
 			}
 			
 			return $users;

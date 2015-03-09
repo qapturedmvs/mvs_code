@@ -175,13 +175,28 @@ class User_M extends MVS_Model
       
       if(isset($data['login_user'])){
         $filters['select'] .= ', fl.flw_id';
-        $filters['join'][0][1] .= ' AND f.flwr_usr_id != '.$data['login_user'];
+        //$filters['join'][0][1] .= ' AND f.flwr_usr_id != '.$data['login_user'];
         $filters['join'][] = array('mvs_follows fl', 'fl.flwd_usr_id = f.flwr_usr_id AND fl.flwr_usr_id = '.$data['login_user'], 'left');
       }
       
     }else{
       
+      $filters = array(
+        'select' => 'us.usr_id, us.usr_nick, us.usr_name, us.usr_avatar',
+        'from' => 'mvs_users u',
+        'join' => array(
+          array('mvs_follows f', 'f.flwr_usr_id = u.usr_id', 'inner'),
+          array('mvs_users us', 'us.usr_id = f.flwd_usr_id', 'inner')
+        ),
+        'where' => "u.usr_nick = '".$data['nick']."'",
+        'order_by' => 'us.usr_name ASC'
+      );
       
+      if(isset($data['login_user'])){
+        $filters['select'] .= ', fl.flw_id';
+        //$filters['join'][0][1] .= ' AND f.flwd_usr_id != '.$data['login_user'];
+        $filters['join'][] = array('mvs_follows fl', 'fl.flwd_usr_id = f.flwd_usr_id AND fl.flwr_usr_id = '.$data['login_user'], 'left');
+      }
       
     }
     

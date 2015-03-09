@@ -13,17 +13,18 @@
       
       if($this->input->is_ajax_request()){
 				
-				if(isset($this->user['usr_id'])){
-					
+				$id = $this->input->post('id', TRUE);
+				
+				if($this->logged_in && $id){
+
 					$this->data['action'] = $action;
-					$id = $this->input->post('id', TRUE);
 					$data = array('action' => $action, 'flwr_usr_id' => $this->user['usr_id']);
 					
 					if($action === 'follow')
 						$data['flwd_usr_id'] = $id;
 					else
 						$data['flw_id'] = $id;
-
+					
 					$this->data['follow_result'] = $this->follow_m->follow_unfollow($data);
 					
 				}else{

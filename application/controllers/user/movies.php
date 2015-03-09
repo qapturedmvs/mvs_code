@@ -19,7 +19,7 @@
 
 				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
 
-					$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'cl');
+					$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
 					$this->data['controls']['owner'] = FALSE;
 					$this->data['controls']['cl_action'] = FALSE;
 					
@@ -46,7 +46,7 @@
 				$this->load->model('user_custom_list_m');
 				
 				$this->data['controls'] = array('page' => 'cld', 'seen_action' =>  'single', 'cld_action' => TRUE, 'owner' => TRUE);
-				$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'cld');
+				$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'custom_list_detail');
 				
 				if(!$this->data['the_user'])
 					show_404();
@@ -85,7 +85,7 @@
 					
 					$this->load->model('seen_m');
 					
-					$this->data['the_user'] = $this->seen_m->get_user_from_slug($slug, $this->user['usr_id'], 'main');
+					$this->data['the_user'] = $this->seen_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
 					$this->data['controls']['owner'] = FALSE;
 					
 					if(!$this->data['the_user'])
@@ -114,7 +114,7 @@
 
 					$this->load->model('watchlist_m');
 					
-					$this->data['the_user'] = $this->watchlist_m->get_user_from_slug($slug, $this->user['usr_id'], 'main');
+					$this->data['the_user'] = $this->watchlist_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
 					$this->data['controls']['owner'] = FALSE;
 					
 					if(!$this->data['the_user'])

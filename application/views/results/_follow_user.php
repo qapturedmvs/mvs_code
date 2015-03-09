@@ -8,7 +8,7 @@
 		elseif($follow_result === 'unfollow')
 			echo '{"result":"OK", "action":"follow", "msg":"User not following anymore"}';
 			
-		elseif($seen_result === 'no-user')
+		elseif($follow_result === 'no-user')
 			echo '{"result":"FALSE", "msg":"User not found"}';
 
 ?>
