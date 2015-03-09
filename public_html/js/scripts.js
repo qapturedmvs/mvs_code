@@ -662,9 +662,10 @@ $('#prf_nick').blur(function(){
 		$(this).parent('li').addClass('loading');
 		getAjax( { uri: site_url+'ajx/user_ajx/check_nick/'+val }, function( e ){			
 				if(e['result'] == 'OK'){
-					if(e['status'] == 'DONE')
+					if(e['status'] == 'DONE'){
 						$('#prf_nick').parent('li').removeClass('loading').addClass('available');
-					else{
+						$('#prf_nick').val(e['nick']);
+					}else{
 						$('#prf_nick').parent('li').removeClass('loading').addClass('unavailable');
 					}
 					

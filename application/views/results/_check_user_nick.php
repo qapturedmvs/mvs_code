@@ -7,7 +7,7 @@
 		
 		
 		if($check_nick_result === TRUE)
-			echo '{"result":"OK", "status":"DONE", "msg":"Nick is available"}';
+			echo '{"result":"OK", "status":"DONE", "msg":"Nick is available", "nick":"'.$nick.'"}';
 			
 		elseif($check_nick_result === 'no-nick')
 				echo '{"result":"FALSE", "msg":"No nick found"}';

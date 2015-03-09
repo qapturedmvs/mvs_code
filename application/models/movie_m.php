@@ -29,7 +29,7 @@ class Movie_M extends MVS_Model
 		
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
 		
-		if(count($movies['data']))
+		if(isset($movies['data']))
 			return $movies;
 		else
 			return FALSE;

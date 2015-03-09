@@ -15,8 +15,8 @@
 				
 				if($this->logged_in){
 					
-					if($nick)
-						$this->data['check_nick_result'] = $this->user_m->check_usr_unique_field('usr_nick', $nick, $this->user['usr_id']);
+					if($nick && ($this->data['nick'] = slugify(rawurldecode($nick))) !== '')
+						$this->data['check_nick_result'] = $this->user_m->check_usr_unique_field('usr_nick', $this->data['nick'], $this->user['usr_id']);
 					else
 						$this->data['check_nick_result'] = 'no-nick';
 					
