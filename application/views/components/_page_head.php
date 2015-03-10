@@ -32,3 +32,4 @@
     <script src="<?php echo site_url('js/plugins.js'); ?>"></script>
   </head>
   <body ng-app="qapturedApp">
+		<input type="hidden" id="site_url" value="<?php echo $site_url; ?>" />

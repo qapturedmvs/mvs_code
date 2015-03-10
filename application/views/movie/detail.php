@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	var mvs_id = <?php echo $movie->mvs_id; ?>;
 </script>
-<div class="pageDefault pageMovie">
+<div class="pageDefault pageMovie" mvs-id="<?php echo $movie->mvs_id; ?>">
 	<section class="hero"></section>
 	<section class="body">
 		<aside class="mainCol left">
@@ -31,7 +31,7 @@
 						<div class="actions">
 							<?php if($logged_in): ?>
 							<ul>
-								<li class="seenMovie"<?php echo ($actions['seen']) ? ' rel="unseen" seen-id="'.$actions['seen'][0]->seen_id.'"' : ' rel="seen"'; ?>><a href="javascript:void(0);">Seen</a></li>
+								<li class="seenMovie singleSeen"><a<?php echo ($actions['seen']) ? ' rel="unseen" seen-id="'.$actions['seen'][0]->seen_id.'"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
 								<li><a href="javascript:void(0);">Qapture</a></li>
 								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
@@ -100,7 +100,7 @@
 										<span class='user'><b>{{item.usr_name}}</b></span>
 										<a class="btnShowReplies" onclick="showMore(this)" href="javascript:void(0);">
 											<span class='text'>{{item.act_text}}</span> 
-											<span class='time'>{{item.act_time}} ago</span>
+											<span class='time'>{{item.act_time}}</span>
 										</a>
 										<?php if($logged_in): ?>
 										<span ng-if="item.act_ref_id==0" class="btnHolder">
@@ -112,7 +112,7 @@
 											<div act-ref-id="{{item.act_id}}" class="commentItem subComment" ng-repeat='reply in item.reply'>
 												<span class='user'><b>{{reply.usr_name}}</b></span>
 												<span class='text'>{{reply.act_text}}</span> 
-												<span class='time'>{{reply.act_time}} ago</span>
+												<span class='time'>{{reply.act_time}}</span>
 												<hr class="qFixer" />
 											</div>
 										</div>

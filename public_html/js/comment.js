@@ -1,4 +1,4 @@
-var site_url = $('#mvs_site_url').val(), cmtText, comm;
+var site_url = $('#site_url').val(), cmtText, comm;
 
 function add_comment(id, type, text, ref_id){
 	
@@ -35,7 +35,7 @@ function moveReplyFrom(obj){
 		
 		$('a.btnReply').click(function(){
 			cmtText = $('#reply_text').val();
-			mvs_id = $('div.details').attr("rel");
+			mvs_id = mvs_id;
 			
 			if(cmtText != '')
 				add_comment(mvs_id, 2, cmtText, ref);

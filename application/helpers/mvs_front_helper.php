@@ -170,19 +170,25 @@
     $time = time() - strtotime($time);
 
     $tokens = array (
-        31536000 => 'year',
-        2592000 => 'month',
-        604800 => 'week',
-        86400 => 'day',
-        3600 => 'hour',
-        60 => 'minute',
-        1 => 'second'
+			'year' => 31536000,
+			'month' => 2592000,
+			'week' => 604800,
+			'day' => 86400,
+			'hour' => 3600,
+			'minute' => 60,
+			'second' => 1
     );
 
-    foreach ($tokens as $unit => $text) {
+    foreach ($tokens as $text => $unit) {
         if ($time < $unit) continue;
         $numberOfUnits = floor($time / $unit);
-        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+				
+				if($time > ($tokens['day']*2))
+					return date('Y-m-d H:i:s', $time);
+				elseif($time < ($tokens['day']*2) && $time > $tokens['day'])
+					return 'Yesterday';
+				else
+					return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'ago');
     }
 
 	}

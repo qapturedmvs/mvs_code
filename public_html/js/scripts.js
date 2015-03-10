@@ -1,5 +1,5 @@
 // GLOBAL VARIABLE
-var qs = window.location.search;
+var site_url = $('#site_url').val(), qs = window.location.search;
 
 // GLOBAL ANGULAR MODULE
 var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
@@ -291,50 +291,31 @@ if ($('.form-signup').length > 0)
 // Movie Detail Feeds
 if( $('.movieCommentsHolder').length > 0 )
 		getAjx({ controller: 'movieCommentController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+mvs_id }, function(){});
-
-// Movie Detail Seen
-$('li.seenMovie a').click(function(){
-		var action = $(this).parent('li').attr("rel"),
-				id = (action == 'seen') ? mvs_id : $(this).parent('li').attr("seen-id");
 		
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
+// Seen Action (Detail & List)
+function single_seen(obj){
+
+	var action = $(obj).attr("rel"),
+				id = (action == 'seen') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("seen-id");
+				
+	getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'seen')
-						$('li.seenMovie').removeAttr("seen-id");
+						$(obj).removeAttr("seen-id");
 					else{
-						$('li.seenMovie').attr("seen-id", e['seen-id']);
+						$(obj).attr("seen-id", e['seen-id']);
 					}
 						
-					$('li.seenMovie').attr("rel", e['action']);
+					$(obj).attr("rel", e['action']);
 					
 				}else
 					alert(e['msg']);
 					
 		});
-});
 
-// Movie Detail Seen
-$('li.seenMovie a').click(function(){
-		var action = $(this).parent('li').attr("rel"),
-				id = (action == 'seen') ? mvs_id : $(this).parent('li').attr("seen-id");
-		
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
-				
-				if(e['result'] == 'OK'){
-					if(e['action'] == 'seen')
-						$('li.seenMovie').removeAttr("seen-id");
-					else{
-						$('li.seenMovie').attr("seen-id", e['seen-id']);
-					}
-						
-					$('li.seenMovie').attr("rel", e['action']);
-					
-				}else
-					alert(e['msg']);
-					
-		});
-});
+}
+
 
 // Movie List Seen
 var seenList = [];
@@ -568,6 +549,7 @@ if( exist($('.pageSeen')) ){
 	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr });
 }
 
+// Seen Page Unseen
 function unseen(obj){
 
 		var id = $(obj).attr("seen-id");
@@ -586,28 +568,6 @@ function unseen(obj){
 	
 }
 
-function single_seen(obj){
-
-	var action = $(obj).attr("rel"),
-				id = (action == 'seen') ? $(obj).parents('.movieItemInner').attr("mvs-id") : $(obj).attr("seen-id");
-				
-	getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
-				
-				if(e['result'] == 'OK'){
-					if(e['action'] == 'seen')
-						$(obj).removeAttr("seen-id");
-					else{
-						$(obj).attr("seen-id", e['seen-id']);
-					}
-						
-					$(obj).attr("rel", e['action']);
-					
-				}else
-					alert(e['msg']);
-					
-		});
-
-}
 
 // Watchlist Page
 if( exist($('.pageWatchlist')) ){
