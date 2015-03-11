@@ -10,8 +10,35 @@
       
 		}
     
-    public function index(){
+    public function actions($slug = NULL){
       
+			if($slug){
+				
+				$this->data['controls'] = array('page' => 'profile', 'owner' => TRUE);
+				$this->data['the_user'] = $this->user_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
+				
+				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+
+					$this->data['controls']['owner'] = FALSE;
+					
+					if(!$this->data['the_user'])
+						show_404();
+					
+				}else{
+					
+
+						
+				}
+
+				$this->data['subview'] = 'user/wall';
+				$this->load->view('_main_body_layout', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
+			
     }
   
   }

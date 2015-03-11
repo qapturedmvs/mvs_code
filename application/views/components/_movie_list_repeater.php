@@ -26,8 +26,9 @@
           </div>
           <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>
           <div ng-switch-when='2'><b>{{item.result}}</b></div>
-				</div>  
+				</div>
 	    </div>
 	    <div ng-show='reddit.busy'>Loading data...</div>
 	  </div>
+		<hr class="qFixer" />
 	</div>

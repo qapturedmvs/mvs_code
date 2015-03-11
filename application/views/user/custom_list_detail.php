@@ -19,4 +19,7 @@
 		<input type="text" class="listTitle edit-mode" value="<?php echo $list['list_title']; ?>" />
 	</div>
 	<?php $this->load->view('components/_movie_list_repeater'); ?>
+	<div class="social">
+		<?php $this->load->view('components/_commentbox'); ?>
+	</div>
 </div>

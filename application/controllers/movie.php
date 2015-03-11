@@ -20,13 +20,15 @@
 	
 		public function index($id = NULL){
 
-			if($this->uri->segment(2) != 'index'){	// Url'den index ile çağırılırsa 404 dönmeli
-				
+			if($id){	// Url'den index ile çağırılırsa 404 dönmeli
+
 				$movie = $this->movie_m->movie($id);
 		
 				if($movie){
+
 					//$movie['data']->mvs_cover = $this->data['site_url'].'data/movies/thumbs/'.$movie['data']->mvs_slug.'_'.$this->config->item('mvs_img_suffix_m').'_.jpg';
 					$this->data['movie'] = $movie['data'];
+					$this->data['controls'] = array('page' => 'movie-detail');
 					
 					// Eğer filmin cast, genre, country bilgilerinden olmayan var ise view'daki loop hata vermesin
 					$this->data['casts'] = array();

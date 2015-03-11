@@ -167,7 +167,8 @@
 	
 	function time_calculator($time){
 		
-    $time = time() - strtotime($time);
+		$postTime = strtotime($time);
+    $time = time() - $postTime;
 
     $tokens = array (
 			'year' => 31536000,
@@ -184,7 +185,7 @@
         $numberOfUnits = floor($time / $unit);
 				
 				if($time > ($tokens['day']*2))
-					return date('Y-m-d H:i:s', $time);
+					return date('M j, Y', $postTime);
 				elseif($time < ($tokens['day']*2) && $time > $tokens['day'])
 					return 'Yesterday';
 				else
