@@ -1,5 +1,5 @@
 <div class="listHolder">
-	<div ng-controller='infiniteScrollController' class="movieListHolder row">
+	<div ng-controller='infiniteScrollController' class="movieListHolder grid">
 	  <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 	    <div ng-repeat='item in reddit.items' ng-class="{movieItem:item.type == 0, seperator:item.type == 1}">
           <div ng-switch="item.type">

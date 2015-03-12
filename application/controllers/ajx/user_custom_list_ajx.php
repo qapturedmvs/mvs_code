@@ -8,6 +8,8 @@
 			$this->load->model('user_custom_list_m');
       
 		}
+		
+		public function index(){ show_404(); }
     
     public function list_lister(){
       

@@ -9,9 +9,7 @@
       
 		}
     
-    public function index(){
-      
-    }
+    public function index(){ show_404(); }
     
     public function seen_unseen_movie($action){
 

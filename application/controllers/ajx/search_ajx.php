@@ -6,10 +6,7 @@
 			$this->load->model('search_m');
 		}
 		
-		public function index(){
-
-			
-		}
+		public function index(){ show_404(); }
 		
 		public function lister($keyword = NULL){
 

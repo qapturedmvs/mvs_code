@@ -10,9 +10,7 @@
       
 		}
     
-    public function index(){
-      
-    }
+    public function index(){ show_404(); }
     
     public function lister($p = 1){
       

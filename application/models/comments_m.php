@@ -13,9 +13,12 @@ class Comments_M extends MVS_Model
 	}
 	
 	// MOVIE DETAIL COMMENTS
-	public function movie_comments_json($mvs_id, $usr_id = NULL, $offset = 0){
+	public function movie_comments_json($mvs_id, $usr_id, $p = 0){
 
-		if($usr_id != NULL){		
+		$p = $this->cleaner($p);
+		$offset = ($p-1) * $this->per_page;
+			
+		if($usr_id !== 0){		
 			
 			$filters = array(
 				'select' => 'flwd_usr_id, u.usr_id, usr_name, usr_nick, act_id, act_ref_id, act_type_id, act_text, act_time',

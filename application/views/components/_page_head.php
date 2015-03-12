@@ -28,7 +28,7 @@
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
     <link href="<?php echo site_url('js/jquery-ui/jquery-ui.css'); ?>" rel="stylesheet">
-	<script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
+		<script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/plugins.js'); ?>"></script>
   </head>
   <body ng-app="qapturedApp">

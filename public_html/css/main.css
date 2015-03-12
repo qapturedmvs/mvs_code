@@ -179,25 +179,25 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .sidebar .lists .sectionTitle{font-weight:bold; display:block; margin-bottom:20px;}
 .pageMovie .body .sidebar .lists li{margin-bottom:7px;}
 
-/* MOVIE DETAIL COMMENT */
-.movieCommentsHolder{}
-.movieCommentsHolder h4{font-size:18px; margin-bottom:15px;}
-.movieCommentsHolder .commentsTabs{margin-bottom:10px;}
-.movieCommentsHolder .commentsTabs li{float:left; margin-right:15px;}
-.movieCommentsHolder .commentItem{margin-bottom:5px; background:#e6e6e6; border:1px solid #ddd; padding-bottom:15px;}
-.movieCommentsHolder .commentItem.more{padding-bottom:0;}
-.movieCommentsHolder .commentItem:hover{background:#e9e9e9;}
-.movieCommentsHolder .commentItem .user{display:block; margin:15px 0 5px 0; padding:0 15px;}
-.movieCommentsHolder .commentItem .text{display:block; margin-bottom: 5px; padding:0 15px;}
-.movieCommentsHolder .commentItem .time{display:block; text-align: right; padding:0 15px;}
-.movieCommentsHolder .commentItem .btnHolder{display:block; padding:0 15px;}
-.movieCommentsHolder .commentItem a.btnShowReplies:hover, .movieCommentsHolder .commentItem a.btnShowReplies:hover span{text-decoration:none;}
+/* COMMENTBOX */
+.commentboxHolder{}
+.commentboxHolder h4{font-size:18px; margin-bottom:15px;}
+.commentboxHolder .commentsTabs{margin-bottom:10px;}
+.commentboxHolder .commentsTabs li{float:left; margin-right:15px;}
+.commentboxHolder .commentItem{margin-bottom:5px; background:#e6e6e6; border:1px solid #ddd; padding-bottom:15px;}
+.commentboxHolder .commentItem.more{padding-bottom:0;}
+.commentboxHolder .commentItem:hover{background:#e9e9e9;}
+.commentboxHolder .commentItem .user{display:block; margin:15px 0 5px 0; padding:0 15px;}
+.commentboxHolder .commentItem .text{display:block; margin-bottom: 5px; padding:0 15px;}
+.commentboxHolder .commentItem .time{display:block; text-align: right; padding:0 15px;}
+.commentboxHolder .commentItem .btnHolder{display:block; padding:0 15px;}
+.commentboxHolder .commentItem a.btnShowReplies:hover, .commentboxHolder .commentItem a.btnShowReplies:hover span{text-decoration:none;}
 .replyForm{padding-top:10px;}
 .replyForm textarea{width:100%; margin-bottom:5px; height:90px;}
 .commentReplies{margin:10px 0 0;  padding:10px; background:#ddd; display:none;}
 .commentItem.more .commentReplies{display:block;}
 .commentReplies .subComment{border:none; background:none;}
-.movieCommentsHolder .subComment:hover{background:none;}
+.commentboxHolder .subComment:hover{background:none;}
 
 /* ACTOR DETAIL */
 .pageActor{padding-top:30px;}

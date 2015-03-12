@@ -2,7 +2,7 @@
 	var commentPage = '<?php echo $controls['page']; ?>';
 </script>
 <div class="commentbox">
-	<div ng-controller='movieCommentController' class="movieCommentsHolder">
+	<div ng-controller='commentRepeaterController' class="commentboxHolder">
 		<div class="commentsTabs">
 		<h4>Comments</h4>
 			<ul>
@@ -16,7 +16,7 @@
 		</div>
 		<div class="commentsContent">
 			<div act-id="{{item.act_id}}" act-ref-id="{{item.act_ref_id}}" class="commentItem" ng-repeat='item in items'>
-				<span class='user'><b>{{item.usr_name}}</b></span>
+				<span class='user'><a href="<?php echo $site_url.'user/movies/lists/'; ?>{{item.usr_nick}}"><b>{{item.usr_name}}</b></a></span>
 				<a class="btnShowReplies" onclick="showMore(this)" href="javascript:void(0);">
 					<span class='text'>{{item.act_text}}</span> 
 					<span class='time'>{{item.act_time}}</span>
@@ -54,7 +54,6 @@
 		</div>
 	</div>
 	<?php endif; ?>
-	<script src="<?php echo site_url('js/comment.js'); ?>"></script>
 </div>
 
 

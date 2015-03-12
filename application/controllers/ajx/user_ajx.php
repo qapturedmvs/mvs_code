@@ -8,6 +8,8 @@
 			$this->load->model('user_m');
       
 		}
+		
+		public function index(){ show_404(); }
     
     public function check_nick($nick){
       
@@ -77,9 +79,7 @@
 				
 				$user->usr_avatar = ($user->usr_avatar === '') ? 'images/user.jpg' : $user->usr_avatar;
 				$user->flw_id = ($user->flw_id === NULL) ? 0 : $user->flw_id;
-				
-				if($user->usr_id === $this->user['usr_id'])
-					$user->me = TRUE;
+				$user->usr_me = ($user->usr_id === $this->user['usr_id']) ? 1 : 0;
 				
 			}
 			
