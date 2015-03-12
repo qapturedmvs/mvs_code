@@ -31,12 +31,12 @@
 						<div class="actions">
 							<?php if($logged_in): ?>
 							<ul>
-								<li class="seenMovie singleSeen"><a<?php echo ($actions['seen']) ? ' rel="unseen" seen-id="'.$actions['seen'][0]->seen_id.'"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
+								<li class="seenMovie singleSeen"><a<?php echo ($actions['lists'][0]->seen_id !== NULL) ? ' rel="unseen" seen-id="'.$actions['lists'][0]->seen_id.'"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
 								<li><a href="javascript:void(0);">Qapture</a></li>
 								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
 										<ul class="dLists">
-											<li class="wtc" <?php echo ($actions['watchlist']) ? 'wtc-id="'.$actions['watchlist'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?>><a href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
+											<li class="wtc" <?php echo ($actions['lists'][0]->wtc_id !== NULL) ? 'wtc-id="'.$actions['lists'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?>><a href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
 											<li class="cnl"><a href="javascript:void(0);">Add to New Custom List</a>
 											<div class="listCreate none"><input maxlength="255" placeholder="Enter list title" type="text" /><a rel="cncl" href="javascript:void(0);">Add</a></div>
 											</li>
@@ -44,8 +44,8 @@
 										<div class="cLists none">
 										<h5>My Lists</h5>
 										<ul>
-											<?php if($actions['custom_lists']): ?>
-												<?php foreach($actions['custom_lists'] as $list): ?>
+											<?php if($actions['lists']): ?>
+												<?php foreach($actions['lists'] as $list): ?>
 													<li <?php echo ($list->ldt_id !== NULL) ? 'ldt-id="'.$list->ldt_id.'" rel="rfcl"' : 'rel="atcl"'; ?> list-id="<?php echo $list->list_id; ?>"><a href="javascript:void(0);"><?php echo $list->list_title; ?></a></li>
 												<?php endforeach; ?>
 											<?php endif; ?>

@@ -12,7 +12,7 @@ class Comments_M extends MVS_Model
 		parent::__construct();
 	}
 	
-	// MOVIE DETAIL COMMENTS
+	// Movie Detail Comments
 	public function movie_comments_json($mvs_id, $usr_id, $p = 0){
 
 		$p = $this->cleaner($p);
@@ -38,8 +38,50 @@ class Comments_M extends MVS_Model
 			$filters = array(
 				'select' => 'act_id,act_ref_id,act_type_id,act_text,act_time,u.usr_id,usr_nick,usr_name',
 				'from' => 'mvs_feeds f',
-				'join' => array('mvs_users u', 'f.usr_id = u.usr_id', 'inner'),
+				'join' => array('mvs_users u', 'u.usr_id = f.usr_id', 'inner'),
 				'where' => "mvs_id = $mvs_id",
+				'order_by' => $this->_order_by.' DESC'
+			);
+			
+			$feeds = $this->get_data(NULL, $offset, TRUE, $filters);
+			
+		}
+
+		if(isset($feeds['data']))
+			return $feeds;
+		else
+			return FALSE;
+	
+	}
+	
+	// Custom List Comments
+	public function custom_list_comments_json($list_id, $usr_id, $p = 0){
+
+		$p = $this->cleaner($p);
+		$offset = ($p-1) * $this->per_page;
+			
+		if($usr_id !== 0){		
+			
+			$filters = array(
+				'select' => 'u.usr_id, u.usr_name, u.usr_nick, f.act_id, f.act_ref_id, f.act_type_id, f.act_text, f.act_time',
+				'from' => 'mvs_follows fl',
+				'join' => array(
+										array('mvs_users u', 'u.usr_id = fl.flwd_usr_id', 'inner'),
+										array('mvs_feeds f', "f.usr_id = fl.flwd_usr_id AND f.list_id = $list_id", 'inner')
+									),
+				'where' => "fl.flwr_usr_id = $usr_id",
+				'order_by' => $this->_order_by.' DESC'
+			);
+			
+			$feeds = $this->get_data(NULL, $offset, FALSE, $filters);
+		
+		}else{
+			
+			$filters = array(
+				'select' => 'act_id,act_ref_id,act_type_id,act_text,act_time,u.usr_id,usr_nick,usr_name',
+				'from' => 'mvs_feeds f',
+				'join' => array('mvs_users u', 'u.usr_id = f.usr_id', 'inner'),
+				'where' => "list_id = $list_id",
 				'order_by' => $this->_order_by.' DESC'
 			);
 			

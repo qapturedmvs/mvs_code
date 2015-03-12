@@ -73,6 +73,7 @@ class Action_M extends MVS_Model
 		
 	}
 	
+	// TEMP
 	public function check_seen($data){
 		
 		$filters = array(
@@ -91,6 +92,7 @@ class Action_M extends MVS_Model
 		
 	}
 	
+	// TEMP
 	public function check_watchlist($data){
 		
 		$filters = array(
@@ -141,12 +143,36 @@ class Action_M extends MVS_Model
 		
 	}
 	
+	// TEMP
 	public function get_custom_lists($data){
 		
 		$filters = array(
 			'select' => 'cl.list_id, cl.list_title, cld.ldt_id',
 			'from' => 'mvs_custom_lists cl',
 			'join' => array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
+			'where' => 'cl.usr_id = '.$data['usr_id'],
+			'order_by' => 'cl.list_time DESC'
+		);
+		
+		$cl = $this->get_data(NULL, 0, FALSE, $filters);
+		
+		if(isset($cl['data']))
+			return $cl['data'];
+		else
+			return FALSE;
+		
+	}
+	
+	public function get_movie_actions($data){
+		
+		$filters = array(
+			'select' => 'cl.list_id, cl.list_title, cld.ldt_id, s.seen_id, w.wtc_id',
+			'from' => 'mvs_custom_lists cl',
+			'join' => array(
+				array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
+				array('mvs_seen s', 's.usr_id = cl.usr_id AND s.mvs_id = '.$data['mvs_id'], 'left'),
+				array('mvs_watchlist w', 'w.usr_id = cl.usr_id AND w.mvs_id = '.$data['mvs_id'], 'left')
+				),
 			'where' => 'cl.usr_id = '.$data['usr_id'],
 			'order_by' => 'cl.list_time DESC'
 		);

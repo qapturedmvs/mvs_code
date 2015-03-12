@@ -149,7 +149,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .mainCol .details .text .actions > ul > li > a{padding:7px 22px; font-size:14px; line-height:16px; background:#E6E6E6; border:none; border-left:2px solid #000; cursor:pointer; cursor:hand; display:inline-block;}
 .pageMovie .body .mainCol .details .text .actions > ul > li:first-child a{border-left:none;}
 .pageMovie .body .mainCol .details .text .actions > ul > li > a:hover{background:#fff; text-decoration:none;}
-.pageMovie .body .mainCol .details .text .actions > ul > li[rel=unseen] a{background:#000; color:#fff;}
+.pageMovie .body .mainCol .details .text .actions > ul > li > a[rel=unseen]{background:#000; color:#fff;}
 .pageMovie .body .mainCol .details .text .actions .listSelection{position:absolute; left:1px; background:#e6e6e6; border:1px solid #ccc; width:150px; padding:10px; display:none;}
 .pageMovie .body .mainCol .details .text .actions > ul > li.addToList:hover .listSelection{display:block;}
 .pageMovie .body .mainCol .details .text .actions .listSelection ul{}

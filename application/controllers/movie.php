@@ -81,14 +81,16 @@
 			
 			$this->load->model('action_m');
 			
-			// Seen Movie Check
-			$db_data['seen'] = $this->action_m->check_seen(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			$db_data['lists'] = $this->action_m->get_movie_actions(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
 			
-			// Watchlist Movie Check
-			$db_data['watchlist'] = $this->action_m->check_watchlist(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
-			
-			// User's Custom Lists
-			$db_data['custom_lists'] = $this->action_m->get_custom_lists(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			//// Seen Movie Check
+			//$db_data['seen'] = $this->action_m->check_seen(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			//
+			//// Watchlist Movie Check
+			//$db_data['watchlist'] = $this->action_m->check_watchlist(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
+			//
+			//// User's Custom Lists
+			//$db_data['custom_lists'] = $this->action_m->get_custom_lists(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
 			
 			return $db_data;
 	
