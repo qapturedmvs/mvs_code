@@ -24,20 +24,27 @@ class Action_M extends MVS_Model
 		
 		if($data['action'] === 'seen'){
 			unset($data['action']);
-			$this->db->insert('mvs_seen', $data);
-			$result = $this->db->insert_id();
-			$filters = array(
-				'select' => 'wtc_id',
-				'from' => 'mvs_watchlist',
-				'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
-				'limit' => 1
-			);
-			$wtc_chk = $this->get_data(NULL, 0, FALSE, $filters);
-
-			if(isset($wtc_chk['data'])){
-				$this->db->where('wtc_id = '.$wtc_chk['data'][0]->wtc_id);
-				$this->db->delete('mvs_watchlist');
-			}
+			//$this->db->trans_start();
+			$this->db->query('call sp_seen_single('.$data['mvs_id'].', '.$data['usr_id'].', @seen)');
+			
+			//$call_total = 'SELECT @seen';
+			$query = $this->db->query('SELECT @seen as seen');
+			//$this->db->trans_complete();
+			var_dump($query->next_result());
+			//$this->db->insert('mvs_seen', $data);
+			//$result = $this->db->insert_id();
+			//$filters = array(
+			//	'select' => 'wtc_id',
+			//	'from' => 'mvs_watchlist',
+			//	'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
+			//	'limit' => 1
+			//);
+			//$wtc_chk = $this->get_data(NULL, 0, FALSE, $filters);
+			//
+			//if(isset($wtc_chk['data'])){
+			//	$this->db->where('wtc_id = '.$wtc_chk['data'][0]->wtc_id);
+			//	$this->db->delete('mvs_watchlist');
+			//}
 		}else{
 			$this->db->where('seen_id = '.$data['seen_id'].' AND usr_id = '.$data['usr_id']);
 			$this->db->delete('mvs_seen');
@@ -73,43 +80,41 @@ class Action_M extends MVS_Model
 		
 	}
 	
-	// TEMP
-	public function check_seen($data){
-		
-		$filters = array(
-			'select' => '*',
-			'from' => 'mvs_seen',
-			'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
-			'limit' => 1
-		);
-		
-		$seen = $this->get_data(NULL, 0, FALSE, $filters);
-		
-		if(isset($seen['data']))
-			return $seen['data'];
-		else
-			return FALSE;
-		
-	}
+	//public function check_seen($data){
+	//	
+	//	$filters = array(
+	//		'select' => '*',
+	//		'from' => 'mvs_seen',
+	//		'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
+	//		'limit' => 1
+	//	);
+	//	
+	//	$seen = $this->get_data(NULL, 0, FALSE, $filters);
+	//	
+	//	if(isset($seen['data']))
+	//		return $seen['data'];
+	//	else
+	//		return FALSE;
+	//	
+	//}
 	
-	// TEMP
-	public function check_watchlist($data){
-		
-		$filters = array(
-			'select' => '*',
-			'from' => 'mvs_watchlist',
-			'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
-			'limit' => 1
-		);
-		
-		$wtc = $this->get_data(NULL, 0, FALSE, $filters);
-		
-		if(isset($wtc['data']))
-			return $wtc['data'];
-		else
-			return FALSE;
-		
-	}
+	//public function check_watchlist($data){
+	//	
+	//	$filters = array(
+	//		'select' => '*',
+	//		'from' => 'mvs_watchlist',
+	//		'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
+	//		'limit' => 1
+	//	);
+	//	
+	//	$wtc = $this->get_data(NULL, 0, FALSE, $filters);
+	//	
+	//	if(isset($wtc['data']))
+	//		return $wtc['data'];
+	//	else
+	//		return FALSE;
+	//	
+	//}
 	
 	public function add_remove_watchlist($data){
 		
@@ -143,37 +148,37 @@ class Action_M extends MVS_Model
 		
 	}
 	
-	// TEMP
-	public function get_custom_lists($data){
-		
-		$filters = array(
-			'select' => 'cl.list_id, cl.list_title, cld.ldt_id',
-			'from' => 'mvs_custom_lists cl',
-			'join' => array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
-			'where' => 'cl.usr_id = '.$data['usr_id'],
-			'order_by' => 'cl.list_time DESC'
-		);
-		
-		$cl = $this->get_data(NULL, 0, FALSE, $filters);
-		
-		if(isset($cl['data']))
-			return $cl['data'];
-		else
-			return FALSE;
-		
-	}
+	//public function get_custom_lists($data){
+	//	
+	//	$filters = array(
+	//		'select' => 'cl.list_id, cl.list_title, cld.ldt_id',
+	//		'from' => 'mvs_custom_lists cl',
+	//		'join' => array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
+	//		'where' => 'cl.usr_id = '.$data['usr_id'],
+	//		'order_by' => 'cl.list_time DESC'
+	//	);
+	//	
+	//	$cl = $this->get_data(NULL, 0, FALSE, $filters);
+	//	
+	//	if(isset($cl['data']))
+	//		return $cl['data'];
+	//	else
+	//		return FALSE;
+	//	
+	//}
 	
 	public function get_movie_actions($data){
 		
 		$filters = array(
 			'select' => 'cl.list_id, cl.list_title, cld.ldt_id, s.seen_id, w.wtc_id',
-			'from' => 'mvs_custom_lists cl',
+			'from' => 'mvs_users u',
 			'join' => array(
+				array('mvs_custom_lists cl', 'cl.usr_id = u.usr_id', 'left'),
 				array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
-				array('mvs_seen s', 's.usr_id = cl.usr_id AND s.mvs_id = '.$data['mvs_id'], 'left'),
-				array('mvs_watchlist w', 'w.usr_id = cl.usr_id AND w.mvs_id = '.$data['mvs_id'], 'left')
+				array('mvs_seen s', 's.usr_id = u.usr_id AND s.mvs_id = '.$data['mvs_id'], 'left'),
+				array('mvs_watchlist w', 'w.usr_id = u.usr_id AND w.mvs_id = '.$data['mvs_id'], 'left')
 				),
-			'where' => 'cl.usr_id = '.$data['usr_id'],
+			'where' => 'u.usr_id = '.$data['usr_id'],
 			'order_by' => 'cl.list_time DESC'
 		);
 		

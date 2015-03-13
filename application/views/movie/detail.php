@@ -44,11 +44,11 @@
 										<div class="cLists none">
 										<h5>My Lists</h5>
 										<ul>
-											<?php if($actions['lists']): ?>
-												<?php foreach($actions['lists'] as $list): ?>
-													<li <?php echo ($list->ldt_id !== NULL) ? 'ldt-id="'.$list->ldt_id.'" rel="rfcl"' : 'rel="atcl"'; ?> list-id="<?php echo $list->list_id; ?>"><a href="javascript:void(0);"><?php echo $list->list_title; ?></a></li>
-												<?php endforeach; ?>
-											<?php endif; ?>
+											<?php foreach($actions['lists'] as $list): ?>
+												<?php if($list->list_id !== NULL): ?>
+												<li <?php echo ($list->ldt_id !== NULL) ? 'ldt-id="'.$list->ldt_id.'" rel="rfcl"' : 'rel="atcl"'; ?> list-id="<?php echo $list->list_id; ?>"><a href="javascript:void(0);"><?php echo $list->list_title; ?></a></li>
+												<?php endif; ?>
+											<?php endforeach; ?>
 										</ul>
 										</div>
 										<hr class="qFixer" />
