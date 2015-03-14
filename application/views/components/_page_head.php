@@ -22,7 +22,8 @@
 		<?php endif; ?>
     <title><?php echo $temp_title; ?></title>
 			<script type="text/javascript">
-				var site_url = '<?php echo $site_url; ?>';
+				var site_url = '<?php echo $site_url; ?>',
+						page = '<?php echo (isset($controls['page'])) ? $controls['page'] : ''; ?>';
 			</script>
     <link href="<?php echo site_url('css/main.css'); ?>" rel="stylesheet">
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>

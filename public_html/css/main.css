@@ -97,6 +97,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .singleSeen a[rel=seen] .actSeen{display:inline;}
 .singleSeen a[rel=unseen] .actUnseen{display:inline;}
 
+.addtoWtc span{display:none;}
+.addtoWtc a[rel=awtc] span.awtc{display:inline;}
+.addtoWtc a[rel=rwtc] span.rwtc{display:inline;}
+
 
 .controllers{margin-bottom:30px;}
 .controllers .view{float:right;}
@@ -156,9 +160,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .mainCol .details .text .actions .listSelection ul.addTo{}
 .pageMovie .body .mainCol .details .text .actions .listSelection ul.added{max-height:200px;}
 .pageMovie .body .mainCol .details .text .actions .listSelection ul li{margin-bottom:8px;}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul li.wtc span{display:none;}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul li[rel=awtc] span.awtc{display:inline;}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul li[rel=rwtc] span.rwtc{display:inline;}
+
 .pageMovie .body .mainCol .details .text .actions .listCreate{padding-top:10px;}
 .pageMovie .body .mainCol .details .text .actions .cLists{margin-top:5px;}
 .pageMovie .body .mainCol .details .text .actions .cLists h5{margin-bottom:5px;}

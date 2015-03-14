@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	var commentPage = '<?php echo $controls['page']; ?>';
+	var commentPage = true;
 </script>
 <div class="commentbox">
 	<div ng-controller='commentRepeaterController' class="commentboxHolder">

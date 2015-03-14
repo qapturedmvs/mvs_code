@@ -23,32 +23,18 @@ class Action_M extends MVS_Model
 	public function seen_movie($data){
 		
 		if($data['action'] === 'seen'){
-			unset($data['action']);
-			//$this->db->trans_start();
-			$this->db->query('call sp_seen_single('.$data['mvs_id'].', '.$data['usr_id'].', @seen)');
 			
-			//$call_total = 'SELECT @seen';
-			$query = $this->db->query('SELECT @seen as seen');
-			//$this->db->trans_complete();
-			var_dump($query->next_result());
-			//$this->db->insert('mvs_seen', $data);
-			//$result = $this->db->insert_id();
-			//$filters = array(
-			//	'select' => 'wtc_id',
-			//	'from' => 'mvs_watchlist',
-			//	'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
-			//	'limit' => 1
-			//);
-			//$wtc_chk = $this->get_data(NULL, 0, FALSE, $filters);
-			//
-			//if(isset($wtc_chk['data'])){
-			//	$this->db->where('wtc_id = '.$wtc_chk['data'][0]->wtc_id);
-			//	$this->db->delete('mvs_watchlist');
-			//}
+			unset($data['action']);
+			$out = array('@seen_id' => NULL);
+			$this->db->call_procedure('sp_seen_single', $data, $out);
+			$result = $out['@seen_id'];
+
 		}else{
+			
 			$this->db->where('seen_id = '.$data['seen_id'].' AND usr_id = '.$data['usr_id']);
 			$this->db->delete('mvs_seen');
 			$result = 'unseen';
+			
 		}
 		
 		return $result;
@@ -119,13 +105,18 @@ class Action_M extends MVS_Model
 	public function add_remove_watchlist($data){
 		
 		if($data['action'] === 'awtc'){
+			
 			unset($data['action']);
-			$this->db->insert('mvs_watchlist', $data);
-			$result = $this->db->insert_id();
+			$out = array('@wtc_id' => NULL);
+			$this->db->call_procedure('sp_addto_watchlist', $data, $out);
+			$result = $out['@wtc_id'];
+
 		}else{
+			
 			$this->db->where('wtc_id = '.$data['wtc_id'].' AND usr_id = '.$data['usr_id']);
 			$this->db->delete('mvs_watchlist');
 			$result = 'rwtc';
+			
 		}
 		
 		return $result;

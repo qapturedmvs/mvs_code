@@ -36,7 +36,7 @@
 								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
 										<ul class="dLists">
-											<li class="wtc" <?php echo ($actions['lists'][0]->wtc_id !== NULL) ? 'wtc-id="'.$actions['lists'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?>><a href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
+											<li class="wtc addtoWtc"><a onclick="add_remove_wtc(this)" <?php echo ($actions['lists'][0]->wtc_id !== NULL) ? 'wtc-id="'.$actions['lists'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?> href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
 											<li class="cnl"><a href="javascript:void(0);">Add to New Custom List</a>
 											<div class="listCreate none"><input maxlength="255" placeholder="Enter list title" type="text" /><a rel="cncl" href="javascript:void(0);">Add</a></div>
 											</li>

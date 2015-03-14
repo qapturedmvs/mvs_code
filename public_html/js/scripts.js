@@ -302,6 +302,7 @@ function single_seen(obj){
 						$(obj).removeAttr("seen-id");
 					else{
 						$(obj).attr("seen-id", e['seen-id']);
+						$('a[rel="rwtc"]').attr("rel", "awtc").removeAttr("wtc-id");	
 					}
 						
 					$(obj).attr("rel", e['action']);
@@ -312,7 +313,6 @@ function single_seen(obj){
 		});
 
 }
-
 
 // Movie List Seen
 var seenList = [];
@@ -353,30 +353,27 @@ function removeSeen(){
 }
 
 // Movie Detail Watchlist
-$('li.wtc a').click(function(){
-		var action = $(this).parent('li').attr("rel"),
-				id = (action == 'awtc') ? mvs_id : $(this).parent('li').attr("wtc-id");
-		
-		
+function add_remove_wtc(obj){
+		var action = $(obj).attr("rel"),
+				id = (action == 'awtc') ? mvs_id : $(obj).attr("wtc-id");
+			
 		getAjax( { uri: site_url+'ajx/list_actions_ajx/add_remove_watchlist/'+action, param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'awtc')
-						$('li.wtc').removeAttr("wtc-id");
+						$(obj).removeAttr("wtc-id");
 					else{
-						$('li.wtc').attr("wtc-id", e['wtc-id']);
-						if($('li.seenMovie').attr("rel") === 'unseen')
-							$('li.seenMovie a').click();
+						$(obj).attr("wtc-id", e['wtc-id']);
+						$('a[rel="unseen"]').attr("rel", "seen").removeAttr("seen-id");
 					}
 						
-					$('li.wtc').attr("rel", e['action']);
+					$(obj).attr("rel", e['action']);
 					
 				}else
 					alert(e['msg']);
 					
 		});
-		
-});
+}
 
 // Movie Detail Custom List
 $('.cnl > a').click(function(){
@@ -678,11 +675,11 @@ function cleanText( k ){
 
 
 // COMMENT ACTIONS
-if(typeof commentPage !== 'undefined'){
+if(commentPage){
 
 	var cmtText, comm, commId;
 	
-	switch(commentPage){
+	switch(page){
 		
 		case 'movie-detail':
 			commId = mvs_id;
