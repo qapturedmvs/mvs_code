@@ -653,15 +653,23 @@ function watch_trailer( t ){
 		_this.addClass('yt');
 
 	var movieName = cleanText( $('h1').attr('title') ),
-		year = cleanText( $('h1 small').text() ),
+ 		year = cleanText( $('h1 small').text() ),
 		uri ='https://gdata.youtube.com/feeds/api/videos/?q={{movieName}}+{{year}}+official+trailer&max-results=1&orderby=relevance&format=5&v=2&alt=jsonc&duration=short';
 		uri = uri.replace('{{movieName}}', encodeURIComponent( movieName )).replace('{{year}}', encodeURIComponent( year ));
 		
 	getAjax({ 'uri': uri, 'dataType': 'JSONP' }, 
-	function( d ){
+	function( d ){ 
 		// success
-		var ytID = d['data']['items'][0]['id'], hrf = 'https://www.youtube.com/watch?v=' + ytID;
-		_this.attr('href', hrf).addClass('yt').nivoLightbox({ auto: true });
+		var ytID = d['data']['items'][0]['id'], hrf = 'https://www.youtube.com/watch?v=' + ytID;		
+		_this
+		.attr('href', hrf)
+		.addClass('yt')
+		.nivoLightbox({ auto: true,  
+						afterShowLightbox: function(){
+							var src = $('.nivo-lightbox-content > iframe').attr('src');
+							$('.nivo-lightbox-content > iframe').attr('src', src + '?autoplay=1');
+    					} 
+		});
 	},
 	function(){
 		// error
@@ -675,7 +683,7 @@ function cleanText( k ){
 
 
 // COMMENT ACTIONS
-if(commentPage){
+if( typeof commentPage !== 'undefined' ){
 
 	var cmtText, comm, commId;
 	
