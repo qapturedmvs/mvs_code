@@ -17,63 +17,57 @@
 			
 		}
 	
-		public function index($id = NULL){
+		public function index($slug = NULL){
 
-			if($this->uri->segment(2) != 'index'){	// Url'den index ile cagirilirsa 404 dönmeli
+			if($this->uri->segment(2) !== 'index'){	// Url'den index ile cagirilirsa 404 dönmeli
 				
-				$actor = $this->actor_m->actor($id);
+				$actor = $this->actor_m->actor($slug);
 		
 				if($actor){
-                    
-								$db_data = $this->actor_m->get_chars($actor['data']->str_id);
-								$type_unq = array(); 
-												
-								$this->data['actor'] = $actor['data'];
-												
-								for($i=0; $i<count($db_data['chars']); $i++){
-										
-										$db_data['chars'][$i]->mvs_title = $db_data['movies'][$i]->mvs_title;
-										$db_data['chars'][$i]->mvs_slug = $db_data['movies'][$i]->mvs_slug;
-										$db_data['chars'][$i]->mvs_year = $db_data['movies'][$i]->mvs_year;
-										$db_data['chars'][$i]->mvs_rating = $db_data['movies'][$i]->mvs_rating;
-										$db_data['chars'][$i]->mvs_imdb_id = $db_data['movies'][$i]->mvs_imdb_id;
-										
-										foreach($db_data['types'] as $type){
+          
+					$type_unq = array(); 
+					$featured = array();
+					$i = 0;
 					
-												if($db_data['chars'][$i]->type_id == $type->type_id){	
-														$db_data['chars'][$i]->type_name = $type->type_name;
-												
-														if(!in_array($type->type_name, $type_unq))
-															array_push($type_unq, $type->type_name);
-												}
-									
-										}
-																
-								}
-								
-								function sortByRate($a, $b){
-										if ($a->mvs_rating == $b->mvs_rating){
-												return 0;
-										}
-										return ($a->mvs_rating > $b->mvs_rating) ? -1 : 1;
-								}
-								
-								usort($db_data['chars'], "sortByRate");
-												
-								$this->data['chars'] = $db_data['chars'];
-								$this->data['types'] = $type_unq;
-								
-								// Setting meta_tags object
-								$this->data['meta_tags'] = (object) array(
-																'title' => $actor['data']->str_name,
-																'description' => $actor['data']->str_name,
-																'type' => 'actor',
-																'image' => $actor['data']->str_photo
-														);
-							
-								// Load view
-								$this->data['subview'] = 'actor/detail';
-								$this->load->view('_main_body_layout', $this->data);
+					foreach($actor as $key => $val){
+						
+						$type_unq[] = $actor[$key]->type_name;
+						
+						if($i === 0)
+							$this->data['actor'] = $actor[$key]->str_name;
+						
+						if($i < 5 && $actor[$key]->mvs_poster !== ''){
+							$featured[] = array('poster' => $actor[$key]->mvs_poster, 'mvs_title' => $actor[$key]->mvs_title, 'mvs_slug' => $actor[$key]->mvs_slug);
+							unset($actor[$key]);
+							$i++;
+						}
+
+					}
+					
+					function sortByYear($a, $b){
+							if ($a->mvs_year == $b->mvs_year){
+									return 0;
+							}
+							return ($a->mvs_year > $b->mvs_year) ? -1 : 1;
+					}
+					
+					usort($actor, "sortByYear");
+					
+					$this->data['featured'] = $featured;
+					$this->data['types'] = array_unique($type_unq);
+					$this->data['movies'] = $actor;
+					
+					 //Setting meta_tags object
+					$this->data['meta_tags'] = (object) array(
+						'title' => $this->data['actor'],
+						'description' => $this->data['actor'],
+						'type' => 'actor',
+						'image' => ''
+					);
+				
+					// Load view
+					$this->data['subview'] = 'actor/detail';
+					$this->load->view('_main_body_layout', $this->data);
 					
 				}else{
 					show_404();

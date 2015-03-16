@@ -15,52 +15,28 @@ class Actor_M extends MVS_Model
 	}
 	
 	// Actor detail
-	public function actor($id){
+	public function actor($slug){
 		
-		$id = $this->cleaner($id);
-		$actor = $this->get_data($id);
-	
+		$slug = $this->cleaner($slug);
+		$filters = array(
+			'select' => 'm.mvs_slug, m.mvs_title, m.mvs_year, m.mvs_imdb_rate, m.mvs_rating, m.mvs_poster, c.type_id, ct.type_name, s.str_name',
+			'from' => 'mvs_stars s',
+			'join' => array(
+				array('mvs_cast c', 'c.str_id = s.str_id', 'inner'),
+				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner'),
+				array('mvs_cast_type ct', 'ct.type_id = c.type_id', 'inner')
+			),
+			'where' => "s.str_slug = '$slug'",
+			'order_by' => 'm.mvs_rating DESC'
+		);
+		
+		$actor = $this->get_data(NULL, 0, FALSE, $filters);
+
 		if (isset($actor['data']))
-			return $actor;
+			return $actor['data'];
 		else
 			return FALSE;
 	
 	}
     
-    public function get_chars($id){
-      
-			$this->per_page = 0;
-			$filters = array(
-					'select' => 'mvs_id, type_id',
-					'from' => 'mvs_cast',
-					'where' => 'str_id = '.$id,
-					'order_by' => array('mvs_id', 'ASC')
-			);
-			$chars = $this->get_data(NULL, 0, FALSE, $filters);
-
-			$temp = '';
-									
-			foreach($chars['data'] as $char)
-					$temp .= $char->mvs_id.',';
-					
-			$filters = array(
-					'select' => 'mvs_id, mvs_slug, mvs_title, mvs_year, mvs_rating, mvs_imdb_id',
-					'from' => 'mvs_movies',
-					'where' => 'mvs_id IN('.trim($temp, ',').')',
-					'order_by' => array('mvs_id', 'ASC')
-			);
-			
-			$movies = $this->get_data(NULL, 0, FALSE, $filters);
-			$this->_table_name = 'mvs_cast_type';
-			$cast_types = $this->get_data();
-			$db_data['chars'] = $chars['data'];
-			$db_data['movies'] = $movies['data'];
-			$db_data['types'] = $cast_types['data'];
-			
-			if (count($db_data))
-				return $db_data;
-			else
-				return FALSE;
-		
-    }
 }
