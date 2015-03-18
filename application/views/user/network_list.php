@@ -5,7 +5,7 @@
 	<?php $this->load->view('components/_the_user'); ?>
 	<?php $this->load->view('components/menus/_user_network_menu'); ?>
 	<div class="titleDefault titleNetwork">
-		<h1>Followers</h1>
+		<h1><?php echo ($controls['page'] == 'followers') ? 'Followers' : 'Followings'; ?></h1>
 	</div>
 	<div class="listHolder" ng-controller='userNetwork'>
 		<ul>

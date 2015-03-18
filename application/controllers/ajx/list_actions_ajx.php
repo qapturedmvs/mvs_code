@@ -152,25 +152,12 @@
 					$vars = $this->input->post(NULL, TRUE);
 					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['mvs']);
 					
-					if($action === 'atcl'){
-						
+					if($action === 'atcl')
 						$data['list_id'] = $vars['id'];
-						$check = $this->action_m->check_custom_list($data);
-						
-						if($check === NULL){
-							unset($data['usr_id']);
-							$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
-						}elseif($check === FALSE)
-							$this->data['lst_result'] = 'no-list';
-						else
-							$this->data['lst_result'] = 'movie-in-list';
-							
-					}else{
-						
+					else
 						$data['ldt_id'] = $vars['id'];
-						$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
-							
-					}
+					
+					$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
 
 				}else{
 					

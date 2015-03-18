@@ -2,36 +2,19 @@
 
 		$this->output->set_header('Content-Type: application/json; charset=utf-8');
 		
-		if(is_numeric($lst_result)){
-			
-			echo '{"result":"OK", "action":"rfcl", "msg":"Movie added your list", "ldt-id":"'.$lst_result.'"}';
-			
-		}else{
+		if($lst_result == -2)	
+			echo '{"result":"FALSE", "msg":"Custom list not found."}';
+
+		elseif($lst_result == -1)
+				echo '{"result":"FALSE", "msg":"Movie not found."}';
+				
+		elseif($lst_result == 0)
+				echo '{"result":"FALSE", "msg":"Movie already in that list."}';
 		
-			switch($lst_result){
+		elseif($lst_result == 'rfcl')
+				echo '{"result":"OK", "action":"atcl", "msg":"Movie removed from your list"}';
 				
-				case 'rfcl':
-					echo '{"result":"OK", "action":"atcl", "msg":"Movie removed from your list"}';
-				break;
-				
-				case 'no-list':
-					echo '{"result":"FALSE", "msg":"Custom list not found."}';
-				break;
-					
-				case 'movie-in-list':
-					echo '{"result":"FALSE", "msg":"Movie already in that list."}';
-				break;
-				
-				case 'no-movie':
-					echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
-				break;
-					
-				case 'no-user':
-					echo '{"result":"FALSE", "msg":"User not found"}';
-				break;
-				
-			}
-			
-		}
+		else
+				echo '{"result":"OK", "action":"rfcl", "msg":"Movie added your list", "ldt-id":"'.$lst_result.'"}';
 
 ?>

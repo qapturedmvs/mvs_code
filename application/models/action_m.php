@@ -66,42 +66,6 @@ class Action_M extends MVS_Model
 		
 	}
 	
-	//public function check_seen($data){
-	//	
-	//	$filters = array(
-	//		'select' => '*',
-	//		'from' => 'mvs_seen',
-	//		'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
-	//		'limit' => 1
-	//	);
-	//	
-	//	$seen = $this->get_data(NULL, 0, FALSE, $filters);
-	//	
-	//	if(isset($seen['data']))
-	//		return $seen['data'];
-	//	else
-	//		return FALSE;
-	//	
-	//}
-	
-	//public function check_watchlist($data){
-	//	
-	//	$filters = array(
-	//		'select' => '*',
-	//		'from' => 'mvs_watchlist',
-	//		'where' => 'usr_id = '.$data['usr_id'].' AND mvs_id = '.$data['mvs_id'],
-	//		'limit' => 1
-	//	);
-	//	
-	//	$wtc = $this->get_data(NULL, 0, FALSE, $filters);
-	//	
-	//	if(isset($wtc['data']))
-	//		return $wtc['data'];
-	//	else
-	//		return FALSE;
-	//	
-	//}
-	
 	public function add_remove_watchlist($data){
 		
 		if($data['action'] === 'awtc'){
@@ -139,25 +103,6 @@ class Action_M extends MVS_Model
 		
 	}
 	
-	//public function get_custom_lists($data){
-	//	
-	//	$filters = array(
-	//		'select' => 'cl.list_id, cl.list_title, cld.ldt_id',
-	//		'from' => 'mvs_custom_lists cl',
-	//		'join' => array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
-	//		'where' => 'cl.usr_id = '.$data['usr_id'],
-	//		'order_by' => 'cl.list_time DESC'
-	//	);
-	//	
-	//	$cl = $this->get_data(NULL, 0, FALSE, $filters);
-	//	
-	//	if(isset($cl['data']))
-	//		return $cl['data'];
-	//	else
-	//		return FALSE;
-	//	
-	//}
-	
 	public function get_movie_actions($data){
 		
 		$filters = array(
@@ -182,46 +127,21 @@ class Action_M extends MVS_Model
 		
 	}
 	
-	public function check_custom_list($data){
-		
-		if($data['action'] == 'atcl'){
-			unset($data['action']);
-			
-			$this->db->select('cld.ldt_id');
-			$this->db->join('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left');
-			$db_data = $this->db->get_where('mvs_custom_lists cl', array('cl.list_id' => $data['list_id'], 'cl.usr_id' => $data['usr_id']), 1)->row();
-			
-			if(count($db_data) > 0)
-				return $db_data->ldt_id;
-			else
-				return FALSE;
-			
-		}else{
-			unset($data['action']);
-			
-			$this->db->select('cld.list_id');
-			$this->db->join('mvs_custom_lists cl', 'cl.list_id = cld.list_id AND cl.usr_id = '.$data['usr_id'], 'inner');
-			$db_data = $this->db->get_where('mvs_custom_list_data cld', array('cld.ldt_id' => $data['ldt_id']), 1)->row();
-			
-			if(count($db_data) > 0)
-				return $db_data->list_id;
-			else
-				return FALSE;
-			
-		}
-		
-	}
-	
 	public function add_remove_from_list($data){
 		
 		if($data['action'] === 'atcl'){
+			
 			unset($data['action']);
-			$this->db->insert('mvs_custom_list_data', $data);
-			$result = $this->db->insert_id();
+			$out = array('@ldt_id' => NULL);
+			$this->db->call_procedure('sp_addto_customlist', $data, $out);
+			$result = $out['@ldt_id'];
+
 		}else{
+			
 			$this->db->where('ldt_id = '.$data['ldt_id'].' AND mvs_id = '.$data['mvs_id']);
 			$this->db->delete('mvs_custom_list_data');
 			$result = 'rfcl';
+			
 		}
 		
 		return $result;

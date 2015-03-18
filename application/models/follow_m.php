@@ -15,13 +15,18 @@ class Follow_M extends MVS_Model
   public function follow_unfollow($data){
 
     if($data['action'] === 'follow'){
+      
       unset($data['action']);
-      $this->db->insert('mvs_follows', $data);
-      $result = $this->db->insert_id();
+			$out = array('@flw_id' => NULL);
+			$this->db->call_procedure('sp_follow', $data, $out);
+			$result = $out['@flw_id'];
+
     }else{
+      
       $this->db->where('flw_id = '.$data['flw_id'].' AND flwr_usr_id = '.$data['flwr_usr_id']);
       $this->db->delete('mvs_follows');
       $result = 'unfollow';
+      
     }
     
     return $result;
