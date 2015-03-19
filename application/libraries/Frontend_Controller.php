@@ -34,4 +34,15 @@
 			
 		}
 		
+		protected function cache_table_data($table, $model){
+	
+			if(!$data = $this->cache->get($table)){
+					$data = $this->{$model}->{$table}();
+					$this->cache->save($table, $data, 600);
+			}
+			
+			return $data;
+		
+		}
+		
 	}

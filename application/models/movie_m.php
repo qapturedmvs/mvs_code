@@ -58,20 +58,22 @@ class Movie_M extends MVS_Model
 		$this->per_page = 0;
 		$filters = NULL;
 		
-		if($ids != NULL){
+		if($ids != NULL)
 				$filters['where'] = $ids;
-				$genres = $this->get_data(NULL, 0, FALSE, $filters);
-				$genres = $genres['data'];
-		}else{
-				if(!$genres = $this->cache->get('genres')){
-						$genres = $this->get_data(NULL, 0, FALSE, $filters);
-						$this->cache->save('genres', $genres['data'], 600);
-						$genres = $genres['data'];
-				}
-		}
+		//		$genres = $this->get_data(NULL, 0, FALSE, $filters);
+		//		$genres = $genres['data'];
+		//}else{
+		//		if(!$genres = $this->cache->get('genres')){
+		//				$genres = $this->get_data(NULL, 0, FALSE, $filters);
+		//				$this->cache->save('genres', $genres['data'], 600);
+		//				$genres = $genres['data'];
+		//		}
+		//}
+		
+		$genres = $this->get_data(NULL, 0, FALSE, $filters);
 	
-		if(count($genres))
-			return $genres;
+		if(isset($genres['data']))
+			return $genres['data'];
 		else
 			return FALSE;
 	
@@ -86,20 +88,22 @@ class Movie_M extends MVS_Model
 		$this->per_page = 0;
 		$filters = NULL;	
 
-    if($ids != NULL){
+    if($ids != NULL)
 				$filters['where'] = $ids;
-				$countries = $this->get_data(NULL, 0, FALSE, $filters);
-				$countries = $countries['data'];
-    }else{
-				if(!$countries = $this->cache->get('countries')){
-						$countries = $this->get_data(NULL, 0, FALSE, $filters);
-						$this->cache->save('countries', $countries['data'], 600);
-						$countries = $countries['data'];
-				}
-		}
+//				$countries = $this->get_data(NULL, 0, FALSE, $filters);
+//				$countries = $countries['data'];
+//    }else{
+//				if(!$countries = $this->cache->get('countries')){
+//						$countries = $this->get_data(NULL, 0, FALSE, $filters);
+//						$this->cache->save('countries', $countries['data'], 600);
+//						$countries = $countries['data'];
+//				}
+//		}
 
-		if(count($countries))
-			return $countries;
+		$countries = $this->get_data(NULL, 0, FALSE, $filters);
+
+		if(isset($countries['data']))
+			return $countries['data'];
 		else
 			return FALSE;
 	
