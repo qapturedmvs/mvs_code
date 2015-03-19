@@ -21,11 +21,11 @@
 					<div class="titleDefault titleFilmography">Known For</div>
 					<ul>
 						<?php
-							foreach($featured as $feat){
+							foreach($featured as $slug => $feat){
 									
-								$cover = getCoverPath($feat['mvs_slug'], 'medium');
+								$cover = getCoverPath($slug, 'medium');
 								
-								echo '<li style="background:url('.$site_url.$cover.') center center no-repeat; background-size:cover;"><a href="'.$site_url.'movie/'.$feat['mvs_slug'].'"></a></li>';	
+								echo '<li style="background:url('.$site_url.$cover.') center center no-repeat; background-size:cover;"><a title="'.$feat['title'].' - '.$feat['year'].'" href="'.$site_url.'movie/'.$slug.'"></a></li>';	
 	
 							}
 						?>
@@ -35,8 +35,8 @@
 					<div class="filmography">
 					<div class="titleDefault titleFilmography">Full Filmography</div>
 							<ul>
-									<?php foreach($movies as $movie): ?>
-									<li><span class="year"><?php echo $movie->mvs_year; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$movie->mvs_slug; ?>"><?php echo $movie->mvs_title; ?></a></span><hr class="qFixer" /></li>
+									<?php foreach($movies as $slug => $movie): ?>
+									<li><span class="year"><?php echo $movie['year']; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$movie['slug']; ?>"><?php echo $movie['title']; ?></a></span><hr class="qFixer" /></li>
 									<?php endforeach; ?>
 							</ul>
 					</div>

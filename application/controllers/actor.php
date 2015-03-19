@@ -27,6 +27,7 @@
           
 					$type_unq = array(); 
 					$featured = array();
+					$movies = array();
 					$i = 0;
 					
 					foreach($actor as $key => $val){
@@ -37,20 +38,27 @@
 							$this->data['actor'] = $actor[$key]->str_name;
 						
 						if($i < 5 && $actor[$key]->mvs_poster !== ''){
-							$featured[] = array('poster' => $actor[$key]->mvs_poster, 'mvs_title' => $actor[$key]->mvs_title, 'mvs_slug' => $actor[$key]->mvs_slug);
-							unset($actor[$key]);
+
+							$featured[$actor[$key]->mvs_slug] = array('poster' => $actor[$key]->mvs_poster, 'title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug);
 							$i++;
+
+						}else{
+							
+							$movies[$actor[$key]->mvs_slug] = array('title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug);
+							
 						}
 
 					}
 					
 					function sortByYear($a, $b){
-							if ($a->mvs_year == $b->mvs_year){
+							if ($a['year'] == $b['year']){
 									return 0;
 							}
-							return ($a->mvs_year > $b->mvs_year) ? -1 : 1;
+							return ($a['year'] > $b['year']) ? -1 : 1;
 					}
 					
+					unset($actor);
+					$actor = array_diff_key($movies, $featured);
 					usort($actor, "sortByYear");
 					
 					$this->data['featured'] = $featured;
