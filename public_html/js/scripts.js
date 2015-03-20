@@ -667,7 +667,7 @@ function watch_trailer( t ){
 		.nivoLightbox({ auto: true,  
 						afterShowLightbox: function(){
 							var src = $('.nivo-lightbox-content > iframe').attr('src');
-							$('.nivo-lightbox-content > iframe').attr('src', src + '?autoplay=1');
+							$('.nivo-lightbox-content > iframe').attr('src', src + '?autoplay=1&rel=0&showinfo=0');
     					} 
 		});
 	},

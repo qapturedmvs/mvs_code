@@ -26,7 +26,6 @@
 		
 				if($movie){
 
-					//$movie['data']->mvs_cover = $this->data['site_url'].'data/movies/thumbs/'.$movie['data']->mvs_slug.'_'.$this->config->item('mvs_img_suffix_m').'_.jpg';
 					$this->data['movie'] = $movie['data'];
 					$this->data['controls'] = array('page' => 'movie-detail');
 					
@@ -39,17 +38,15 @@
 
 					if($casts)
 						$this->data['casts'] = $casts['data'];
-					
-					if($movie['data']->cntry_id != ''){
-						$cntId = str_replace('|', ',', trim($movie['data']->cntry_id, '|'));
-						$countries = $this->movie_m->countries('cntry_id IN('.$cntId.')');
-						$this->data['countries'] = $countries;
-					}
-					
-					if($movie['data']->gnr_id != ''){
-						$gnrId = str_replace('|', ',', trim($movie['data']->gnr_id, '|'));
-						$genres = $this->movie_m->genres('gnr_id IN('.$gnrId.')');
-						$this->data['genres'] = $genres;
+						
+					// Genres & Countries	
+					foreach($this->filter_def['like'] as $key => $val){
+						
+						if($movie['data']->{$val[0]} != ''){
+							$this->data[$val[1]]['data'] = explode('|', trim($movie['data']->{$val[0]}, '|'));
+							$this->data[$val[1]]['table'] = $this->cache_table_data($val[1], 'movie_m', array('id' => $val[0], 'title' => $val[2]));
+						}
+							
 					}
 					
 					// Setting meta_tags object
@@ -82,15 +79,6 @@
 			$this->load->model('action_m');
 			
 			$db_data['lists'] = $this->action_m->get_movie_actions(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
-			
-			//// Seen Movie Check
-			//$db_data['seen'] = $this->action_m->check_seen(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
-			//
-			//// Watchlist Movie Check
-			//$db_data['watchlist'] = $this->action_m->check_watchlist(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
-			//
-			//// User's Custom Lists
-			//$db_data['custom_lists'] = $this->action_m->get_custom_lists(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
 			
 			return $db_data;
 	

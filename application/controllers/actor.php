@@ -32,7 +32,7 @@
 					
 					foreach($actor as $key => $val){
 						
-						$type_unq[] = $actor[$key]->type_name;
+						$type_unq[] = $actor[$key]->type_title;
 						
 						if($i === 0)
 							$this->data['actor'] = $actor[$key]->str_name;

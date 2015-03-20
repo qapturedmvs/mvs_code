@@ -34,10 +34,16 @@
 			
 		}
 		
-		protected function cache_table_data($table, $model){
-	
+		protected function cache_table_data($table, $model, $fields){
+			
+			$data = array();
+
 			if(!$data = $this->cache->get($table)){
-					$data = $this->{$model}->{$table}();
+					$db_data = $this->{$model}->{$table}();
+					
+					foreach($db_data as $d)
+						$data[$d->{$fields['id']}] = $d->{$fields['title']};
+					
 					$this->cache->save($table, $data, 600);
 			}
 			

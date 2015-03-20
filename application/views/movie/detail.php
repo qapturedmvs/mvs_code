@@ -12,16 +12,16 @@
 						<h1 title="<?php echo $movie->mvs_title; ?>"><?php echo $movie->mvs_title.' (<small>'.$movie->mvs_year.'</small>)'; ?></h1>
 						<div class="genre">
 							<ul>
-								<?php foreach($genres as $genre): ?>
-								<li><?php echo $genre->gnr_title; ?></li>
+								<?php foreach($genres['data'] as $genre): ?>
+								<li><?php echo $genres['table'][$genre]; ?></li>
 								<?php endforeach; ?>
 							</ul>
 							<hr class="qFixer" />
 						</div>
 						<div class="country">
 							<ul>
-								<?php foreach($countries as $country): ?>
-								<li><?php echo $country->cntry_title; ?></li>
+								<?php foreach($countries['data'] as $country): ?>
+								<li><?php echo $countries['table'][$country]; ?></li>
 								<?php endforeach; ?>
 							</ul>
 							<hr class="qFixer" />

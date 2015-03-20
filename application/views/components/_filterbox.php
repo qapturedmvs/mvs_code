@@ -21,14 +21,14 @@
   <div class="boxHeader"></div>
   <div class="boxBody"> 
     <ul class="filterList">
-   <?php foreach($filters as $group => $filter): ?>
+   <?php foreach($tables as $group => $filter): ?>
    <li class="filter <?php echo strtolower($labels[$group]); ?>">
    <?php if($group != 'mfy' && $group != 'mfr'): ?>
       <a href="javascript:void(0);" class="title"><?php echo $labels[$group]; ?></a>
       <div class="submenu">
       <ul class="multi" rel="<?php echo $group; ?>">
         <?php foreach($filter as $key => $value): ?>         
-          <li><a rel="<?php echo $value; ?>" href="javascript:void(0);"><?php echo $tables[$group][$value]; ?></a></li>
+          <li><a rel="<?php echo $key; ?>" href="javascript:void(0);"><?php echo $value; ?></a></li>
         <?php endforeach; ?>
       </ul>
       <hr class="qFixer" />

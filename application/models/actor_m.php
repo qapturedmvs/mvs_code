@@ -19,7 +19,7 @@ class Actor_M extends MVS_Model
 		
 		$slug = $this->cleaner($slug);
 		$filters = array(
-			'select' => 'm.mvs_slug, m.mvs_title, m.mvs_year, m.mvs_imdb_rate, m.mvs_rating, m.mvs_poster, c.type_id, ct.type_name, s.str_name',
+			'select' => 'm.mvs_slug, m.mvs_title, m.mvs_year, m.mvs_imdb_rate, m.mvs_rating, m.mvs_poster, c.type_id, ct.type_title, s.str_name',
 			'from' => 'mvs_stars s',
 			'join' => array(
 				array('mvs_cast c', 'c.str_id = s.str_id', 'inner'),

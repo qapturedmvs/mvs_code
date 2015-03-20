@@ -17,12 +17,10 @@
 			
 			$tables = $this->_set_tables($this->filter_defs);
 			$vars = qs_filter($this->get_vars, $this->filter_defs);
-			$filters = $tables['filter'];
-			
+
 			$this->data['controls'] = array('page' => 'movies', 'seen_action' => 'multi', 'cl_action' => FALSE);
 			$this->data['vars'] = $vars;
-			$this->data['tables'] = $tables['table'];
-			$this->data['filters'] = $filters;
+			$this->data['tables'] = $tables;
 			$this->data['subview'] = 'movie/list';
 			$this->load->view('_main_body_layout', $this->data);
 			
@@ -33,19 +31,11 @@
 			
 			$tables = array();
 			
-			foreach($filter_def['like'] as $key => $val){
-				
-				$db_data[$val[1]] = $this->cache_table_data($val[1], 'movie_m');
-				
-				foreach($db_data[$val[1]] as $item){
-					$tables['table'][$key][(int)$item->{$val[0]}] = $item->{$val[2]};
-					$tables['filter'][$key][] = (int)$item->{$val[0]};
-				}
-				
-			}
+			foreach($filter_def['like'] as $key => $val)
+				$tables[$key] = $this->cache_table_data($val[1], 'movie_m', array('id' => $val[0], 'title' => $val[2]));
 
-			$tables['table']['mfr'] = $tables['filter']['mfr'] = array('min' => 1, 'max' => 10);
-			$tables['table']['mfy'] = $tables['filter']['mfy'] = array('min' => 1950, 'max' => 2014);
+			$tables['mfr']  = array('min' => 1, 'max' => 10);
+			$tables['mfy']  = array('min' => 1950, 'max' => 2014);
 			
 			return $tables;
 			
