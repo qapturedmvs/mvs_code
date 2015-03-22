@@ -163,7 +163,7 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '' });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '', 'type': 1 });
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
@@ -182,7 +182,7 @@ function getAjx( obj, callback ){
 	});
 }
 
-
+// type => 0 scrolling, type => 1 load more
 function infiniteScroll( obj ){
 		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		qapturedApp.factory('Reddit', function( $http ){
@@ -190,6 +190,7 @@ function infiniteScroll( obj ){
 			this.items = [];
 			this.busy = false;
 			this.noResult = false;
+			this.loading = false;
 			this.after = 1;
 		  };
 		  Reddit.prototype.nextPage = function() {
@@ -197,6 +198,8 @@ function infiniteScroll( obj ){
 				this.busy = true;	
 						
 			var sep = (qs === '') ? '?' : '&', url = site_url + obj['uri'] + this.after + qs + sep + 'type=' + obj['listType'] + obj['cstVar'];
+			
+			this.loading = true;
 			
 			$http.get(url).success(function(d) {
 		
@@ -227,6 +230,10 @@ function infiniteScroll( obj ){
 				setTimeout(function(){
 					lazyLoadActive();
 				}, 1);
+				
+				
+				if( obj['type'] == 1 ) this.busy = true;
+				this.loading = false;
 				
 			  }else{
 				this.busy = false;
@@ -462,7 +469,7 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 1 });
 }
 
 // Custom List Detail Remove from Custom List
@@ -540,7 +547,7 @@ if( exist($('.pageSeen')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 1 });
 }
 
 // Seen Page Unseen
@@ -581,7 +588,7 @@ if( exist($('.pageWatchlist')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 1 });
 }
 
 // Follow Unfollow
@@ -609,27 +616,55 @@ function follow_unfollow(obj){
 }
 
 // Profile Page Check User Nick
-$('#prf_nick').blur(function(){
-	var val = $(this).val(), rel = $(this).attr('rel');
-	
+var stm = null, minLength = 4;
+if( $('#prf_nick').length > 0 )
+	$('#prf_nick')
+	.bind('keyup', function(){
+		var _this = $( this ), val = _this.val();
+		_this.val( string_to_slug( val ) );
+		if( _this.val().length >= minLength ){
+			clearTm();
+			stm = setTimeout(function(){ checkNick( _this ); }, 333);
+		}else{
+			 clearTm();
+			 $('#prf_nick').parent('li').removeClass('loading').addClass('unavailable');
+		}
+	});
+function checkNick( _this ){
+	var val = _this.val(), rel = _this.attr('rel'); 
 	if(val !== rel){
-		$(this).parent('li').addClass('loading');
+		_this.parent('li').addClass('loading');
 		getAjax( { uri: site_url+'ajx/user_ajx/check_nick/'+val }, function( e ){			
 				if(e['result'] == 'OK'){
 					if(e['status'] == 'DONE'){
-						$('#prf_nick').parent('li').removeClass('loading').addClass('available');
+						$('#prf_nick').parent('li').removeClass('loading unavailable').addClass('available');
 						$('#prf_nick').val(e['nick']);
 					}else{
-						$('#prf_nick').parent('li').removeClass('loading').addClass('unavailable');
+						$('#prf_nick').parent('li').removeClass('loading available').addClass('unavailable');
 					}
 					
 				}else
 					alert(e['msg']);
-					
 		});
 	}
-});
+}
+function string_to_slug(str) {
+  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
+  
+  // remove accents, swap ñ for n, etc
+  var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+  var to   = "aaaaeeeeiiiioooouuuunc------";
+  for (var i=0, l=from.length ; i<l ; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
 
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
+
+  return str;
+}
 // Followers
 if( exist($('.pageNetwork')) ){
 	var action = $('.pageNetwork').attr('rel'), page = 1;
@@ -687,25 +722,14 @@ if( typeof commentPage !== 'undefined' ){
 
 	var cmtText, comm, commId;
 	
-	switch(page){
-		
-		case 'movie-detail':
-			commId = mvs_id;
-			
-			// Movie Detail Feeds
-			getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+commId }, function(){});
-			
-		break;
-	
-		case 'custom':
-			commId = list_id;
-			
-			// Custom List Feeds
-			getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/custom_list?type=nwf&list_id='+commId }, function(){});
-			
-		break;
-		
-		
+	if( $('.listHolder').length > 0 ){
+		// Custom List Feeds
+		commId = list_id;	
+		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/custom_list?type=nwf&list_id='+commId }, function(){});
+	}else{
+		// Movie Detail Feeds
+		commId = mvs_id;			
+		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+commId }, function(){});
 	}
 			
 	$('a.btnComment').click(function(){

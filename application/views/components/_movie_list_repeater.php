@@ -28,7 +28,8 @@
           <div ng-switch-when='2'><b>{{item.result}}</b></div>
 				</div>
 	    </div>
-	    <div ng-show='reddit.busy'>Loading data...</div>
+	    <div ng-show='reddit.loading'>Loading data...</div>
+        <a href="javascript:void(0);" ng-click="reddit.nextPage()" class="loadMoreButton">Load More</a>
 	  </div>
 		<hr class="qFixer" />
 	</div>
