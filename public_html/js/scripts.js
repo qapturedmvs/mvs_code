@@ -472,6 +472,25 @@ if( exist($('.pageCustomListDetail')) ){
 	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 1 });
 }
 
+function deleteCustomList(obj){
+	
+	var list = $(obj).attr("list-id");
+			
+		getAjax( { uri: site_url+'ajx/list_actions_ajx/delete_custom_list/', param: {list:list} }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					
+					$(obj).parents('.listItem').fadeOut(333, function(){
+						$(obj).parents('.listItem').remove();
+					});
+					
+				}else
+					alert(e['msg']);
+					
+		});
+	
+}
+
 // Custom List Detail Remove from Custom List
 var clsArr = [];
 

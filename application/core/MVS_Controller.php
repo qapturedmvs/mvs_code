@@ -25,6 +25,7 @@ class MVS_Controller extends CI_Controller{
 		// Default Variables
 		$this->data['site_url'] = site_url();
 		$this->data['current_url'] = current_url();
+		$this->data['referer_url'] = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : FALSE;
 
 	}
 	

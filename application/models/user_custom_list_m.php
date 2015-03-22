@@ -68,9 +68,30 @@ class User_Custom_List_M extends MVS_Model
 			$this->db->insert('mvs_custom_lists', $data);
 			$result = $this->db->insert_id();
 		}else{
-			$this->db->where('list_id = '.$data['list_id'].' AND usr_id = '.$data['usr_id']);
-			$this->db->delete('mvs_custom_lists');
+			unset($data['action']);
+			$this->db->call_procedure('sp_delete_customlist', $data);
 			$result = 'dcl';
+		}
+		
+		return $result;
+		
+	}
+	
+	public function add_remove_from_list($data){
+		
+		if($data['action'] === 'atcl'){
+			
+			unset($data['action']);
+			$out = array('@ldt_id' => NULL);
+			$this->db->call_procedure('sp_addto_customlist', $data, $out);
+			$result = $out['@ldt_id'];
+
+		}else{
+			
+			$this->db->where('ldt_id = '.$data['ldt_id'].' AND mvs_id = '.$data['mvs_id']);
+			$this->db->delete('mvs_custom_list_data');
+			$result = 'rfcl';
+			
 		}
 		
 		return $result;

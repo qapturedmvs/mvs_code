@@ -56,14 +56,6 @@ function getMessage($type, $message){
 	return $html;
 }
 
-function generateSlug($type){
-	
-	$prefix = ($type == 'movie') ? 'qm' : 'qa';
-	$slug = $prefix.str_shuffle(strtolower(random_string('alpha', 5)).random_string('numeric', 3));
-	return $slug;
-	
-}
-
 function getVars($array){
 	$qs = '';
 	
@@ -83,36 +75,3 @@ function getVars($array){
 	
 	return $qs;
 }
-
-function rate_math($imdb, $tmt, $meta){
-	
-	$bArr = array(array('ref' => 'imdb', 'rate' => 59.13), array('ref' => 'tmt', 'rate' => 23.64), array('ref' => 'meta', 'rate' => 17.23));
-	$rArr = array();
-	$base = $bArr[0]->ref;
-	$base_r = $bArr[0]->rate;
-	$base = $bArr[0]->ref; $base_r = $bArr[0]->rate;
-	
-	if($imdb != '' && $imdb != NULL){
-		array_push($rArray, 'imdb');
-	}
-	if($tmt != '' && $tmt != NULL){
-		array_push($rArray, 'tmt');
-	}
-	if($meta != '' && $meta != NULL){
-		array_push($rArray, 'meta');
-	}
-	
-	if(count($rArr) > 0){
-		$base = $rArr[0];
-		foreach($bArr as $item){
-			if($item->ref != $base && !in_array($item->ref, $rArr))
-				${$item->ref} = (${$base}-($base_r/100))+($item->rate/100);
-		}
-	}else{
-		// Eğer filmin hiçbir ratingi yoksa???
-	}
-	
-	return number_format((($imdb*59.13)+($tmt*23.64)+($meta*17.23))/100, 2, '.', '');
-	
-}
-

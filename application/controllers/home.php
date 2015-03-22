@@ -15,7 +15,7 @@
 
 			// LOGIN FORM CONTROLS
 			if(isset($inputs['lgn_submit']))
-				$this->_login($inputs, 'user/feeds');
+				$this->_login($inputs);
 			
 			// SIGNUP FORM CONTROLS
 			if(isset($inputs['sgn_submit']))
@@ -26,17 +26,19 @@
 			
 		}
 		
-		private function _login($data, $successPage){
-				
+		private function _login($data){
+	
 			$rules = $this->config->config['usr_login'];
 			$this->form_validation->set_rules($rules);
 			
 			if($this->form_validation->run() === TRUE){
 				
+				$ref = ($data['lgn_ref']) ? $data['lgn_ref'] : 'user/feeds';
+				unset($data['lgn_ref']);
 				$user = $this->user_m->login($data['lgn_email'], $data['lgn_password']);
 
 				if($user && $user['data']->usr_act == 1){
-			
+					
 					$data = array(
 						'usr_id' => $user['data']->usr_id,
 						'usr_nick' => $user['data']->usr_nick,
@@ -48,7 +50,7 @@
 						
 					$this->session->set_userdata($data);
 									
-					redirect($successPage, 'refresh');
+					redirect($ref, 'refresh');
 									
 				}elseif($user && $user['data']->usr_act == 0){
 

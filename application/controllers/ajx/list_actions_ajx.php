@@ -4,8 +4,6 @@
     
 		function __construct(){
 			parent::__construct();
-			
-			$this->load->model('action_m');
       
 		}
     
@@ -16,6 +14,8 @@
 			if($this->input->is_ajax_request()){
 				
 				if(isset($this->user['usr_id'])){
+					
+					$this->load->model('action_m');
 					
 					$this->data['action'] = $action;
 					$id = $this->input->post('id', TRUE);
@@ -50,6 +50,8 @@
 				
 				if(isset($this->user['usr_id'])){
 					
+					$this->load->model('action_m');
+					
 					$ids = $this->input->post('ids', TRUE);
 					$data = array();
 					
@@ -79,6 +81,8 @@
 			if($this->input->is_ajax_request()){
 				
 				if(isset($this->user['usr_id'])){
+					
+					$this->load->model('action_m');
 					
 					$this->data['action'] = $action;
 					$id = $this->input->post('id', TRUE);
@@ -113,16 +117,18 @@
 				
 				if(isset($this->user['usr_id'])){
 					
+					$this->load->model('user_custom_list_m');
+					
 					$this->data['action'] = $action;
 					$vars = $this->input->post(NULL, TRUE);
 					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
 						
-					$this->data['lst_result'] = array('lst' => $this->action_m->create_delete_list($data));
+					$this->data['lst_result'] = array('lst' => $this->user_custom_list_m->create_delete_list($data));
 					
 					if(is_numeric($this->data['lst_result']['lst'])){
 						unset($data);
 						$data = array('action' => 'atcl', 'mvs_id' => $vars['id'], 'list_id' => $this->data['lst_result']['lst']);
-						$this->data['lst_result']['ldt'] = $this->action_m->add_remove_from_list($data);
+						$this->data['lst_result']['ldt'] = $this->user_custom_list_m->add_remove_from_list($data);
 					}else{
 						$this->data['lst_result'] = 'no-list';
 					}
@@ -142,11 +148,50 @@
 			
 		}
 		
+		public function delete_custom_list(){
+			
+			if($this->input->is_ajax_request()){
+				
+				if(isset($this->user['usr_id'])){
+					
+					$this->load->model('user_custom_list_m');
+					
+					$vars = $this->input->post(NULL, TRUE);
+					
+					if(isset($vars['list'])){
+						
+						$data = array('action' => 'dcl', 'list_id' => $vars['list'], 'usr_id' => $this->user['usr_id']);
+						$this->data['lst_result'] = $this->user_custom_list_m->create_delete_list($data);
+					
+					}else{
+						
+						$this->data['lst_result'] = 'no-list';
+						
+					}
+					
+				}else{
+					
+					$this->data['lst_result'] = 'no-user';
+					
+				}
+				
+				$this->load->view('results/_cl_delete_custom_list', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
+			
+		}
+		
 		public function add_remove_from_list($action){
 			
 			if($this->input->is_ajax_request()){
 				
 				if(isset($this->user['usr_id'])){
+					
+					$this->load->model('user_custom_list_m');
 					
 					$this->data['action'] = $action;
 					$vars = $this->input->post(NULL, TRUE);
@@ -157,7 +202,7 @@
 					else
 						$data['ldt_id'] = $vars['id'];
 					
-					$this->data['lst_result'] = $this->action_m->add_remove_from_list($data);
+					$this->data['lst_result'] = $this->user_custom_list_m->add_remove_from_list($data);
 
 				}else{
 					
