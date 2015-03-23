@@ -14,11 +14,11 @@
       
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'profile', 'owner' => TRUE);
-				$this->data['the_user'] = $this->user_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
+				$this->data['controls'] = array('page' => 'wall', 'owner' => TRUE);
 				
 				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
-
+          
+          $this->data['the_user'] = $this->feed_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
 					$this->data['controls']['owner'] = FALSE;
 					
 					if(!$this->data['the_user'])

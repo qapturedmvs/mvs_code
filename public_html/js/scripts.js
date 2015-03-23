@@ -739,14 +739,16 @@ function cleanText( k ){
 // COMMENT ACTIONS
 if( typeof commentPage !== 'undefined' ){
 
-	var cmtText, comm, commId;
+	var cmtText, comm, commId, commType;
 	
-	if( $('.listHolder').length > 0 ){
+	if( page === 'cld' ){
 		// Custom List Feeds
+		commType = 4;
 		commId = list_id;	
 		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/custom_list?type=nwf&list_id='+commId }, function(){});
-	}else{
+	}else if( page === 'movie-detail' ){
 		// Movie Detail Feeds
+		commType = 2;
 		commId = mvs_id;			
 		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+commId }, function(){});
 	}
@@ -755,22 +757,22 @@ if( typeof commentPage !== 'undefined' ){
 			cmtText = $('#comment_text').val();
 			
 			if(cmtText != '')
-				add_comment(commId, 2, cmtText, 0);
+				add_comment(commId, commType, cmtText, 0);
 	});
 
 }
 
 	function add_comment(id, type, text, ref_id){
 		
-		commentType = (ref_id == 0) ? 'comment' : 'reply';
+		holder = (ref_id == 0) ? 'comment' : 'reply';
 		
 		$.ajax({
 			type:'POST',
 			url:site_url+'ajx/comments_ajx/add_comment',
 			data:{id:id, type:type, text:text, ref:ref_id},
 			success:function(result){
-				$('.'+commentType+'_result').text(result.data['message']);
-				$('#'+commentType+'_text').val('');
+				$('.'+holder+'_result').text(result.data['message']);
+				$('#'+holder+'_text').val('');
 			}
 		});
 		

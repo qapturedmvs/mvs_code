@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class User_Ajx extends Frontend_Controller{
+	class User_Ajx extends Ajx_Controller{
     
 		function __construct(){
 			parent::__construct();
@@ -12,29 +12,21 @@
 		public function index(){ show_404(); }
     
     public function check_nick($nick){
-      
-			if($this->input->is_ajax_request()){
 				
-				if($this->logged_in){
-					
-					if($nick && ($this->data['nick'] = slugify(rawurldecode($nick))) !== '')
-						$this->data['check_nick_result'] = $this->user_m->check_usr_unique_field('usr_nick', $this->data['nick'], $this->user['usr_id']);
-					else
-						$this->data['check_nick_result'] = 'no-nick';
-					
-				}else{
-					
-					$this->data['check_nick_result'] = 'no-user';
-					
-				}
-			
-				$this->load->view('results/_check_user_nick', $this->data);
-			
+			if($this->logged_in){
+				
+				if($nick && ($this->data['nick'] = slugify(rawurldecode($nick))) !== '')
+					$this->data['check_nick_result'] = $this->user_m->check_usr_unique_field('usr_nick', $this->data['nick'], $this->user['usr_id']);
+				else
+					$this->data['check_nick_result'] = 'no-nick';
+				
 			}else{
 				
-				show_404();
+				$this->data['check_nick_result'] = 'no-user';
 				
 			}
+		
+			$this->load->view('results/_check_user_nick', $this->data);
 
 		}
 		
@@ -42,7 +34,7 @@
 			
 			$data = array('action' => $this->get_vars['act'], 'nick' => $this->get_vars['nick'], 'p' => $p);
 
-			if($this->input->is_ajax_request() && $data['nick'] && $data['action']){
+			if($data['nick'] && $data['action']){
 
 				if($this->logged_in)
 					$data['login_user'] = $this->user['usr_id'];

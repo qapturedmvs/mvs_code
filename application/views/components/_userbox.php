@@ -4,6 +4,7 @@
   <div class="userMenu">
     <ul>
       <li><a href="<?php echo $site_url.'user/profile/general/'.$user['usr_nick']; ?>">Profile</a></li>
+      <li><a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>">Wall</a></li>
       <li><a href="<?php echo $site_url.'user/movies/lists/'.$user['usr_nick']; ?>">My Movie Lists</a></li>
       <li><a href="<?php echo $site_url.'user/network/followers/'.$user['usr_nick']; ?>">My Network</a></li>
     </ul>

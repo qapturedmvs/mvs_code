@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Movie_Ajx extends Frontend_Controller{
+	class Movie_Ajx extends Ajx_Controller{
 		function __construct(){
 			parent::__construct();
 			
@@ -10,8 +10,6 @@
 		public function index(){ show_404(); }
 		
 		public function lister($p = 1){
-			
-			if($this->input->is_ajax_request()){
 				
 				$vars = $this->get_vars;
 				$type = $vars['type'];
@@ -107,12 +105,6 @@
 				$this->data['json'] = json_encode($json);
 				
 				$this->load->view('json/main_json_view', $this->data);
-				
-			}else{
-				
-				show_404();
-					
-			}
 			
 		}
 		
