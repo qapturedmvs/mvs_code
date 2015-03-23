@@ -12,6 +12,7 @@ class User_Custom_List_M extends MVS_Model
 		parent::__construct();
 	}
   
+	// User Custom Lists (User Movie Lists)
 	public function get_lists($usr_id){
 		
 		$filters = array(
@@ -64,13 +65,18 @@ class User_Custom_List_M extends MVS_Model
 	public function create_delete_list($data){
 		
 		if($data['action'] === 'cncl'){
+			
 			unset($data['action']);
-			$this->db->insert('mvs_custom_lists', $data);
-			$result = $this->db->insert_id();
+			$out = array('@list_id' => NULL, '@ldt_id' => NULL);
+			$this->db->call_procedure('sp_new_customlist', $data, $out);
+			$result = array('list_id' => $out['@list_id'], 'ldt_id' => $out['@ldt_id']);
+		
 		}else{
+		
 			unset($data['action']);
 			$this->db->call_procedure('sp_delete_customlist', $data);
 			$result = 'dcl';
+		
 		}
 		
 		return $result;
@@ -115,36 +121,6 @@ class User_Custom_List_M extends MVS_Model
 			return $cl['data'];
 		else
 			return FALSE;
-		
-	}
-	
-	public function check_custom_list($data){
-		
-		if($data['action'] == 'atcl'){
-			unset($data['action']);
-			
-			$this->db->select('cld.ldt_id');
-			$this->db->join('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left');
-			$db_data = $this->db->get_where('mvs_custom_lists cl', array('cl.list_id' => $data['list_id'], 'cl.usr_id' => $data['usr_id']), 1)->row();
-			
-			if(count($db_data) > 0)
-				return $db_data->ldt_id;
-			else
-				return FALSE;
-			
-		}else{
-			unset($data['action']);
-			
-			$this->db->select('cld.list_id');
-			$this->db->join('mvs_custom_lists cl', 'cl.list_id = cld.list_id AND cl.usr_id = '.$data['usr_id'], 'inner');
-			$db_data = $this->db->get_where('mvs_custom_list_data cld', array('cld.ldt_id' => $data['ldt_id']), 1)->row();
-			
-			if(count($db_data) > 0)
-				return $db_data->list_id;
-			else
-				return FALSE;
-			
-		}
 		
 	}
 	

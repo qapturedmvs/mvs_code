@@ -18,7 +18,7 @@
 							<div class='seen singleSeen'><a ng-if="item.usr_seen==0" rel="seen" onclick="single_seen(this)" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a>
 							<a ng-if="item.usr_seen==1" rel="unseen" seen-id="{{item.seen_id}}" onclick="<?php echo ($controls['page'] == 'seen') ? 'unseen(this)' : 'single_seen(this)'; ?>" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></div>
 							<?php endif; ?>
-							<?php if($controls['page'] === 'custom'): ?>
+							<?php if($controls['page'] === 'cld'): ?>
 							<div class="remove edit-mode"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" rel="0" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>

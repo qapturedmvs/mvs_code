@@ -121,17 +121,10 @@
 					
 					$this->data['action'] = $action;
 					$vars = $this->input->post(NULL, TRUE);
-					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
+					$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
 						
-					$this->data['lst_result'] = array('lst' => $this->user_custom_list_m->create_delete_list($data));
+					$this->data['lst_result'] = $this->user_custom_list_m->create_delete_list($data);
 					
-					if(is_numeric($this->data['lst_result']['lst'])){
-						unset($data);
-						$data = array('action' => 'atcl', 'mvs_id' => $vars['id'], 'list_id' => $this->data['lst_result']['lst']);
-						$this->data['lst_result']['ldt'] = $this->user_custom_list_m->add_remove_from_list($data);
-					}else{
-						$this->data['lst_result'] = 'no-list';
-					}
 				}else{
 					
 					$this->data['lst_result'] = 'no-user';
