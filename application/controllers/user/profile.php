@@ -5,52 +5,33 @@
 		function __construct(){
 			parent::__construct();
 			
+			$this->session_check();
 			$this->output->enable_profiler();
 			$this->load->model('user_m');
-			$this->session_check();
       
 		}
     
-    public function general($slug = NULL){
+    public function index(){
 			
-			if($slug){
+			$this->data['controls'] = array('page' => 'profile', 'owner' => TRUE);
+			$user = $this->user_m->get_user_data($this->user['usr_id'], 'usr_id');
+			$this->data['modified_data'] = FALSE;
+			$inputs = $this->input->post(NULL, TRUE);
 				
-				$this->data['controls'] = array('page' => 'profile', 'owner' => TRUE);
-				$this->data['the_user'] = $this->user_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-				$this->data['modified_data'] = FALSE;
+			// PROFILE FORM CONTROLS
+			if(isset($inputs['prf_submit'])){
 				
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+				$this->_save_data($inputs);
+				unset($inputs['prf_password']);
+				unset($inputs['repassword']);
+				unset($inputs['prf_submit']);
+				$this->data['modified_data'] = json_encode($inputs);
 
-					$this->data['controls']['owner'] = FALSE;
-					
-					if(!$this->data['the_user'])
-						show_404();
-					
-				}else{
-					
-					$inputs = $this->input->post(NULL, TRUE);
-						
-					// PROFILE FORM CONTROLS
-					if(isset($inputs['prf_submit'])){
-						
-						$this->_save_data($inputs);
-						unset($inputs['prf_password']);
-						unset($inputs['repassword']);
-						unset($inputs['prf_submit']);
-						$this->data['modified_data'] = json_encode($inputs);
-
-					}
-						
-				}
-
-				$this->data['subview'] = 'user/profile';
-				$this->load->view('_main_body_layout', $this->data);
-			
-			}else{
-				
-				show_404();
-				
 			}
+			
+			$this->data['the_user'] = $user['data'];
+			$this->data['subview'] = 'user/profile';
+			$this->load->view('_main_body_layout', $this->data);
       
     }
 		

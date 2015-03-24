@@ -163,7 +163,7 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '', 'type': 1 });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '', 'type': 0 });
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
@@ -191,6 +191,7 @@ function infiniteScroll( obj ){
 			this.busy = false;
 			this.noResult = false;
 			this.loading = false;
+			this.loadMore = false;
 			this.after = 1;
 		  };
 		  Reddit.prototype.nextPage = function() {
@@ -232,7 +233,10 @@ function infiniteScroll( obj ){
 				}, 1);
 				
 				
-				if( obj['type'] == 1 ) this.busy = true;
+				if( obj['type'] == 1 ){
+					this.busy = true;
+					this.loadMore = true;
+				}
 				this.loading = false;
 				
 			  }else{
@@ -325,7 +329,7 @@ function single_seen(obj){
 var seenList = [];
 function select_seen(obj){
 	
-	var rel = $(obj).attr("rel"), id = $(obj).parents(".movieItemInner").attr("rel");
+	var rel = $(obj).attr("rel"), id = $(obj).parents(".movieItemInner").attr("mvs-id");
 	
 	if(rel == 0){
 		
@@ -355,7 +359,7 @@ $('a.btnMultiSeen').click(function(){
 function removeSeen(){
 	
 	for(var i=0, l=seenList.length; i<l; i++)
-		$('.movieItemInner[rel="'+seenList[i]+'"] .seen a').remove();
+		$('.movieItemInner[mvs-id="'+seenList[i]+'"] .seen a').remove();
 	
 }
 
@@ -469,7 +473,7 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 1 });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 0 });
 }
 
 function deleteCustomList(obj){
@@ -566,7 +570,7 @@ if( exist($('.pageSeen')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 1 });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
 }
 
 // Seen Page Unseen
@@ -607,7 +611,7 @@ if( exist($('.pageWatchlist')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 1 });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
 }
 
 // Follow Unfollow
@@ -788,7 +792,7 @@ if( typeof commentPage !== 'undefined' ){
 				cmtText = $('#reply_text').val();
 				
 				if(cmtText != '')
-					add_comment(commId, 2, cmtText, ref);
+					add_comment(commId, commType, cmtText, ref);
 		});
 			
 	}

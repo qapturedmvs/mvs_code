@@ -5,8 +5,8 @@
 		function __construct(){
 			parent::__construct();
 			
-			$this->output->enable_profiler();
 			$this->session_check();
+			$this->output->enable_profiler();
 			$this->load->model('feed_m');
       
 		}

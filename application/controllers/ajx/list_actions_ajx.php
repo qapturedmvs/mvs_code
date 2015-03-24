@@ -96,7 +96,6 @@
 				$this->data['action'] = $action;
 				$vars = $this->input->post(NULL, TRUE);
 				$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
-					
 				$this->data['lst_result'] = $this->user_custom_list_m->create_delete_list($data);
 				
 			}else{

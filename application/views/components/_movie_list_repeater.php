@@ -29,7 +29,7 @@
 				</div>
 	    </div>
 	    <div ng-show='reddit.loading'>Loading data...</div>
-        <a href="javascript:void(0);" ng-click="reddit.nextPage()" class="loadMoreButton">Load More</a>
+        <a href="javascript:void(0);" ng-click="reddit.nextPage()" ng-show="reddit.loadMore" class="loadMoreButton">Load More</a>
 	  </div>
 		<hr class="qFixer" />
 	</div>
