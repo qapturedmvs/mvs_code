@@ -55,7 +55,7 @@ class Comments_M extends MVS_Model
 	}
 	
 	// Custom List Comments
-	public function custom_list_comments_json($list_id, $usr_id, $p = 0){
+	public function customlist_comments_json($list_id, $usr_id, $p = 0){
 
 		$p = $this->cleaner($p);
 		$offset = ($p-1) * $this->per_page;
@@ -67,7 +67,7 @@ class Comments_M extends MVS_Model
 				'from' => 'mvs_follows fl',
 				'join' => array(
 										array('mvs_users u', 'u.usr_id = fl.flwd_usr_id', 'inner'),
-										array('mvs_feeds f', "f.usr_id = fl.flwd_usr_id AND f.list_id = $list_id", 'inner')
+										array('mvs_feeds f', "f.usr_id = fl.flwd_usr_id AND f.list_id = $list_id AND f.act_type_id = 4", 'inner')
 									),
 				'where' => "fl.flwr_usr_id = $usr_id",
 				'order_by' => $this->_order_by.' DESC'
@@ -81,7 +81,7 @@ class Comments_M extends MVS_Model
 				'select' => 'act_id,act_ref_id,act_type_id,act_text,act_time,u.usr_id,usr_nick,usr_name',
 				'from' => 'mvs_feeds f',
 				'join' => array('mvs_users u', 'u.usr_id = f.usr_id', 'inner'),
-				'where' => "list_id = $list_id",
+				'where' => "list_id = $list_id AND f.act_type_id = 4",
 				'order_by' => $this->_order_by.' DESC'
 			);
 			

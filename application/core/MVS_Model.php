@@ -25,7 +25,7 @@ class MVS_Model extends CI_Model {
 					$this->db->start_cache();
 					if($filters !== NULL){
 						foreach($filters as $key => $val){
-							if(is_array($val) && count($val) > 1){
+							if(is_array($val)){
 								if(is_array($val[0]))
 									foreach($val as $subVal)
 										call_user_func_array(array(&$this->db, $key), $subVal);
@@ -116,16 +116,16 @@ class MVS_Model extends CI_Model {
 				$filters = array(
 					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, cl.list_id, cl.list_title',
 					'from' => 'mvs_custom_lists cl',
+					'join' => array(
+						array('mvs_users u', 'u.usr_id = cl.usr_id', 'inner')
+					),
 					'where' => "cl.list_slug = '$slug'"
 				);
 				
 				if($user){
 					
 					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
-					$filters['join'] = array(
-						array('mvs_users u', 'u.usr_id = cl.usr_id', 'inner'),
-						array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left')
-					);
+					$filters['join'][] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
 					
 				}
 			break;

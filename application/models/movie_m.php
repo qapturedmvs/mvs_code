@@ -36,7 +36,7 @@ class Movie_M extends MVS_Model
 	
 	}
 	
-	// Movie detail
+	// MOVIE DETAIL
 	public function movie($id){
 		
 		$id = $this->cleaner($id);
@@ -49,17 +49,15 @@ class Movie_M extends MVS_Model
 	
 	}
 	
-	// Get all genres
-	public function genres($ids = NULL){
-	
-		$this->_table_name = 'mvs_genres';
-		$this->_primary_key = 'gnr_id';
-		$this->_order_by = 'gnr_id';
+	// GET ALL GENRES
+	public function genres(){
+
 		$this->per_page = 0;
-		$filters = NULL;
-		
-		if($ids != NULL)
-				$filters['where'] = $ids;
+		$filters = array(
+			'select' => '*',
+			'from' => 'mvs_genres',
+			'order_by' => 'gnr_title ASC'
+		);
 
 		$genres = $this->get_data(NULL, 0, FALSE, $filters);
 	
@@ -70,17 +68,15 @@ class Movie_M extends MVS_Model
 	
 	}
 	
-	// Get all countries
-	public function countries($ids = NULL){
-	
-		$this->_table_name = 'mvs_country';
-		$this->_primary_key = 'cntry_id';
-		$this->_order_by = 'cntry_id';
-		$this->per_page = 0;
-		$filters = NULL;	
+	// GET ALL COUNTRIES
+	public function countries(){
 
-    if($ids != NULL)
-				$filters['where'] = $ids;
+		$this->per_page = 0;
+		$filters = array(
+			'select' => '*',
+			'from' => 'mvs_country',
+			'order_by' => 'cntry_title ASC'
+		);	
 
 		$countries = $this->get_data(NULL, 0, FALSE, $filters);
 

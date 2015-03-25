@@ -45,7 +45,7 @@
 			$type = $this->get_vars['type'];
 			$usr_id = ($type == 'myn') ? $this->user['usr_id'] : 0;
 			$json = (object) array();
-			$db_data = $this->comments_m->custom_list_comments_json($mvs_id, $usr_id, $p);
+			$db_data = $this->comments_m->customlist_comments_json($mvs_id, $usr_id, $p);
 			
 			if($db_data){
 				
