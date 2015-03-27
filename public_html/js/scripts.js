@@ -108,6 +108,55 @@ if(exist($('.pageMovies'))){
 		
 	});
 	
+	  var defs = [], vals = [], fg;
+  
+  function set_slider_vals(obj, min, max){
+    $('span.min', obj).text(min);
+    $('span.max', obj).text(max);
+  }
+  
+  $('.sliderHolder').each(function(){
+    fg = $(this).attr("rel");
+    defs[fg] = [];
+    defs[fg][0] = parseFloat($('.slider', this).attr("min"));
+    defs[fg][1] = parseFloat($('.slider', this).attr("max"));
+    
+    if(qs.indexOf(fg+'=') != -1){
+      vals[fg] = qsManager.get(fg).split(',');
+      set_slider_vals(this, vals[fg][0], vals[fg][1]);
+    }else{
+      vals[fg] = [defs[fg][0],defs[fg][1]];
+      set_slider_vals(this, defs[fg][0], defs[fg][1]);
+    }
+    
+    $('.slider', this).slider({max:defs[fg][1], min:defs[fg][0], range:true, values:vals[fg], change:function(event, ui){
+      fg = $(this).parents('.sliderHolder').attr("rel");
+      
+      
+      if(ui.values[0] != vals[fg][0] || ui.values[1] != vals[fg][1]){
+        if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
+          qsManager.remove(fg);
+        else
+          qsManager.put(fg, ui.values[0]+','+ui.values[1], false);
+      }
+    },
+    slide:function(event, ui){
+      var obj = $(this).parents('.sliderHolder');
+      set_slider_vals(obj, ui.values[0], ui.values[1]);
+    }
+    });
+  });
+	
+	$('li.filter.network select').change(function(){
+		var fVal = $('option:selected', this).val();
+		
+		if(fVal != 0)
+			qsManager.mput('mfn', fVal);
+		else
+			qsManager.remove('mfn');
+		
+	});
+	
 	$('.filterList > li').mouseenter(function(){
 		$(this).addClass("active");
 	}).mouseleave(function(){
@@ -125,24 +174,17 @@ if(exist($('.pageMovies'))){
 			for(var i in qObj[e]){
 				$('.filters ul.multi[rel="'+e+'"] li a[rel="'+qObj[e][i]+'"]').addClass("selected");
 			}
+			
+			if(e == 'mfn')
+				$('li.filter.network select option[value="'+qObj[e][0]+'"]').attr("selected", "setected");
+			
 		}
 	}
 	
 	$('.clrChoices').click(function(){
-		temp = '';
-		$('.choices a').each(function(i){
-			grp = $(this).attr("grp");
-			if(temp.indexOf(grp) == -1)
-				temp += (i == 0) ? grp : '|'+grp;
-		});
 		
-		if(qs.indexOf('mfy') != -1)
-			temp += '|mfy';
+		window.location.href = current_url;
 		
-		if(qs.indexOf('mfr') != -1)
-			temp += '|mfr';
-		
-		qsManager.remove(temp);
 	});
 	
 	$('.choices a').click(function(){

@@ -20,8 +20,51 @@ class Movie_M extends MVS_Model
 			'select' => 'mvs_id, mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id, mvs_rating',
 			'order_by' => 'mvs_year DESC, mvs_rating DESC'
 		);
-
 		
+		if(isset($vars['mfn']) && $cst_str['usr_id'] !== NULL){
+			
+			$filters['select'] = 'm.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_imdb_id, m.mvs_rating';
+			
+			switch($vars['mfn']){
+				
+				case 'seen':
+					$filters['join'] = array(
+						array('mvs_seen s', 's.usr_id = f.flwd_usr_id', 'inner'),
+						array('mvs_movies m', 'm.mvs_id = s.mvs_id', 'inner')
+					);
+					$filters['group_by'] = 'm.mvs_id';
+					$vars['mfn'] = TRUE;
+				break;
+			
+				case 'watchlist':
+					$filters['join'] = array(
+						array('mvs_watchlist w', 'w.usr_id = f.flwd_usr_id', 'inner'),
+						array('mvs_movies m', 'm.mvs_id = w.mvs_id', 'inner')
+					);
+					$filters['group_by'] = 'm.mvs_id';
+					$vars['mfn'] = TRUE;
+				break;
+			
+				case 'comment':
+					$filters['join'] = array(
+						array('mvs_feeds feed', 'feed.usr_id = f.flwd_usr_id', 'inner'),
+						array('mvs_movies m', 'm.mvs_id = feed.mvs_id', 'inner')
+					);
+					$filters['group_by'] = 'm.mvs_id';
+					$vars['mfn'] = TRUE;
+				break;
+				
+			}
+			
+			if($vars['mfn'] === TRUE){
+				$filters['from'] = 'mvs_follows f';
+				$filters['where'] = 'f.flwr_usr_id = '.$cst_str['usr_id'];
+			}
+
+		}
+		
+		unset($vars['mfn']);
+
 		if(count($vars) > 0){
 				$vars = qs_filter($vars, $defs);
 				$filters['where'] = (isset($filters['where'])) ? $filters['where'].' AND '.movies_where($vars, $defs) : movies_where($vars, $defs);

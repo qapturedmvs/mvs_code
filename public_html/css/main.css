@@ -104,7 +104,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 .controllers{margin-bottom:30px;}
 .controllers .view{float:right;}
-.filters{}
+.filters{padding-bottom:20px;}
 .filters .filterList{}
 .filters .filterList > li{position:relative; float:left; width:150px;}
 .filters .filterList > li > a{display:inline-block; height:15px;}
@@ -123,11 +123,14 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .filters .filterList > li .sliderHolder span.limits.max{right:0;}
 .filters .filterList > li.year, .filters .filterList > li.rating{margin-right:40px;}
 .filters .filterList > li.genre .submenu{left:-150px;}
+.filters  .filterList > li.network{}
+.filters  .filterList > li.network select{margin-top:10px;}
 .filters .choicesHolder{margin-bottom:20px; padding:15px; border:1px solid #ccc; background:#e6e6e6;}
 .filters .choicesHolder .chHeader{margin-bottom:20px;}
 .filters .choicesHolder .chHeader span{font-weight:bold; padding-right:40px;}
 .filters .choicesHolder .choices a{background:url(../images/choice.png) right top no-repeat; padding-right:20px; display:inline-block; height:26px; vertical-align:middle; margin-right:10px;}
 .filters .choicesHolder .choices a span{background:#fff; padding:5px; height:15px; display:inline-block;}
+
 
 .btnMultiSeen{position:fixed; margin-left:-170px;}
 

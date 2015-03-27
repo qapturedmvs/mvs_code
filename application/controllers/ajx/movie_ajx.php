@@ -4,6 +4,7 @@
 		function __construct(){
 			parent::__construct();
 			
+			//$this->output->enable_profiler(TRUE);
 			$this->load->model('movie_m');
 		}
 		
@@ -12,16 +13,13 @@
 		public function lister($p = 1){
 				
 				$vars = $this->get_vars;
-				$type = $vars['type'];
 				$cst_str = '';
 				$model = '';
-				
-				unset($vars['type']);
-				
-				switch($type){
+
+				switch($vars['type']){
 					
 					case 'ml':
-							$m_set = array('fn' => $type);
+							$cst_str =  array('usr_id' => $this->user['usr_id']);
 							$model = 'movie_m';
 							break;
 						
@@ -47,6 +45,8 @@
 							break;
 
 				}
+				
+				unset($vars['type']);
 				
 				$p = $this->{$model}->cleaner($p);
 				$curPage = ($p != '') ? $p : 1;
