@@ -204,6 +204,13 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .commentReplies .subComment{border:none; background:none;}
 .commentboxHolder .subComment:hover{background:none;}
 
+/* WALL */
+.wallHolder .wallItem{margin-bottom:5px; background:#e6e6e6; border:1px solid #ddd; padding-bottom:15px;}
+.wallHolder .wallItem .title{display:block; margin:15px 0 5px 0; padding:0 15px; font-weight:bold;}
+.wallHolder .wallItem .text{display:block; margin-bottom: 5px; padding:0 15px;}
+.wallHolder .wallItem .time{display:block; text-align: right; padding:0 15px;}
+
+
 /* ACTOR DETAIL */
 .pageActor{padding-top:30px;}
 .pageActor .cover{width:175px; border:2px solid #000;}
@@ -218,11 +225,18 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageActor .detail .movies .featured{margin:10px 0 50px;}
 .pageActor .detail .movies .featured li{float:left; margin-right:10px; width:145px; height:220px; background:#eee;}
 .pageActor .detail .movies .featured li a{width:145px; height:220px; display:block;}
-.pageActor .detail .movies .filmography li{clear:both; margin-bottom:10px;}
-.pageActor .detail .movies .filmography li span.year{display:inline-block; width:50px; float:left;}
-.pageActor .detail .movies .filmography li span.movie{display:inline-block; width:300px; float:left;}
-.pageActor .detail .movies .filmography li span.movie a:hover{text-decoration:underline;}
-.pageActor .detail .movies .filmography li span.character{color:#555; float:left;}
+
+.pageActor .detail .movies .filmography .tabFilmography{margin-bottom:20px;}
+.pageActor .detail .movies .filmography .tabFilmography li{float:left; margin-right:15px;}
+.pageActor .detail .movies .filmography .tabFilmography li a{font-weight:bold;}
+.pageActor .detail .movies .filmography .tabFilmography li.selected a{text-decoration:underline;}
+
+.pageActor .detail .movies .filmography .tabContent li{clear:both; margin-bottom:10px; display:none;}
+.pageActor .detail .movies .filmography .tabContent li span.year{display:inline-block; width:50px; float:left;}
+.pageActor .detail .movies .filmography .tabContent li span.movie{display:inline-block; width:300px; float:left;}
+.pageActor .detail .movies .filmography .tabContent li span.movie a:hover{text-decoration:underline;}
+.pageActor .detail .movies .filmography .tabContent li span.character{color:#555; float:left;}
+.pageActor .detail .movies .filmography .tabContent li.Actor{display:block;}
 
 /* SEARCH */
 .pageSearch{}

@@ -34,11 +34,21 @@
 					</div>
 					<div class="filmography">
 					<div class="titleDefault titleFilmography">Full Filmography</div>
+						<div class="tabDefault tabFilmography">
 							<ul>
-									<?php foreach($movies as $slug => $movie): ?>
-									<li><span class="year"><?php echo $movie['year']; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$movie['slug']; ?>"><?php echo $movie['title']; ?></a></span><hr class="qFixer" /></li>
-									<?php endforeach; ?>
+								<?php foreach($types as $type): ?>
+								<li<?php echo ($type == 'Actor') ? ' class="selected"' : ''; ?>><a rel="<?php echo $type; ?>" href="javascript:void(0);"><?php echo $type; ?></a></li>
+								<?php endforeach; ?>
 							</ul>
+								<hr class="qFixer" />
+						</div>
+						<div class="tabContent">
+								<ul>
+									<?php foreach($movies as $slug => $movie): ?>
+									<li class="<?php echo $movie['type']; ?>"><span class="year"><?php echo $movie['year']; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$movie['slug']; ?>"><?php echo $movie['title']; ?></a></span><hr class="qFixer" /></li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
 					</div>
 			</div>
 		</aside>

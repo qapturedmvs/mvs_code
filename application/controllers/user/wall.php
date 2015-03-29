@@ -24,10 +24,6 @@
 					if(!$this->data['the_user'])
 						show_404();
 					
-				}else{
-					
-
-						
 				}
 
 				$this->data['subview'] = 'user/wall';

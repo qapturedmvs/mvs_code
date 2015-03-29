@@ -27,7 +27,7 @@ class Movie_M extends MVS_Model
 			
 			switch($vars['mfn']){
 				
-				case 'seen':
+				case 1:
 					$filters['join'] = array(
 						array('mvs_seen s', 's.usr_id = f.flwd_usr_id', 'inner'),
 						array('mvs_movies m', 'm.mvs_id = s.mvs_id', 'inner')
@@ -36,7 +36,7 @@ class Movie_M extends MVS_Model
 					$vars['mfn'] = TRUE;
 				break;
 			
-				case 'watchlist':
+				case 2:
 					$filters['join'] = array(
 						array('mvs_watchlist w', 'w.usr_id = f.flwd_usr_id', 'inner'),
 						array('mvs_movies m', 'm.mvs_id = w.mvs_id', 'inner')
@@ -45,7 +45,7 @@ class Movie_M extends MVS_Model
 					$vars['mfn'] = TRUE;
 				break;
 			
-				case 'comment':
+				case 3:
 					$filters['join'] = array(
 						array('mvs_feeds feed', 'feed.usr_id = f.flwd_usr_id', 'inner'),
 						array('mvs_movies m', 'm.mvs_id = feed.mvs_id', 'inner')

@@ -30,7 +30,7 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 			if( item.category == 'movies' ){
 				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>');
 			}else if( item.category == 'stars' ){
-				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '">'+ item.str_name +'</a></span><hr class="qFixer" /></div>');
+				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/actor/'+ item.str_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.str_slug + '">'+ item.str_name +'</a></span><hr class="qFixer" /></div>');
 			}else if( item.category == 'noResult' ){
 				li.html('<div class="row">No Result</div>');
 			}
@@ -151,7 +151,7 @@ if(exist($('.pageMovies'))){
 		var fVal = $('option:selected', this).val();
 		
 		if(fVal != 0)
-			qsManager.mput('mfn', fVal);
+			qsManager.put('mfn', fVal);
 		else
 			qsManager.remove('mfn');
 		
@@ -745,6 +745,17 @@ function lazyLoadActive(){
 		$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
 }
 
+// Wall
+if( exist($('.pageWall')) ){
+	var page = 1;
+	
+	getAjx({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/'+page+'?&nick='+nick }, function(){
+		
+		setTimeout(lazyLoadActive, 1);
+	
+	});
+}
+
 // YOUTUBE TRAILER
 function watch_trailer( t ){
 	var _this = $( t );
@@ -853,6 +864,17 @@ if( typeof commentPage !== 'undefined' ){
 		
 		}
 	}
-
+	
+	// Actro Detail
+	$('.tabFilmography a').click(function(){
+		var item = $(this).attr("rel");
+		
+		if(!$(this).parent('li').hasClass("selected")){
+			$('.tabContent li').hide();
+			$('.tabContent li.'+item).show();
+			$('.tabFilmography a').parent('li.selected').removeClass("selected");
+			$(this).parent('li').addClass("selected");
+		}
+	});
 
 

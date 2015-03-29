@@ -29,7 +29,7 @@
 					$featured = array();
 					$movies = array();
 					$i = 0;
-					
+
 					foreach($actor as $key => $val){
 						
 						$type_unq[] = $actor[$key]->type_title;
@@ -42,11 +42,9 @@
 							$featured[$actor[$key]->mvs_slug] = array('poster' => $actor[$key]->mvs_poster, 'title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug);
 							$i++;
 
-						}else{
-							
-							$movies[$actor[$key]->mvs_slug] = array('title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug);
-							
 						}
+						
+						$movies[] = array('title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug, 'type' => $actor[$key]->type_title);
 
 					}
 					
@@ -58,12 +56,11 @@
 					}
 					
 					unset($actor);
-					$actor = array_diff_key($movies, $featured);
-					usort($actor, "sortByYear");
+					usort($movies, "sortByYear");
 					
 					$this->data['featured'] = $featured;
 					$this->data['types'] = array_unique($type_unq);
-					$this->data['movies'] = $actor;
+					$this->data['movies'] = $movies;
 					
 					 //Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(

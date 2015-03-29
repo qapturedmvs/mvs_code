@@ -53,10 +53,8 @@
 				$offset = ($curPage-1) * $this->{$model}->per_page;
 				$db_data = $this->{$model}->movies_json($offset, $vars, $this->filter_def, $cst_str);
 				$movies = $db_data['data'];
-				$db_data = $this->movie_m->countries();
-				$countries = $db_data;
-				$db_data = $this->movie_m->genres();
-				$genres = $db_data;
+				$tables['genres'] = $this->cache_table_data('genres', 'movie_m', array('id' => 'gnr_id', 'title' => 'gnr_title'));
+				$tables['countries'] = $this->cache_table_data('countries', 'movie_m', array('id' => 'cntry_id', 'title' => 'cntry_title'));
 				$json = (object) array();
 		
 				if($movies){
@@ -66,25 +64,28 @@
 						$usr_seen = $this->_get_user_seen();
 					
 					foreach($movies as $movie){
+						
+						$movie->mvs_genre = array();
+						$movie->mvs_country = array();
+						
+						if($movie->gnr_id !== ''){
 							
-						$g = explode('||', trim($movie->gnr_id, '|'));
-						$c = explode('||', trim($movie->cntry_id, '|'));
-						$temp = array();
-					
-						for($i=0; $i<count($g); $i++){
-							$key = getItemFromObj($genres, $g[$i], 'gnr_id', 'gnr_title');
-							array_push($temp, trim($key, ' '));
+							$genres = explode('|', trim($movie->gnr_id, '|'));
+							
+							foreach($genres as $genre)
+								$movie->mvs_genre[] = $tables['genres'][$genre];
+						
 						}
+						
+						if($movie->cntry_id !== ''){
 							
-						$movie->mvs_genre = $temp;
-						$temp = array();
+							$countries = explode('|', trim($movie->cntry_id, '|'));
 							
-						for($i=0; $i<count($c); $i++){
-							$key = getItemFromObj($countries, $c[$i], 'cntry_id', 'cntry_title');
-							array_push($temp, trim($key, ' '));
+							foreach($countries as $country)
+								$movie->mvs_country[] = $tables['countries'][$country];
+							
 						}
-							
-						$movie->mvs_country = $temp;				
+										
 						$movie->mvs_poster = (file_exists(FCPATH."data\movies\\thumbs\\".$movie->mvs_slug."_175x240_.jpg")) ? "data/movies/thumbs/".$movie->mvs_slug."_175x240_.jpg" : NULL;
 						
 						// Users Seen Check

@@ -1,17 +1,19 @@
 
-<?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING'); ?>
+<?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING', 'mfn' => array("Friend's Seen", "Friend's Watchlist", "Friend's Commented")); ?>
 <section class="filters">
   <?php if($vars): ?>
   <div class="choicesHolder none">
     <div class="chHeader"><span>SELECTIONS</span><a class="clrChoices" href="javascript:void(0);">Clear All</a></div>
     <div class="choices">
       <?php foreach($vars as $key => $val): ?>
-        <?php if($key != 'mfr' && $key != 'mfy'): ?>
+        <?php if($key != 'mfr' && $key != 'mfy' && $key != 'mfn'): ?>
           <?php foreach($val as $v): ?>
               <a grp="<?php echo $key; ?>" rel="<?php echo $v; ?>" href="javascript:void(0);"><span><?php echo $tables[$key][$v]; ?></span></a>
           <?php endforeach; ?>
-        <?php else: ?>
+        <?php elseif($key != 'mfn'): ?>
           <a grp="<?php echo $key; ?>" href="javascript:void(0);"><span><?php echo $labels[$key].': '.$val[0].' - '.$val[1]; ?></span></a>
+        <?php else: ?>
+          <a grp="<?php echo $key; ?>" href="javascript:void(0);"><span><?php echo 'NETWORK: '.$labels[$key][($val[0]-1)]; ?></span></a>
         <?php endif; ?>
       <?php endforeach; ?>
     </div>
@@ -46,20 +48,19 @@
       <?php endif; ?>
     </li>
    <?php endforeach; ?>
+   <?php if($logged_in): ?>
    <li class="filter network">
     <a class="title" href="javascript:void(0);">MY NETWORK</a>
     <select>
       <option value="0">Choose</option>
-      <option value="seen">Friend's Seen</option>
-      <option value="watchlist">Friend's Watchlist</option>
-      <option value="comment">Friend's Commented</option>
+      <option value="1">Friend's Seen</option>
+      <option value="2">Friend's Watchlist</option>
+      <option value="3">Friend's Commented</option>
     </select>
    </li>
+   <?php endif; ?>
    </ul>
   <hr class="qFixer" />
   </div>
   <div class="boxFooter"></div>
 </section>
-<script type="text/javascript">
-
-</script>
