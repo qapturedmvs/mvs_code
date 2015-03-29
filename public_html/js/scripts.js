@@ -226,29 +226,33 @@ function getAjx( obj, callback ){
 
 // type => 0 scrolling, type => 1 load more
 function infiniteScroll( obj ){
+		
 		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
+		
 		qapturedApp.factory('Reddit', function( $http ){
+		  
 		  var Reddit = function() {
 			this.items = [];
 			this.busy = false;
-			this.noResult = false;
+			this.btnState = obj['type'] == 1 ? true : false;
 			this.loading = false;
-			this.loadMore = false;
 			this.after = 1;
 		  };
-		  Reddit.prototype.nextPage = function() {
-			if( this.busy || this.noResult ) return;
-				this.busy = true;	
-						
+		  
+		  Reddit.prototype.nextPage = function(){ 
+			
+			if( this.loading ) return;
+			
 			var sep = (qs === '') ? '?' : '&', url = site_url + obj['uri'] + this.after + qs + sep + 'type=' + obj['listType'] + obj['cstVar'];
-			
+						
 			this.loading = true;
-			
-			$http.get(url).success(function(d) {
+
+			$http.get( url ).success(function( d ){
 		
 			  if( d['result'] == 'OK' ){
 				
-				//
+				if( this.after > 1 ) this.items.push( { 'type': 1, 'paging': this.after } );
+				
 				for(var i = 0; i < d['data'].length; ++i){
 					var items = d['data'][ i ];
 						items['type'] = 0;
@@ -259,33 +263,28 @@ function infiniteScroll( obj ){
 					this.items.push( items );
 				}
 				
-				//
 				if( d['data'].length < obj['pageSize'] ){
-					this.busy = false;
-					this.noResult = true;
+					this.busy = true;
+					this.btnState = false;
 				}else{
 					this.after++;
-					this.busy = false;
-					this.items.push( { 'type': 1, 'paging': this.after } );
+					this.busy = false;	
 				}
 				
-				// TRIGGER LAZYLOAD
-				setTimeout(function(){
-					lazyLoadActive();
-				}, 1);
+				if( obj['type'] == 1 ) this.busy = true;
 				
-				
-				if( obj['type'] == 1 ){
-					this.busy = true;
-					this.loadMore = true;
-				}
 				this.loading = false;
 				
+				// TRIGGER LAZYLOAD
+				setTimeout(function(){ lazyLoadActive(); }, 1);
+				
 			  }else{
-				this.busy = false;
-				this.noResult = true;
+				this.loading = false;
+				this.busy = true;
+				this.btnState = false;
 				this.items.push( { 'type': 2, 'result': 'No Result' } );
 			  }
+			  
 			}.bind(this));
 		  };
 		  return Reddit;
