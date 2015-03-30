@@ -14,10 +14,7 @@
     public function wall($p = 1){
       
 			$json = (object) array();
-      $p = $this->feed_m->cleaner($p);
-      $offset = ($p-1) * $this->feed_m->per_page;
-			$data = array('nick' => 7, 'offset' => $offset);
-			//$data = array('nick' => $this->get_vars['nick'], 'offset' => $offset);
+			$data = array('nick' => $this->get_vars['nick'], 'p' => $p);
       $feeds = $this->feed_m->wall_json($data);
       
       if($feeds){
