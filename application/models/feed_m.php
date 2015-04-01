@@ -16,8 +16,8 @@ class Feed_M extends MVS_Model
     $data['offset'] = ($data['p']-1) * $this->per_page;
 		
 		unset($data['p']);
-		
-		$feeds = $this->db->call_procedure('sp_get_wall', $data);
+
+		$feeds = $this->db->call_procedure('sp_get_wall_test', $data);
 
 		if($feeds)
 			return $feeds;

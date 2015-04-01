@@ -18,9 +18,9 @@
       $feeds = $this->feed_m->wall_json($data);
       
       if($feeds){
-				
-				//$feeds = $this->_build_feed_tree($feeds);
-				
+
+				$feeds = $this->_build_feed_tree($feeds);
+				//var_dump($feeds);
         $json->result = 'OK';
         $json->data = $feeds;
       }else{
@@ -30,7 +30,7 @@
 
       $data['json'] = json_encode($json);
       
-      $this->load->view('json/main_json_view', $data);
+     // $this->load->view('json/main_json_view', $data);
       
     }
 		
@@ -40,18 +40,28 @@
 			
 			foreach ($data as $d){
 				
-				if($d['feed_act_ref_id'] !== NULL && $d['feed_act_ref_id'] == $parent){ 
+				$d = (object) $d;
+								 
+				
+				if($d->feed_ref_id !== NULL && (int)$d->feed_ref_id === (int)$parent){
 					
-					$children = $this->_build_feed_tree($data, $d['feed_act_id']);
+					if((int)$parent !== 0)
+						var_dump($d->feed_ref_id);
+					
+					$children = $this->_build_feed_tree($data, $d->feed_id);
 					
 					if(!empty($children))
-						$d['reply'] = $children;
+						$d->feed_ref = $children;
 				
 					$tree[] = $d;
-				 
+
+				}elseif($d->feed_type !== 'ref'){
+					
+					
+					
 				}
 				
-				$d['feed_time'] = time_calculator($d['feed_time']);
+				$d->feed_time = time_calculator($d->feed_time);
 				
 			}
 			 

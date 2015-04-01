@@ -182,16 +182,19 @@
 
     foreach ($tokens as $text => $unit) {
         if ($time < $unit) continue;
-        $numberOfUnits = floor($time / $unit);
+        
+				$numberOfUnits = floor($time / $unit);
 				
 				if($time > ($tokens['day']*2))
-					return date('M j, Y', $postTime);
+					$time = date('M j, Y', $postTime);
 				elseif($time < ($tokens['day']*2) && $time > $tokens['day'])
-					return 'Yesterday';
+					$time = 'Yesterday';
 				else
-					return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'ago');
+					$time = $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'ago');
     }
-
+		
+		 return $time;
+		
 	}
 	
 	// User Nick Check
