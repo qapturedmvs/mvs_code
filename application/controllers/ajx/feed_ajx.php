@@ -20,7 +20,7 @@
       if($feeds){
 
 				$feeds = $this->_build_feed_tree($feeds);
-				//var_dump($feeds);
+
         $json->result = 'OK';
         $json->data = $feeds;
       }else{
@@ -28,43 +28,50 @@
         $json->data = '';
       }
 
-      $data['json'] = json_encode($json);
-      
-     // $this->load->view('json/main_json_view', $data);
+			$this->data['json'] = json_encode($json);
+			$this->load->view('json/main_json_view', $this->data);
       
     }
 		
-		private function _build_feed_tree(Array $data, $parent = 0){ 
+		private function _build_feed_tree(Array $data){ 
 
 			$tree = array();
 			
-			foreach ($data as $d){
+			foreach($data as $ck => $cv){
 				
-				$d = (object) $d;
-								 
-				
-				if($d->feed_ref_id !== NULL && (int)$d->feed_ref_id === (int)$parent){
+				if($cv['feed_type'] === 'rf'){
 					
-					if((int)$parent !== 0)
-						var_dump($d->feed_ref_id);
+					foreach($data as $pk => $pv){
+						
+						if($pv['feed_type'] === 'rv' && $pv['feed_id'] == $cv['feed_ref_id']){
+							
+							if(isset($tree[$pk])){
+								
+								$tree[$pk]['ref'][] = $cv;
+								
+							}else{
+							
+								$pv['ref'][] = $cv;
+								$tree[$pk] = $pv;
+							
+							}
+							
+						}
+						
+					}
 					
-					$children = $this->_build_feed_tree($data, $d->feed_id);
+				}else{
 					
-					if(!empty($children))
-						$d->feed_ref = $children;
-				
-					$tree[] = $d;
-
-				}elseif($d->feed_type !== 'ref'){
-					
-					
+					if(!isset($tree[$ck])){
+						
+						$tree[$ck] = $cv;
+						
+					}
 					
 				}
 				
-				$d->feed_time = time_calculator($d->feed_time);
-				
 			}
-			 
+
 			return $tree;
 		}
   

@@ -7,7 +7,7 @@
 		{
 			parent::__construct();
 			
-			if($this->input->is_ajax_request())
+			if(!$this->input->is_ajax_request())
 				show_404();
 			
 		}

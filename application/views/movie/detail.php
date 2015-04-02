@@ -6,7 +6,7 @@
 	<section class="body">
 		<aside class="mainCol left">
 			<div class="details">
-				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
+				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.getCoverPath($movie->mvs_slug, 'medium'); ?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
 				<div class="text left">
 					<div class="posArea">
 						<h1 title="<?php echo $movie->mvs_title; ?>"><?php echo $movie->mvs_title.' (<small>'.$movie->mvs_year.'</small>)'; ?></h1>
@@ -103,3 +103,49 @@
 		<hr class="qFixer" />
 	</section>
 </div>
+<script type="text/javascript">
+	
+	var color = {
+    get: function(a, b, c) {
+        var e = new Image;
+        e.onerror = function() {
+            alert("y\u00fcklemede hata")
+        };
+        e.onload = function() {
+            var a = document.createElement("canvas");
+            a.width = e.width;
+            a.height = e.height;
+            a = a.getContext("2d");
+            a.drawImage(e, 0, 0);
+            a = a.getImageData(0, 0, this.width, this.height).data;
+            a = color.rgbToHex(a[0], a[1], a[2]);
+            //a = color.shade("#" + a, -8);
+            b((!1 == c ? "" : "#") + a);
+        };
+        e.src = a
+    },
+    rgbToHex: function(a, b, c) {
+        return color.toHex(a) + color.toHex(b) + color.toHex(c)
+    },
+    toHex: function(a) {
+        a = parseInt(a, 10);
+        if (isNaN(a)) return "00";
+        a = Math.max(0, Math.min(a,
+            255));
+        return "0123456789ABCDEF".charAt((a - a % 16) / 16) + "0123456789ABCDEF".charAt(a % 16)
+    },
+    shade: function(a, b) {
+        var c = parseInt(a.slice(1), 16),
+            e = Math.round(2.55 * b),
+            h = (c >> 16) + e,
+            g = (c >> 8 & 255) + e,
+            c = (c & 255) + e;
+        return (16777216 + 65536 * (255 > h ? 1 > h ? 0 : h : 255) + 256 * (255 > g ? 1 > g ? 0 : g : 255) + (255 > c ? 1 > c ? 0 : c : 255)).toString(16).slice(1)
+    }
+};
+
+ color.get('<?php echo $site_url.getCoverPath($movie->mvs_slug, 'small'); ?>', function( k ) {
+		$('.pageMovie .hero').css("background-color", k);  
+  });
+	
+</script>

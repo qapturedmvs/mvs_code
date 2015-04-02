@@ -11,7 +11,7 @@
 		<ul>
 			<li class="listItem wallItem" ng-repeat='item in items'>
 				
-				<div act-id="{{item.feed_id}}" class="feedHolder ctm mov" ng-if="item.feed_type == 'ctm'">
+				<div act-id="{{item.feed_id}}" class="feedHolder ctm mov" ng-if="item.feed_type == 'rv' && item.act_type_id == 2">
 					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
@@ -21,7 +21,7 @@
           <hr class="qFixer" />
 				</div>
 				
-				<div act-id="{{item.feed_id}}" class="feedHolder ctcl" ng-if="item.feed_type == 'ctcl'">
+				<div act-id="{{item.feed_id}}" class="feedHolder ctcl" ng-if="item.feed_type == 'rv' && item.act_type_id == 4">
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
             <div class="text">{{item.feed_text}}</div>
@@ -30,7 +30,7 @@
           <hr class="qFixer" />
 				</div>
 				
-				<div list-id="{{item.feed_id}}" class="feedHolder clist" ng-if="item.feed_type == 'clist'">
+				<div list-id="{{item.feed_id}}" class="feedHolder clist" ng-if="item.feed_type == 'cl'">
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
             <div class="text">Custom List created</div>
@@ -39,7 +39,7 @@
           <hr class="qFixer" />
 				</div>
 				
-				<div seen-id="{{item.feed_id}}" class="feedHolder seen mov" ng-if="item.feed_type == 'seen'">
+				<div seen-id="{{item.feed_id}}" class="feedHolder seen mov" ng-if="item.feed_type == 'sn'">
 					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
@@ -49,7 +49,7 @@
           <hr class="qFixer" />
 				</div>
 				
-				<div wtc-id="{{item.feed_id}}" class="feedHolder wtc mov" ng-if="item.feed_type == 'wtc'">
+				<div wtc-id="{{item.feed_id}}" class="feedHolder wtc mov" ng-if="item.feed_type == 'wt'">
 					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
@@ -59,7 +59,7 @@
           <hr class="qFixer" />
 				</div>
 				
-				<div bdg-id="{{item.feed_id}}" class="feedHolder bdg" ng-if="item.feed_type == 'bdg'">
+				<div bdg-id="{{item.feed_id}}" class="feedHolder bdg" ng-if="item.feed_type == 'bg'">
           <div class="textContent">
             <div class="text">You Won a Badge</div>
             <div class="title">{{item.bdg_type_title}}</div>

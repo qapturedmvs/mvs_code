@@ -24,7 +24,7 @@
 				break;
 			
 			case 'small':
-				$size = '_60X85_';
+				$size = '_80X120_';
 			break;
 			
 		}
