@@ -170,7 +170,7 @@
 		$postTime = strtotime($time);
     $time = time() - $postTime;
 
-    $tokens = array (
+    $tokens = array(
 			'year' => 31536000,
 			'month' => 2592000,
 			'week' => 604800,
@@ -180,19 +180,23 @@
 			'second' => 1
     );
 
-    foreach ($tokens as $text => $unit) {
-        if ($time < $unit) continue;
+    foreach($tokens as $text => $unit) {
         
-				$numberOfUnits = floor($time / $unit);
-				
-				if($time > ($tokens['day']*2))
-					$time = date('M j, Y', $postTime);
-				elseif($time < ($tokens['day']*2) && $time > $tokens['day'])
-					$time = 'Yesterday';
-				else
-					$time = $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'ago');
+				if($time > $unit){
+
+					$numberOfUnits = floor($time / $unit);
+					
+					if($time > ($tokens['day']*2))
+						$time = date('M j, Y', $postTime);
+					elseif($time < ($tokens['day']*2) && $time > $tokens['day'])
+						$time = 'Yesterday';
+					else
+						$time = $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'ago');
+					
+					break;
+				}
     }
-		
+
 		 return $time;
 		
 	}

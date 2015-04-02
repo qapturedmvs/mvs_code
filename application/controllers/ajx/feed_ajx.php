@@ -39,6 +39,8 @@
 			
 			foreach($data as $ck => $cv){
 				
+				$cv['feed_time'] = time_calculator($cv['feed_time']);
+				
 				if($cv['feed_type'] === 'rf'){
 					
 					foreach($data as $pk => $pv){
@@ -56,22 +58,23 @@
 							
 							}
 							
+							$tree[$pk]['feed_time'] = time_calculator($tree[$pk]['feed_time']);
+							
 						}
 						
 					}
 					
 				}else{
 					
-					if(!isset($tree[$ck])){
-						
+					if(!isset($tree[$ck]))
 						$tree[$ck] = $cv;
-						
-					}
 					
 				}
 				
 			}
-
+			
+			ksort($tree);
+			
 			return $tree;
 		}
   

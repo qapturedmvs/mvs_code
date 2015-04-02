@@ -11,7 +11,7 @@
 		<ul>
 			<li class="listItem wallItem" ng-repeat='item in items'>
 				
-				<div act-id="{{item.feed_id}}" class="feedHolder ctm mov" ng-if="item.feed_type == 'rv' && item.act_type_id == 2">
+				<div act-id="{{item.feed_id}}" class="feedHolder rv2 mov" ng-if="item.feed_type == 'rv' && item.act_type_id == 2">
 					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
@@ -21,7 +21,26 @@
           <hr class="qFixer" />
 				</div>
 				
-				<div act-id="{{item.feed_id}}" class="feedHolder ctcl" ng-if="item.feed_type == 'rv' && item.act_type_id == 4">
+				<div act-id="{{item.feed_id}}" class="feedHolder rv4" ng-if="item.feed_type == 'rv' && item.act_type_id == 4">
+          <div class="textContent">
+            <div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
+            <div class="text">{{item.feed_text}}</div>
+          </div>
+					<div class="time">{{item.feed_time}}</div>
+          <hr class="qFixer" />
+				</div>
+				
+				<div act-id="{{item.feed_id}}" class="feedHolder rr2 mov" ng-if="item.feed_type == 'rr' && item.act_type_id == 2">
+					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
+          <div class="textContent">
+            <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
+            <div class="text">{{item.feed_text}}</div>
+          </div>
+					<div class="time">{{item.feed_time}}</div>
+          <hr class="qFixer" />
+				</div>
+				
+				<div act-id="{{item.feed_id}}" class="feedHolder rr4" ng-if="item.feed_type == 'rr' && item.act_type_id == 4">
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
             <div class="text">{{item.feed_text}}</div>
