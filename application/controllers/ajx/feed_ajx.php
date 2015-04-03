@@ -19,7 +19,6 @@
       
       if($feeds){
 
-				//$feeds = $this->_build_feed_tree(json_decode(json_encode($feeds)));
 				$feeds = $this->_build_feed_tree($feeds);
 
         $json->result = 'OK';
@@ -33,34 +32,6 @@
 			$this->load->view('json/main_json_view', $this->data);
       
     }
-		
-		//private function _build_feed_tree(Array $data, $parent = 0){ 
-		// 
-		//	$tree = array();
-		//	
-		//	foreach ($data as $d){
-		//		
-		//		$d->feed_ref_id = ($d->feed_ref_id !== NULL) ? (int) $d->feed_ref_id : NULL;
-		//		$d->feed_id = ($d->feed_id !== NULL) ? (int) $d->feed_id : NULL;
-		//		
-		//		if ($d->feed_ref_id == $parent){ 
-		//			
-		//			$children = $this->_build_feed_tree($data, $d->feed_id);
-		//			
-		//			if (!empty($children))
-		//				$d->ref = $children;
-		//		
-		//			$tree[] = $d;
-		//		 
-		//		} 
-		//		
-		//		
-		//		$d->feed_time = time_calculator($d->feed_time);
-		//		
-		//	}
-		//	 
-		//	return $tree;
-		//}
 		
 		private function _build_feed_tree(Array $data){ 
 		
