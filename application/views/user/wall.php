@@ -12,7 +12,7 @@
 			<li class="listItem wallItem" ng-repeat='item in items'>
 				
 				<div act-id="{{item.feed_id}}" class="feedHolder rv2 mov" ng-if="item.feed_type == 'rv' && item.act_type_id == 2">
-					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
+					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">{{item.feed_text}}</div>
@@ -31,7 +31,7 @@
 				</div>
 				
 				<div act-id="{{item.feed_id}}" class="feedHolder rr2 mov" ng-if="item.feed_type == 'rr' && item.act_type_id == 2">
-					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
+					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">{{item.feed_text}}</div>
@@ -59,7 +59,7 @@
 				</div>
 				
 				<div seen-id="{{item.feed_id}}" class="feedHolder seen mov" ng-if="item.feed_type == 'sn'">
-					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
+					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">Marked as Seen</div>
@@ -69,7 +69,7 @@
 				</div>
 				
 				<div wtc-id="{{item.feed_id}}" class="feedHolder wtc mov" ng-if="item.feed_type == 'wt'">
-					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>data/movies/thumbs/{{item.mvs_slug}}_175x240_.jpg"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
+					<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
           <div class="textContent">
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">Added to Watchlist</div>
