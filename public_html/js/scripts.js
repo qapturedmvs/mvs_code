@@ -741,8 +741,8 @@ if( exist($('.pageNetwork')) ){
 }
 
 function lazyLoadActive(){
-	if( $("div.lazy").length > 0 )
-		$("div.lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
+	if( $(".lazy").length > 0 )
+		$(".lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
 }
 
 // Wall

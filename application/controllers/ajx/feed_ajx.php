@@ -46,6 +46,8 @@
 				elseif($cv['mvs_poster'] === '0')
 					$cv['mvs_poster'] = 'images/placeHolder.jpg';
 				
+				$cv['usr_avatar'] =  ($cv['usr_avatar'] == '') ? 'images/user.jpg' : $cv['usr_avatar'];
+				
 				if($cv['feed_type'] === 'rf'){
 					
 					foreach($data as $pk => $pv){
@@ -69,6 +71,8 @@
 								$tree[$pk]['mvs_poster'] = getCoverPath($tree[$pk]['mvs_slug'], 'small');
 							elseif($tree[$pk]['mvs_poster'] === '0')
 								$tree[$pk]['mvs_poster'] = 'images/placeHolder.jpg';
+								
+							$tree[$pk]['usr_avatar'] =  ($tree[$pk]['usr_avatar'] == '') ? 'images/user.jpg' : $tree[$pk]['usr_avatar'];
 							
 						}
 						

@@ -213,6 +213,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .wallHolder .wallItem .moviePoster{width:60px; height:100px; background-size:cover; background-position:center center; background-color:#fff; float:left; margin:0 20px 0 0;}
 .wallHolder .wallItem.mov .textContent{float:left;}
 
+.wallHolder .wallItem .feedHolder .userInfo{float:left; width:125px; }
+.wallHolder .wallItem .feedHolder .userInfo a.usrAvatar{display:block; width:60px; height:66px;}
+.wallHolder .wallItem .feedHolder .feedInfo{float:left; width:840px;}
+
 
 /* ACTOR DETAIL */
 .pageActor{padding-top:30px;}
