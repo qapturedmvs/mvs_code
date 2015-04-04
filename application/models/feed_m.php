@@ -17,7 +17,7 @@ class Feed_M extends MVS_Model
 		
 		unset($data['p']);
 
-		$feeds = $this->db->call_procedure('sp_get_wall_test', $data);
+		$feeds = $this->db->call_procedure('sp_get_wall', $data);
 
 		if($feeds)
 			return $feeds;
