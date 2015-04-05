@@ -47,6 +47,7 @@
 					$cv['mvs_poster'] = 'images/placeHolder.jpg';
 				
 				$cv['usr_avatar'] =  ($cv['usr_avatar'] == '') ? 'images/user.jpg' : $cv['usr_avatar'];
+				$cv['owner'] = ($cv['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 				
 				if($cv['feed_type'] === 'rf'){
 					
@@ -73,6 +74,7 @@
 								$tree[$pk]['mvs_poster'] = 'images/placeHolder.jpg';
 								
 							$tree[$pk]['usr_avatar'] =  ($tree[$pk]['usr_avatar'] == '') ? 'images/user.jpg' : $tree[$pk]['usr_avatar'];
+							$tree[$pk]['owner'] = ($tree[$pk]['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 							
 						}
 						
