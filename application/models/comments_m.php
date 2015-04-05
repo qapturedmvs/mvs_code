@@ -21,7 +21,7 @@ class Comments_M extends MVS_Model
 		if($usr_id !== 0){		
 			
 			$filters = array(
-				'select' => 'flwd_usr_id, u.usr_id, usr_name, usr_nick, act_id, act_ref_id, act_type_id, act_text, act_time',
+				'select' => 'flwd_usr_id, u.usr_id, usr_name, usr_nick, usr_avatar, act_id, act_ref_id, act_type_id, act_text, act_time',
 				'from' => 'mvs_follows fl',
 				'join' => array(
 										array('mvs_users u', 'u.usr_id = fl.flwd_usr_id', 'inner'),
@@ -36,7 +36,7 @@ class Comments_M extends MVS_Model
 		}else{
 			
 			$filters = array(
-				'select' => 'act_id,act_ref_id,act_type_id,act_text,act_time,u.usr_id,usr_nick,usr_name',
+				'select' => 'act_id, act_ref_id, act_type_id, act_text, act_time, u.usr_id, usr_nick, usr_name, usr_avatar',
 				'from' => 'mvs_feeds f',
 				'join' => array('mvs_users u', 'u.usr_id = f.usr_id', 'inner'),
 				'where' => "mvs_id = $mvs_id",
@@ -63,7 +63,7 @@ class Comments_M extends MVS_Model
 		if($usr_id !== 0){		
 			
 			$filters = array(
-				'select' => 'u.usr_id, u.usr_name, u.usr_nick, f.act_id, f.act_ref_id, f.act_type_id, f.act_text, f.act_time',
+				'select' => 'u.usr_id, u.usr_name, u.usr_nick, usr_avatar, f.act_id, f.act_ref_id, f.act_type_id, f.act_text, f.act_time',
 				'from' => 'mvs_follows fl',
 				'join' => array(
 										array('mvs_users u', 'u.usr_id = fl.flwd_usr_id', 'inner'),
@@ -78,7 +78,7 @@ class Comments_M extends MVS_Model
 		}else{
 			
 			$filters = array(
-				'select' => 'act_id,act_ref_id,act_type_id,act_text,act_time,u.usr_id,usr_nick,usr_name',
+				'select' => 'act_id, act_ref_id, act_type_id, act_text, act_time, u.usr_id, usr_nick, usr_name, usr_avatar',
 				'from' => 'mvs_feeds f',
 				'join' => array('mvs_users u', 'u.usr_id = f.usr_id', 'inner'),
 				'where' => "list_id = $list_id AND f.act_type_id = 4",

@@ -801,12 +801,16 @@ if( typeof commentPage !== 'undefined' ){
 		// Custom List Feeds
 		commType = 4;
 		commId = list_id;	
-		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/custom_list?type=nwf&list_id='+commId }, function(){});
+		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/custom_list?type=nwf&list_id='+commId }, function(){
+			setTimeout(lazyLoadActive, 1);	
+		});
 	}else if( page === 'movie-detail' ){
 		// Movie Detail Feeds
 		commType = 2;
 		commId = mvs_id;			
-		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+commId }, function(){});
+		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+commId }, function(){
+			setTimeout(lazyLoadActive, 1);	
+		});
 	}
 			
 	$('a.btnComment').click(function(){
@@ -861,11 +865,11 @@ if( typeof commentPage !== 'undefined' ){
 			}else{
 				comm.removeClass("more");
 			}
-		
+			setTimeout(lazyLoadActive, 1);	
 		}
 	}
 	
-	// Actro Detail
+	// Actor Detail
 	$('.tabFilmography a').click(function(){
 		var item = $(this).attr("rel");
 		

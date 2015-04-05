@@ -23,7 +23,6 @@
 		<h4>Comments</h4>
 			<ul>
 				<li><a href="javascript:void(0);">Top Rated</a></li>
-				<li><a href="javascript:void(0);">Newest First</a></li>
 				<?php if($logged_in): ?>
 				<li><a href="javascript:void(0);">My Network</a></li>
 				<?php endif; ?>

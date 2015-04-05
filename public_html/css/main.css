@@ -204,6 +204,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .commentReplies .subComment{border:none; background:none;}
 .commentboxHolder .subComment:hover{background:none;}
 
+.commentboxHolder .commentItem .userInfo{float:left; width:125px; }
+.commentboxHolder .commentItem .userInfo a.usrAvatar{display:block; width:60px; height:66px;}
+.commentboxHolder .commentItem .reviewContent{float:left; width:570px;}
+
 /* WALL */
 .wallHolder .wallItem{margin-bottom:5px; background:#e6e6e6; border:1px solid #ddd; padding:15px;}
 .wallHolder .wallItem .feedHolder{display:inline-block; width:100%;}
@@ -216,6 +220,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .wallHolder .wallItem .feedHolder .userInfo{float:left; width:125px; }
 .wallHolder .wallItem .feedHolder .userInfo a.usrAvatar{display:block; width:60px; height:66px;}
 .wallHolder .wallItem .feedHolder .feedInfo{float:left; width:840px;}
+
+.wallHolder .wallItem .feedHolder .refs{margin-top:20px; padding:0 30px;}
+.wallHolder .wallItem .feedHolder .refs .wallItem{border:none;}
+.wallHolder .wallItem .feedHolder .refs .feedInfo{float:left; width:740px;}
 
 
 /* ACTOR DETAIL */
