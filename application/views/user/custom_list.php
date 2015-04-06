@@ -9,7 +9,9 @@
 		<ul>
 			<li class="listItem" ng-repeat='item in items'>
 				<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a>
+				<?php if($controls['owner']): ?>
 				<a class="clDeleteBtn" list-id="{{item.list_id}}" href="javascript:void(0);" onclick="deleteCustomList(this)">DELETE</a>
+				<?php endif; ?>
 			</li>
 		</ul>
 	</div>

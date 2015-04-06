@@ -44,7 +44,7 @@
 						<a onclick="moveReplyFrom(this)" href="javascript:void(0);" class="btnReply">Reply</a>
 				</span>
 				<?php endif; ?>
-				<a class="btnShowReplies" onclick="showMore(this)" href="javascript:void(0);">Show more</a>
+				<a class="btnShowReplies" onclick="showMore(this)" href="javascript:void(0);">X more reviews</a>
 				<hr class="qFixer" />
 				<div class="commentReplies">
 					<div act-ref-id="{{item.act_id}}" class="commentItem subComment" ng-repeat='reply in item.reply'>

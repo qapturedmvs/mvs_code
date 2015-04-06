@@ -185,11 +185,6 @@
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
-					<?php if($logged_in): ?>
-						<div class="feedControls" ng-if="item.owner == 1">
-							<a class="btnRemove" href="javascript:void(0);">Remove</a>
-						</div>
-						<?php endif; ?>
 				</div>
 				
 				<?php //User's seen action ?>
@@ -208,11 +203,6 @@
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
-					<?php if($logged_in): ?>
-						<div class="feedControls" ng-if="item.owner == 1">
-							<a class="btnRemove" href="javascript:void(0);">Remove</a>
-						</div>
-						<?php endif; ?>
 				</div>
 				
 				<?php //User's add to watchlist action ?>
@@ -231,11 +221,6 @@
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
-					<?php if($logged_in): ?>
-						<div class="feedControls" ng-if="item.owner == 1">
-							<a class="btnRemove" href="javascript:void(0);">Remove</a>
-						</div>
-						<?php endif; ?>
 				</div>
 				
 				<?php //User earned a badge ?>
@@ -253,11 +238,6 @@
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
-					<?php if($logged_in): ?>
-						<div class="feedControls" ng-if="item.owner == 1">
-							<a class="btnRemove" href="javascript:void(0);">Remove</a>
-						</div>
-						<?php endif; ?>
 				</div>
 				
 			</li>
