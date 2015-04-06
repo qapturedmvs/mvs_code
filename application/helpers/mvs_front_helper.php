@@ -183,19 +183,10 @@
     foreach($tokens as  $unit => $text){
         
 			if ($time < $unit) continue;
-
 			$numberOfUnits = floor($time / $unit);
-			
-			if($time > (86400*2))
-				$time = date('M j, Y', $postTime);
-			elseif($time < (86400*2) && $time > 86400)
-				$time = 'Yesterday';
-			else
-				$time = $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'ago');
+			return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'');
 
     }
-
-		 return $time;
 		
 	}
 	
