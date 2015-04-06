@@ -10,6 +10,7 @@
 				<div class="text left">
 					<div class="posArea">
 						<h1 title="<?php echo $movie->mvs_title; ?>"><?php echo $movie->mvs_title.' (<small>'.$movie->mvs_year.'</small>)'; ?></h1>
+						<?php if($genres): ?>
 						<div class="genre">
 							<ul>
 								<?php foreach($genres['data'] as $genre): ?>
@@ -18,6 +19,8 @@
 							</ul>
 							<hr class="qFixer" />
 						</div>
+						<?php endif; ?>
+						<?php if($countries): ?>
 						<div class="country">
 							<ul>
 								<?php foreach($countries['data'] as $country): ?>
@@ -26,6 +29,7 @@
 							</ul>
 							<hr class="qFixer" />
 						</div>
+						<?php endif; ?>
 						<div class="trailer"><a class="trailerBtn button" onclick="watch_trailer(this)" href="javascript:void(0);">Trailer</a></div>
 						<hr class="qFixer" />
 						<div class="actions">
