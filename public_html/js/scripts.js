@@ -839,7 +839,7 @@ if( typeof commentPage !== 'undefined' ){
 	}
 
 	function moveReplyFrom(obj){
-			comm = $(obj).parents('.commentItem');
+			comm = $(obj).parents('*[act-id]');
 			var ref = comm.attr("act-id");
 	
 			$("#replyForm").appendTo(comm);
@@ -853,21 +853,21 @@ if( typeof commentPage !== 'undefined' ){
 			
 	}
 	
-	function showMore(obj){
-		
-		comm = $(obj).parents('.commentItem');
-		var rep = $(obj).siblings('.commentReplies').children('.subComment').length;
-		
-		if(rep > 0){
-	
-			if(!comm.hasClass("more")){
-				comm.addClass("more");
-			}else{
-				comm.removeClass("more");
-			}
-			setTimeout(lazyLoadActive, 1);	
-		}
-	}
+	//function showMore(obj){
+	//	
+	//	comm = $(obj).parents('.commentItem');
+	//	var rep = $(obj).siblings('.commentReplies').children('.subComment').length;
+	//	
+	//	if(rep > 0){
+	//
+	//		if(!comm.hasClass("more")){
+	//			comm.addClass("more");
+	//		}else{
+	//			comm.removeClass("more");
+	//		}
+	//		setTimeout(lazyLoadActive, 1);	
+	//	}
+	//}
 	
 	// Actor Detail
 	$('.tabFilmography a').click(function(){

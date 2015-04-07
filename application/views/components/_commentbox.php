@@ -30,36 +30,51 @@
 			<hr class="qFixer" />
 		</div>
 		<div class="commentsContent">
-			<div act-id="{{item.act_id}}" act-ref-id="{{item.act_ref_id}}" class="commentItem" ng-repeat='item in items'>
-				<div class="userInfo">
-						<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>
-						<hr class="qFixer" />
-					</div>
-				<div class="reviewContent">
-					<span class='text'>{{item.act_text}}</span> 
-					<span class='time'>{{item.act_time}}</span>
-				</div>
-				<?php if($logged_in): ?>
-				<span ng-if="item.act_ref_id==0" class="btnHolder">
-						<a onclick="moveReplyFrom(this)" href="javascript:void(0);" class="btnReply">Reply</a>
-				</span>
-				<?php endif; ?>
-				<a class="btnShowReplies" onclick="showMore(this)" href="javascript:void(0);">X more reviews</a>
-				<hr class="qFixer" />
-				<div class="commentReplies">
-					<div act-ref-id="{{item.act_id}}" class="commentItem subComment" ng-repeat='reply in item.reply'>
-						<div class="userInfo">
-							<a href="<?php echo $site_url; ?>user/wall/actions/{{reply.usr_nick}}" title="{{reply.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{reply.usr_avatar}}"></a>
+			<ul>
+				
+				<li class="feedListItem reviewItem" ng-repeat='item in items'>
+					<div act-id="{{item.act_id}}" class="feedHolder rv2 mov">
+						<div class="feedContent">
+							<div class="userInfo"> <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>
+								<hr class="qFixer" />
+							</div>
+							<div class="feedInfo">
+								<div class="textContent">
+									<div class="text">{{item.act_text}}</div>
+								</div>
+								<div class="time">{{item.act_time}}</div>
+								<hr class="qFixer" />
+							</div>
+							<hr class="qFixer" />
+							<?php if($logged_in): ?>
+							<div class="feedControls" ng-if="item.owner == 1"> <a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a> <a class="btnEdit" href="javascript:void(0);">Edit</a> <a class="btnRemove" href="javascript:void(0);">Remove</a> </div>
+							<div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+							<?php endif; ?>
+							<a class="btnShowReplies" href="javascript:void(0);">X more reviews</a>
 							<hr class="qFixer" />
 						</div>
-						<div class="reviewContent">
-							<span class='text'>{{reply.act_text}}</span> 
-							<span class='time'>{{reply.act_time}}</span>
+						<div class="refs">
+							<div act-id="{{ref.act_id}}" class="feedListItem reviewItem refItem" ng-repeat='ref in item.ref'>
+								<div class="userInfo"> <a href="<?php echo $site_url; ?>user/wall/actions/{{ref.usr_nick}}" title="{{ref.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{ref.usr_avatar}}"></a>
+									<hr class="qFixer" />
+								</div>
+								<div class="feedInfo">
+									<div class="textContent">
+										<div class="text">{{ref.act_text}}</div>
+									</div>
+									<div class="time">{{ref.act_time}}</div>
+									<hr class="qFixer" />
+									<?php if($logged_in): ?>
+									<div class="feedControls" ng-if="ref.owner == 1"> <a class="btnEdit" href="javascript:void(0);">Edit</a> <a class="btnRemove" href="javascript:void(0);">Remove</a> </div>
+									<div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
+									<?php endif; ?>
+								</div>
+							</div>
 						</div>
-						<hr class="qFixer" />
 					</div>
-				</div>
-			</div>
+					</li>
+				
+			</ul>
 		</div>
 	</div>
 </div>

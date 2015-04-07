@@ -37,7 +37,7 @@
 						<hr class="qFixer" />
 						<?php if($logged_in): ?>
 						<div class="feedControls" ng-if="item.owner == 1">
-							<a class="btnReply" href="javascript:void(0);">Reply</a>
+							<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
@@ -88,7 +88,7 @@
 						<hr class="qFixer" />
 						<?php if($logged_in): ?>
 						<div class="feedControls" ng-if="item.owner == 1">
-							<a class="btnReply" href="javascript:void(0);">Reply</a>
+							<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>

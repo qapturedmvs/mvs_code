@@ -76,7 +76,7 @@
 					$children = $this->_build_comment_tree($data, $d->act_id);
 					
 					if (!empty($children))
-						$d->reply = $children;
+						$d->ref = $children;
 				
 					$tree[] = $d;
 				 
