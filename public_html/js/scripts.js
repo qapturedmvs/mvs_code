@@ -817,19 +817,27 @@ if( typeof commentPage !== 'undefined' ){
 			cmtText = $('#comment_text').val();
 			
 			if(cmtText != '')
-				add_comment(commId, commType, cmtText, 0);
+				add_comment(0, cmtText, commType, commId);
 	});
 
 }
 
-	function add_comment(id, type, text, ref_id){
+	function add_comment(ref_id, text, type, id){
 		
-		holder = (ref_id == 0) ? 'comment' : 'reply';
+		var postObj;
 		
+		if(ref_id == 0){
+			holder = 'comment';
+			postObj = {id:id, type:type, text:text};
+		}else{
+			holder = 'reply';
+			postObj = {ref:ref_id, text:text};
+		}
+
 		$.ajax({
 			type:'POST',
 			url:site_url+'ajx/comments_ajx/add_comment',
-			data:{id:id, type:type, text:text, ref:ref_id},
+			data:postObj,
 			success:function(result){
 				$('.'+holder+'_result').text(result.data['message']);
 				$('#'+holder+'_text').val('');
@@ -848,7 +856,7 @@ if( typeof commentPage !== 'undefined' ){
 				cmtText = $('#reply_text').val();
 				
 				if(cmtText != '')
-					add_comment(commId, commType, cmtText, ref);
+					add_comment(ref, cmtText);
 		});
 			
 	}

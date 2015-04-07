@@ -184,7 +184,7 @@
         
 			if ($time < $unit) continue;
 			$numberOfUnits = floor($time / $unit);
-			return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':'');
+			return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':' ago');
 
     }
 		
