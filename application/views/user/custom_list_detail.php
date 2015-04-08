@@ -18,6 +18,9 @@
 		<h4 class="normal-mode"><?php echo $list['list_title']; ?></h4>
 		<input type="text" class="listTitle edit-mode" value="<?php echo $list['list_title']; ?>" />
 	</div>
+	<?php if($logged_in): ?>
+	<div class="rateHolder listRate"><a class="rateUp" href="javascript:void(0);">Up <small></small></a><a class="rateDown" href="javascript:void(0);">Down <small></small></a></div>
+	<?php endif; ?>
 	<?php $this->load->view('components/_movie_list_repeater'); ?>
 	<div class="social">
 		<?php $this->load->view('components/_commentbox'); ?>

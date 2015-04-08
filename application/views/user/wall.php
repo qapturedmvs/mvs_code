@@ -41,7 +41,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
 						<?php endif; ?>
 					</div>
 					<div class="refs">
@@ -63,7 +63,7 @@
 									<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 									<a class="btnRemove" href="javascript:void(0);">Remove</a>
 								</div>
-                <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
+                <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
 							<?php endif; ?>
 							</div>
               <hr class="qFixer" />
@@ -93,7 +93,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
 						<?php endif; ?>
 					</div>
 					<div class="refs">
@@ -115,7 +115,7 @@
 								<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 								<a class="btnRemove" href="javascript:void(0);">Remove</a>
 							</div>
-              <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
+              <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
 						<?php endif; ?>
 						</div>
             <hr class="qFixer" />
@@ -143,7 +143,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
 						<?php endif; ?>
 				</div>
 				
@@ -167,7 +167,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
 						<?php endif; ?>
 				</div>
 				
