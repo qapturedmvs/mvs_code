@@ -225,7 +225,7 @@ function getAjx( obj, callback ){
 }
 
 // type => 0 scrolling, type => 1 load more
-function infiniteScroll( obj ){
+function infiniteScroll( obj, callback ){
 		
 		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		
@@ -284,6 +284,9 @@ function infiniteScroll( obj ){
 				this.btnState = false;
 				this.items.push( { 'type': 2, 'result': 'No Result' } );
 			  }
+			  
+			  // CALLBACK
+			  if( callback != undefined ) setTimeout(callback, 1);
 			  
 			}.bind(this));
 		  };
@@ -494,6 +497,7 @@ function getAjax( obj, callback, error ){
 //////* USER PAGES *//////
 
 // Custom List Page
+var clArr = [];
 if( exist($('.pageCustomList')) )
 	getAjx({ controller: 'userCustomList', uri: 'ajx/user_custom_list_ajx/list_lister?usr='+usr }, function(){});
 		
@@ -514,7 +518,9 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 0 });
+	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 0 }, function(){
+		clArr = searchList();
+	});
 }
 
 function deleteCustomList(obj){
@@ -534,6 +540,32 @@ function deleteCustomList(obj){
 					
 		});
 	
+}
+
+// SORTABLE
+function checkSortable( k ){
+	var el = $( ".movieListHolder" );
+	if( el.length > 0 )
+		if( k == 'add' ){
+			if( el.hasClass('ui-sortable') ) el.sortable( 'destroy' );
+			el.sortable({ items: '.movieItem' });
+		}else{
+			el.sortable( 'destroy' );
+			checkList();
+		}
+}
+function searchList(){
+	var arr = [];
+	$("[mvs-ldt]").each(function( i, k ) {
+    	arr[ i ] =  $( this ).attr('ldt-id') ;
+    });
+	return arr;
+}
+
+function checkList(){
+	var last = searchList();
+	
+	console.log(clArr, searchList());
 }
 
 // Custom List Detail Remove from Custom List
@@ -557,12 +589,14 @@ $('.editHolder a').click(function(){
 		edit_custom_list();
 		$('.titleCustomList h4').text($('input.listTitle').val());
 		$('.pageDefault').removeClass('edit');
+		checkSortable('destroy');
 	}else{
 		$('.pageDefault').addClass('edit');
 		$('.titleCustomList input').focus();
+		checkSortable('add');
 	}
-	
 });
+
 
 function edit_custom_list(){
 	var title = $('input.listTitle').val(), text = $('.titleCustomList h4').text();
