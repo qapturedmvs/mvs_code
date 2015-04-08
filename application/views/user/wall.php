@@ -66,6 +66,7 @@
                 <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
 							<?php endif; ?>
 							</div>
+              <hr class="qFixer" />
 						</div>
 				</div>
 				</div>
@@ -117,8 +118,8 @@
               <div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
 						<?php endif; ?>
 						</div>
+            <hr class="qFixer" />
 					</div>
-					<hr class="qFixer" />
 				</div>
 				
 				<?php //User review to another user's movie review ?>

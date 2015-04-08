@@ -223,7 +223,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .wallHolder .wallItem .feedHolder .feedInfo{float:left; width:840px;}
 
 .wallHolder .wallItem .feedHolder .refs{margin-top:20px; padding:0 30px;}
-.wallHolder .wallItem .feedHolder .refs .wallItem{border:none;}
+.wallHolder .wallItem .feedHolder .refs .wallItem{border:none; background:none;}
 .wallHolder .wallItem .feedHolder .refs .feedInfo{float:left; width:740px;}
 
 

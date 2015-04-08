@@ -85,6 +85,7 @@
 				if($parent === 0){
 					$d->act_time = time_calculator($d->act_time);
 					$d->usr_avatar =  ($d->usr_avatar == '') ? 'images/user.jpg' : $d->usr_avatar;
+					$d->owner = ($d->usr_id == $this->user['usr_id']) ? 1 : 0;
 				}
 				
 			}

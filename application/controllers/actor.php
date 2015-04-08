@@ -37,7 +37,7 @@
 						if($i === 0)
 							$this->data['actor'] = $actor[$key]->str_name;
 						
-						if($i < 5 && $actor[$key]->mvs_poster !== ''){
+						if($i < 5 && $actor[$key]->mvs_poster != 0){
 
 							$featured[$actor[$key]->mvs_slug] = array('poster' => $actor[$key]->mvs_poster, 'title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug);
 							$i++;

@@ -47,7 +47,13 @@
 							</div>
 							<hr class="qFixer" />
 							<?php if($logged_in): ?>
-							<div class="feedControls" ng-if="item.owner == 1"> <a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a> <a class="btnEdit" href="javascript:void(0);">Edit</a> <a class="btnRemove" href="javascript:void(0);">Remove</a> </div>
+							<div class="feedControls">
+								<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
+								<div class="feedOwnerControls" ng-if="item.owner == 1">
+									<a class="btnEdit" href="javascript:void(0);">Edit</a>
+									<a class="btnRemove" href="javascript:void(0);">Remove</a>
+								</div>
+							</div>
 							<div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
 							<?php endif; ?>
 							<a class="btnShowReplies" href="javascript:void(0);">X more reviews</a>
