@@ -31,7 +31,7 @@
 								<div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
 								<div class="text">{{item.feed_text}}</div>
 							</div>
-							<div class="time">{{item.feed_time}}</div>
+							<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 							<hr class="qFixer" />
 						</div>
 						<hr class="qFixer" />
@@ -41,7 +41,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
 						<?php endif; ?>
 					</div>
 					<div class="refs">
@@ -56,14 +56,14 @@
 									<div class="title"><a href="<?php echo $site_url; ?>movie/{{ref.mvs_slug}}">{{ref.mvs_title}}</a></div>
 									<div class="text">{{ref.feed_text}}</div>
 								</div>
-								<div class="time">{{ref.feed_time}}</div>
+								<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 								<hr class="qFixer" />
 								<?php if($logged_in): ?>
 								<div class="feedControls" ng-if="ref.owner == 1">
 									<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 									<a class="btnRemove" href="javascript:void(0);">Remove</a>
 								</div>
-                <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
+                <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a></div>
 							<?php endif; ?>
 							</div>
               <hr class="qFixer" />
@@ -83,7 +83,7 @@
 							<div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
 							<div class="text">{{item.feed_text}}</div>
 						</div>
-						<div class="time">{{item.feed_time}}</div>
+						<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 						<hr class="qFixer" />
 						</div>
 						<hr class="qFixer" />
@@ -93,7 +93,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
 						<?php endif; ?>
 					</div>
 					<div class="refs">
@@ -107,7 +107,7 @@
 								<div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{ref.list_slug}}">{{ref.list_title}}</a></div>
 								<div class="text">{{ref.feed_text}}</div>
 							</div>
-							<div class="time">{{ref.feed_time}}</div>
+							<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 							<hr class="qFixer" />
 							</div>
 							<?php if($logged_in): ?>
@@ -115,7 +115,7 @@
 								<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 								<a class="btnRemove" href="javascript:void(0);">Remove</a>
 							</div>
-              <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
+              <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a></div>
 						<?php endif; ?>
 						</div>
             <hr class="qFixer" />
@@ -134,7 +134,7 @@
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">{{item.feed_text}}</div>
           </div>
-					<div class="time">{{item.feed_time}}</div>
+					<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
@@ -143,7 +143,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
 						<?php endif; ?>
 				</div>
 				
@@ -158,7 +158,7 @@
             <div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
             <div class="text">{{item.feed_text}}</div>
           </div>
-					<div class="time">{{item.feed_time}}</div>
+					<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
@@ -167,7 +167,7 @@
 							<a class="btnEdit" href="javascript:void(0);">Edit</a>	
 							<a class="btnRemove" href="javascript:void(0);">Remove</a>
 						</div>
-            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
+            <div class="rateHolder feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
 						<?php endif; ?>
 				</div>
 				
@@ -182,7 +182,7 @@
             <div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
             <div class="text">Custom List created</div>
           </div>
-					<div class="time">{{item.feed_time}}</div>
+					<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
@@ -200,7 +200,7 @@
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">Marked as Seen</div>
           </div>
-					<div class="time">{{item.feed_time}}</div>
+					<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
@@ -218,7 +218,7 @@
             <div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
             <div class="text">Added to Watchlist</div>
           </div>
-					<div class="time">{{item.feed_time}}</div>
+					<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />
@@ -235,7 +235,7 @@
             <div class="text">You Won a Badge</div>
             <div class="title">{{item.bdg_type_title}}</div>
           </div>
-					<div class="time">{{item.feed_time}}</div>
+					<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
           <hr class="qFixer" />
 					</div>
 					<hr class="qFixer" />

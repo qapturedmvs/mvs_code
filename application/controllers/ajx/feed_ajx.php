@@ -39,7 +39,7 @@
 			
 			foreach($data as $ck => $cv){
 				
-				$cv['feed_time'] = time_calculator($cv['feed_time']);
+				$cv['feed_ago'] = time_calculator($cv['feed_time']);
 				
 				if($cv['mvs_poster'] === '1')
 					$cv['mvs_poster'] = getCoverPath($cv['mvs_slug'], 'small');
@@ -66,7 +66,7 @@
 							
 							}
 							
-							$tree[$pk]['feed_time'] = time_calculator($tree[$pk]['feed_time']);
+							$tree[$pk]['feed_ago'] = time_calculator($tree[$pk]['feed_time']);
 							
 							if($tree[$pk]['mvs_poster'] === '1')
 								$tree[$pk]['mvs_poster'] = getCoverPath($tree[$pk]['mvs_slug'], 'small');
