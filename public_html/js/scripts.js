@@ -842,7 +842,7 @@ if( typeof commentPage !== 'undefined' ){
 		// Movie Detail Feeds
 		commType = 2;
 		commId = mvs_id;			
-		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie_detail?type=nwf&mvs_id='+commId }, function(){
+		getAjx({ controller: 'commentRepeaterController', uri: 'ajx/comments_ajx/movie?type=nwf&mvs_id='+commId }, function(){
 			setTimeout(lazyLoadActive, 1);	
 		});
 	}

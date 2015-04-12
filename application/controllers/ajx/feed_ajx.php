@@ -14,7 +14,7 @@
     public function wall($p = 1){
       
 			$json = (object) array();
-			$data = array('nick' => $this->get_vars['nick'], 'p' => $p);
+			$data = array('nick' => $this->get_vars['nick'], 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'p' => $p);
       $feeds = $this->feed_m->wall_json($data);
       
       if($feeds){
@@ -27,7 +27,7 @@
         $json->result = 'FALSE';
         $json->data = '';
       }
-//var_dump($feeds);
+
 			$this->data['json'] = json_encode($json);
 			$this->load->view('json/main_json_view', $this->data);
       

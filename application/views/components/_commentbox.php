@@ -33,47 +33,58 @@
 			<ul>
 				
 				<li class="feedListItem reviewItem" ng-repeat='item in items'>
-					<div act-id="{{item.act_id}}" class="feedHolder rv2 mov">
+					<div act-id="{{item.feed_id}}" class="feedHolder rv{{item.act_type_id}}">
 						<div class="feedContent">
 							<div class="userInfo"> <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>
 								<hr class="qFixer" />
 							</div>
 							<div class="feedInfo">
 								<div class="textContent">
-									<div class="text">{{item.act_text}}</div>
+									<div class="text">{{item.feed_text}}</div>
 								</div>
-								<div class="time">{{item.act_time}}</div>
+								<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 								<hr class="qFixer" />
 							</div>
 							<hr class="qFixer" />
 							<?php if($logged_in): ?>
 							<div class="feedControls">
-								<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
-								<div class="feedOwnerControls" ng-if="item.owner == 1">
-									<a class="btnEdit" href="javascript:void(0);">Edit</a>
+								<div class="generalControls">
+									<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
+									<div class="rateHolder feedRate" ng-class="item.usr_rate_value == 1 ? 'disableUp' : (item.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
+								</div>
+								<div class="ownerControls" ng-if="item.owner == 1">
+									<a class="btnEdit" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
 									<a class="btnRemove" href="javascript:void(0);">Remove</a>
 								</div>
 							</div>
-							<div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_rates_neg}}</small></a></div>
 							<?php endif; ?>
-							<a class="btnShowReplies" href="javascript:void(0);">X more reviews</a>
 							<hr class="qFixer" />
 						</div>
-						<div class="refs">
-							<div act-id="{{ref.act_id}}" class="feedListItem reviewItem refItem" ng-repeat='ref in item.ref'>
-								<div class="userInfo"> <a href="<?php echo $site_url; ?>user/wall/actions/{{ref.usr_nick}}" title="{{ref.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{ref.usr_avatar}}"></a>
-									<hr class="qFixer" />
-								</div>
-								<div class="feedInfo">
-									<div class="textContent">
-										<div class="text">{{ref.act_text}}</div>
+						<div class="refHolder" ng-if="item.feed_ref_count != null">
+							<a class="btnShowReplies" href="javascript:void(0);" ng-if="item.feed_ref_count > 2">{{item.feed_ref_count - 2}} more reviews</a>
+							<div class="refs">
+								<div act-id="{{ref.feed_id}}" class="feedListItem reviewItem refItem" ng-repeat='ref in item.ref'>
+									<div class="userInfo"> <a href="<?php echo $site_url; ?>user/wall/actions/{{ref.usr_nick}}" title="{{ref.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{ref.usr_avatar}}"></a>
+										<hr class="qFixer" />
 									</div>
-									<div class="time">{{ref.act_time}}</div>
-									<hr class="qFixer" />
-									<?php if($logged_in): ?>
-									<div class="feedControls" ng-if="ref.owner == 1"> <a class="btnEdit" href="javascript:void(0);">Edit</a> <a class="btnRemove" href="javascript:void(0);">Remove</a> </div>
-									<div class="feedRate"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_rates_pos}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_rates_neg}}</small></a></div>
-									<?php endif; ?>
+									<div class="feedInfo">
+										<div class="textContent">
+											<div class="text">{{ref.feed_text}}</div>
+										</div>
+										<div class="time"><span title="{{ref.feed_time}}">{{ref.feed_ago}}</span></div>
+										<hr class="qFixer" />
+										<?php if($logged_in): ?>
+										<div class="feedControls">
+											<div class="generalControls">
+												<div class="rateHolder feedRate" ng-class="ref.usr_rate_value == 1 ? 'disableUp' : (ref.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a></div>
+											</div>
+											<div class="ownerControls" ng-if="ref.owner == 1">
+												<a class="btnEdit" href="javascript:void(0);">Edit</a>	
+												<a class="btnRemove" href="javascript:void(0);">Remove</a>
+											</div>
+										</div>
+										<?php endif; ?>
+									</div>
 								</div>
 							</div>
 						</div>
