@@ -58,9 +58,7 @@
 									<hr class="qFixer" />
 									</div>
 									<div class="feedInfo">
-										<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{ref.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{ref.mvs_slug}}"></a></div>
 										<div class="textContent">
-											<div class="title"><a href="<?php echo $site_url; ?>movie/{{ref.mvs_slug}}">{{ref.mvs_title}}</a></div>
 											<div class="text">{{ref.feed_text}}</div>
 										</div>
 										<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
@@ -124,7 +122,6 @@
 									</div>
 									<div class="feedInfo">
 										<div class="textContent">
-											<div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{ref.list_slug}}">{{ref.list_title}}</a></div>
 											<div class="text">{{ref.feed_text}}</div>
 										</div>
 										<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
