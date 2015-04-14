@@ -70,13 +70,17 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 /* MOVIE LIST */
 .pageMovies{}
+
+.movieListHolder .movieItem .plot{display:none;}
+
 .movieListHolder.row .movieItem{padding:0 0 15px; margin:15px 0 0; border-bottom:1px solid #e6e6e6;}
-.movieListHolder.row .movieItem span{display:block; margin-bottom:10px;}
+.movieListHolder.row .movieItem .movieItemInner > span{display:block; margin-bottom:10px;}
 .movieListHolder.row .movieItem .poster{float:left; margin:0 20px 0 0; width:175px; height:200px;}
 .movieListHolder.row .movieItem .poster img{width:100px;}
 .movieListHolder.row .movieItem .title{margin-bottom:15px; line-height:25px;}
 .movieListHolder.row .movieItem .title a{font-size:24px;}
 .movieListHolder.row .seperator{padding:10px; margin:0 0 15px; background:#e6e6e6; display:block; font-size:16px;}
+.movieListHolder.row .movieItem .plot{display:block;}
 
 .movieListHolder.grid .movieItem{padding:8px; margin:0 10px 20px 0; background:#E6E6E6; display:inline-block; width:118px; height:300px; vertical-align:top;}
 .movieListHolder.grid > div > div:nth-child(7n){margin-right:0;}

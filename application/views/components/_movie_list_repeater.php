@@ -11,6 +11,9 @@
             <span class='rating'>{{item.mvs_rating}}</span> 
             <span class='genre'>{{item.mvs_genre}}</span> 
             <span class='country'>{{item.mvs_country}}</span>
+						<?php if($controls['page'] === 'cld'): ?>
+						<div class='plot'>{{item.mvs_plot}}</div>
+						<?php endif; ?>
 						<?php if($logged_in): ?>
 							<?php if($controls['seen_action'] === 'multi'): ?>
 							<div class='seen multiSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>

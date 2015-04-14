@@ -29,11 +29,22 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
+	public function get_customlist_detail($data){
+
+		$cl = $this->db->call_procedure('sp_get_customlist', $data);
+
+		if($cl)
+			return $cl;
+		else
+			return FALSE;
+		
+	}
+	
 	// Custom Movie list JSON
 	public function movies_json($offset = 0, $vars, $defs, $cst_str){
 		
 		$filters = array(
-			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating',
+			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating, m.mvs_plot',
 			'from' => 'mvs_custom_list_data c',
 			'join' => array(
 				array('mvs_custom_lists cl', 'cl.list_id = c.list_id', 'inner'),

@@ -46,7 +46,7 @@
 				$this->load->model('user_custom_list_m');
 				
 				$this->data['controls'] = array('page' => 'cld', 'seen_action' =>  'single', 'cld_action' => TRUE, 'owner' => TRUE);
-				$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'custom_list_detail');
+				$this->data['the_user'] = $this->user_custom_list_m->get_customlist_detail(array('slug' => $slug, 'login_usr' => $this->user['usr_id']));
 				
 				if(!$this->data['the_user'])
 					show_404();
