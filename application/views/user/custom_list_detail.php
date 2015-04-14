@@ -19,7 +19,7 @@
 		<input type="text" class="listTitle edit-mode" value="<?php echo $list['list_title']; ?>" />
 	</div>
 	<?php if($logged_in): ?>
-	<div class="rateHolder listRate"><a class="rateUp" href="javascript:void(0);">Up <small></small></a><a class="rateDown" href="javascript:void(0);">Down <small></small></a></div>
+<div class="rateHolder clRate<?php if($list['rate_value'] == 1) echo ' disableUp'; elseif($list['rate_value'] == -1) echo ' disableDown'; ?>"><a class="rateUp" href="javascript:void(0);">Up <small><?php echo $list['pos_rate']; ?></small></a><a class="rateDown" href="javascript:void(0);">Down <small><?php echo $list['neg_rate']; ?></small></a></div>
 	<?php endif; ?>
 	<?php $this->load->view('components/_movie_list_repeater'); ?>
 	<div class="social">

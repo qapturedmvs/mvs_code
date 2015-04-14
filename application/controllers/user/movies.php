@@ -46,12 +46,14 @@
 				$this->load->model('user_custom_list_m');
 				
 				$this->data['controls'] = array('page' => 'cld', 'seen_action' =>  'single', 'cld_action' => TRUE, 'owner' => TRUE);
-				$this->data['the_user'] = $this->user_custom_list_m->get_customlist_detail(array('slug' => $slug, 'login_usr' => $this->user['usr_id']));
+				$cl = $this->user_custom_list_m->get_customlist_detail(array('slug' => $slug, 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0));
 				
-				if(!$this->data['the_user'])
+				
+				if(!$cl)
 					show_404();
-					
-				$this->data['list'] = array('list_id' => $this->data['the_user']->list_id, 'list_title' => $this->data['the_user']->list_title);
+				
+				$this->data['the_user'] = (object) array('usr_id' => $cl[0]['usr_id'], 'usr_nick' => $cl[0]['usr_nick'], 'usr_name' => $cl[0]['usr_name'], 'usr_avatar' => $cl[0]['usr_avatar'], 'usr_slogan' => $cl[0]['usr_slogan'], 'flw_id' => $cl[0]['flw_id']);
+				$this->data['list'] = array('list_id' => $cl[0]['list_id'], 'list_title' => $cl[0]['list_title'], 'pos_rate' => $cl[0]['pos_rate'], 'neg_rate' => $cl[0]['neg_rate'], 'rate_id' => $cl[0]['rate_id'], 'rate_value' => $cl[0]['rate_value']);
 				
 				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $this->data['the_user']->usr_nick)){
 
