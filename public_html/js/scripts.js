@@ -1,6 +1,6 @@
 // GLOBAL VARIABLE
 
-var /*site_url = $('#site_url').val(),*/ qs = window.location.search;
+var /*site_url = $('#site_url').val(),*/ qs = window.location.search, feed_year = 0;
 
 // GLOBAL ANGULAR MODULE
 var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
@@ -205,7 +205,8 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '', 'type': 0 });
+	//--> infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '', 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ml', 'pageSize': 100, 'type': 0 });
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
@@ -224,10 +225,12 @@ function getAjx( obj, callback ){
 	});
 }
 
+
+// Infinite
 // type => 0 scrolling, type => 1 load more
 function infiniteScroll( obj, callback ){
 		
-		qapturedApp.controller('infiniteScrollController', function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
+		qapturedApp.controller(obj['controller'], function( $scope, Reddit ){ $scope.reddit = new Reddit(); });
 		
 		qapturedApp.factory('Reddit', function( $http ){
 		  
@@ -242,10 +245,10 @@ function infiniteScroll( obj, callback ){
 		  Reddit.prototype.nextPage = function(){ 
 			
 			if( this.loading ) return;
-			
-			var sep = (qs === '') ? '?' : '&', url = site_url + obj['uri'] + this.after + qs + sep + 'type=' + obj['listType'] + obj['cstVar'];
-						
+					
 			this.loading = true;
+			
+			var url = site_url + obj['uri'].replace(/{{page}}/g, this.after);
 
 			$http.get( url ).success(function( d ){
 		
@@ -256,10 +259,16 @@ function infiniteScroll( obj, callback ){
 				for(var i = 0; i < d['data'].length; ++i){
 					var items = d['data'][ i ];
 						items['type'] = 0;
-						items['mvs_genre'] = items['mvs_genre'].toString();
-						items['mvs_country'] = items['mvs_country'].toString();					
+						if( items['mvs_genre'] )	items['mvs_genre'] = items['mvs_genre'].toString();
+						if( items['mvs_country'] ) items['mvs_country'] = items['mvs_country'].toString();					
 						if( items['mvs_poster'] == null )
 							items['mvs_poster'] = 'images/placeHolder.jpg';
+						if( items['feed_year'] ){
+							if( feed_year != items['feed_year'] ){
+								feed_year = items['feed_year'];
+								this.items.push({ 'type': 4, 'result': feed_year });
+							}
+						}
 					this.items.push( items );
 				}
 				
@@ -274,7 +283,7 @@ function infiniteScroll( obj, callback ){
 				if( obj['type'] == 1 ) this.busy = true;
 				
 				this.loading = false;
-				
+
 				// TRIGGER LAZYLOAD
 				setTimeout(function(){ lazyLoadActive(); }, 1);
 				
@@ -293,6 +302,7 @@ function infiniteScroll( obj, callback ){
 		  return Reddit;
 		});
 }
+
 
 /* FORM VALIDATION */
 if ($('.form-signin').length > 0) 
@@ -518,7 +528,12 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
+	/*
 	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 0 }, function(){
+		clArr = searchList();
+	});
+	*/
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ucl&list='+list_id, 'pageSize': 100, 'type': 0 }, function(){
 		clArr = searchList();
 	});
 }
@@ -645,7 +660,8 @@ if( exist($('.pageSeen')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
+	//--> infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=us&usr='+usr, 'pageSize': 30, 'type': 0 });
 }
 
 // Seen Page Unseen
@@ -686,7 +702,8 @@ if( exist($('.pageWatchlist')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
+	//-- infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=uwl&usr='+usr, 'pageSize': 30, 'type': 0 });
 }
 
 // Follow Unfollow
@@ -782,12 +799,7 @@ function lazyLoadActive(){
 // Wall
 if( exist($('.pageWall')) ){
 	var page = 1;
-	
-	getAjx({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/'+page+'?&nick='+nick }, function(){
-		
-		setTimeout(lazyLoadActive, 1);
-	
-	});
+	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick=nickimnick', 'pageSize': 5, 'type': 0 });
 }
 
 // YOUTUBE TRAILER
