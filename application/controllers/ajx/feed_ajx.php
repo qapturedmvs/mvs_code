@@ -19,7 +19,31 @@
       
       if($feeds){
 
-				$feeds = $this->_build_feed_tree($feeds);
+				$feeds = $this->_build_wall_tree($feeds);
+        $json->result = 'OK';
+        $json->data = $feeds;
+				
+      }else{
+				
+        $json->result = 'FALSE';
+        $json->data = '';
+				
+      }
+
+			$this->data['json'] = json_encode($json);
+			$this->load->view('json/main_json_view', $this->data);
+      
+    }
+		
+		public function feeds($p = 1){
+      
+			$json = (object) array();
+			$data = array('usr' => $this->user['usr_id'], 'p' => $p);
+      $feeds = $this->feed_m->feeds_json($data);
+      
+      if($feeds){
+
+				$feeds = $this->_build_wall_tree($feeds);
         $json->result = 'OK';
         $json->data = $feeds;
 				
@@ -44,7 +68,7 @@
       if($feeds){
 				
 				foreach($feeds as $feed)
-					$feed = $this->_prepare_feed_data($feed);
+					$feed = $this->_prepare_wall_data($feed);
 
         $json->result = 'OK';
         $json->data = $feeds;
@@ -61,13 +85,13 @@
 			
 		}
 		
-		private function _build_feed_tree(Array $data){ 
+		private function _build_wall_tree(Array $data){ 
 		
 			$tree = array();
 			
 			foreach($data as $ck => $cv){
 				
-				$cv = $this->_prepare_feed_data($cv);
+				$cv = $this->_prepare_wall_data($cv);
 				
 				if($cv['feed_type'] === 'rf'){
 					
@@ -104,8 +128,11 @@
 			return $tree;
 		}
 		
-		private function _prepare_feed_data($feed){
+		private function _prepare_wall_data($feed){
 			
+			$temp = date_parse($feed['feed_time']);
+			
+			$feed['feed_year'] = $temp['year'];
 			$feed['feed_ago'] = time_calculator($feed['feed_time']);
 				
 			if($feed['mvs_poster'] === '1')

@@ -15,10 +15,10 @@
       <div class="reply_result"></div>
     </div>
   </div>
-  <div class="listHolder wallHolder" ng-controller='userWall'>
+  <div class="ReviewListHolder wallHolder" ng-controller='userWall'>
     <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
       <ul>
-        <li class="listItem wallItem" ng-repeat='item in reddit.items' ng-class="{items:item.type == 0, seperator:item.type == 1, years:item.type == 4}">
+        <li class="listItem wallItem" ng-repeat='item in reddit.items' ng-class="{items:item.type == 0, pageSep:item.type == 1, noData:item.type == 2, yearSep:item.type == 3}">
           <div ng-switch="item.type">
             <div ng-switch-when='0'>
               <?php //User review to a movie ?>
@@ -258,7 +258,7 @@
             </div>
             <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>
             <div ng-switch-when='2'><b>{{item.result}}</b></div>
-            <div ng-switch-when='4'><b>{{item.result}}</b></div>
+            <div ng-switch-when='3'><b>{{item.result}}</b></div>
           </div>
         </li>
       </ul>

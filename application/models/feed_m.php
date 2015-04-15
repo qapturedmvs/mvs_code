@@ -27,6 +27,24 @@ class Feed_M extends MVS_Model
 	
 	}
 	
+	//FEEDS JSON
+	public function feeds_json($data){
+		
+		$data['p'] = $this->cleaner($data['p']);
+    $data['offset'] = ($data['p']-1) * $this->per_page;
+		$data['perpage'] = $this->per_page;
+		
+		unset($data['p']);
+
+		$feeds = $this->db->call_procedure('sp_get_feeds', $data);
+
+		if($feeds)
+			return $feeds;
+		else
+			return FALSE;
+	
+	}
+	
 	//MORE REF REVIEW JSON
 	public function more_review_json($data){
 

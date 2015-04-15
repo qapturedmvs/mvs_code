@@ -266,7 +266,7 @@ function infiniteScroll( obj, callback ){
 						if( items['feed_year'] ){
 							if( feed_year != items['feed_year'] ){
 								feed_year = items['feed_year'];
-								this.items.push({ 'type': 4, 'result': feed_year });
+								this.items.push({ 'type': 3, 'result': feed_year });
 							}
 						}
 					this.items.push( items );
@@ -799,7 +799,13 @@ function lazyLoadActive(){
 // Wall
 if( exist($('.pageWall')) ){
 	var page = 1;
-	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick=nickimnick', 'pageSize': 5, 'type': 0 });
+	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick='+nick, 'pageSize': 5, 'type': 0 });
+}
+
+// Feeds
+if( exist($('.pageFeeds')) ){
+	var page = 1;
+	infiniteScroll({ controller: 'userFeeds', uri: 'ajx/feed_ajx/feeds/{{page}}', 'pageSize': 5, 'type': 0 });
 }
 
 // YOUTUBE TRAILER

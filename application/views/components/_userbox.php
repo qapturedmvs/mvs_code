@@ -1,6 +1,9 @@
 <?php if($logged_in): ?>
 <div class="userbox">
-  <div class="usrInfo"><?php echo $user['usr_name']; ?></div>
+  <div class="userInfo">
+    <span class="userAvatar"><img src="<?php echo ($user['usr_avatar'] != '') ? $site_url.$user['usr_avatar'] : $site_url.'images/user.jpg'; ?>" alt="<?php echo $user['usr_name']; ?>" /></span>
+    <a href="<?php echo $site_url.'user/feeds'; ?>"><?php echo $user['usr_name']; ?></a>
+  </div>
   <div class="userMenu">
     <ul>
       <li><a href="<?php echo $site_url.'user/profile/'; ?>">Profile</a></li>
