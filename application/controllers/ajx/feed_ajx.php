@@ -40,7 +40,7 @@
 			$json = (object) array();
 			$data = array('usr' => $this->user['usr_id'], 'p' => $p);
       $feeds = $this->feed_m->feeds_json($data);
-      
+
       if($feeds){
 
 				$feeds = $this->_build_wall_tree($feeds);
@@ -115,7 +115,7 @@
 					}
 					
 				}else{
-					
+
 					if(!isset($tree[$ck]))
 						$tree[$ck] = $cv;
 					

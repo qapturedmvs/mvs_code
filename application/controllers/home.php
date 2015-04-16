@@ -9,7 +9,7 @@
 		}
 		
 		public function index(){
-
+$this->_send_mail('nickimnick@gmail.com', 'WELCOME');
 			$this->logged_in === FALSE || redirect('user/feeds');
 			$inputs = $this->input->post(NULL, TRUE);
 

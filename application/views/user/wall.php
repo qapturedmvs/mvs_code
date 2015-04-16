@@ -57,7 +57,7 @@
                           <div class="textContent">
                             <div class="text">{{ref.feed_text}}</div>
                           </div>
-                          <div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
+                          <div class="time"><span title="{{item.feed_time}}">{{ref.feed_ago}}</span></div>
                           <hr class="qFixer" />
                         </div>
                         <?php if($logged_in): ?>
@@ -109,7 +109,7 @@
                           <div class="textContent">
                             <div class="text">{{ref.feed_text}}</div>
                           </div>
-                          <div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
+                          <div class="time"><span title="{{item.feed_time}}">{{ref.feed_ago}}</span></div>
                           <hr class="qFixer" />
                         </div>
                         <hr class="qFixer" />
@@ -256,9 +256,9 @@
                 </div>
               </div>
             </div>
-            <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div>
+            <!-- <div ng-switch-when='1'><b>PAGE {{item.paging}}</b></div> -->
             <div ng-switch-when='2'><b>{{item.result}}</b></div>
-            <div ng-switch-when='3'><b>{{item.result}}</b></div>
+            <div id="year{{item.result}}" ng-switch-when='3'><a href="javascript:void(0);">{{item.result}}</a></b></div>
           </div>
         </li>
       </ul>
