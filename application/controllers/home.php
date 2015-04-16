@@ -9,7 +9,7 @@
 		}
 		
 		public function index(){
-$this->_send_mail('nickimnick@gmail.com', 'WELCOME');
+
 			$this->logged_in === FALSE || redirect('user/feeds');
 			$inputs = $this->input->post(NULL, TRUE);
 
@@ -82,6 +82,7 @@ $this->_send_mail('nickimnick@gmail.com', 'WELCOME');
 					
 					$data['tmp_usr_act_key'] = $user['usr_act_key'];
 					$this->session->set_userdata($data);
+
 					redirect($successPage, 'refresh');
 					
 				}else{

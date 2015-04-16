@@ -30,14 +30,14 @@ class MVS_Controller extends CI_Controller{
 	}
 	
 			
-	protected function _send_mail($email, $type){
+	protected function _send_mail($data, $type){
 		
 		$this->load->library('email');
 		
 		$this->email->from('qaptured@altugorsmen.com', 'Qaptured');
-		$this->email->to($email);
-		$this->email->subject('Email Test');
-		$this->email->message('Testing the email class. Mail type is: '.$type);
+		$this->email->to($data['usr_email']);
+		$this->email->subject($data['subject']);
+		$this->email->message($result);
 		
 		//$this->email->send();
 		
