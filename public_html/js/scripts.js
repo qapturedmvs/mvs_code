@@ -796,16 +796,34 @@ function lazyLoadActive(){
 		$(".lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
 }
 
+function rateButton(){
+	var clicklable = true;
+	$('.rateHolder > a.active').unbind('click').bind('click', function(){
+		if( clicklable ){
+			clicklable = false;
+			var _this = $( this ), prts = _this.parents('[act-id]'), actID = prts.attr('act-id'), type = prts.hasClass('cList') ? 'url1' : 'url2';
+			// ajax sonucu 
+			clicklable = true;
+			console.log(actID);
+		}
+	});
+}
+
+
 // Wall
 if( exist($('.pageWall')) ){
 	var page = 1;
-	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick='+nick, 'pageSize': 5, 'type': 0 });
+	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick='+nick, 'pageSize': 5, 'type': 0 }, function(){
+		rateButton();
+	});
 }
 
 // Feeds
 if( exist($('.pageFeeds')) ){
 	var page = 1;
-	infiniteScroll({ controller: 'userFeeds', uri: 'ajx/feed_ajx/feeds/{{page}}', 'pageSize': 5, 'type': 0 });
+	infiniteScroll({ controller: 'userFeeds', uri: 'ajx/feed_ajx/feeds/{{page}}', 'pageSize': 5, 'type': 0 }, function(){
+		rateButton();
+	});
 }
 
 // YOUTUBE TRAILER
