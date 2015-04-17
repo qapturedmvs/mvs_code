@@ -34,14 +34,13 @@ class MVS_Controller extends CI_Controller{
 		
 		$this->load->library('email');
 		
+		$message = $this->load->view('email/'.$type,$data,TRUE);
+		
 		$this->email->from('qaptured@altugorsmen.com', 'Qaptured');
 		$this->email->to($data['usr_email']);
 		$this->email->subject($data['subject']);
-		$this->email->message($result);
-		
-		//$this->email->send();
-		
-		//echo $this->email->print_debugger();
+		$this->email->message($message);
+		$this->email->send();
 		
 	}
 	

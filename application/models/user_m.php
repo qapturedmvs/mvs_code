@@ -40,15 +40,15 @@ class User_M extends MVS_Model
 		}
 	}
   
-  public function signup($name, $email, $password){
+  public function signup($data){
     
-		$password = $this->hash($password, 'sha512');
-		$usr_act_key = $this->hash($email, 'sha1');
+		$password = $this->hash($data['sgn_password'], 'sha512');
+		$usr_act_key = $this->hash($data['sgn_email'], 'sha1');
     $user = array(
       'usr_nick' => gnrtSlug('user'),
-      'usr_name' => $name,
-      'usr_email' => $email,
-      'usr_password' => $password,
+      'usr_name' => $data['sgn_name'],
+      'usr_email' => $data['sgn_email'],
+      'usr_password' => $data['sgn_password'],
       'usr_avatar' => '',
 			'usr_slogan' => '',
       'usr_account' => 'qp',

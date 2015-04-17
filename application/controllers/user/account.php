@@ -11,18 +11,18 @@
 		
 		public function success(){
 			
-			$usr_act_key = $this->session->userdata('tmp_usr_act_key');
-			
-			if($usr_act_key){
-				
-        $this->session->unset_userdata('tmp_usr_act_key');
-				$this->data['mail_link'] = $this->data['site_url'].'user/account/activate?act='.$usr_act_key;
-				
-			}else{
-				
-				redirect('', 'refresh');
-				
-			}
+//			$usr_act_key = $this->session->userdata('tmp_usr_act_key');
+//			
+//			if($usr_act_key){
+//				
+//        $this->session->unset_userdata('tmp_usr_act_key');
+//				$this->data['mail_link'] = $this->data['site_url'].'user/account/activate?act='.$usr_act_key;
+//				
+//			}else{
+//				
+//				redirect('', 'refresh');
+//				
+//			}
 			
 			$this->data['subview'] = 'user/account/signup_success';
 			$this->load->view('_main_body_layout', $this->data);

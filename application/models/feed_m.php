@@ -15,6 +15,7 @@ class Feed_M extends MVS_Model
 		$data['p'] = $this->cleaner($data['p']);
     $data['offset'] = ($data['p']-1) * $this->per_page;
 		$data['perpage'] = $this->per_page;
+		$data['time'] = $this->session->flashdata('page_load_time');
 		
 		unset($data['p']);
 
@@ -33,6 +34,7 @@ class Feed_M extends MVS_Model
 		$data['p'] = $this->cleaner($data['p']);
     $data['offset'] = ($data['p']-1) * $this->per_page;
 		$data['perpage'] = $this->per_page;
+		$data['time'] = $this->session->flashdata('page_load_time');
 		
 		unset($data['p']);
 

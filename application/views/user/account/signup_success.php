@@ -1,6 +1,6 @@
 <?php
 
-  echo 'NEW MEMBER SUCCESS!!!<br />';
-  echo 'YOUR ACTIVATION LINK<br /><a href="'.$mail_link.'">'.$mail_link.'</a>';
+  echo 'Your account has been created.<br />';
+  echo 'Activation mail sent to your email.';
 
 ?>

@@ -2,7 +2,6 @@
   
   $config['useragent'] = 'Qaptured';
   $config['protocol'] = 'smtp';
-  //$config['charset'] = 'iso-8859-1';
   $config['smtp_host'] = 'mail.altugorsmen.com';
   $config['smtp_user'] = 'qaptured@altugorsmen.com';
   $config['smtp_pass'] = 'qpt1234';
