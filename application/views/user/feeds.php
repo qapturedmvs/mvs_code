@@ -38,7 +38,10 @@
 									<div class="feedControls">
 										<div class="generalControls">
 											<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
-											<div class="rateHolder feedRate" ng-class="item.usr_rate_value == 1 ? 'disableUp' : (item.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
+											<div class="rateHolder feedRate">
+												<a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a>
+												<a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a>
+											</div>
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
 											<a class="btnEdit" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
@@ -66,7 +69,10 @@
 												<?php if($logged_in): ?>
 												<div class="feedControls">
 													<div class="generalControls">
-														<div class="rateHolder feedRate" ng-class="ref.usr_rate_value == 1 ? 'disableUp' : (ref.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a></div>
+														<div class="rateHolder feedRate">
+															<a class="rateUp" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a>
+															<a class="rateDown" ng-class="{ref:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a>
+														</div>
 													</div>
 													<div class="ownerControls" ng-if="ref.owner == 1">
 														<a class="btnEdit" href="javascript:void(0);">Edit</a>	
@@ -101,7 +107,10 @@
 									<div class="feedControls">
 										<div class="generalControls">
 											<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
-											<div class="rateHolder feedRate" ng-class="item.usr_rate_value == 1 ? 'disableUp' : (item.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
+											<div class="rateHolder feedRate">
+												<a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a>
+												<a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a>
+											</div>
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
 											<a class="btnEdit" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
@@ -132,7 +141,10 @@
 											<div class="feedControls">
 												<div class="generalControls">
 													<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
-													<div class="rateHolder feedRate" ng-class="ref.usr_rate_value == 1 ? 'disableUp' : (ref.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a></div>
+													<div class="rateHolder feedRate">
+														<a class="rateUp" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a>
+														<a class="rateDown" ng-class="{ref:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a>
+													</div>
 												</div>
 												<div class="ownerControls" ng-if="ref.owner == 1">
 													<a class="btnEdit" href="javascript:void(0);">Edit</a>	
@@ -167,7 +179,10 @@
 								<?php if($logged_in): ?>
 								<div class="feedControls">
 									<div class="generalControls">
-										<div class="rateHolder feedRate" ng-class="item.usr_rate_value == 1 ? 'disableUp' : (item.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
+										<div class="rateHolder feedRate">
+                      <a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a>
+                      <a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a>
+										</div>
 									</div>
 									<div class="ownerControls" ng-if="item.owner == 1">
 										<a class="btnEdit" href="javascript:void(0);">Edit</a>	
@@ -197,7 +212,10 @@
 								<?php if($logged_in): ?>
 								<div class="feedControls">
 									<div class="generalControls">
-										<div class="rateHolder feedRate" ng-class="item.usr_rate_value == 1 ? 'disableUp' : (item.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
+										<div class="rateHolder feedRate">
+                      <a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a>
+                      <a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a>
+										</div>
 									</div>
 									<div class="ownerControls" ng-if="item.owner == 1">
 										<a class="btnEdit" href="javascript:void(0);">Edit</a>	
@@ -227,14 +245,17 @@
 								<?php if($logged_in): ?>
 									<div class="feedControls">
 									<div class="generalControls">
-										<div class="rateHolder feedRate" ng-class="item.usr_rate_value == 1 ? 'disableUp' : (item.usr_rate_value == -1 ? 'disableDown' : '')"><a class="rateUp" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a><a class="rateDown" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a></div>
+										<div class="rateHolder feedRate">
+                      <a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a>
+                      <a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a>
+										</div>
 									</div>
 								</div>
 								<?php endif; ?>
 							</div>
 							
 							<?php //User's seen action ?>
-							<div seen-id="{{item.feed_id}}" class="feedHolder seen mov" ng-if="item.feed_type == 'sn'">
+							<div seen-id="{{item.feed_id}}" class="feedHolder seen" ng-if="item.feed_type == 'sn'">
 								<div class="feedContent">
 									<div class="userInfo">
 										<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>
@@ -244,7 +265,13 @@
 									<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
 									<div class="textContent">
 										<div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
-										<div class="text">Marked as Seen</div>
+										<div class="text">
+											<span class="grp" ng-if="item.total_seen > 1">
+												<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
+											</span>
+											<span ng-if="(item.total_seen - item.seen_count) > 0"> and <a href="javascript:void(0);">{{item.total_seen - item.seen_count}} other</a></span>
+											Marked as Seen
+										</div>
 									</div>
 									<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 									<hr class="qFixer" />
@@ -254,7 +281,7 @@
 							</div>
 							
 							<?php //User's add to watchlist action ?>
-							<div wtc-id="{{item.feed_id}}" class="feedHolder wtc mov" ng-if="item.feed_type == 'wt'">
+							<div wtc-id="{{item.feed_id}}" class="feedHolder wtc" ng-if="item.feed_type == 'wt'">
 								<div class="feedContent">
 									<div class="userInfo">
 										<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>

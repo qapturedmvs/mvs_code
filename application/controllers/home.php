@@ -83,14 +83,9 @@
 					//$data['tmp_usr_act_key'] = $user['usr_act_key'];
 					//$this->session->set_userdata($data);
 					
-					$mail = array(
-										'usr_name' => $data['sgn_name'],
-										'usr_email' => $data['sgn_email'],
-										'act_link' => $this->data['site_url'].'user/account/activate?act='.$user['usr_act_key'],
-										'subject' => 'Qaptured User Activation'
-									);
-					
-					$this->_send_mail($mail, 'user_activation');
+					$this->data['mail'] = $user;
+
+					$this->_send_mail($data['sgn_email'], 'Qaptured User Activation', $this->data, 'user_activation');
 					
 					redirect($successPage, 'refresh');
 					

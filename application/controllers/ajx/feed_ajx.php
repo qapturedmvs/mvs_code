@@ -43,7 +43,7 @@
 
       if($feeds){
 
-				$feeds = $this->_build_wall_tree($feeds);
+				$feeds = $this->_build_feed_tree($feeds);
         $json->result = 'OK';
         $json->data = $feeds;
 				
@@ -98,7 +98,7 @@
 					foreach($data as $pk => $pv){
 						
 						if($pv['feed_type'] === 'rv' && $pv['feed_id'] == $cv['feed_ref_id']){
-
+		
 							if(isset($tree[$pk])){
 								
 								$tree[$pk]['ref'][] = $cv;
@@ -106,16 +106,16 @@
 							}else{
 							
 								$pv['ref'][] = $cv;
-								$tree[$pk] = $this->_prepare_feed_data($pv);
+								$tree[$pk] = $this->_prepare_wall_data($pv);
 							
 							}
 							
 						}
 						
 					}
-					
-				}else{
 
+				}else{
+		
 					if(!isset($tree[$ck]))
 						$tree[$ck] = $cv;
 					
@@ -126,6 +126,55 @@
 			ksort($tree);
 			
 			return $tree;
+		}
+		
+		private function _build_feed_tree($data){
+			
+			$tree = array();
+			
+			foreach($data as $k => $d){
+				
+				if($d['feed_type'] == 'sn' && (int) $d['total_seen'] > 1){
+					
+					$i = 1;
+					unset($data[$k]);
+					
+					foreach($data as $sk => $sv){
+						
+						if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id']){
+							
+							$d['grp'][] = $this->_prepare_wall_data($sv);
+							unset($data[$sk]);
+							$i++;
+							
+						}
+						
+					}
+					
+					if(isset($d['grp'])){
+						$d['seen_count'] = $i;
+						$tree[] = $this->_prepare_wall_data($d);
+					}
+					
+				}elseif($d['feed_type'] == 'rf'){
+					
+					foreach($tree as $tk => $tv){
+						
+						if($tv['feed_id'] == $d['feed_ref_id'])
+							$tree[$tk]['ref'][] = $this->_prepare_wall_data($d);
+						
+					}
+					
+				}else{
+					
+					$tree[] = $this->_prepare_wall_data($d);
+					
+				}
+				
+			}
+			
+			return $tree;
+			
 		}
 		
 		private function _prepare_wall_data($feed){
@@ -144,6 +193,23 @@
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 			
 			return $feed;
+			
+		}
+		
+		public function rate_review($act_id){
+			
+			if($this->logged_in){
+				
+				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $act_id, 'value' => $this->get_vars['val']);
+				$this->data['rate_result'] = $this->feed_m->rate_review($data);
+			
+			}else{
+				
+				$this->data['rate_result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_rate_review', $this->data);
 			
 		}
   

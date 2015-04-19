@@ -11,7 +11,7 @@
     
     public function seen_unseen_movie($action){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('action_m');
 				
@@ -38,7 +38,7 @@
 		
 		public function mark_all_seen(){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('action_m');
 				
@@ -62,7 +62,7 @@
 		
 		public function add_remove_watchlist($action){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('action_m');
 				
@@ -89,7 +89,7 @@
 		
 		public function create_new_list($action){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('user_custom_list_m');
 				
@@ -110,7 +110,7 @@
 		
 		public function delete_custom_list(){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('user_custom_list_m');
 				
@@ -139,7 +139,7 @@
 		
 		public function add_remove_from_list($action){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('user_custom_list_m');
 				
@@ -162,6 +162,23 @@
 			
 			$this->load->view('results/_cl_add_remove_from_list', $this->data);
 
+		}
+		
+		public function rate_customlist($list_id){
+			
+			if($this->logged_in){
+				
+				$data = array('usr_id' => $this->user['usr_id'], 'list_id' => $list_id, 'value' => $this->get_vars['val']);
+				$this->data['rate_result'] = $this->user_custom_list_m->rate_customlist($data);
+			
+			}else{
+				
+				$this->data['rate_result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_rate_review', $this->data);
+			
 		}
 		
   

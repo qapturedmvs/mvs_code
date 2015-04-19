@@ -156,6 +156,17 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
+	public function rate_review($data){
+			
+			$data['list_id'] = $this->cleaner($data['list_id']);
+			$out = array('@result' => NULL);
+			$this->db->call_procedure('sp_rate_customlist', $data, $out);
+			$result = $out['@result'];
+		
+		return $result;
+	
+	}
+	
   
 }
 

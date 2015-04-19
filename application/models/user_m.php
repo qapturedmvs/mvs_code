@@ -48,7 +48,7 @@ class User_M extends MVS_Model
       'usr_nick' => gnrtSlug('user'),
       'usr_name' => $data['sgn_name'],
       'usr_email' => $data['sgn_email'],
-      'usr_password' => $data['sgn_password'],
+      'usr_password' => $password,
       'usr_avatar' => '',
 			'usr_slogan' => '',
       'usr_account' => 'qp',
@@ -58,7 +58,7 @@ class User_M extends MVS_Model
 		
     $this->db->insert('mvs_users', $user);
     
-    return array('usr_id' => $this->db->insert_id(), 'usr_act_key' => $usr_act_key);
+    return array('usr_id' => $this->db->insert_id(), 'usr_name' => $data['sgn_name'], 'usr_act_key' => $usr_act_key);
 	}
   
   public function profile($id){

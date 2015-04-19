@@ -16,6 +16,6 @@
 	<?php echo form_close(); ?>
 	</div>
 <?php else: ?>
-<div class="formResultHolder pwrResultHolder">YOUR PASSWORD RESET LINK: <?php echo '<a href="'.$mail_link.'">'.$mail_link.'</a>'; ?>.</div>
+<div class="formResultHolder pwrResultHolder">Your password reset link send to your email.</div>
 <?php endif; ?>
 </div>

@@ -58,6 +58,17 @@ class Feed_M extends MVS_Model
 			return FALSE;
 	
 	}
+	
+	public function rate_review($data){
+			
+			$data['act_id'] = $this->cleaner($data['act_id']);
+			$out = array('@result' => NULL);
+			$this->db->call_procedure('sp_rate_review', $data, $out);
+			$result = $out['@result'];
+		
+		return $result;
+	
+	}
   
 }
 

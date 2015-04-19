@@ -26,7 +26,10 @@
 					
 					if($account){
 						
-						$this->data['mail_link'] = $this->data['site_url'].'user/password/reset?act='.$account['data']->usr_act_key;
+						$this->data['mail'] = $account['data'];
+
+						$this->_send_mail($account['data']->usr_email, 'Qaptured Forgotten Password', $this->data, 'user_password_forget');
+						//$this->data['mail_link'] = $this->data['site_url'].'user/password/reset?act='.$account['data']->usr_act_key;
 						$this->data['pwf_result'] = 'success';
 						
 					}else{
