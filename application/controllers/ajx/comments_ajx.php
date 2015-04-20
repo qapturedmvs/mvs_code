@@ -59,58 +59,45 @@
       
     }
 		
-		private function _build_comment_tree(Array $data){ 
+		private function _build_comment_tree($data){ 
 		
 			$tree = array();
-			
-			foreach($data as $ck => $cv){
-				
-				$cv['feed_ago'] = time_calculator($cv['feed_time']);
-				$cv['usr_avatar'] =  ($cv['usr_avatar'] == '') ? 'images/user.jpg' : $cv['usr_avatar'];
-				$cv['owner'] = ($cv['usr_id'] == $this->user['usr_id']) ? 1 : 0;
-				
-				if($cv['feed_type'] === 'rf'){
-					
-					foreach($data as $pk => $pv){
-						
-						if($pv['feed_type'] === 'rv' && $pv['feed_id'] == $cv['feed_ref_id']){
 
-							if(isset($tree[$pk])){
-								
-								$tree[$pk]['ref'][] = $cv;
-								
-							}else{
-							
-								$pv['ref'][] = $cv;
-								$tree[$pk] = $pv;
-							
-							}
-							
-							$tree[$pk]['feed_ago'] = time_calculator($tree[$pk]['feed_time']);		
-							$tree[$pk]['usr_avatar'] =  ($tree[$pk]['usr_avatar'] == '') ? 'images/user.jpg' : $tree[$pk]['usr_avatar'];
-							$tree[$pk]['owner'] = ($tree[$pk]['usr_id'] == $this->user['usr_id']) ? 1 : 0;
-							
-						}
+			foreach($data as $k => $d){
+				
+				if($d['feed_type'] == 'rf'){
+					
+					foreach($tree as $tk => $tv){
+						
+						if($tv['feed_id'] == $d['feed_ref_id'])
+							$tree[$tk]['ref'][] = $this->_prepare_comment_data($d);
 						
 					}
 					
 				}else{
 					
-					if(!isset($tree[$ck]))
-						$tree[$ck] = $cv;
+					$tree[] = $this->_prepare_comment_data($d);
 					
 				}
 				
 			}
 			
-			ksort($tree);
-			
 			return $tree;
+		}
+		
+		private function _prepare_comment_data($feed){
+			
+			$feed['feed_ago'] = time_calculator($feed['feed_time']);
+			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
+			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
+			
+			return $feed;
+			
 		}
 		
 		public function add_comment(){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
 				$this->load->model('action_m');
 			
@@ -151,15 +138,15 @@
 					$this->data['comment_result'] = 'error';
 					
 				}
+				
+				$this->load->view('json/comment_json', $this->data);
 			
 			}else{
 				
-				$this->data['comment_result'] = 'no-user';
+				show_404();
 				
 			}
-			
-			$this->load->view('json/comment_json', $this->data);
-				
+
     }
   
   }

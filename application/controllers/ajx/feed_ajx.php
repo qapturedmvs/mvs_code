@@ -88,42 +88,25 @@
 		private function _build_wall_tree(Array $data){ 
 		
 			$tree = array();
-			
-			foreach($data as $ck => $cv){
+
+			foreach($data as $k => $d){
 				
-				$cv = $this->_prepare_wall_data($cv);
-				
-				if($cv['feed_type'] === 'rf'){
+				if($d['feed_type'] == 'rf'){
 					
-					foreach($data as $pk => $pv){
+					foreach($tree as $tk => $tv){
 						
-						if($pv['feed_type'] === 'rv' && $pv['feed_id'] == $cv['feed_ref_id']){
-		
-							if(isset($tree[$pk])){
-								
-								$tree[$pk]['ref'][] = $cv;
-								
-							}else{
-							
-								$pv['ref'][] = $cv;
-								$tree[$pk] = $this->_prepare_wall_data($pv);
-							
-							}
-							
-						}
+						if($tv['feed_id'] == $d['feed_ref_id'])
+							$tree[$tk]['ref'][] = $this->_prepare_wall_data($d);
 						
 					}
-
+					
 				}else{
-		
-					if(!isset($tree[$ck]))
-						$tree[$ck] = $cv;
+					
+					$tree[] = $this->_prepare_wall_data($d);
 					
 				}
 				
 			}
-			
-			ksort($tree);
 			
 			return $tree;
 		}
@@ -183,13 +166,15 @@
 			
 			$feed['feed_year'] = $temp['year'];
 			$feed['feed_ago'] = time_calculator($feed['feed_time']);
+			
+			unset($temp);
 				
 			if($feed['mvs_poster'] === '1')
 				$feed['mvs_poster'] = getCoverPath($feed['mvs_slug'], 'small');
 			elseif($feed['mvs_poster'] === '0')
 				$feed['mvs_poster'] = 'images/placeHolder.jpg';
 			
-			$feed['usr_avatar'] =  ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
+			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 			
 			return $feed;
