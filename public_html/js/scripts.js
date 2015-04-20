@@ -809,11 +809,11 @@ function onRateClick(){
 		if( _this.parents('[act-id]') ){
 			prts = _this.parents('[act-id]');
 			id = prts.attr('act-id');
-			uri = '/ajx/feed_ajx/rate_review/' + id;
+			uri = 'ajx/feed_ajx/rate_review/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}else{
 			prts = _this.parents('[list-id]');
 			id = prts.attr('list-id');
-			uri = '/ajx/feed_ajx/rate_review/' + id;
+			uri = 'ajx/feed_ajx/rate_review/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}
 		
 		obj = { 'down': $('.rateHolder a.rateDown', prts).hasClass('active') ? 1 : 0, 'up': $('.rateHolder a.rateUp', prts).hasClass('active') ? 1 : 0 }
