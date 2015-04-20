@@ -170,15 +170,15 @@
 				
 				$data = array('usr_id' => $this->user['usr_id'], 'list_id' => $list_id, 'value' => $this->get_vars['val']);
 				$this->data['rate_result'] = $this->user_custom_list_m->rate_customlist($data);
+				
+				$this->load->view('results/_rate_item', $this->data);
 			
 			}else{
 				
-				$this->data['rate_result'] = 'no-user';
+				show_404();
 				
 			}
-			
-			$this->load->view('results/_rate_review', $this->data);
-			
+
 		}
 		
   
