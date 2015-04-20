@@ -797,16 +797,53 @@ function lazyLoadActive(){
 }
 
 function rateButton(){
-	var clicklable = true;
-	$('.rateHolder > a.active').unbind('click').bind('click', function(){
-		if( clicklable ){
-			clicklable = false;
-			var _this = $( this ), prts = _this.parents('[act-id]'), actID = prts.attr('act-id'), type = prts.hasClass('cList') ? 'url1' : 'url2';
-			// ajax sonucu 
-			clicklable = true;
-			console.log(actID);
+	$('.rateHolder > a.active').unbind('click').bind('click', onRateClick);
+}
+
+var clicklable = true;
+function onRateClick(){
+	if( clicklable ){		
+		clicklable = false;
+		
+		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri, obj;
+		if( _this.parents('[act-id]') ){
+			prts = _this.parents('[act-id]');
+			id = prts.attr('act-id');
+			uri = '/ajx/feed_ajx/rate_review/' + id;
+		}else{
+			prts = _this.parents('[list-id]');
+			id = prts.attr('list-id');
+			uri = '/ajx/feed_ajx/rate_review/' + id;
 		}
-	});
+		
+		obj = { 'down': $('.rateHolder a.rateDown', prts).hasClass('active') ? 1 : 0, 'up': $('.rateHolder a.rateUp', prts).hasClass('active') ? 1 : 0 }
+		$('.rateHolder a.active', prts).removeClass('active');
+		
+		getAjax({ 'uri': site_url + uri }, function(){
+			$('.rateHolder a small', prts).html();
+			$('.rateHolder a.active', prts).removeClass('active');
+			var i;
+			if( type == 'up' ){
+				i = parseFloat( $('.rateHolder a.rateUp small', prts).text() );
+				$('.rateHolder a.rateUp small', prts).html( i++ );
+				if( obj['down'] == 1 ){ 
+					$('.rateHolder a.rateDown', prts).addClass('active');
+					i = parseFloat( $('.rateHolder a.rateDown small', prts).text() );
+					$('.rateHolder a.rateDown small', prts).html( i-- );
+				}
+			}else{
+				i = parseFloat( $('.rateHolder a.rateDown small', prts).text() );
+				$('.rateHolder a.rateDown small', prts).html( i++ );
+				if( obj['up'] == 1 ){ 
+					$('.rateHolder a.rateUp', prts).addClass('active');
+					i = parseFloat( $('.rateHolder a.rateUp small', prts).text() );
+					$('.rateHolder a.rateUp small', prts).html( i-- );
+				}
+			}
+			$('.rateHolder > a.active', prts).unbind('click').bind('click', onRateClick);
+			clicklable = true;
+		});
+	}
 }
 
 
