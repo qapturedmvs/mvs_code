@@ -360,7 +360,7 @@ function single_seen(obj){
 	var action = $(obj).attr("rel"),
 				id = (action == 'seen') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("seen-id");
 				
-	getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
+	getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'seen')
@@ -401,7 +401,7 @@ function select_seen(obj){
 
 $('a.btnMultiSeen').click(function(){
 		
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/mark_all_seen/', param: {ids:seenList} }, function( e ){
+		getAjax( { uri: site_url+'ajx/movie_actions_ajx/mark_all_seen/', param: {ids:seenList} }, function( e ){
 				
 				alert(e['msg']);
 				removeSeen();
@@ -422,7 +422,7 @@ function add_remove_wtc(obj){
 		var action = $(obj).attr("rel"),
 				id = (action == 'awtc') ? mvs_id : $(obj).attr("wtc-id");
 			
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/add_remove_watchlist/'+action, param: {id:id} }, function( e ){
+		getAjax( { uri: site_url+'ajx/movie_actions_ajx/add_remove_watchlist/'+action, param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'awtc')
@@ -459,7 +459,7 @@ $('.listCreate a').click(function(){
 
 		
 		
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/create_new_list/'+action, param: {id:mvs_id,title:title} }, function( e ){
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/create_new_list/'+action, param: {id:mvs_id,title:title} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					$('.cnl > a').click();
@@ -478,7 +478,7 @@ $('.cLists li a').click(function(){
 		var action = $(this).parent('li').attr("rel"),
 				id = (action == 'atcl') ? $(this).parent('li').attr("list-id") : $(this).parent('li').attr("ldt-id");
 		
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/add_remove_from_list/'+action, param: {id: id, mvs: mvs_id} }, function( e ){
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/add_remove_from_list/'+action, param: {id: id, mvs: mvs_id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					if(e['action'] == 'atcl')
@@ -509,7 +509,7 @@ function getAjax( obj, callback, error ){
 // Custom List Page
 var clArr = [];
 if( exist($('.pageCustomList')) )
-	getAjx({ controller: 'userCustomList', uri: 'ajx/user_custom_list_ajx/list_lister?usr='+usr }, function(){});
+	getAjx({ controller: 'userCustomList', uri: 'ajx/user_customlist_ajx/list_lister?usr='+usr }, function(){});
 		
 if( exist($('.pageCustomListDetail')) ){
 	
@@ -542,7 +542,7 @@ function deleteCustomList(obj){
 	
 	var list = $(obj).attr("list-id");
 			
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/delete_custom_list/', param: {list:list} }, function( e ){
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/delete_custom_list/', param: {list:list} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					
@@ -618,7 +618,7 @@ function edit_custom_list(){
 		
 		if(title !== text){
 
-			getAjax( { uri: site_url+'ajx/user_custom_list_ajx/edit_list_detail', param: {id: list_id, title:title} }, function( e ){
+			getAjax( { uri: site_url+'ajx/user_customlist_ajx/edit_list_detail', param: {id: list_id, title:title} }, function( e ){
 					
 					if(e['result'] == 'FALSE')
 						alert(e['msg']);
@@ -629,7 +629,7 @@ function edit_custom_list(){
 		
 		if(clsArr.length > 0){
 
-			getAjax( { uri: site_url+'ajx/user_custom_list_ajx/cl_remove_multi_item', param: {ids:clsArr} }, function( e ){
+			getAjax( { uri: site_url+'ajx/user_customlist_ajx/cl_remove_multi_item', param: {ids:clsArr} }, function( e ){
 					
 					if(e['result'] == 'OK')
 						clsArr = [];
@@ -669,7 +669,7 @@ function unseen(obj){
 
 		var id = $(obj).attr("seen-id");
 
-		getAjax( { uri: site_url+'ajx/list_actions_ajx/seen_unseen_movie/unseen', param: {id:id} }, function( e ){
+		getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen_unseen_movie/unseen', param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					$(obj).parents('div.movieItem').fadeOut(333, function(){
@@ -814,7 +814,7 @@ function onRateClick(){
 		}else{
 			prts = _this.parents('[list-id]');
 			id = prt.attr('list-id');
-			uri = 'ajx/feed_ajx/rate_review/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
+			uri = 'ajx/user_customlist_ajx/rate_customlist/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}
 		
 		//prts = $('> .feedContent', prts);
