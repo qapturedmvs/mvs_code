@@ -187,14 +187,14 @@
 				
 				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $act_id, 'value' => $this->get_vars['val']);
 				$this->data['rate_result'] = $this->feed_m->rate_review($data);
-				
-				$this->load->view('results/_rate_item', $this->data);
-			
+
 			}else{
 				
-				show_404();
+				$this->data['rate_result'] = 'no-user';
 				
 			}
+			
+			$this->load->view('results/_rate_item', $this->data);
 
 		}
   

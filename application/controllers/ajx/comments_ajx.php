@@ -105,11 +105,11 @@
 				
 				if(isset($vars['ref'])){
 					
-					$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => $vars['ref'], 'act_text' => $vars['text']);
+					$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => $vars['ref'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
 					
 				}else{
 					
-					$data = array('act_type_id' => (int) $vars['type'], 'act_text' => $vars['text'], 'usr_id' => $this->user['usr_id'], 'act_ref_id' => 0);
+					$data = array('act_type_id' => (int) $vars['type'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl'], 'usr_id' => $this->user['usr_id'], 'act_ref_id' => 0);
 					$col = '';
 
 					switch((int) $vars['type']) {
@@ -125,27 +125,35 @@
 					
 				}
 				
+				$this->data['comment_result'] = $this->action_m->add_comment($data);
 				
-				$feed = $this->action_m->add_comment($data);
-				
-				if($feed){
-					
-					$this->data['feed'] = $feed;
-					$this->data['comment_result'] = 'success';
-					
-				}else{
-					
-					$this->data['comment_result'] = 'error';
-					
-				}
-				
-				$this->load->view('json/comment_json', $this->data);
-			
 			}else{
 				
-				show_404();
+				$this->data['comment_result'] = 'no-user';
 				
 			}
+			
+			$this->load->view('result/_add_comment', $this->data);
+
+    }
+		
+		public function edit_comment($act_id){
+				
+			if($this->logged_in){
+				
+				$this->load->model('action_m');
+			
+				$vars = $this->input->post(NULL, TRUE);
+				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $vars['act'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+				$this->data['edit_result'] = $this->action_m->edit_comment($data);
+				
+			}else{
+				
+				$this->data['edit_result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('result/_edit_comment', $this->data);
 
     }
   

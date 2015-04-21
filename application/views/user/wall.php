@@ -11,6 +11,10 @@
     <div class="replyForm" id="replyForm">
       <textarea name="reply_text" id="reply_text" required></textarea>
       <a href="javascript:void(0);" class="btnDefault btnReply rc">Reply</a>
+      <div class="spoilerChkHolder">
+				<input type="checkbox" name="reply_spl" id="reply_spl" />
+				<label for="reply_spl">This review including spoiler</label>
+			</div>
       <hr class="qFixer" />
       <div class="reply_result"></div>
     </div>
@@ -68,7 +72,7 @@
                           <div class="generalControls">
                             <div class="rateHolder feedRate">
 															<a class="rateUp" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a>
-															<a class="rateDown" ng-class="{ref:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a>
+															<a class="rateDown" ng-class="{ref:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a>
 														</div>
                           </div>
                           <div class="ownerControls" ng-if="ref.owner == 1"> <a class="btnEdit" href="javascript:void(0);">Edit</a> <a class="btnRemove" href="javascript:void(0);">Remove</a> </div>
@@ -128,7 +132,7 @@
                         <div class="generalControls"> <a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
                           <div class="rateHolder feedRate">
 														<a class="rateUp" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{ref.feed_pos_rate}}</small></a>
-														<a class="rateDown" ng-class="{ref:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a>
+														<a class="rateDown" ng-class="{ref:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{ref.feed_neg_rate}}</small></a>
 													</div>
                         </div>
                         <div class="ownerControls" ng-if="ref.owner == 1"> <a class="btnEdit" href="javascript:void(0);">Edit</a> <a class="btnRemove" href="javascript:void(0);">Remove</a> </div>

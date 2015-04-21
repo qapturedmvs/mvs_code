@@ -30,6 +30,16 @@ class Action_M extends MVS_Model
 		return $result;
 	
 	}
+	
+	public function edit_comment($data){
+	
+		$out = array('@result' => NULL);
+		$this->db->call_procedure('sp_edit_feed', $data, $out);
+		$result = $out['@result'];
+
+		return $result;
+	
+	}
   
 	public function seen_movie($data){
 		

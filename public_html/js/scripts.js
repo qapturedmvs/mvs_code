@@ -805,42 +805,52 @@ function onRateClick(){
 	if( clicklable ){		
 		clicklable = false;
 		
-		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri, obj;
+		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, prt, id, uri, obj;
 		if( _this.parents('[act-id]') ){
-			prts = _this.parents('[act-id]');
-			id = prts.attr('act-id');
+			prts = _this.parents('[act-id] > .feedContent');
+			prt = _this.parents('[act-id]');
+			id = prt.attr('act-id');
 			uri = 'ajx/feed_ajx/rate_review/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}else{
 			prts = _this.parents('[list-id]');
-			id = prts.attr('list-id');
+			id = prt.attr('list-id');
 			uri = 'ajx/feed_ajx/rate_review/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}
 		
+		//prts = $('> .feedContent', prts);
+		console.log(id, $('.textContent .text', prts).text());
 		obj = { 'down': $('.rateHolder a.rateDown', prts).hasClass('active') ? 1 : 0, 'up': $('.rateHolder a.rateUp', prts).hasClass('active') ? 1 : 0 }
 		$('.rateHolder a.active', prts).removeClass('active');
 		
-		getAjax({ 'uri': site_url + uri }, function(){
-			$('.rateHolder a small', prts).html();
-			$('.rateHolder a.active', prts).removeClass('active');
-			var i;
-			if( type == 'up' ){
-				i = parseFloat( $('.rateHolder a.rateUp small', prts).text() );
-				$('.rateHolder a.rateUp small', prts).html( i++ );
-				if( obj['down'] == 1 ){ 
-					$('.rateHolder a.rateDown', prts).addClass('active');
-					i = parseFloat( $('.rateHolder a.rateDown small', prts).text() );
-					$('.rateHolder a.rateDown small', prts).html( i-- );
+		getAjax({ 'uri': site_url + uri }, function( e ){
+			
+			if (e['result'] == 'OK') {
+				
+				$('.rateHolder a.active', prts).removeClass('active');
+				var i;
+				if( type == 'up' ){
+					i = parseFloat( $('.rateHolder a.rateUp small', prts).text() )+1;
+					$('.rateHolder a.rateUp small', prts).html( i );
+					if( obj['down'] == 0 ){ 
+						$('.rateHolder a.rateDown', prts).addClass('active');
+						i = parseFloat( $('.rateHolder a.rateDown small', prts).text() ) - 1;
+						$('.rateHolder a.rateDown small', prts).html( i );
+					}
+				}else{
+					i = parseFloat( $('.rateHolder a.rateDown small', prts).text() ) + 1;
+					$('.rateHolder a.rateDown small', prts).html( i );
+					if( obj['up'] == 0 ){ 
+						$('.rateHolder a.rateUp', prts).addClass('active');
+						i = parseFloat( $('.rateHolder a.rateUp small', prts).text() ) - 1;
+						
+						$('.rateHolder a.rateUp small', prts).html( i );
+					}
 				}
-			}else{
-				i = parseFloat( $('.rateHolder a.rateDown small', prts).text() );
-				$('.rateHolder a.rateDown small', prts).html( i++ );
-				if( obj['up'] == 1 ){ 
-					$('.rateHolder a.rateUp', prts).addClass('active');
-					i = parseFloat( $('.rateHolder a.rateUp small', prts).text() );
-					$('.rateHolder a.rateUp small', prts).html( i-- );
-				}
+				$('.rateHolder > a.active', prts).unbind('click').bind('click', onRateClick);
+				
 			}
-			$('.rateHolder > a.active', prts).unbind('click').bind('click', onRateClick);
+
+			
 			clicklable = true;
 		});
 	}
@@ -902,7 +912,7 @@ function cleanText( k ){
 // COMMENT ACTIONS
 if( typeof commentPage !== 'undefined' ){
 
-	var cmtText, comm, commId, commType;
+	var cmtText, comm, commId, commType, spl;
 	
 	if( page === 'cld' ){
 		// Custom List Feeds
@@ -921,24 +931,25 @@ if( typeof commentPage !== 'undefined' ){
 	}
 			
 	$('a.btnComment').click(function(){
-			cmtText = $('#comment_text').val();
+			cmtText = $('#comment_text').val(),
+			spl = ($('#comment_spl').is(":checked")) ? 1 : 0;
 			
 			if(cmtText != '')
-				add_comment(0, cmtText, commType, commId);
+				add_comment(0, cmtText, spl, commType, commId);
 	});
 
 }
 
-	function add_comment(ref_id, text, type, id){
+	function add_comment(ref_id, text, spl, type, id){
 		
 		var postObj;
 		
 		if(ref_id == 0){
 			holder = 'comment';
-			postObj = {id:id, type:type, text:text};
+			postObj = {id:id, type:type, text:text, spl:spl};
 		}else{
 			holder = 'reply';
-			postObj = {ref:ref_id, text:text};
+			postObj = {ref:ref_id, text:text, spl:spl};
 		}
 
 		$.ajax({
@@ -960,10 +971,11 @@ if( typeof commentPage !== 'undefined' ){
 			$("#replyForm").appendTo(comm);
 			
 			$('a.btnReply').click(function(){
-				cmtText = $('#reply_text').val();
+				cmtText = $('#reply_text').val(),
+				spl = ($('#reply_spl').is(":checked")) ? 1 : 0;
 				
 				if(cmtText != '')
-					add_comment(ref, cmtText);
+					add_comment(ref, cmtText, spl);
 		});
 			
 	}

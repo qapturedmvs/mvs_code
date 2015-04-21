@@ -6,6 +6,10 @@
 	<div class="commentForm">
 		<textarea name="comment_text" id="comment_text" required></textarea>
 		<a href="javascript:void(0);" class="btnDefault btnComment rc">Comment</a>
+		<div class="spoilerChkHolder">
+			<input type="checkbox" name="comment_spl" id="comment_spl" />
+			<label for="comment_spl">This review including spoiler</label>
+		</div>
 		<hr class="qFixer" />
 		<div class="comment_result"></div>
 	</div>
@@ -13,6 +17,10 @@
 		<div class="replyForm" id="replyForm">
 			<textarea name="reply_text" id="reply_text" required></textarea>
 			<a href="javascript:void(0);" class="btnDefault btnReply rc">Reply</a>
+			<div class="spoilerChkHolder">
+				<input type="checkbox" name="reply_spl" id="reply_spl" />
+				<label for="reply_spl">This review including spoiler</label>
+			</div>
 			<hr class="qFixer" />
 			<div class="reply_result"></div>
 		</div>
