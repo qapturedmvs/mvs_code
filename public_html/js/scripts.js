@@ -802,54 +802,56 @@ function onRateClick(){
 	if( clicklable ){		
 		clicklable = false;
 		
-		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, prt, id, uri, obj;
-		if( _this.parents('[act-id]') ){
-			prts = _this.parents('[act-id] > .feedContent');
-			prt = _this.parents('[act-id]');
-			id = prt.attr('act-id');
+		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri, obj;
+		
+		if( _this.parents('[act-id]').length > 0 ){
+			prts = _this.parents('[act-id]');
+			id = prts.attr('act-id');
 			uri = 'ajx/feed_ajx/rate_review/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}else{
 			prts = _this.parents('[list-id]');
-			id = prt.attr('list-id');
+			id = prts.attr('list-id');
 			uri = 'ajx/user_customlist_ajx/rate_customlist/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}
-		
-		//prts = $('> .feedContent', prts);
-		console.log(id, $('.textContent .text', prts).text());
-		obj = { 'down': $('.rateHolder a.rateDown', prts).hasClass('active') ? 1 : 0, 'up': $('.rateHolder a.rateUp', prts).hasClass('active') ? 1 : 0 }
-		$('.rateHolder a.active', prts).removeClass('active');
+	
+		obj = { 'down': $('.rateHolder a.rateDown', prts).hasClass('active') ? 1 : 0, 'up': $('.rateHolder a.rateUp', prts).hasClass('active') ? 1 : 0 };
 		
 		getAjax({ 'uri': site_url + uri }, function( e ){
-			
+		
 			if (e['result'] == 'OK') {
 				
-				$('.rateHolder a.active', prts).removeClass('active');
-				var i;
+				var i, rateUp = type == 'up' ? _this : _this.siblings('a') , rateDown = type == 'down' ? _this : _this.siblings('a');
+				
+				rateUp.removeClass('active');
+				rateDown.removeClass('active');
+				
 				if( type == 'up' ){
-					i = parseFloat( $('.rateHolder a.rateUp small', prts).text() )+1;
-					$('.rateHolder a.rateUp small', prts).html( i );
+					i = parseFloat( $('small', rateUp).text() ) + 1;
+					$('small', rateUp).html( i );
 					if( obj['down'] == 0 ){ 
-						$('.rateHolder a.rateDown', prts).addClass('active');
-						i = parseFloat( $('.rateHolder a.rateDown small', prts).text() ) - 1;
-						$('.rateHolder a.rateDown small', prts).html( i );
+						rateDown.addClass('active');
+						i = parseFloat( $('small', rateDown).text() ) - 1;
+						$('small', rateDown).html( i );
 					}
 				}else{
-					i = parseFloat( $('.rateHolder a.rateDown small', prts).text() ) + 1;
-					$('.rateHolder a.rateDown small', prts).html( i );
+					i = parseFloat( $('small', rateDown).text() ) + 1;
+					$('small', rateDown).html( i );
 					if( obj['up'] == 0 ){ 
-						$('.rateHolder a.rateUp', prts).addClass('active');
-						i = parseFloat( $('.rateHolder a.rateUp small', prts).text() ) - 1;
-						
-						$('.rateHolder a.rateUp small', prts).html( i );
+						rateUp.addClass('active');
+						i = parseFloat( $('small', rateUp).text() ) - 1;
+						$('small', rateUp).html( i );
 					}
 				}
-				$('.rateHolder > a.active', prts).unbind('click').bind('click', onRateClick);
 				
+				rateUp.unbind('click').bind('click', onRateClick);
+				rateDown.unbind('click').bind('click', onRateClick);
+			
 			}
 
 			
 			clicklable = true;
 		});
+		
 	}
 }
 
