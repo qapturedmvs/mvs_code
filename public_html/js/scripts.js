@@ -504,7 +504,6 @@ function getAjax( obj, callback, error ){
 //////* USER PAGES *//////
 
 // Custom List Page
-var clArr = [];
 if( exist($('.pageCustomList')) )
 	getAjx({ controller: 'userCustomList', uri: 'ajx/user_customlist_ajx/list_lister?usr='+usr }, function(){});
 		
@@ -525,13 +524,11 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	/*
-	infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ucl', 'pageSize': 30, 'cstVar': '&list='+list_id, 'type': 0 }, function(){
-		clArr = searchList();
-	});
-	*/
 	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ucl&list='+list_id, 'pageSize': 100, 'type': 0 }, function(){
-		clArr = searchList();
+		if( $('.pageCustomListDetail').hasClass('edit') ){
+			checkSortable('destroy');
+			checkSortable('add');
+		}
 	});
 }
 
@@ -563,7 +560,6 @@ function checkSortable( k ){
 			el.sortable({ items: '.movieItem' });
 		}else{
 			el.sortable( 'destroy' );
-			checkList();
 		}
 }
 function searchList(){
@@ -577,7 +573,7 @@ function searchList(){
 function checkList(){
 	var last = searchList();
 	
-	console.log(clArr, searchList());
+	console.log(last);
 }
 
 // Custom List Detail Remove from Custom List
@@ -602,6 +598,7 @@ $('.editHolder a').click(function(){
 		$('.titleCustomList h4').text($('input.listTitle').val());
 		$('.pageDefault').removeClass('edit');
 		checkSortable('destroy');
+		checkList();
 	}else{
 		$('.pageDefault').addClass('edit');
 		$('.titleCustomList input').focus();
