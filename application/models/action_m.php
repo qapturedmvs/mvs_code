@@ -12,35 +12,6 @@ class Action_M extends MVS_Model
 		parent::__construct();
 	}
   
-	public function add_comment($data){
-		
-		if($data['act_ref_id'] === 0){
-			
-			$this->db->insert($this->_table_name, $data);
-			$result = $this->db->insert_id();
-			
-		}else{
-			
-			$out = array('@result' => NULL);
-			$this->db->call_procedure('sp_reply_feed', $data, $out);
-			$result = $out['@result'];
-			
-		}
-		
-		return $result;
-	
-	}
-	
-	public function edit_comment($data){
-	
-		$out = array('@result' => NULL);
-		$this->db->call_procedure('sp_edit_feed', $data, $out);
-		$result = $out['@result'];
-
-		return $result;
-	
-	}
-  
 	public function seen_movie($data){
 		
 		if($data['action'] === 'seen'){

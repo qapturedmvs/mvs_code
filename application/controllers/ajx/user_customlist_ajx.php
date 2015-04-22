@@ -69,17 +69,16 @@
 			$this->load->view('results/_cl_multi_remove', $this->data);
 
 		}
-		//////////////////////////////
+
 		public function create_new_list($action){
 				
 			if($this->logged_in){
 				
 				$this->load->model('user_custom_list_m');
-				
-				$this->data['action'] = $action;
+
 				$vars = $this->input->post(NULL, TRUE);
-				$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
-				$this->data['lst_result'] = $this->user_custom_list_m->create_delete_list($data);
+				$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
+				$this->data['lst_result'] = $this->user_custom_list_m->create_customlist($data);
 				
 			}else{
 				
@@ -91,7 +90,7 @@
 			
 		}
 		
-		public function delete_custom_list(){
+		public function delete_custom_list($list_id){
 				
 			if($this->logged_in){
 				
@@ -101,12 +100,12 @@
 				
 				if(isset($vars['list'])){
 					
-					$data = array('action' => 'dcl', 'list_id' => $vars['list'], 'usr_id' => $this->user['usr_id']);
-					$this->data['lst_result'] = $this->user_custom_list_m->create_delete_list($data);
+					$data = array('list_id' => $list_id, 'usr_id' => $this->user['usr_id']);
+					$this->data['lst_result'] = $this->user_custom_list_m->delete_customlist($data);
 				
 				}else{
 					
-					$this->data['lst_result'] = 'no-list';
+					show_404();
 					
 				}
 				

@@ -73,23 +73,22 @@ class User_Custom_List_M extends MVS_Model
 	
 	}
 	
-	public function create_delete_list($data){
+	public function create_customlist($data){
+
+		$out = array('@list_id' => NULL, '@ldt_id' => NULL);
+		$this->db->call_procedure('sp_new_customlist', $data, $out);
+		$result = array('list_id' => $out['@list_id'], 'ldt_id' => $out['@ldt_id']);
+
+		return $result;
 		
-		if($data['action'] === 'cncl'){
-			
-			unset($data['action']);
-			$out = array('@list_id' => NULL, '@ldt_id' => NULL);
-			$this->db->call_procedure('sp_new_customlist', $data, $out);
-			$result = array('list_id' => $out['@list_id'], 'ldt_id' => $out['@ldt_id']);
+	}
+	
+		public function delete_customlist($data){
 		
-		}else{
-		
-			unset($data['action']);
-			$this->db->call_procedure('sp_delete_customlist', $data);
-			$result = 'dcl';
-		
-		}
-		
+		$out = array('@result' => NULL);
+		$this->db->call_procedure('sp_delete_customlist', $data, $out);
+		$result = $out['@result'];
+
 		return $result;
 		
 	}

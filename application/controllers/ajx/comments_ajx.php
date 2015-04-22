@@ -99,7 +99,7 @@
 				
 			if($this->logged_in){
 				
-				$this->load->model('action_m');
+				$this->load->model('comments_m');
 			
 				$vars = $this->input->post(NULL, TRUE);
 				
@@ -125,7 +125,7 @@
 					
 				}
 				
-				$this->data['comment_result'] = $this->action_m->add_comment($data);
+				$this->data['comment_result'] = $this->comments_m->add_comment($data);
 				
 			}else{
 				
@@ -141,11 +141,11 @@
 				
 			if($this->logged_in){
 				
-				$this->load->model('action_m');
+				$this->load->model('comments_m');
 			
 				$vars = $this->input->post(NULL, TRUE);
 				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $vars['act'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
-				$this->data['edit_result'] = $this->action_m->edit_comment($data);
+				$this->data['edit_result'] = $this->comments_m->edit_comment($data);
 				
 			}else{
 				
@@ -156,6 +156,26 @@
 			$this->load->view('result/_edit_comment', $this->data);
 
     }
+		
+		public function delete_comment($act_id){
+			
+			if($this->logged_in){
+				
+				$this->load->model('comments_m');
+
+				$data = array('act_id' => $act_id, 'usr_id' => $this->user['usr_id']);
+				$this->data['item'] = 'review';
+				$this->data['delete_result'] = $this->comments_m->delete_comment($data);
+				
+			}else{
+				
+				$this->data['delete_result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('result/_delete_review', $this->data);
+			
+		}
   
   }
 

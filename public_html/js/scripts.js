@@ -451,15 +451,12 @@ if($('.cLists ul li').length > 0)
 
 // Movie Detail Create New Custom List
 $('.listCreate a').click(function(){
-		var action = $(this).attr("rel"),
-				title = $(this).siblings('input').val();
+		var title = $(this).siblings('input').val();
 		
 		if(title.length > 255)
 			title = title.substring(0, 254);
-
-		
-		
-		getAjax( { uri: site_url+'ajx/user_customlist_ajx/create_new_list/'+action, param: {id:mvs_id,title:title} }, function( e ){
+	
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/create_new_list/', param: {id:mvs_id,title:title} }, function( e ){
 				
 				if(e['result'] == 'OK'){
 					$('.cnl > a').click();

@@ -4,11 +4,11 @@
 		
 		switch($lst_result){
 		
-			case 'dcl':
+			case 1:
 				echo '{"result":"OK", "msg":"List deleted successfully."}';
 			break;
 			
-			case 'no-list':
+			case -1:
 				echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
 			break;
 			
