@@ -155,7 +155,7 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
-	public function rate_review($data){
+	public function rate_customlist($data){
 			
 			$data['list_id'] = $this->cleaner($data['list_id']);
 			$out = array('@result' => NULL);
