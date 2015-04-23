@@ -86,6 +86,44 @@
 			$this->load->view('results/_wtc_add_remove', $this->data);
 
 		}
+		
+		public function myn_seen_users($movie){
+
+			if($this->logged_in){
+				
+				$this->load->model('seen_m');
+				
+				$data = array('usr' => $this->user['usr_id'], 'mvs' => $movie, 'offset' => 0, 'limit' => 5);
+				$results = $this->seen_m->myn_seen_users($data);
+				$json = (object) array();
+		
+				if($results){
+
+					foreach($results as $result)
+						$result['usr_avatar'] = ($result['usr_avatar'] === '') ? 'images/user.jpg' : $result['usr_avatar'];
+
+					$json->result = 'OK';
+					$json->total = $results[0]['total'];
+					$json->data = $results;
+					
+				}else{
+					
+					$json->result = 'FALSE';
+					$json->data = '';
+				
+				}
+				
+				$this->data['json'] = json_encode($json);
+			
+				$this->load->view('json/main_json_view', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
+
+		}
   
   }
 

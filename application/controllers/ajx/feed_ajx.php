@@ -163,19 +163,33 @@
 		private function _prepare_wall_data($feed){
 			
 			$temp = date_parse($feed['feed_time']);
-			
 			$feed['feed_year'] = $temp['year'];
 			$feed['feed_ago'] = time_calculator($feed['feed_time']);
-			
-			unset($temp);
-				
-			if($feed['mvs_poster'] === '1')
-				$feed['mvs_poster'] = getCoverPath($feed['mvs_slug'], 'small');
-			elseif($feed['mvs_poster'] === '0')
-				$feed['mvs_poster'] = 'images/placeHolder.jpg';
-			
 			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
+			
+			
+			
+			if($feed['mvs_poster'] != NULL)				
+				$feed['mvs_poster'] = ($feed['mvs_poster'] === '1') ? getCoverPath($feed['mvs_slug'], 'small') : 'images/placeHolder.jpg';
+			
+			if($feed['list_data_slugs'] !== NULL){
+				
+				$temp['slugs'] = explode('||', $feed['list_data_slugs']);
+				$temp['titles'] = explode('||', $feed['list_data_titles']);
+				$temp['poster_fls'] = explode('||', $feed['list_data_posters']);
+				
+				foreach($temp['slugs'] as $k => $v){
+					$feed['cld'][] = array(
+						'cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg',
+						'slug' => $v,
+						'title' => $temp['titles'][$k]
+					);
+				}
+				
+			}
+			
+			unset($temp);
 			
 			return $feed;
 			

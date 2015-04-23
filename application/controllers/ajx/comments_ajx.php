@@ -133,7 +133,7 @@
 				
 			}
 			
-			$this->load->view('result/_add_comment', $this->data);
+			$this->load->view('results/_add_comment', $this->data);
 
     }
 		
@@ -153,7 +153,7 @@
 				
 			}
 			
-			$this->load->view('result/_edit_comment', $this->data);
+			$this->load->view('results/_edit_comment', $this->data);
 
     }
 		
@@ -173,7 +173,7 @@
 				
 			}
 			
-			$this->load->view('result/_delete_review', $this->data);
+			$this->load->view('results/_delete_review', $this->data);
 			
 		}
   

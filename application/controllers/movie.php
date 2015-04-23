@@ -20,7 +20,7 @@
 	
 		public function index($id = NULL){
 
-			if($id){	// Url'den index ile çağırılırsa 404 dönmeli
+			if($id){
 
 				$movie = $this->movie_m->movie($id);
 		

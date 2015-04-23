@@ -37,6 +37,19 @@ class Seen_M extends MVS_Model
 			return FALSE;
 	
 	}
+	
+	public function myn_seen_users($data){
+		
+		$data['mvs'] = $this->cleaner($data['mvs']);
+
+		$users = $this->db->call_procedure('sp_md_myn_seen_users', $data);
+
+		if($users)
+			return $users;
+		else
+			return FALSE;
+		
+	}
   
 }
 
