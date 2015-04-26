@@ -31,6 +31,8 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>');
 			}else if( item.category == 'stars' ){
 				li.html('<div class="row"><span class="title"><a href="/mvs_code/public_html/actor/'+ item.str_slug + '">'+ item.str_name +'</a></span><hr class="qFixer" /></div>');
+			}else if( item.category == 'users' ){
+				li.html('<div class="row"><span class="title"><a href="/user/wall/actions/'+ item.usr_nick + '">'+ item.usr_name +'</a></span><hr class="qFixer" /></div>');
 			}else if( item.category == 'noResult' ){
 				li.html('<div class="row">No Result</div>');
 			}

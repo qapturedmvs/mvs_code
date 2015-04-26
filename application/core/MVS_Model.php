@@ -6,13 +6,11 @@ class MVS_Model extends CI_Model {
 	protected $_primary_key = 'id';
 	public $rules = array();
 	public $per_page = 0;
-	protected $_timestamp = '';
 	
 	function __construct() {
 		parent::__construct();
 
 		$this->load->driver('cache', $this->config->item('cache_sets'));
-		$this->_timestamp = $this->config->item('mvs_db_time');
 		
 	}
 	

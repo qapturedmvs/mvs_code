@@ -34,7 +34,10 @@
 			if($this->form_validation->run() === TRUE){
 				
 				$ref = ($data['lgn_ref']) ? $data['lgn_ref'] : 'user/feeds';
+				$cookie_chk = (isset($data['lgn_cookie'])) ? TRUE : FALSE;
 				unset($data['lgn_ref']);
+				unset($data['lgn_cookie']);
+
 				$user = $this->user_m->login($data['lgn_email'], $data['lgn_password']);
 
 				if($user && $user['data']->usr_act == 1){
@@ -47,6 +50,18 @@
 						'usr_avatar' => $user['data']->usr_avatar,
 						'usr_loggedin' => TRUE,
 					);
+					
+					if($cookie_chk){
+
+						$cookie = array(
+							'name' => 'mvs_lgn_cookie',
+							'value' => hash('sha256', $user['data']->usr_id),
+							'expire' => 31536000
+						);
+						
+						$this->input->set_cookie($cookie);
+						
+					}
 						
 					$this->session->set_userdata($data);
 									

@@ -16,7 +16,7 @@
 						<?php endif; ?>
 						<?php if($logged_in): ?>
 							<?php if($controls['seen_action'] === 'multi'): ?>
-							<div class='seen multiSeen' ng-if="item.usr_seen==0"><a class="checkSeen" onclick="select_seen(this)" rel="0" href="javascript:void(0);">Seen</a></div>
+							<div class="seen multiSeen"><a onclick="select_movie(this)" rel="0" href="javascript:void(0);">Select</a></div>
 							<?php elseif($controls['seen_action'] === 'single'): ?>
 							<div class='seen singleSeen'><a ng-if="item.usr_seen==0" rel="seen" onclick="single_seen(this)" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a>
 							<a ng-if="item.usr_seen==1" rel="unseen" seen-id="{{item.seen_id}}" onclick="<?php echo ($controls['page'] == 'seen') ? 'unseen(this)' : 'single_seen(this)'; ?>" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></div>

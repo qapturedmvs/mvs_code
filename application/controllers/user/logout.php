@@ -7,7 +7,11 @@
 		}
     
     public function index(){
-      $this->session->sess_destroy();
+      
+			$this->session->sess_destroy();
+			
+			delete_cookie('mvs_lgn_cookie');
+			
       redirect('', 'refresh');
     }
   

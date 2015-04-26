@@ -68,6 +68,32 @@
 		
 		}
 		
+		public function get_users($type = 'suggest'){
+			
+			$data = array('keyword' => $this->get_vars['u'], 'login_user' => $this->user['usr_id'], 'type' => 'suggest');
+			$results = FALSE;
+		 
+			if($data['keyword']){
+				$results = $this->search_m->find_users($data);
+				$results['data'] = $this->users_loop($results['data']);
+			}
+
+			$json = (object) array();
+	
+			if($results){						
+				$json->result = 'OK';
+				$json->data = $results['data'];
+			}else{
+				$json->result = 'FALSE';
+				$json->data = '';
+			}
+			
+			$this->data['json'] = json_encode($json);
+			
+			$this->load->view('json/main_json_view', $this->data);
+			
+		}
+		
 			
 	}
 

@@ -6,7 +6,6 @@
 		protected $data = array();
 		protected $user = NULL;
 		protected $logged_in = FALSE;
-		protected $_timestamp = '';
 		
 		// TEMP
 		protected $filter_def = array('like' => array('mfc' => array('cntry_id', 'countries', 'cntry_title'), 'mfg' => array('gnr_id', 'genres', 'gnr_title')), 'between' => array('mfr' => 'mvs_rating', 'mfy' => 'mvs_year'), 'network' => array('mfn' => 'network'));
@@ -17,13 +16,14 @@
 			
 			$this->load->helper(array('form', 'mvs_front_helper'));
 			$this->data['site_name'] = $this->config->item('mvs_site_name');
-			$this->_timestamp = $this->config->item('mvs_db_time');
 
 			// CHECK USER LOGGED IN
 			$this->logged_in = $this->data['logged_in'] = (bool) $this->session->userdata('usr_loggedin');
 			
 			if($this->logged_in === TRUE)
 				$this->user = $this->data['user'] = $this->session->all_userdata();
+			else
+				$this->cookie_check();
 
 		}
 		
@@ -31,6 +31,36 @@
 				
 			if($this->logged_in === FALSE)
 				redirect('', 'refresh');
+			
+		}
+		
+		protected function cookie_check(){
+
+			// KEEP ME SIGNED IN CHECK
+			if($token = $this->input->cookie('mvs_lgn_cookie', TRUE)){
+				
+				$this->load->model('user_m');
+				
+				$user = $this->user_m->auto_login($token);
+				
+				if($user){
+
+					$data = array(
+						'usr_id' => $user->usr_id,
+						'usr_nick' => $user->usr_nick,
+						'usr_name' => $user->usr_name,
+						'usr_email' => $user->usr_email,
+						'usr_avatar' => $user->usr_avatar,
+						'usr_loggedin' => TRUE,
+					);
+						
+					$this->session->set_userdata($data);
+									
+					redirect('user/feeds', 'refresh');
+					
+				}
+				
+			}
 			
 		}
 		
@@ -49,6 +79,22 @@
 			
 			return $data;
 		
+		}
+		
+		protected function users_loop($users){
+			
+			foreach($users as $user){
+				
+				if($this->logged_in)
+					$user->flw_id = ($user->flw_id === NULL) ? 0 : $user->flw_id;
+				
+				$user->usr_avatar = ($user->usr_avatar === '') ? 'images/user.jpg' : $user->usr_avatar;
+				$user->usr_me = ($user->usr_id === $this->user['usr_id']) ? 1 : 0;
+				
+			}
+			
+			return $users;
+			
 		}
 		
 	}

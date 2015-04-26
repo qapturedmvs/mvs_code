@@ -6,7 +6,7 @@ class User_Custom_List_M extends MVS_Model
 	protected $_table_name = 'mvs_custom_lists';
 	protected $_primary_key = 'list_id';
 	protected $_order_by = 'list_time';
-	public $per_page = 30;
+	public $per_page = 100;
   
 	function __construct (){
 		parent::__construct();
@@ -51,7 +51,7 @@ class User_Custom_List_M extends MVS_Model
 				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner')
 			),
 			'where' => 'c.list_id = '.$cst_str['list_id'],
-			'order_by' => 'c.ldt_list_order ASC, c.ldt_id DESC'
+			'order_by' => 'c.ldt_list_order ASC, c.ldt_id ASC'
 		);
 		
 		if($cst_str['usr_id'] !== NULL){

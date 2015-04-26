@@ -40,7 +40,7 @@
 					$data['login_user'] = $this->user['usr_id'];
 
 				$results = $this->user_m->get_user_network($data);
-				$results['data'] = $this->_users_loop($results['data']);
+				$results['data'] = $this->users_loop($results['data']);
 				
 				$json = (object) array();
 		
@@ -62,22 +62,6 @@
 				show_404();
 				
 			}
-			
-		}
-		
-		private function _users_loop($users){
-			
-			foreach($users as $user){
-				
-				if($this->logged_in)
-					$user->flw_id = ($user->flw_id === NULL) ? 0 : $user->flw_id;
-				
-				$user->usr_avatar = ($user->usr_avatar === '') ? 'images/user.jpg' : $user->usr_avatar;
-				$user->usr_me = ($user->usr_id === $this->user['usr_id']) ? 1 : 0;
-				
-			}
-			
-			return $users;
 			
 		}
   

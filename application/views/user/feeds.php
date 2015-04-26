@@ -172,19 +172,21 @@
 									<div class="feedInfo">
 									<div class="textContent">
 										<div class="listCover" ng-if="item.list_data_slugs != null">
+											<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">
 											<ul>
 												<li ng-repeat="cld in item.cld" class="lazy" data-original="<?php echo $site_url; ?>{{cld.cover}}"></li>
 											</ul>
 											<hr class="qFixer" />
+											</a>
 										</div>
-										<div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
+										<div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}} <small>({{item.list_data_count}})</small></a></div>
 										<div class="text">
 											<p ng-if="item.list_data_slugs == null">Custom List Created</p>
 											<ul class="customList" ng-if="item.list_data_slugs != null">
-												<li ng-repeat="cld in item.cld"><a href="<?php echo $site_url; ?>movie/{{cld.slug}}">{{cld.title}}</a></li>
+												<li ng-repeat="cld in item.cld">{{cld.title}}</li>
 											</ul>
 											<hr class="qFixer" />
-											<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">Show More</a>
+											<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">Show Full List</a>
 										</div>
 										<hr class="qFixer" />
 									</div>

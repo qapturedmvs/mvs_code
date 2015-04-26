@@ -43,6 +43,16 @@
     
     }
     
+    public function user(){
+			
+			$keyword = $this->input->post('keyword', TRUE);
+
+			$this->data['keyword'] = $keyword;
+			$this->data['subview'] = 'user/user_finder';
+			$this->load->view('_main_body_layout', $this->data);
+			
+		}
+    
   }
   
 ?>

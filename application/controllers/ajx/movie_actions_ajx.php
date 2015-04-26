@@ -87,9 +87,9 @@
 
 		}
 		
-		public function myn_seen_users($movie){
+		public function myn_seen_users($movie = 0){
 
-			if($this->logged_in){
+			if($this->logged_in && $movie != 0){
 				
 				$this->load->model('seen_m');
 				

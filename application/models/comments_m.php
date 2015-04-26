@@ -49,7 +49,7 @@ class Comments_M extends MVS_Model
 	}
 	
 	public function add_comment($data){
-		
+
 		if($data['act_ref_id'] === 0){
 			
 			$this->db->insert($this->_table_name, $data);

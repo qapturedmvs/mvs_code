@@ -167,9 +167,7 @@
 			$feed['feed_ago'] = time_calculator($feed['feed_time']);
 			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
-			
-			
-			
+
 			if($feed['mvs_poster'] != NULL)				
 				$feed['mvs_poster'] = ($feed['mvs_poster'] === '1') ? getCoverPath($feed['mvs_slug'], 'small') : 'images/placeHolder.jpg';
 			
@@ -182,7 +180,6 @@
 				foreach($temp['slugs'] as $k => $v){
 					$feed['cld'][] = array(
 						'cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg',
-						'slug' => $v,
 						'title' => $temp['titles'][$k]
 					);
 				}

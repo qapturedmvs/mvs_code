@@ -254,7 +254,7 @@ $config['encryption_key'] = 'gh9K*fHgZa2@hZc&hjasLuVfVBNa*%f';
 |
 */
 $config['sess_cookie_name']		= 'mvssession';
-$config['sess_expiration']		= 7200;
+$config['sess_expiration']		= 0;
 $config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= TRUE;
