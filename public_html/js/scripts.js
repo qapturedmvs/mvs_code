@@ -801,7 +801,7 @@ function onRateClick(){
 	if( clicklable ){		
 		clicklable = false;
 		
-		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri, obj;
+		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri;
 		
 		if( _this.parents('[act-id]').length > 0 ){
 			prts = _this.parents('[act-id]');
@@ -812,14 +812,12 @@ function onRateClick(){
 			id = prts.attr('list-id');
 			uri = 'ajx/user_customlist_ajx/rate_customlist/' + id + '?val=' + ( type == 'up' ? 1 : -1 );
 		}
-	
-		obj = { 'down': $('.rateHolder a.rateDown', prts).hasClass('active') ? 1 : 0, 'up': $('.rateHolder a.rateUp', prts).hasClass('active') ? 1 : 0 };
 		
 		getAjax({ 'uri': site_url + uri }, function( e ){
-		
+
 			if (e['result'] == 'OK') {
 				
-				var i, rateUp = type == 'up' ? _this : _this.siblings('a') , rateDown = type == 'down' ? _this : _this.siblings('a');
+				var i, rateUp = type == 'up' ? _this : _this.siblings('a') , rateDown = type == 'down' ? _this : _this.siblings('a'), obj = { 'down': rateDown.hasClass('active') ? 1 : 0, 'up': rateUp.hasClass('active') ? 1 : 0 };
 				
 				rateUp.removeClass('active');
 				rateDown.removeClass('active');

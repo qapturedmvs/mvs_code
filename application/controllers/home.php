@@ -34,7 +34,7 @@
 			if($this->form_validation->run() === TRUE){
 				
 				$ref = ($data['lgn_ref']) ? $data['lgn_ref'] : 'user/feeds';
-				$cookie_chk = (isset($data['lgn_cookie'])) ? TRUE : FALSE;
+				$cookie = (isset($data['lgn_cookie'])) ? TRUE : FALSE;
 				unset($data['lgn_ref']);
 				unset($data['lgn_cookie']);
 
@@ -51,7 +51,7 @@
 						'usr_loggedin' => TRUE,
 					);
 					
-					if($cookie_chk){
+					if($cookie){
 
 						$cookie = array(
 							'name' => 'mvs_lgn_cookie',
@@ -60,6 +60,8 @@
 						);
 						
 						$this->input->set_cookie($cookie);
+						
+						$this->user_m->set_autologin($user['data']->usr_id, $cookie);
 						
 					}
 						

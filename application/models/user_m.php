@@ -59,6 +59,16 @@ class User_M extends MVS_Model
       return FALSE;
     
   }
+	public function set_autologin($usr_id, $cookie){
+		
+		$data = array(
+			'usr_id' => $usr_id,
+			'aut_token' => $cookie['value']
+		);
+		
+		$this->db->insert('mvs_autologin', $data);
+		
+	}
   
   public function signup($data){
     
