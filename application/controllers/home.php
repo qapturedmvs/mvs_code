@@ -55,7 +55,7 @@
 
 						$cookie = array(
 							'name' => 'mvs_lgn_cookie',
-							'value' => hash('sha256', $user['data']->usr_id),
+							'value' => hash('sha512', random_string('alpha', 10).$user['data']->usr_id),
 							'expire' => 31536000
 						);
 						

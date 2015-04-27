@@ -70,6 +70,13 @@ class User_M extends MVS_Model
 		
 	}
   
+  public function destroy_autologin($usr_id, $token){
+		
+		$this->db->where("usr_id = $usr_id AND aut_token = '$token'");
+    $this->db->delete('mvs_autologin');
+		
+	}
+  
   public function signup($data){
     
 		$password = $this->hash($data['sgn_password'], 'sha512');

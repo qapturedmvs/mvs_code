@@ -58,6 +58,10 @@
 									
 					redirect('user/feeds', 'refresh');
 					
+				}else{
+					
+					delete_cookie('mvs_lgn_cookie');
+					
 				}
 				
 			}
