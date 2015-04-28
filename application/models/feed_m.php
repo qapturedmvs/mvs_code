@@ -47,10 +47,10 @@ class Feed_M extends MVS_Model
 	
 	}
 	
-	//MORE REF REVIEW JSON
-	public function more_review_json($data){
+	//GET MORE REVIEW REPLIES
+	public function get_more_replies($data){
 
-		$feeds = $this->db->call_procedure('sp_get_more_refs', $data);
+		$feeds = $this->db->call_procedure('sp_get_more_replies', $data);
 
 		if($feeds)
 			return $feeds;

@@ -43,8 +43,8 @@
 										<div class="generalControls">
 											<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
 											<div class="rateHolder feedRate">
-												<a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
-												<a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
+												<a class="rateUp" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
+												<a class="rateDown" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
 											</div>
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
@@ -55,9 +55,9 @@
 									<?php endif; ?>
 								</div>
 								<div class="refHolder" ng-if="item.feed_ref_count != null">
-									<a class="btnShowReplies" href="javascript:void(0);" ng-if="item.feed_ref_count > 2">{{item.feed_ref_count - 2}} more reviews</a>
+									<a class="btnShowReplies" onclick="ShowReplies(this);" href="javascript:void(0);" ng-if="item.feed_ref_count > 2">{{item.feed_ref_count - 2}} more reviews</a>
 									<div class="refs">
-										<div act-id="{{ref.feed_id}}" class="listItem wallItem refItem" ng-repeat="ref in item.ref" ng-class="{spl:ref.act_spl_fl == 1}">
+										<div act-id="{{ref.feed_id}}" class="listItem refItem" ng-repeat="ref in item.ref" ng-class="{spl:ref.act_spl_fl == 1}">
 											<div class="feedContent">
 												<div class="userInfo">
 												<a href="<?php echo $site_url; ?>user/wall/actions/{{ref.usr_nick}}" title="{{ref.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{ref.usr_avatar}}"></a>
@@ -74,8 +74,8 @@
 												<div class="feedControls">
 													<div class="generalControls">
 														<div class="rateHolder feedRate">
-															<a class="rateUp" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="ref.feed_pos_rate != null">{{ref.feed_pos_rate}}</small><small ng-if="ref.feed_pos_rate == null">0</small></a>
-															<a class="rateDown" ng-class="{active:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="ref.feed_neg_rate != null">{{ref.feed_neg_rate}}</small><small ng-if="ref.feed_neg_rate == null">0</small></a>
+															<a class="rateUp" onclick="rateButton(this);" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="ref.feed_pos_rate != null">{{ref.feed_pos_rate}}</small><small ng-if="ref.feed_pos_rate == null">0</small></a>
+															<a class="rateDown" onclick="rateButton(this);" ng-class="{active:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="ref.feed_neg_rate != null">{{ref.feed_neg_rate}}</small><small ng-if="ref.feed_neg_rate == null">0</small></a>
 														</div>
 													</div>
 													<div class="ownerControls" ng-if="ref.owner == 1">
@@ -112,8 +112,8 @@
 										<div class="generalControls">
 											<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
 											<div class="rateHolder feedRate">
-												<a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
-												<a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
+												<a class="rateUp" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
+												<a class="rateDown" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
 											</div>
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
@@ -124,7 +124,7 @@
 									<?php endif; ?>
 								</div>
 								<div class="refHolder" ng-if="item.feed_ref_count != null">
-									<a class="btnShowReplies" href="javascript:void(0);" ng-if="item.feed_ref_count > 2">{{item.feed_ref_count - 2}} more reviews</a>
+									<a class="btnShowReplies" onclick="ShowReplies(this);" href="javascript:void(0);" ng-if="item.feed_ref_count > 2">{{item.feed_ref_count - 2}} more reviews</a>
 									<div class="refs">
 										<div act-id="{{ref.feed_id}}" class="listItem wallItem refItem" ng-repeat="ref in item.ref" ng-class="{spl:ref.act_spl_fl == 1}">
 											<div class="feedContent">
@@ -146,8 +146,8 @@
 												<div class="generalControls">
 													<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
 													<div class="rateHolder feedRate">
-															<a class="rateUp" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="ref.feed_pos_rate != null">{{ref.feed_pos_rate}}</small><small ng-if="ref.feed_pos_rate == null">0</small></a>
-															<a class="rateDown" ng-class="{active:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="ref.feed_neg_rate != null">{{ref.feed_neg_rate}}</small><small ng-if="ref.feed_neg_rate == null">0</small></a>
+															<a class="rateUp" onclick="rateButton(this);" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="ref.feed_pos_rate != null">{{ref.feed_pos_rate}}</small><small ng-if="ref.feed_pos_rate == null">0</small></a>
+															<a class="rateDown" onclick="rateButton(this);" ng-class="{active:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="ref.feed_neg_rate != null">{{ref.feed_neg_rate}}</small><small ng-if="ref.feed_neg_rate == null">0</small></a>
 														</div>
 												</div>
 												<div class="ownerControls" ng-if="ref.owner == 1">
@@ -199,8 +199,8 @@
 									<div class="feedControls">
 									<div class="generalControls">
 										<div class="rateHolder feedRate">
-												<a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
-												<a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
+												<a class="rateUp" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
+												<a class="rateDown" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
 											</div>
 									</div>
 								</div>

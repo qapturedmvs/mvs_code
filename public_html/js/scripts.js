@@ -998,11 +998,12 @@ if( typeof commentPage !== 'undefined' ){
 function ShowReplies( t ){
 	var _this = $( t ), prts = _this.parents('[act-id]');
 	if( prts.length > 0 ){
-		getAjax( { uri: site_url+'ajx/feed_ajx/get_more_refs/'+prts.attr('act-id') }, function( e ){	
+		getAjax( { uri: site_url+'ajx/feed_ajx/get_more_replies/'+prts.attr('act-id') }, function( e ){	
 			var sib = _this.siblings('.refs');
 			if( sib.length > 0 ){
 				sib.html( e );
 				prts.addClass('showReplies');
+				setTimeout(lazyLoadActive, 1);
 			}
 		});
 	}

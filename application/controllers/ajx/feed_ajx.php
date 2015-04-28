@@ -59,29 +59,22 @@
       
     }
 		
-		public function get_more_refs($act_id){
+		public function get_more_replies($act_id){
 			
-			$json = (object) array();
 			$data = array('act_ref' => $act_id, 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
-      $feeds = $this->feed_m->more_review_json($data);
+      $feeds = $this->feed_m->get_more_replies($data);
       
       if($feeds){
-				
-				foreach($feeds as $feed)
-					$feed = $this->_prepare_wall_data($feed);
 
-        $json->result = 'OK';
-        $json->data = $feeds;
-				
-      }else{
-				
-        $json->result = 'FALSE';
-        $json->data = '';
-				
+				foreach($feeds as $key => $feed){
+					$feeds[$key] = $this->_prepare_wall_data($feed);
+
+				}
+
       }
 
-			$this->data['json'] = json_encode($json);
-			$this->load->view('json/main_json_view', $this->data);
+			$this->data['feeds'] = $feeds;
+			$this->load->view('html_results/_more_replies', $this->data);
 			
 		}
 		
