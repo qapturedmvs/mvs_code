@@ -884,7 +884,8 @@ function watch_trailer( t ){
 	getAjax({ 'uri': uri, 'dataType': 'JSONP' }, 
 	function( d ){ 
 		// success
-		var ytID = d['data']['items'][0]['id']['videoId'], hrf = 'https://www.youtube.com/watch?v=' + ytID;		
+
+		var ytID = d['items'][0]['id']['videoId'], hrf = 'https://www.youtube.com/watch?v=' + ytID;		
 		_this
 		.attr('href', hrf)
 		.addClass('yt')

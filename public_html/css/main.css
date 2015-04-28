@@ -234,7 +234,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 .ReviewListHolder .listItem.pageSep{display:none;}
 
-.ReviewListHolder .listItem .feedHolder.clist .listCover{padding:10px; background:#888; border:1px solid #3f3f3f; float:left; width:85px; margin-right:20px;}
+.ReviewListHolder .listItem .feedHolder.clist .listCover{padding:10px; background:#888; border:1px solid #3f3f3f; float:left; width:85px; height:125px; margin-right:20px;}
 .ReviewListHolder .listItem .feedHolder.clist .listCover li{width:40px; height:60px; margin:0 5px 5px 0; float:left; background-size:cover; background-position:center center;}
 .ReviewListHolder .listItem .feedHolder.clist .listCover ul li:nth-child(2n){margin-right:0;}
 .ReviewListHolder .listItem .feedHolder.clist .listCover ul li:nth-child(3){margin-bottom:0;}
