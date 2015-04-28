@@ -59,10 +59,10 @@
       
     }
 		
-		public function get_more_refs(){
+		public function get_more_refs($act_id){
 			
 			$json = (object) array();
-			$data = array('act_ref' => $this->get_vars['ref'], 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+			$data = array('act_ref' => $act_id, 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
       $feeds = $this->feed_m->more_review_json($data);
       
       if($feeds){
