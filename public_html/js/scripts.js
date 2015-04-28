@@ -207,8 +207,8 @@ if(exist($('.pageMovies'))){
 	});
 	
 	// infinite-Scroll
-	//--> infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'ml', 'pageSize': 100, 'cstVar': '', 'type': 0 });
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ml', 'pageSize': 100, 'type': 0 });
+	var s = qs != '' ?  '&' + qs.substr( 1, qs.length ) : '';
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ml' + s, 'pageSize': 100, 'type': 0 });
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
@@ -877,13 +877,14 @@ function watch_trailer( t ){
 
 	var movieName = cleanText( $('h1').attr('title') ),
  		year = cleanText( $('h1 small').text() ),
-		uri ='https://gdata.youtube.com/feeds/api/videos/?q={{movieName}}+{{year}}+official+trailer&max-results=1&orderby=relevance&format=5&v=2&alt=jsonc&duration=short';
+		uri= 'https://www.googleapis.com/youtube/v3/search?part=snippet&q={{movieName}}+{{year}}+official+trailer&type=video&key=AIzaSyBeMIeBXRtdxvziJl7KPd-enpbLoNjl7YE&maxResults=1&videoDuration=short'
+		//uri ='https://gdata.youtube.com/feeds/api/videos/?q={{movieName}}+{{year}}+official+trailer&max-results=1&orderby=relevance&format=5&v=2&alt=jsonc&duration=short';
 		uri = uri.replace('{{movieName}}', encodeURIComponent( movieName )).replace('{{year}}', encodeURIComponent( year ));
 		
 	getAjax({ 'uri': uri, 'dataType': 'JSONP' }, 
 	function( d ){ 
 		// success
-		var ytID = d['data']['items'][0]['id'], hrf = 'https://www.youtube.com/watch?v=' + ytID;		
+		var ytID = d['data']['items'][0]['id']['videoId'], hrf = 'https://www.youtube.com/watch?v=' + ytID;		
 		_this
 		.attr('href', hrf)
 		.addClass('yt')
