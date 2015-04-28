@@ -293,7 +293,8 @@ function infiniteScroll( obj, callback ){
 				this.loading = false;
 				this.busy = true;
 				this.btnState = false;
-				this.items.push( { 'type': 2, 'result': 'No Result' } );
+				if( this.items.length == 0 )
+					 this.items.push( { 'type': 2, 'result': 'No Result' } );
 			  }
 			  
 			  // CALLBACK
@@ -796,12 +797,10 @@ function rateButton(){
 	$('.rateHolder > a.active').unbind('click').bind('click', onRateClick);
 }
 
-var clicklable = true;
 function onRateClick(){
-	if( clicklable ){		
-		clicklable = false;
-		
-		var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri;
+	var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri;
+	
+	if( _this.hasClass('active') ){		
 		
 		if( _this.parents('[act-id]').length > 0 ){
 			prts = _this.parents('[act-id]');
@@ -845,8 +844,6 @@ function onRateClick(){
 			
 			}
 
-			
-			clicklable = true;
 		});
 		
 	}

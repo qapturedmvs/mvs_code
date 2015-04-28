@@ -88,8 +88,8 @@
 			<?php if($logged_in): ?>
 			<div class="userNetworkSeen">
 				<div ng-controller="mdUserNetworkSeen">
-					<span ng-repeat="item in items">, <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
-					<span ng-if="items.total > 3"> and X other people</span> in your network seen this movie.
+					<span ng-repeat="item in items"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
+					<span> and X other people</span> in your network seen this movie.
 				</div>
 				<hr class="qFixer" />
 			</div>
