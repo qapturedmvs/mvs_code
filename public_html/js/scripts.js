@@ -294,7 +294,7 @@ function infiniteScroll( obj, callback ){
 				this.busy = true;
 				this.btnState = false;
 				if( this.items.length == 0 )
-					 this.items.push( { 'type': 2, 'result': 'No Result' } );
+				    this.items.push( { 'type': 2, 'result': 'No Result' } );
 			  }
 			  
 			  // CALLBACK
@@ -793,12 +793,8 @@ function lazyLoadActive(){
 		$(".lazy").lazyload({ effect: 'fadeIn', load: function(){ $( this ).removeClass('lazy').parents('.movieItem').addClass('loaded'); } });
 }
 
-function rateButton(){
-	$('.rateHolder > a.active').unbind('click').bind('click', onRateClick);
-}
-
-function onRateClick(){
-	var _this = $( this ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri;
+function rateButton( t ){
+	var _this = $( t ), type = _this.hasClass('rateUp') ? 'up' : 'down', prts, id, uri;
 	
 	if( _this.hasClass('active') ){		
 		
@@ -838,9 +834,6 @@ function onRateClick(){
 						$('small', rateUp).html( i );
 					}
 				}
-				
-				rateUp.unbind('click').bind('click', onRateClick);
-				rateDown.unbind('click').bind('click', onRateClick);
 			
 			}
 
@@ -853,18 +846,16 @@ function onRateClick(){
 // Wall
 if( exist($('.pageWall')) ){
 	var page = 1;
-	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick='+nick, 'pageSize': 5, 'type': 0 }, function(){
-		rateButton();
-	});
+	infiniteScroll({ controller: 'userWall', uri: 'ajx/feed_ajx/wall/{{page}}?&nick='+nick, 'pageSize': 5, 'type': 0 });
 }
 
 // Feeds
 if( exist($('.pageFeeds')) ){
 	var page = 1;
-	infiniteScroll({ controller: 'userFeeds', uri: 'ajx/feed_ajx/feeds/{{page}}', 'pageSize': 5, 'type': 0 }, function(){
-		rateButton();
-	});
+	infiniteScroll({ controller: 'userFeeds', uri: 'ajx/feed_ajx/feeds/{{page}}', 'pageSize': 5, 'type': 0 });
 }
+
+
 
 // YOUTUBE TRAILER
 function watch_trailer( t ){
@@ -1002,5 +993,17 @@ if( typeof commentPage !== 'undefined' ){
 			$(this).parent('li').addClass("selected");
 		}
 	});
-
-
+	
+////////////////////////////////////////////////////////////////////////////////////////////////////// SHOW REPLIES
+function ShowReplies( t ){
+	var _this = $( t ), prts = _this.parents('[act-id]');
+	if( prts.length > 0 ){
+		getAjax( { uri: site_url+'ajx/feed_ajx/get_more_refs/'+prts.attr('act-id') }, function( e ){	
+			var sib = _this.siblings('.refs');
+			if( sib.length > 0 ){
+				sib.html( e );
+				prts.addClass('showReplies');
+			}
+		});
+	}
+}	
