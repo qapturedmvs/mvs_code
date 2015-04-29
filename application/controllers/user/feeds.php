@@ -14,7 +14,7 @@
     public function index(){
 			
 			// SET PAGE LOAD TIME
-			$this->session->set_flashdata('page_load_time', date("Y-m-d H:i:s"));
+			$this->session->set_flashdata('page_loaded', date("Y-m-d H:i:s"));
 			
 			$this->data['subview'] = 'user/feeds';
 			$this->load->view('_main_body_layout', $this->data);

@@ -203,16 +203,25 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .commentboxHolder .feedListItem .time{display:block; text-align: right; padding:0 15px;}
 .commentboxHolder .feedListItem .btnHolder{display:block; padding:0 15px;}
 .commentboxHolder .feedListItem a.btnShowReplies:hover, .commentboxHolder .feedListItem a.btnShowReplies:hover span{text-decoration:none;}
+
+#replyForm{display:none;}
 .replyForm{padding-top:10px;}
 .replyForm textarea{width:100%; margin-bottom:5px; height:90px;}
+.replyForm .btnReply span{display:none;}
+
+.editing #replyForm, .reply #replyForm{display:block;}
+.editing .btnReply .lblUpdate{display:block;}
+.reply .btnReply .lblReply{display:block;}
+
 .refs{margin:10px 0 0;  padding:10px; background:#ddd;}
 .refs .refItem{border:none; background:none;}
 .commentboxHolder .refItem:hover{background:none;}
 
+
+
 .commentboxHolder .feedListItem .userInfo{float:left; width:125px; }
 .commentboxHolder .feedListItem .userInfo a.usrAvatar{display:block; width:60px; height:66px;}
 .commentboxHolder .feedListItem .reviewContent{float:left; width:570px;}
-
 .commentboxHolder .feedListItem .refs .reviewContent{width:550px;}
 
 /* WALL */
@@ -245,6 +254,9 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .ReviewListHolder .listItem .feedHolder.clist .text ul{margin-bottom:10px;}
 .ReviewListHolder .listItem .feedHolder.clist .text ul li{ margin-bottom:3px; list-style:decimal inside;}
 
+
+.ReviewListHolder .listItem.editing > .feedContent .text{display:none;}
+.ReviewListHolder .listItem.editing > .feedContent .feedControls{display:none;}
 
 /* FEEDS */
 .ReviewListHolder.feedsHolder .listItem.feedsItem.yearSep{display:none;}

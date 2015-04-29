@@ -22,7 +22,7 @@
 			</div>
 			<?php if($feed['owner'] == 1): ?>
 			<div class="ownerControls">
-				<a class="btnEdit" href="javascript:void(0);">Edit</a>	
+				<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
 				<a class="btnRemove" href="javascript:void(0);">Remove</a>
 			</div>
 			<?php endif; ?>

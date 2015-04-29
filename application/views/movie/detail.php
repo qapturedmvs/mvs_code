@@ -76,7 +76,7 @@
 										echo '<a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
 									else
 										echo ', <a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
-
+									
 									$i++;
 								}
 							?>
@@ -88,8 +88,8 @@
 			<?php if($logged_in): ?>
 			<div class="userNetworkSeen">
 				<div ng-controller="mdUserNetworkSeen">
-					<span ng-repeat="item in items"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
-					<span> and X other people</span> in your network seen this movie.
+					<span ng-repeat="item in items.users"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
+					<span ng-if="items.total > 4"> and {{items.total-3}} other people in your network</span> seen this movie.
 				</div>
 				<hr class="qFixer" />
 			</div>

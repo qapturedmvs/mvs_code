@@ -103,8 +103,8 @@
 						$result['usr_avatar'] = ($result['usr_avatar'] === '') ? 'images/user.jpg' : $result['usr_avatar'];
 
 					$json->result = 'OK';
-					$json->total = $results[0]['total'];
-					$json->data = $results;
+					$json->data['total'] = $results[0]['total'];
+					$json->data['users'] = $results;
 					
 				}else{
 					

@@ -11,11 +11,13 @@ class Feed_M extends MVS_Model
   
   //WALL JSON
 	public function wall_json($data){
-
+		
+		$this->session->keep_flashdata('page_loaded');
+		
 		$data['p'] = $this->cleaner($data['p']);
     $data['offset'] = ($data['p']-1) * $this->per_page;
 		$data['perpage'] = $this->per_page;
-		$data['time'] = $this->session->flashdata('page_load_time');
+		$data['time'] = $this->session->flashdata('page_loaded');
 		
 		unset($data['p']);
 
@@ -31,10 +33,12 @@ class Feed_M extends MVS_Model
 	//FEEDS JSON
 	public function feeds_json($data){
 		
+		$this->session->keep_flashdata('page_loaded');
+		
 		$data['p'] = $this->cleaner($data['p']);
     $data['offset'] = ($data['p']-1) * $this->per_page;
 		$data['perpage'] = $this->per_page;
-		$data['time'] = $this->session->flashdata('page_load_time');
+		$data['time'] = $this->session->flashdata('page_loaded');
 		
 		unset($data['p']);
 

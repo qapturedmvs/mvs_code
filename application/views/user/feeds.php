@@ -3,18 +3,7 @@
 	<div class="titleDefault titleFeeds">
 		<h1>Feeds</h1>
 	</div>
-	<div class="replyHolder none">
-		<div class="replyForm" id="replyForm">
-			<textarea name="reply_text" id="reply_text" required></textarea>
-			<a href="javascript:void(0);" class="btnDefault btnReply rc">Reply</a>
-			<div class="spoilerChkHolder">
-				<input type="checkbox" name="reply_spl" id="reply_spl" />
-				<label for="reply_spl">This review including spoiler</label>
-			</div>
-			<hr class="qFixer" />
-			<div class="reply_result"></div>
-		</div>
-	</div>
+	<?php $this->load->view('components/_reply_edit_box'); ?>
 	<div class="ReviewListHolder feedsHolder" ng-controller='userFeeds'>
 		<div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 			<ul>
@@ -41,14 +30,14 @@
 									<?php if($logged_in): ?>
 									<div class="feedControls">
 										<div class="generalControls">
-											<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
+											<a onclick="moveReplyFrom(this);" class="btnReply" href="javascript:void(0);">Reply</a>
 											<div class="rateHolder feedRate">
 												<a class="rateUp" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="item.feed_pos_rate != null">{{item.feed_pos_rate}}</small><small ng-if="item.feed_pos_rate == null">0</small></a>
 												<a class="rateDown" onclick="rateButton(this);" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="item.feed_neg_rate != null">{{item.feed_neg_rate}}</small><small ng-if="item.feed_neg_rate == null">0</small></a>
 											</div>
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
-											<a class="btnEdit" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
+											<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
 											<a class="btnRemove" href="javascript:void(0);">Remove</a>
 										</div>
 									</div>
@@ -79,7 +68,7 @@
 														</div>
 													</div>
 													<div class="ownerControls" ng-if="ref.owner == 1">
-														<a class="btnEdit" onClick="editReview( this );" href="javascript:void(0);">Edit</a>	
+														<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
 														<a class="btnRemove" href="javascript:void(0);">Remove</a>
 													</div>
 												</div>
@@ -117,7 +106,7 @@
 											</div>
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
-											<a class="btnEdit" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
+											<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
 											<a class="btnRemove" href="javascript:void(0);">Remove</a>
 										</div>
 									</div>
@@ -144,14 +133,13 @@
 											<?php if($logged_in): ?>
 											<div class="feedControls">
 												<div class="generalControls">
-													<a onclick="moveReplyFrom(this)" class="btnReply" href="javascript:void(0);">Reply</a>
 													<div class="rateHolder feedRate">
 															<a class="rateUp" onclick="rateButton(this);" ng-class="{active:ref.usr_rate_value != 1}" href="javascript:void(0);">Up <small ng-if="ref.feed_pos_rate != null">{{ref.feed_pos_rate}}</small><small ng-if="ref.feed_pos_rate == null">0</small></a>
 															<a class="rateDown" onclick="rateButton(this);" ng-class="{active:ref.usr_rate_value != -1}" href="javascript:void(0);">Down <small ng-if="ref.feed_neg_rate != null">{{ref.feed_neg_rate}}</small><small ng-if="ref.feed_neg_rate == null">0</small></a>
 														</div>
 												</div>
 												<div class="ownerControls" ng-if="ref.owner == 1">
-													<a class="btnEdit" href="javascript:void(0);">Edit</a>	
+													<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
 													<a class="btnRemove" href="javascript:void(0);">Remove</a>
 												</div>
 											</div>

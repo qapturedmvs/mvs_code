@@ -110,26 +110,34 @@
 			
 			foreach($data as $k => $d){
 				
-				if($d['feed_type'] == 'sn' && (int) $d['total_seen'] > 1){
+				if($d['feed_type'] == 'sn'){
 					
-					$i = 1;
-					unset($data[$k]);
-					
-					foreach($data as $sk => $sv){
+					if((int) $d['total_seen'] > 1){
 						
-						if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id']){
+						$i = 1;
+						unset($data[$k]);
+						
+						foreach($data as $sk => $sv){
 							
-							$d['grp'][] = $this->_prepare_wall_data($sv);
-							unset($data[$sk]);
-							$i++;
+							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id']){
+								
+								$d['grp'][] = $this->_prepare_wall_data($sv);
+								unset($data[$sk]);
+								$i++;
+								
+							}
 							
 						}
 						
-					}
+						if(isset($d['grp'])){
+							$d['seen_count'] = $i;
+							$tree[] = $this->_prepare_wall_data($d);
+						}
 					
-					if(isset($d['grp'])){
-						$d['seen_count'] = $i;
+					}else{
+						
 						$tree[] = $this->_prepare_wall_data($d);
+						
 					}
 					
 				}elseif($d['feed_type'] == 'rf'){
