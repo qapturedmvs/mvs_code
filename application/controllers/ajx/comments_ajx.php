@@ -144,7 +144,7 @@
 				$this->load->model('comments_m');
 			
 				$vars = $this->input->post(NULL, TRUE);
-				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $vars['act'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $act_id, 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
 				$this->data['edit_result'] = $this->comments_m->edit_comment($data);
 				
 			}else{
