@@ -813,13 +813,11 @@ function rateButton( t ){
 			if (e['result'] == 'OK') {
 				
 				var i, rateUp = type == 'up' ? _this : _this.siblings('a') , rateDown = type == 'down' ? _this : _this.siblings('a'), obj = { 'down': rateDown.hasClass('active') ? 1 : 0, 'up': rateUp.hasClass('active') ? 1 : 0 };
-				
-				rateUp.removeClass('active');
-				rateDown.removeClass('active');
-				
+
 				if( type == 'up' ){
 					i = parseFloat( $('small', rateUp).text() ) + 1;
 					$('small', rateUp).html( i );
+					rateUp.removeClass('active');
 					if( obj['down'] == 0 ){ 
 						rateDown.addClass('active');
 						i = parseFloat( $('small', rateDown).text() ) - 1;
@@ -828,6 +826,7 @@ function rateButton( t ){
 				}else{
 					i = parseFloat( $('small', rateDown).text() ) + 1;
 					$('small', rateDown).html( i );
+					rateDown.removeClass('active');
 					if( obj['up'] == 0 ){ 
 						rateUp.addClass('active');
 						i = parseFloat( $('small', rateUp).text() ) - 1;
