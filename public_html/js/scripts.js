@@ -944,6 +944,7 @@ if( typeof commentPage !== 'undefined' ){
 			success:function(result){
 				$('.'+holder+'_result').text(result.data['message']);
 				$('#'+holder+'_text').val('');
+				$('[act-id]').removeClass('editing reply');
 			}
 		});
 		
@@ -953,9 +954,12 @@ if( typeof commentPage !== 'undefined' ){
 			comm = $(obj).parents('*[act-id]');
 			var ref = comm.attr("act-id");
 	
+			$('[act-id]').removeClass('editing reply');
+			comm.addClass('reply');
+			
 			$("#replyForm").appendTo(comm);
 			
-			$('a.btnReply').click(function(){
+			$('a.btnReply').unbind('click').click(function(){
 				cmtText = $('#reply_text').val(),
 				spl = ($('#reply_spl').is(":checked")) ? 1 : 0;
 				
@@ -1007,3 +1011,30 @@ function ShowReplies( t ){
 		});
 	}
 }	
+
+////////////////////////////////////////////////////////////////////////////////////////////////////// EDIT REVIEW
+function editReview( _t ){
+	var _this = $( _t ), prts = _this.parents('[act-id]:eq(0)');
+
+	if( prts.length > 0 ){
+		$('[act-id]').removeClass('editing reply');
+		prts.addClass('editing');
+		var c = $('> .feedContent .textContent', prts);
+		$("#replyForm").appendTo( c );
+		$('#reply_text').val( $('.text', c).text() );
+		$('a.btnReply').unbind('click').bind('click', function(){
+			var val = $('#reply_text').val(), spl = ($('#reply_spl').is(":checked")) ? 1 : 0;
+			
+			getAjax( { uri: site_url+'ajx/comments_ajx/edit_comment/' + prts.attr('act-id'), param: { text: val, spl: spl } }, function(){
+				$('[act-id]').removeClass('editing reply');
+			});
+			
+			$('.text', c).text( $('#reply_text').val() );
+			$('#reply_text').val('');
+			$('#reply_spl').removeAttr('checked');
+			
+		});
+	}
+}
+
+

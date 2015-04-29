@@ -79,7 +79,7 @@
 														</div>
 													</div>
 													<div class="ownerControls" ng-if="ref.owner == 1">
-														<a class="btnEdit" href="javascript:void(0);">Edit</a>	
+														<a class="btnEdit" onClick="editReview( this );" href="javascript:void(0);">Edit</a>	
 														<a class="btnRemove" href="javascript:void(0);">Remove</a>
 													</div>
 												</div>
