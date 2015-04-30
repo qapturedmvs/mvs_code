@@ -119,7 +119,7 @@
 						
 						foreach($data as $sk => $sv){
 							
-							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id']){
+							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id'] && $sv['usr_id'] != $this->user['usr_id']){
 								
 								$d['grp'][] = $this->_prepare_wall_data($sv);
 								unset($data[$sk]);

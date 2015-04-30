@@ -220,8 +220,12 @@
 									<div class="textContent">
 										<div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
 										<div class="text">
-											<span class="grp">
-												<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}"><span ng-if="grp.owner == 0">{{grp.usr_name}}</span><span ng-if="grp.owner == 1">You</span></a></span>
+											<span class="grp" ng-if="item.owner == 0 && item.usr_seen_fl != null">
+												<a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>">You</a>, <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
+												<span ng-if="(item.total_seen - (item.seen_count + 1)) > 0"> and <a href="javascript:void(0);">{{item.total_seen - (item.seen_count + 1)}} other</a></span>
+											</span>
+											<span class="grp" ng-if="item.owner == 1">
+												<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
 												<span ng-if="(item.total_seen - item.seen_count) > 0"> and <a href="javascript:void(0);">{{item.total_seen - item.seen_count}} other</a></span>
 											</span>
 											Marked as Seen
