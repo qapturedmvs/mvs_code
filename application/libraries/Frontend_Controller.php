@@ -23,7 +23,7 @@
 			if($this->logged_in === TRUE)
 				$this->user = $this->data['user'] = $this->session->all_userdata();
 			else
-				$this->cookie_check();
+				$this->token_check();
 
 		}
 		
@@ -34,23 +34,24 @@
 			
 		}
 		
-		protected function cookie_check(){
+		protected function token_check(){
 
 			// KEEP ME SIGNED IN CHECK
-			if($token = $this->input->cookie('mvs_lgn_cookie', TRUE)){
+			if($token = $this->input->cookie('mvs_lgn_token', TRUE)){
 				
 				$this->load->model('user_m');
 				
-				$user = $this->user_m->auto_login($token);
-				
+				$data = array('lgn_email' => NULL, 'lgn_password' => NULL, 'lgn_token' => $token, 'lgn_type' => 'aut', 'lgn_time' => date("Y-m-d H:i:s"));
+				$user = $this->user_m->login($data);
+
 				if($user){
 
 					$data = array(
-						'usr_id' => $user->usr_id,
-						'usr_nick' => $user->usr_nick,
-						'usr_name' => $user->usr_name,
-						'usr_email' => $user->usr_email,
-						'usr_avatar' => $user->usr_avatar,
+						'usr_id' => $user['usr_id'],
+						'usr_nick' => $user['usr_nick'],
+						'usr_name' => $user['usr_name'],
+						'usr_email' => $user['usr_email'],
+						'usr_avatar' => $user['usr_avatar'],
 						'usr_loggedin' => TRUE,
 					);
 						
@@ -60,7 +61,7 @@
 					
 				}else{
 					
-					delete_cookie('mvs_lgn_cookie');
+					delete_cookie('mvs_lgn_token');
 					
 				}
 				

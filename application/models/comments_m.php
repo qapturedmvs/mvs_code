@@ -80,7 +80,7 @@ class Comments_M extends MVS_Model
 	public function delete_comment($data){
 	
 		$out = array('@result' => NULL);
-		$this->db->call_procedure('sp_delete_feed', $data);
+		$this->db->call_procedure('sp_delete_feed', $data, $out);
 		$result = $out['@result'];
 
 		return $result;

@@ -5,7 +5,7 @@
 		if($delete_result == 1)
 			echo '{"result":"OK","data":{"message":"Your review data deleted successfully."}}';
       
-    elseif($delete_result == -1)
+    elseif($delete_result == 0)
 			echo '{"result":"FALSE","data":{"message":"No review found to delete"}}';
 		
 		elseif($delete_result == 'no-user')

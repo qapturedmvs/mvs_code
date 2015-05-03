@@ -140,21 +140,7 @@ class User_Custom_List_M extends MVS_Model
 		return TRUE;
 	
 	}
-	
-	public function multi_remove_from_list($data){
-		
-		$data = $this->cleaner($data);
-		$sql = 'DELETE cl
-						FROM mvs_custom_list_data cl
-						INNER JOIN mvs_custom_lists c ON c.list_id = cl.list_id AND usr_id = '.$data['usr_id'].
-						' WHERE cl.ldt_id IN('.$data['ldt_id'].')';
-		
-		$this->db->query($sql);
-		
-		return TRUE;
-		
-	}
-	
+
 	public function rate_customlist($data){
 			
 			$data['list_id'] = $this->cleaner($data['list_id']);
@@ -164,6 +150,17 @@ class User_Custom_List_M extends MVS_Model
 		
 		return $result;
 	
+	}
+	
+	public function get_movie_customlists($data){
+		
+		$lists = $this->db->call_procedure('sp_get_movie_customlists', $data);
+
+		if($lists)
+			return $lists;
+		else
+			return FALSE;
+		
 	}
 	
   

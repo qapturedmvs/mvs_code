@@ -124,6 +124,54 @@
 			}
 
 		}
+		
+		public function movie_customlists($movie = 0){
+
+			if($this->logged_in && $movie != 0){
+				
+				$this->load->model('user_custom_list_m');
+				
+				$data = array('mvs' => $movie, 'usr' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'type' => 'rlt');
+				$results = $this->user_custom_list_m->get_movie_customlists($data);
+				$json = (object) array();
+		
+				if($results){
+					
+					foreach($results as $key => $result){
+						
+						if($result['list_data_slugs'] !== NULL){
+							
+							$temp['slugs'] = explode('||', $result['list_data_slugs']);
+							$temp['poster_fls'] = explode('||', $result['list_data_posters']);
+							
+							foreach($temp['slugs'] as $k => $v)
+								$results[$key]['cld'][] = array('cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg');
+							
+						}
+						
+					}
+
+					$json->result = 'OK';
+					$json->data['lists'] = $results;
+					
+				}else{
+					
+					$json->result = 'FALSE';
+					$json->data = '';
+				
+				}
+				
+				$this->data['json'] = json_encode($json);
+			
+				$this->load->view('json/main_json_view', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
+
+		}
   
   }
 

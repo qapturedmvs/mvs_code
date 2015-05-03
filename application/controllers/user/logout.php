@@ -11,9 +11,9 @@
     
     public function index(){
       
-			$this->user_m->destroy_autologin($this->user['usr_id'], $this->input->cookie('mvs_lgn_cookie', TRUE));
+			$this->user_m->destroy_autologin($this->user['usr_id'], $this->input->cookie('mvs_lgn_token', TRUE));
 			
-			delete_cookie('mvs_lgn_cookie');
+			delete_cookie('mvs_lgn_token');
 			
 			$this->session->sess_destroy();
 			

@@ -32,14 +32,20 @@
 				
     }
 		
-		public function edit_list_detail(){
+		public function edit_list_detail($list_id = NULL){
 				
-			if(isset($this->user['usr_id'])){
+			if($this->logged_in){
 				
-				$vars = $this->input->post(NULL, TRUE);
-				$data = array('list_id' => $vars['id'], 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title']);
+				if($list_id){
 					
-				$this->data['ecl_result'] = $this->user_custom_list_m->edit_custom_list($data);
+					$vars = $this->input->post(NULL, TRUE);
+					
+					$data = array('list_id' => $list_id, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title'], 'list_order' => $vars['order'], 'list_remove' => (isset($vars['del'])) ? $vars['del'] : NULL);
+
+					var_dump($data);
+					//$this->data['ecl_result'] = $this->user_custom_list_m->edit_custom_list($data);
+					
+				}
 					
 			}else{
 				
@@ -47,26 +53,7 @@
 				
 			}
 			
-			$this->load->view('results/_cl_edit_list', $this->data);
-
-		}
-		
-		public function cl_remove_multi_item(){
-				
-			if(isset($this->user['usr_id'])){
-				
-				$ids = $this->input->post('ids', TRUE);
-				$data = array('usr_id' => $this->user['usr_id'], 'ldt_id' => implode(',', $ids));
-				
-				$this->data['lst_result'] = $this->user_custom_list_m->multi_remove_from_list($data);
-
-			}else{
-				
-				$this->data['lst_result'] = 'no-user';
-				
-			}
-			
-			$this->load->view('results/_cl_multi_remove', $this->data);
+			//$this->load->view('results/_cl_edit_list', $this->data);
 
 		}
 

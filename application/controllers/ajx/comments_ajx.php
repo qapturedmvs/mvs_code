@@ -13,7 +13,7 @@
 				
 			$this->load->model('comments_m');
 			
-			$data = array('mvs_id' => $this->get_vars['mvs_id'], 'usr_id' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'type' => $this->get_vars['type'], 'p' => $p);
+			$data = array('mvs_id' => $this->get_vars['mvs_id'], 'usr_id' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'type' => $this->get_vars['type'], 'p' => $p);
 			$json = (object) array();
 			$db_data = $this->comments_m->movie_comments_json($data);
 			
@@ -164,7 +164,7 @@
 				$this->load->model('comments_m');
 
 				$data = array('act_id' => $act_id, 'usr_id' => $this->user['usr_id']);
-				$this->data['item'] = 'review';
+
 				$this->data['delete_result'] = $this->comments_m->delete_comment($data);
 				
 			}else{

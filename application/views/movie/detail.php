@@ -102,14 +102,21 @@
 			<section class="btnSet">
 				<a class="btnDefault btnExplore rc" href="#">Explore &gt;</a>
 			</section>
-			<section class="lists relatedLists">
+			<section class="lists relatedLists" ng-controller="mdUserCustomlists">
 				<span class="sectionTitle">Related Lists</span>
 				<ul>
-					<li><a href="#">My Horror Movies</a></li>
-					<li><a href="#">Best Movies</a></li>
-					<li><a href="#">Movies of mine</a></li>
-					<li><a href="#">Steven's movies</a></li>
-					<li><a href="#">My oldies list</a></li>
+					<li ng-repeat="item in items.lists">
+						<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">
+						<div class="listCover" ng-if="item.list_data_slugs != null">
+							<ul>
+								<li ng-repeat="cld in item.cld" class="lazy" data-original="<?php echo $site_url; ?>{{cld.cover}}"></li>
+							</ul>
+							<hr class="qFixer" />
+						</div>
+						<span class="listTitle">{{item.list_title}} ({{item.list_movie_count}})</span>
+						<hr class="qFixer" />
+						</a>
+					</li>
 				</ul>
 			</section>
 		</aside>

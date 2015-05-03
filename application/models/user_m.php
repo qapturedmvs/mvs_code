@@ -12,68 +12,23 @@ class User_M extends MVS_Model
 		parent::__construct();
 	}
   
-  public function login($email, $password){
+  public function login($data){
     
-		$password = $this->hash($password, 'sha512');
-		$this->_primary_key = 'usr_email';
-		
-		$filters = array(
-      'select' => '*',
-      'from' => 'mvs_users',
-      'where' => "usr_password = '$password'"
-    );
-		
-		$user = $this->get_data($email, 0, FALSE, $filters);
+		$data['lgn_password'] = ($data['lgn_password'] != NULL) ? $this->hash($data['lgn_password'], 'sha512') : NULL;
 
-		if(isset($user['data'])){
+		$user = $this->db->call_procedure('sp_user_login', $data);
 
-      $this->db->where('usr_id', $user['data']->usr_id);
-      $this->db->set('usr_last_login', date($this->config->item('mvs_db_time')));
-      $this->db->update('mvs_users');
-			
-			return $user;
-    
-		}else{
-      
+		if($user)
+			return $user[0];
+		else
 			return FALSE;
-    
-		}
-	}
-  
-  public function auto_login($token){
-    
-    $filters = array(
-      'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_email, u.usr_avatar',
-      'from' => 'mvs_autologin a',
-      'join' => array(
-        array('mvs_users u', 'u.usr_id = a.usr_id', 'inner')
-      ),
-      'where' => "a.aut_token = '$token'"
-    );
 
-    $user = $this->get_data(NULL, 0, FALSE, $filters);
-
-    if(isset($user['data']))
-      return $user['data'][0];
-    else
-      return FALSE;
-    
-  }
-	public function set_autologin($usr_id, $cookie){
-		
-		$data = array(
-			'usr_id' => $usr_id,
-			'aut_token' => $cookie['value']
-		);
-		
-		$this->db->insert('mvs_autologin', $data);
-		
 	}
   
   public function destroy_autologin($usr_id, $token){
 		
-		$this->db->where("usr_id = $usr_id AND aut_token = '$token'");
-    $this->db->delete('mvs_autologin');
+		$this->db->where("usr_id = $usr_id AND lgn_token = '$token'");
+    $this->db->delete('mvs_login');
 		
 	}
   

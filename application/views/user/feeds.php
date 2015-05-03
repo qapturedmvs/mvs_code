@@ -38,7 +38,7 @@
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
 											<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
-											<a class="btnRemove" href="javascript:void(0);">Remove</a>
+											<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
 										</div>
 									</div>
 									<?php endif; ?>
@@ -69,7 +69,7 @@
 													</div>
 													<div class="ownerControls" ng-if="ref.owner == 1">
 														<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
-														<a class="btnRemove" href="javascript:void(0);">Remove</a>
+														<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
 													</div>
 												</div>
 											<?php endif; ?>
@@ -107,7 +107,7 @@
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
 											<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
-											<a class="btnRemove" href="javascript:void(0);">Remove</a>
+											<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
 										</div>
 									</div>
 									<?php endif; ?>
@@ -140,7 +140,7 @@
 												</div>
 												<div class="ownerControls" ng-if="ref.owner == 1">
 													<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
-													<a class="btnRemove" href="javascript:void(0);">Remove</a>
+													<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
 												</div>
 											</div>
 											<?php endif; ?>
@@ -197,7 +197,9 @@
 							
 							<?php //User's seen action ?>
 							<div seen-id="{{item.feed_id}}" class="feedHolder seen" ng-if="item.feed_type == 'sn'">
-								<div class="feedContent" ng-if="item.total_seen <= 1">
+								
+								<?php //Single seen action ?>
+								<div class="feedContent {{item.seen_type}}" ng-if="item.seen_type == 'single_seen'">
 									<div class="userInfo">
 										<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>
 										<hr class="qFixer" />
@@ -213,21 +215,52 @@
 									</div>
 									<hr class="qFixer" />
 								</div>
-								<?php //Group seen action ?>
-								<div class="feedContent" ng-if="item.total_seen > 1">
+								
+								<?php //Movie group seen action ?>
+								<div class="feedContent {{item.seen_type}}" ng-if="item.seen_type == 'movie_group_seen'">
+									<div class="userInfo">
+										<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" title="{{item.usr_name}}" class="usrAvatar lazy" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a>
+										<hr class="qFixer" />
+									</div>
+									<div class="feedInfo">
+									<div class="movieGroup">
+										<a class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}" href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}" title="{{item.mvs_title}}"></a>
+										<a ng-repeat="grp in item.grp" class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{grp.mvs_poster}}" href="<?php echo $site_url; ?>movie/{{grp.mvs_slug}}" title="{{grp.mvs_title}}"></a>
+										<hr class="qFixer" />
+									</div>
+									
+									<div class="textContent">
+										<div class="text">Marked as Seen</div>
+									</div>
+									<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
+									<hr class="qFixer" />
+									</div>
+									<hr class="qFixer" />
+								</div>
+								
+								<?php //User group seen action ?>
+								<div class="feedContent {{item.seen_type}}" ng-if="item.seen_type == 'user_group_seen'">
 									<div class="feedInfo">
 									<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
 									<div class="textContent">
 										<div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
 										<div class="text">
-											<span class="grp" ng-if="item.owner == 0 && item.usr_seen_fl != null">
-												<a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>">You</a>, <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
-												<span ng-if="(item.total_seen - (item.seen_count + 1)) > 0"> and <a href="javascript:void(0);">{{item.total_seen - (item.seen_count + 1)}} other</a></span>
-											</span>
-											<span class="grp" ng-if="item.owner == 1">
+
+											<span class="grp" ng-if="item.usr_seen_fl == null">
 												<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
 												<span ng-if="(item.total_seen - item.seen_count) > 0"> and <a href="javascript:void(0);">{{item.total_seen - item.seen_count}} other</a></span>
 											</span>
+											
+											<span class="grp" ng-if="item.owner == 0 && item.usr_seen_fl != null">
+												<a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>">You</a>, <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
+												<span ng-if="(item.total_seen - item.seen_count > 0)"> and <a href="javascript:void(0);">{{item.total_seen - item.seen_count}} other</a></span>
+											</span>
+											
+											<span class="grp" ng-if="item.owner == 1">
+												<a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">You</a><span ng-repeat="grp in item.grp">, <a href="<?php echo $site_url; ?>user/wall/actions/{{grp.usr_nick}}">{{grp.usr_name}}</a></span>
+												<span ng-if="(item.total_seen - item.seen_count) > 0"> and <a href="javascript:void(0);">{{item.total_seen - item.seen_count}} other</a></span>
+											</span>
+											
 											Marked as Seen
 										</div>
 									</div>
@@ -288,4 +321,5 @@
 		</div>
 		<hr class="qFixer" />
 	</div>
+	<?php $this->load->view('components/_system_messagebox', array('qBox' => 'remove')); ?>
 </div>

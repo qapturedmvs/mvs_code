@@ -31,7 +31,7 @@
 	<div class="error"><?php if(isset($login_error)) echo $login_error; ?></div>
 	<input name="lgn_email" id="lgn_email" type="email" class="form-control" placeholder="Email address" required autofocus>
 	<input name="lgn_password" id="lgn_password" type="password" class="form-control" placeholder="Password" required>
-    <input name="lgn_cookie" id="lgn_cookie" type="checkbox" class="form-control" /><label for="lgn_cookie">Keep me signed in</label>
+    <input name="lgn_token" id="lgn_token" type="checkbox" class="form-control" /><label for="lgn_token">Keep me signed in</label>
   <input name="lgn_ref" id="lgn_ref" type="hidden" class="form-control" value="<?php echo $referer_url; ?>" />
 	<button class="btn btn-lg btn-primary btn-block" name="lgn_submit" id="lgn_submit" type="submit">Sign in</button>                     
 <?php echo form_close(); ?>

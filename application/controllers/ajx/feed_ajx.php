@@ -114,12 +114,12 @@
 					
 					if((int) $d['total_seen'] > 1){
 						
-						$i = 1;
+						$i = ($d['usr_id'] == $this->user['usr_id']) ? 0 : 1;
 						unset($data[$k]);
 						
 						foreach($data as $sk => $sv){
 							
-							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id'] && $sv['usr_id'] != $this->user['usr_id']){
+							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id'] && $sv['usr_id'] != $this->user['usr_id'] && $i < 3){
 								
 								$d['grp'][] = $this->_prepare_wall_data($sv);
 								unset($data[$sk]);
@@ -130,13 +130,41 @@
 						}
 						
 						if(isset($d['grp'])){
-							$d['seen_count'] = $i;
+							$d['seen_count'] = ($d['usr_seen_fl'] != NULL) ? $i+1 : $i;
+							$d['seen_type'] = 'user_group_seen';
 							$tree[] = $this->_prepare_wall_data($d);
 						}
 					
 					}else{
 						
-						$tree[] = $this->_prepare_wall_data($d);
+						$i = 1;
+						unset($data[$k]);
+						
+						foreach($data as $sk => $sv){
+							
+							if($sv['feed_type'] == 'sn' && $sv['usr_id'] == $d['usr_id'] && (int) $d['total_seen'] == 1){
+								
+								$d['grp'][] = $this->_prepare_wall_data($sv);
+								unset($data[$sk]);
+								$i++;
+								
+							}
+							
+						}
+						
+						if(isset($d['grp'])){
+							
+							$d['mov_grp_count'] = $i;
+							$d['seen_type'] = 'movie_group_seen';
+							$tree[] = $this->_prepare_wall_data($d);
+							
+						}elseif(isset($data[$k])){
+							
+							$d['seen_type'] = 'single_seen';
+							$tree[] = $this->_prepare_wall_data($data[$k]);
+							
+							
+						}
 						
 					}
 					

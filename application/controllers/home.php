@@ -34,42 +34,55 @@
 			if($this->form_validation->run() === TRUE){
 				
 				$ref = ($data['lgn_ref']) ? $data['lgn_ref'] : 'user/feeds';
-				$cookie = (isset($data['lgn_cookie'])) ? TRUE : FALSE;
+				$cookie = FALSE;
+				
 				unset($data['lgn_ref']);
-				unset($data['lgn_cookie']);
-
-				$user = $this->user_m->login($data['lgn_email'], $data['lgn_password']);
-
-				if($user && $user['data']->usr_act == 1){
+				unset($data['lgn_submit']);
+				
+				if(isset($data['lgn_token'])){
 					
-					$data = array(
-						'usr_id' => $user['data']->usr_id,
-						'usr_nick' => $user['data']->usr_nick,
-						'usr_name' => $user['data']->usr_name,
-						'usr_email' => $user['data']->usr_email,
-						'usr_avatar' => $user['data']->usr_avatar,
+					$cookie = TRUE;
+					$data['lgn_token'] = hash('sha512', random_string('alpha', 10).$data['lgn_email']);
+					
+				}else{
+					
+					$data['lgn_token'] = NULL;
+					
+				}
+				
+				$data['lgn_type'] = 'lgn';
+				$data['lgn_time'] = date("Y-m-d H:i:s");
+
+				$user = $this->user_m->login($data);
+
+				if($user && $user['usr_act'] == 1){
+					
+					$session = array(
+						'usr_id' => $user['usr_id'],
+						'usr_nick' => $user['usr_nick'],
+						'usr_name' => $user['usr_name'],
+						'usr_email' => $user['usr_email'],
+						'usr_avatar' => $user['usr_avatar'],
 						'usr_loggedin' => TRUE,
 					);
 					
 					if($cookie){
 
 						$cookie = array(
-							'name' => 'mvs_lgn_cookie',
-							'value' => hash('sha512', random_string('alpha', 10).$user['data']->usr_id),
+							'name' => 'mvs_lgn_token',
+							'value' => $data['lgn_token'],
 							'expire' => 31536000
 						);
-						
+
 						$this->input->set_cookie($cookie);
-						
-						$this->user_m->set_autologin($user['data']->usr_id, $cookie);
 						
 					}
 						
-					$this->session->set_userdata($data);
+					$this->session->set_userdata($session);
 									
 					redirect($ref, 'refresh');
 									
-				}elseif($user && $user['data']->usr_act == 0){
+				}elseif($user && $user['usr_act'] == 0){
 
 					$this->data['login_error'] = 'Please activate your account. <a href="'.$this->data['site_url'].'user/account/activate?act='.$user['data']->usr_act_key.'">Click here</a> for sending activation email.';
 					
@@ -96,9 +109,6 @@
 				$user = $this->user_m->signup($data);
 				
 				if($user){
-					
-					//$data['tmp_usr_act_key'] = $user['usr_act_key'];
-					//$this->session->set_userdata($data);
 					
 					$this->data['mail'] = $user;
 

@@ -567,16 +567,10 @@ function checkSortable( k ){
 }
 function searchList(){
 	var arr = [];
-	$("[mvs-ldt]").each(function( i, k ) {
-    	arr[ i ] =  $( this ).attr('ldt-id') ;
+	$("[ldt-id]").each(function( i, k ) {
+    	arr[ i ] =  $(this).attr('ldt-id');
     });
 	return arr;
-}
-
-function checkList(){
-	var last = searchList();
-	
-	console.log(last);
 }
 
 // Custom List Detail Remove from Custom List
@@ -584,7 +578,7 @@ var clsArr = [];
 
 function removeFromList(obj){
 	
-	var rel = $(obj).attr("rel"), id = $(obj).attr("ldt-id"), mvs = $(obj).parents(".movieItemInner").attr("rel");
+	var id = $(obj).attr("ldt-id");
 		
 	clsArr.push(id);
 	
@@ -601,7 +595,6 @@ $('.editHolder a').click(function(){
 		$('.titleCustomList h4').text($('input.listTitle').val());
 		$('.pageDefault').removeClass('edit');
 		checkSortable('destroy');
-		checkList();
 	}else{
 		$('.pageDefault').addClass('edit');
 		$('.titleCustomList input').focus();
@@ -611,31 +604,23 @@ $('.editHolder a').click(function(){
 
 
 function edit_custom_list(){
-	var title = $('input.listTitle').val(), text = $('.titleCustomList h4').text();
+	var title = $('input.listTitle').val(), postParams = {title:title}, ids = searchList();
 		
-		if(title !== text){
-
-			getAjax( { uri: site_url+'ajx/user_customlist_ajx/edit_list_detail', param: {id: list_id, title:title} }, function( e ){
-					
-					if(e['result'] == 'FALSE')
-						alert(e['msg']);
-						
-			});
+		if(ids.length > 0)
+			postParams.order = ids.toString();;
+			
+		if(clsArr.length > 0)
+			postParams.del = clsArr.toString();
 		
-		}
-		
-		if(clsArr.length > 0){
-
-			getAjax( { uri: site_url+'ajx/user_customlist_ajx/cl_remove_multi_item', param: {ids:clsArr} }, function( e ){
-					
-					if(e['result'] == 'OK')
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/edit_list_detail/'+list_id, param:postParams }, function( e ){
+				
+				if(e['result'] == 'OK')
 						clsArr = [];
 					else
 						alert(e['msg']);
-						
-			});
+					
+		});
 		
-		}
 }
 
 
@@ -889,6 +874,66 @@ function watch_trailer( t ){
 	});	 
 }
 
+
+function select_movie(m){
+	
+	var _this = $(m).parents('[mvs-id]'), mvs = _this.attr('mvs-id');
+	
+	console.log(mvs);
+	
+}
+
+// Movie Detail Seen In User's Network
+if( exist($('.pageMovie')) )
+	getAjx({ controller: 'mdUserNetworkSeen', uri: 'ajx/movie_actions_ajx/myn_seen_users/'+mvs_id }, function(){});
+	
+
+// Movie Detail Related Custom Lists
+if( exist($('.pageMovie')) )
+	getAjx({ controller: 'mdUserCustomlists', uri: 'ajx/movie_actions_ajx/movie_customlists/'+mvs_id }, function(){ setTimeout(lazyLoadActive, 1); });
+	
+
+// User Finder Page
+if( $('.pageUserFinder').length > 0 && typeof keyword != 'undefined' )
+	getAjx({ controller: 'UserSearchController', uri: "ajx/search_ajx/get_users/suggest?u="+keyword }, function(){
+		
+		setTimeout(function(){ lazyLoadActive(); }, 1);
+		
+	});
+
+// User Search Suggest
+if( $('#user_keyword').length > 0 )
+	$('#user_keyword').qapturedComplete({
+		source: function( request, response ) {
+			
+			getAjax( { uri: site_url + "ajx/search_ajx/get_users/suggest?u=" + request.term, param: null }, function( d ){
+				
+				if( d.result == 'OK' )
+			  	response( prepareData(d.data) );
+					
+		    });
+			
+		  },
+		  minLength: 2
+	});
+	
+	function prepareData( data ){
+	
+	var obj = [];
+	
+	if( data.length > 0 ){
+		for( var i = 0; i < data.length; ++i )
+			data[i]['category'] = 'users';
+		
+		obj = obj.concat( data );	
+	}
+	
+	if( obj.length > 0 ) return obj;
+	else return [{ 'category': 'noResult' }];
+	
+}
+
+
 function cleanText( k ){
 	return k.replace(/(^\s+|\s+$)/g,'');
 }
@@ -1012,7 +1057,7 @@ function ShowReplies( t ){
 	}
 }	
 
-////////////////////////////////////////////////////////////////////////////////////////////////////// EDIT REVIEW
+// EDIT REVIEW
 function editReview( _t ){
 	var _this = $( _t ), prts = _this.parents('[act-id]:eq(0)');
 
@@ -1035,6 +1080,28 @@ function editReview( _t ){
 			
 		});
 	}
+}
+
+// DELETE REVIEW
+function deleteReview( _t ){
+	var _this = $( _t ), prts = _this.parents('[act-id]:eq(0)');
+	
+	if( prts.length > 0 ){
+		
+		getAjax( { uri: site_url+'ajx/comments_ajx/delete_comment/' + prts.attr('act-id')}, function(e){
+			
+			if(e['result'] == 'OK'){
+				prts.fadeOut(333, function(){
+					prts.remove();
+				});
+			}else{
+				alert(e['data']['message']);
+			}
+
+		});
+		
+	}
+	
 }
 
 

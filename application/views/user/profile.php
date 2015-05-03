@@ -1,7 +1,7 @@
 <div class="pageDefault pageProfile">
 	<div class="titleDefault titleProfile">
 		<h1>Your Profile</h1>
-		<p>Last Login: <?php echo date_format(date_create($the_user->usr_last_login), 'M d, Y H:i'); ?></p>
+		<p>Last Login: <?php //echo date_format(date_create($the_user->usr_last_login), 'M d, Y H:i'); ?></p>
 	</div>
 	<div class="profileForm">
 	<?php echo form_open('', array('class' => 'form-profile', 'role' => 'form')); ?>
