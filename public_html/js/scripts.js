@@ -1105,3 +1105,13 @@ function deleteReview( _t ){
 }
 
 
+// READ MORE
+function readMore( _t ){
+	
+	var _this = $( _t ), prts = _this.parents('div.text:eq(0)');
+	
+	prts.toggleClass('more');
+	
+}
+
+

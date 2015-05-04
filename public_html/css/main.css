@@ -247,6 +247,10 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .ReviewListHolder .listItem .movie_group_seen .textContent{margin-top:10px;}
 .ReviewListHolder .listItem.rv2 .textContent{float:left;}
 
+.ReviewListHolder .listItem .text .textEnd{display:none;}
+.ReviewListHolder .listItem .text.more .textEnd{display:inline;}
+.ReviewListHolder .listItem .text.more .dots{display:none;}
+.ReviewListHolder .listItem .text.more .readMore{display:none;}
 
 .ReviewListHolder .listItem .feedHolder .userInfo{float:left; width:125px; }
 .ReviewListHolder .listItem .feedHolder .userInfo a.usrAvatar{display:block; width:60px; height:66px;}

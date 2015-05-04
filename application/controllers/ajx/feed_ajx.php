@@ -199,6 +199,18 @@
 
 			if($feed['mvs_poster'] != NULL)				
 				$feed['mvs_poster'] = ($feed['mvs_poster'] === '1') ? getCoverPath($feed['mvs_slug'], 'small') : 'images/placeHolder.jpg';
+				
+			if($feed['feed_text'] !== NULL){
+				$feed['text_char'] = strlen($feed['feed_text']);
+				if($feed['text_char'] > 500){
+					
+					$feed['text_start'] = substr($feed['feed_text'], 0, 500);
+					$feed['text_start'] = substr($feed['text_start'], 0, strrpos($feed['text_start'], ' '));
+					$feed['text_end'] = substr($feed['feed_text'], strlen($feed['text_start']), $feed['text_char']);
+					
+				}
+				
+			}
 			
 			if($feed['list_data_slugs'] !== NULL){
 				
