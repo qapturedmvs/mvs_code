@@ -1122,14 +1122,21 @@ function confirmation( _t ){
       height:140,
       modal: true,
       buttons: {
-        "Ok": function() {
-          $( this ).dialog( "close" );
-		  if( type == '' ) deleteReview( _this );
-		  else if( type == '' ) deleteCustomList( _this );
-        },
-        Cancel: function() {
-          $( this ).dialog( "close" );
-        }
+        "Yes": function() {
+        
+				  $( this ).dialog( "close" );
+					
+					if( type == 'rev' )
+						deleteReview( _this );
+					else if( type == 'cl' )
+						deleteCustomList( _this );
+        
+				},
+        "No": function() {
+        
+				  $( this ).dialog( "close" );
+        
+				}
       }
     });
 }

@@ -60,8 +60,8 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 #qHider{position:fixed; width:100%; height:100%; background:#000; opacity:.5; z-index:998;}
 
-.msgboxDefault{position:fixed; top:50%; left:0; margin:0 auto; background:#fff; z-index:999;}
-.msgboxDelConfirm{width:150px; height:80px; margin-top:-40px;}
+/*.msgboxDefault{position:fixed; top:50%; left:0; margin:0 auto; background:#fff; z-index:999;}
+.msgboxDelConfirm{width:150px; height:80px; margin-top:-40px;}*/
 
 .userHolder{float:left;}
 
