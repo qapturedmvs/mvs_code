@@ -1115,3 +1115,22 @@ function readMore( _t ){
 }
 
 
+function confirmation( _t ){
+	var _this = $( _t ), type = _this.attr('type');
+	$( ".msgboxDelConfirm" ).dialog({
+      resizable: false,
+      height:140,
+      modal: true,
+      buttons: {
+        "Ok": function() {
+          $( this ).dialog( "close" );
+		  if( type == '' ) deleteReview( _this );
+		  else if( type == '' ) deleteCustomList( _this );
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+}
+

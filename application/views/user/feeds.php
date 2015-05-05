@@ -39,7 +39,7 @@
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
 											<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
-											<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
+											<a class="btnRemove" onclick="confirmation(this);" href="javascript:void(0);">Remove</a>
 										</div>
 									</div>
 									<?php endif; ?>
@@ -71,7 +71,7 @@
 													</div>
 													<div class="ownerControls" ng-if="ref.owner == 1">
 														<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
-														<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
+														<a class="btnRemove" onclick="confirmation(this);" href="javascript:void(0);">Remove</a>
 													</div>
 												</div>
 											<?php endif; ?>
@@ -110,7 +110,7 @@
 										</div>
 										<div class="ownerControls" ng-if="item.owner == 1">
 											<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);" ng-if="item.feed_ref_count == null">Edit</a>
-											<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
+											<a class="btnRemove" onclick="confirmation(this);" href="javascript:void(0);">Remove</a>
 										</div>
 									</div>
 									<?php endif; ?>
@@ -144,7 +144,7 @@
 												</div>
 												<div class="ownerControls" ng-if="ref.owner == 1">
 													<a class="btnEdit" onclick="editReview(this);" href="javascript:void(0);">Edit</a>	
-													<a class="btnRemove" onclick="deleteReview(this);" href="javascript:void(0);">Remove</a>
+													<a class="btnRemove" onclick="confirmation(this);" href="javascript:void(0);">Remove</a>
 												</div>
 											</div>
 											<?php endif; ?>
