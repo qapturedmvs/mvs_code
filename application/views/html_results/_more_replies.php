@@ -7,7 +7,7 @@
 		</div>
 		<div class="feedInfo">
 			<div class="textContent">
-				<div class="text"><?php echo $feed['act_text']; ?></div>
+				<div class="text"><?php echo $feed['feed_text']; ?></div>
 			</div>
 			<div class="time"><span title="<?php echo $feed['feed_time']; ?>"><?php echo $feed['feed_ago']; ?></span></div>
 			<hr class="qFixer" />
