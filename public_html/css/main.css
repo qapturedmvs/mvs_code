@@ -228,7 +228,8 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .refs .refItem{border:none; background:none;}
 .commentboxHolder .refItem:hover{background:none;}
 
-
+.msgboxDelConfirm.rev .rev{display:inline !important;}
+.msgboxDelConfirm.cl .cl{display:inline !important;}
 
 .commentboxHolder .feedListItem .userInfo{float:left; width:125px; }
 .commentboxHolder .feedListItem .userInfo a.usrAvatar{display:block; width:60px; height:66px;}

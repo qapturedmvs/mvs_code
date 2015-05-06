@@ -1117,14 +1117,14 @@ function readMore( _t ){
 
 function confirmation( _t ){
 	var _this = $( _t ), type = _this.attr('type');
-	$( ".msgboxDelConfirm" ).dialog({
+	$( ".msgboxDelConfirm" ).addClass(type).dialog({
       resizable: false,
       height:140,
       modal: true,
       buttons: {
         "Yes": function() {
         
-				  $( this ).dialog( "close" );
+				  $( this ).removeClass(type).dialog( "close" );
 					
 					if( type == 'rev' )
 						deleteReview( _this );
@@ -1134,7 +1134,7 @@ function confirmation( _t ){
 				},
         "No": function() {
         
-				  $( this ).dialog( "close" );
+				  $( this ).removeClass(type).dialog( "close" );
         
 				}
       }
