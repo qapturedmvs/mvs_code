@@ -21,8 +21,8 @@
 										<div class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}"></a></div>
 										<div class="textContent">
 											<div class="title"><a href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a></div>
-											<div class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
-											<div class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
+											<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
+											<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
 										</div>
 										<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 										<hr class="qFixer" />
@@ -55,8 +55,8 @@
 												</div>
 												<div class="feedInfo">
 													<div class="textContent">
-														<div class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
-														<div class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
+														<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
+														<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
 													</div>
 													<div class="time"><span title="{{item.feed_time}}">{{ref.feed_ago}}</span></div>
 													<hr class="qFixer" />
@@ -92,8 +92,8 @@
 									<div class="feedInfo">
 									<div class="textContent">
 										<div class="title"><a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a></div>
-										<div class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
-										<div class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
+										<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
+										<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
 									</div>
 									<div class="time"><span title="{{item.feed_time}}">{{item.feed_ago}}</span></div>
 									<hr class="qFixer" />
@@ -126,8 +126,8 @@
 												</div>
 												<div class="feedInfo">
 													<div class="textContent">
-														<div class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
-														<div class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
+														<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char <= 500">{{item.feed_text}}</div>
+														<div onclick="showSpoiler(this);" class="text" ng-if="item.text_char > 500">{{item.text_start}}<span class="dots">...</span> <a class="readMore" onclick="readMore(this);" href="javascript:void(0);">Read more</a><span class="textEnd">{{item.text_end}} <a class="hideMore" onclick="readMore(this);" href="javascript:void(0);">Hide more</a></span></div>
 													</div>
 													<div class="time"><span title="{{item.feed_time}}">{{ref.feed_ago}}</span></div>
 													<hr class="qFixer" />

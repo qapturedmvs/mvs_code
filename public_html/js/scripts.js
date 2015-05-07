@@ -1141,3 +1141,10 @@ function confirmation( _t ){
     });
 }
 
+// REVEALING A SPOILER
+function showSpoiler( _t ){
+	var _this = $( _t ), prts = _this.parents('div.spl:eq(0)');
+	
+	prts.removeClass('spl');
+}
+

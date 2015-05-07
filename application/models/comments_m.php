@@ -49,20 +49,11 @@ class Comments_M extends MVS_Model
 	}
 	
 	public function add_comment($data){
+			
+		$out = array('@result' => NULL);
+		$this->db->call_procedure('sp_add_review', $data, $out);
+		$result = $out['@result'];
 
-		if($data['act_ref_id'] === 0){
-			
-			$this->db->insert($this->_table_name, $data);
-			$result = $this->db->insert_id();
-			
-		}else{
-			
-			$out = array('@result' => NULL);
-			$this->db->call_procedure('sp_reply_feed', $data, $out);
-			$result = $out['@result'];
-			
-		}
-		
 		return $result;
 	
 	}

@@ -103,28 +103,19 @@
 			
 				$vars = $this->input->post(NULL, TRUE);
 				
+				$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => NULL, 'type' => NULL, 'id' => NULL, 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+				
 				if(isset($vars['ref'])){
 					
-					$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => $vars['ref'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+					$data['act_ref_id'] = $vars['ref'];
 					
 				}else{
 					
-					$data = array('act_type_id' => (int) $vars['type'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl'], 'usr_id' => $this->user['usr_id'], 'act_ref_id' => 0);
-					$col = '';
-
-					switch((int) $vars['type']) {
-						case 2:
-								$col = 'mvs_id';
-								break;
-						case 4:
-								$col = 'list_id';
-								break;
-					}
-					
-					$data[$col] = $vars['id'];
+					$data['type'] = $vars['type'];
+					$data['id'] = $vars['id'];
 					
 				}
-				
+
 				$this->data['comment_result'] = $this->comments_m->add_comment($data);
 				
 			}else{

@@ -241,7 +241,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .ReviewListHolder .listItem .feedHolder{display:inline-block; width:100%;}
 .ReviewListHolder .listItem .feedHolder.showReplies .btnShowReplies{display:none;}
 .ReviewListHolder .listItem .title{display:block; margin:15px 0 5px 0; font-weight:bold;}
-.ReviewListHolder .listItem .text{display:block; margin-bottom: 5px;}
+.ReviewListHolder .listItem .text{display:block; margin-bottom: 5px; min-height:25px;}
 .ReviewListHolder .listItem .time{display:block; text-align: right; clear:both;}
 .ReviewListHolder .listItem .moviePoster{width:60px; height:100px; background-size:cover; background-position:center center; background-color:#fff; float:left; margin:0 20px 0 0;}
 .ReviewListHolder .listItem .movie_group_seen .moviePoster{margin:0 15px 15px 0;}
@@ -252,6 +252,8 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .ReviewListHolder .listItem .text.more .textEnd{display:inline;}
 .ReviewListHolder .listItem .text.more .dots{display:none;}
 .ReviewListHolder .listItem .text.more .readMore{display:none;}
+
+.ReviewListHolder .listItem .spl .text{background:url(../images/spl_msg.png) no-repeat center center; text-indent:-9999px; cursor:hand; cursor:pointer;}
 
 .ReviewListHolder .listItem .feedHolder .userInfo{float:left; width:125px; }
 .ReviewListHolder .listItem .feedHolder .userInfo a.usrAvatar{display:block; width:60px; height:66px;}

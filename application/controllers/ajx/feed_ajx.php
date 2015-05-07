@@ -197,10 +197,10 @@
 			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 
-			if($feed['mvs_poster'] != NULL)				
+			if(isset($feed['mvs_poster']))				
 				$feed['mvs_poster'] = ($feed['mvs_poster'] === '1') ? getCoverPath($feed['mvs_slug'], 'small') : 'images/placeHolder.jpg';
 				
-			if($feed['feed_text'] !== NULL){
+			if(isset($feed['feed_text'])){
 				$feed['text_char'] = strlen($feed['feed_text']);
 				if($feed['text_char'] > 500){
 					
@@ -212,7 +212,7 @@
 				
 			}
 			
-			if($feed['list_data_slugs'] !== NULL){
+			if(isset($feed['list_data_slugs'])){
 				
 				$temp['slugs'] = explode('||', $feed['list_data_slugs']);
 				$temp['titles'] = explode('||', $feed['list_data_titles']);
