@@ -19,21 +19,21 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 			
 		$.each( items, function( index, item ) {
 			var li;
-			if ( item.category != currentCategory ){
+			if ( item.result_type != currentCategory ){
 				
-				ul.append('<li class="ui-autocomplete-category '+ item.category +'"><h2>' + item.category + '</h2></li>' );
-				currentCategory = item.category;
+				ul.append('<li class="ui-autocomplete-category '+ item.result_type +'"><h2>' + item.result_type + '</h2></li>' );
+				currentCategory = item.result_type;
 			}
 			
 			li = that._renderItemData( ul, item );
 			
-			if( item.category == 'movies' ){
-				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.mvs_slug + '">'+ item.mvs_title + ' ('+ item.mvs_year +')</a></span><hr class="qFixer" /></div>');
-			}else if( item.category == 'stars' ){
-				li.html('<div class="row"><span class="title"><a href="/mvs_code/public_html/actor/'+ item.str_slug + '">'+ item.str_name +'</a></span><hr class="qFixer" /></div>');
-			}else if( item.category == 'users' ){
+			if( item.result_type == 'movie' ){
+				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.result_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.result_slug + '">'+ item.result_title + ' ('+ item.result_year +')</a></span><hr class="qFixer" /></div>');
+			}else if( item.result_type == 'star' ){
+				li.html('<div class="row"><span class="title"><a href="/mvs_code/public_html/actor/'+ item.result_slug + '">'+ item.result_title +'</a></span><hr class="qFixer" /></div>');
+			}else if( item.result_type == 'users' ){
 				li.html('<div class="row"><span class="title"><a href="/user/wall/actions/'+ item.usr_nick + '">'+ item.usr_name +'</a></span><hr class="qFixer" /></div>');
-			}else if( item.category == 'noResult' ){
+			}else if( item.result_type == 'noResult' ){
 				li.html('<div class="row">No Result</div>');
 			}
 			
@@ -43,37 +43,38 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 });
 
 
-function mergeData( data ){
-	
-	var obj = [], m = data['movies'] , s = data['stars'];
-	
-	if( m.length > 0 ){
-		for( var i = 0; i < m.length; ++i )
-			m[i]['category'] = 'movies';
-		
-		obj = obj.concat( m );	
-	}
-	
-	if( s.length > 0 ){
-		for( var j = 0; j < s.length; ++j )
-			s[j]['category'] = 'stars';	
-		
-		obj = obj.concat( s );	
-	}
-	
-	if( obj.length > 0 ) return obj 
-	else return [{ 'category': 'noResult' }];
-	
-}
+//function mergeData( data ){
+//	
+//	var obj = [], m = data['movies'] , s = data['stars'];
+//	
+//	if( m.length > 0 ){
+//		for( var i = 0; i < m.length; ++i )
+//			m[i]['category'] = 'movies';
+//		
+//		obj = obj.concat( m );	
+//	}
+//	
+//	if( s.length > 0 ){
+//		for( var j = 0; j < s.length; ++j )
+//			s[j]['category'] = 'stars';	
+//		
+//		obj = obj.concat( s );	
+//	}
+//	
+//	if( obj.length > 0 ) return obj 
+//	else return [{ 'category': 'noResult' }];
+//	
+//}
 
 if( $('#search_keyword').length > 0 )
 	$('#search_keyword').qapturedComplete({
 		source: function( request, response ) {
 			
-			getAjax( { uri: site_url + "ajx/search_ajx/lister/" + request.term, param: null }, function( d ){
+			getAjax( { uri: site_url + "ajx/search_ajx/suggest/" + request.term, param: null }, function( d ){
 				
 				if( d.result == 'OK' )
-			  		response( mergeData( d.data ) );
+			  		//response( mergeData( d.data ) );
+						response( d.data );
 					
 		    });
 			

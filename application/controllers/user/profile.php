@@ -13,7 +13,6 @@
     
     public function index(){
 			
-			$this->data['controls'] = array('page' => 'profile', 'owner' => TRUE);
 			$user = $this->user_m->get_user_data($this->user['usr_id'], 'usr_id');
 			$this->data['modified_data'] = FALSE;
 			$inputs = $this->input->post(NULL, TRUE);

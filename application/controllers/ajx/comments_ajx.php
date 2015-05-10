@@ -98,25 +98,30 @@
 		public function add_comment(){
 				
 			if($this->logged_in){
-				
-				$this->load->model('comments_m');
-			
+
 				$vars = $this->input->post(NULL, TRUE);
 				
-				$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => NULL, 'type' => NULL, 'id' => NULL, 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
-				
-				if(isset($vars['ref'])){
+				if($vars){
 					
-					$data['act_ref_id'] = $vars['ref'];
+					$this->load->model('comments_m');
 					
+					if(isset($vars['ref'])){
+					
+						$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => $vars['ref'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+						$this->data['comment_result'] = $this->comments_m->reply_comment($data);
+						
+					}else{
+						
+						$data = array('usr_id' => $this->user['usr_id'], 'type' => $vars['type'], 'id' => $vars['id'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+						$this->data['comment_result'] = $this->comments_m->add_comment($data);
+						
+					}
+
 				}else{
 					
-					$data['type'] = $vars['type'];
-					$data['id'] = $vars['id'];
+					show_404();
 					
 				}
-
-				$this->data['comment_result'] = $this->comments_m->add_comment($data);
 				
 			}else{
 				
@@ -131,12 +136,21 @@
 		public function edit_comment($act_id){
 				
 			if($this->logged_in){
-				
-				$this->load->model('comments_m');
-			
+
 				$vars = $this->input->post(NULL, TRUE);
-				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $act_id, 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
-				$this->data['edit_result'] = $this->comments_m->edit_comment($data);
+				
+				if($vars){
+					
+					$this->load->model('comments_m');
+					
+					$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $act_id, 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
+					$this->data['edit_result'] = $this->comments_m->edit_comment($data);
+				
+				}else{
+					
+					show_404();
+					
+				}
 				
 			}else{
 				
@@ -148,15 +162,22 @@
 
     }
 		
-		public function delete_comment($act_id){
+		public function delete_comment($act_id = NULL){
 			
-			if($this->logged_in){
+			if($this->logged_in && $act_id){
 				
-				$this->load->model('comments_m');
-
-				$data = array('act_id' => $act_id, 'usr_id' => $this->user['usr_id']);
-
-				$this->data['delete_result'] = $this->comments_m->delete_comment($data);
+				if($act_id){
+					
+					$this->load->model('comments_m');
+	
+					$data = array('act_id' => $act_id, 'usr_id' => $this->user['usr_id']);
+					$this->data['delete_result'] = $this->comments_m->delete_comment($data);
+				
+				}else{
+					
+					show_404();
+					
+				}
 				
 			}else{
 				

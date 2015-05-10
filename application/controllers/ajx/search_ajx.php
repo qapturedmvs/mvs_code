@@ -9,64 +9,73 @@
 		public function index(){ show_404(); }
 		
 		public function lister($keyword = NULL){
-				
-			$type = NULL;
-			$limited = TRUE;
-			$results = array('status' => 'none');
-		 
-			if($keyword){
-				$keyword = $this->search_m->cleaner($keyword);
-					 
-				if($type == 'movie' || $type == NULL){
-					$results['movies'] = $this->_movies($keyword, $limited);
-					$results['status'] = ($type == NULL) ? 'both' : 'movie';
-				}
-				
-				if($type == 'star' || $type == NULL){
-					$results['stars'] = $this->_stars($keyword, $limited);
-					$results['status'] = ($type == NULL) ? 'both' : 'star';
-				}
-			}
-
+			
 			$json = (object) array();
-	
-			if($results){						
+			$results = ($keyword) ? $this->search_m->find_movies_stars($keyword) : FALSE;
+
+			if($results){
+				
 				$json->result = 'OK';
 				$json->data = $results;
+			
 			}else{
+			
 				$json->result = 'FALSE';
 				$json->data = '';
+			
 			}
 			
 			$this->data['json'] = json_encode($json);
+			$this->load->view('json/main_json_view', $this->data);
 			
+		}
+		
+		public function suggest($keyword = NULL){
+			
+			$json = (object) array();
+			$data = array('keyword' => $keyword, 'type' => 'both', 'offset' => 0, 'per_page' => 5);
+			$results = ($keyword) ? $this->search_m->suggest_movies_stars($data) : FALSE;
+
+			if($results){
+				
+				$json->result = 'OK';
+				$json->data = $results;
+			
+			}else{
+			
+				$json->result = 'FALSE';
+				$json->data = '';
+			
+			}
+			
+			$this->data['json'] = json_encode($json);
 			$this->load->view('json/main_json_view', $this->data);
 			
 		}
 		
 		
-		private function _movies($keyword, $limited){
-      
-		  $db_data = $this->search_m->find_movies($keyword, $limited);
-		  
-		  if($db_data)
-			return $db_data['data'];
-		  else
-			return $db_data;
-		
-		}
-		
-		private function _stars($keyword, $limited){
-		  
-		  $db_data = $this->search_m->find_stars($keyword, $limited);
-		  
-		  if($db_data)
-			return $db_data['data'];
-		  else
-			return $db_data;
-		  
-		
-		}
+		//private function _movies($keyword, $limited){
+		//    
+		//  $db_data = $this->search_m->find_movies($keyword, $limited);
+		//  
+		//  if($db_data)
+		//	return $db_data['data'];
+		//  else
+		//	return $db_data;
+		//
+		//}
+		//
+		//private function _stars($keyword, $limited){
+		//  
+		//  $db_data = $this->search_m->find_stars($keyword, $limited);
+		//  
+		//  if($db_data)
+		//	return $db_data['data'];
+		//  else
+		//	return $db_data;
+		//  
+		//
+		//}
 		
 		public function get_users($type = 'suggest'){
 			
