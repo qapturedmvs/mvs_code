@@ -10,7 +10,7 @@
 			
 		}
     
-    public function index($type = NULL){
+    public function index(){
       
       $keyword = $this->input->post('keyword', TRUE);
 
@@ -20,27 +20,8 @@
       
     }
     
-    private function _movies($keyword, $limited){
+    public function movies(){
       
-      $db_data = $this->search_m->find_movies($keyword, $limited);
-      
-      if($db_data)
-        return $db_data['data'];
-      else
-        return $db_data;
-    
-    }
-    
-    private function _stars($keyword, $limited){
-      
-      $db_data = $this->search_m->find_stars($keyword, $limited);
-      
-      if($db_data)
-        return $db_data['data'];
-      else
-        return $db_data;
-      
-    
     }
     
     public function user(){

@@ -213,7 +213,7 @@ if(exist($('.pageMovies'))){
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
-	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/'+keyword }, function(){});
+	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?keyword='+keyword }, function(){});
 
 
 function getAjx( obj, callback ){

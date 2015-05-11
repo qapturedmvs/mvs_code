@@ -8,10 +8,29 @@
 		
 		public function index(){ show_404(); }
 		
-		public function lister($keyword = NULL){
+		public function lister($p = 1){
 			
 			$json = (object) array();
-			$results = ($keyword) ? $this->search_m->find_movies_stars($keyword) : FALSE;
+			$data = array('keyword' => $this->get_vars['keyword'], 'type' => 'both', 'offset' => $p, 'per_page' => 10);
+			$results = array('all' => array(), 'movie' => array(), 'star' => array());
+			
+			if(isset($this->get_vars['type'])){
+				$data['type'] = $this->get_vars['type'];
+				$data['per_page'] = 50;
+			}
+		
+			$results['all'] = $this->search_m->find_movies_stars($data);
+			
+			foreach($results['all'] as $k => $v){
+				
+				if($v['result_type'] == 'movie')
+					$v['result_poster'] = ($v['result_poster'] == 1) ? getCoverPath($v['result_slug'], 'small') : 'images/placeHolder.jpg';
+				
+				$results[$v['result_type']][$k] = $v; 
+				
+			}
+			
+			unset($results['all']);
 
 			if($results){
 				
