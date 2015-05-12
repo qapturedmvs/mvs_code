@@ -20,7 +20,21 @@
       
     }
     
-    public function movies(){
+    public function movie(){
+      
+      $this->data['type'] = 'movie';
+   		$this->data['keyword'] = $this->get_vars['q'];
+   		$this->data['subview'] = 'search_detail';
+			$this->load->view('_main_body_layout', $this->data);
+      
+    }
+    
+    public function star(){
+      
+      $this->data['type'] = 'star';
+   		$this->data['keyword'] = $this->get_vars['q'];
+   		$this->data['subview'] = 'search_detail';
+			$this->load->view('_main_body_layout', $this->data);
       
     }
     

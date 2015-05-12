@@ -11,7 +11,7 @@
 		public function lister($p = 1){
 			
 			$json = (object) array();
-			$data = array('keyword' => $this->get_vars['keyword'], 'type' => 'both', 'offset' => $p, 'per_page' => 10);
+			$data = array('keyword' => $this->get_vars['q'], 'type' => 'both', 'offset' => $p, 'per_page' => 10);
 			$results = array('all' => array(), 'movie' => array(), 'star' => array());
 			
 			if(isset($this->get_vars['type'])){
@@ -49,8 +49,9 @@
 			
 		}
 		
-		public function suggest($keyword = NULL){
+		public function suggest(){
 			
+			$keyword = $this->get_vars['q'];
 			$json = (object) array();
 			$data = array('keyword' => $keyword, 'type' => 'both', 'offset' => 0, 'per_page' => 5);
 			$results = ($keyword) ? $this->search_m->suggest_movies_stars($data) : FALSE;

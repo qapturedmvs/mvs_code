@@ -70,7 +70,7 @@ if( $('#search_keyword').length > 0 )
 	$('#search_keyword').qapturedComplete({
 		source: function( request, response ) {
 			
-			getAjax( { uri: site_url + "ajx/search_ajx/suggest/" + request.term, param: null }, function( d ){
+			getAjax( { uri: site_url + "ajx/search_ajx/suggest?q=" + request.term, param: null }, function( d ){
 				
 				if( d.result == 'OK' )
 			  		//response( mergeData( d.data ) );
@@ -79,7 +79,7 @@ if( $('#search_keyword').length > 0 )
 		    });
 			
 		  },
-		  minLength: 3
+		  minLength: 2
 	});
 
 
@@ -213,7 +213,11 @@ if(exist($('.pageMovies'))){
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
-	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?keyword='+keyword }, function(){});
+	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?q='+keyword }, function(){});
+
+
+if( $('.pageSearchDetail').length > 0 && typeof keyword != 'undefined' )
+	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?q='+keyword+'&type='+type }, function(){});
 
 
 function getAjx( obj, callback ){
