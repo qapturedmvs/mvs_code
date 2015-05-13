@@ -320,6 +320,8 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageSearch .results .movies ul{margin-bottom:15px;}
 .pageSearch .results .movies li{margin-bottom:10px;}
 .pageSearch .results .movies li a span{font-size:14px;}
+.pageSearch .results .movies li span.poster{float:left; display:block; margin-right:15px;}
+.pageSearch .results .movies li .posterImg{width:40px; height:60px; background-size:cover;}
 .pageSearch .results .stars{margin-top:20px;}
 .pageSearch .results .stars ul{margin-bottom:15px;}
 .pageSearch .results .stars li{margin-bottom:10px;}

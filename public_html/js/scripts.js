@@ -216,8 +216,13 @@ if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
 	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?q='+keyword }, function(){});
 
 
-if( $('.pageSearchDetail').length > 0 && typeof keyword != 'undefined' )
-	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?q='+keyword+'&type='+type }, function(){});
+if( $('.pageSearchDetail').length > 0 && typeof keyword != 'undefined' ){
+	getAjx({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?q='+keyword+'&type='+type }, function(){setTimeout(function(){ lazyLoadActive(); }, 1);});
+	//var page = 1;
+	//infiniteScroll({ controller: 'searchController', uri: 'ajx/search_ajx/lister/?q='+keyword+'&type='+type, 'pageSize': 100, 'type': 0 });
+
+}
+	
 
 
 function getAjx( obj, callback ){
