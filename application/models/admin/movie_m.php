@@ -21,10 +21,13 @@ class Movie_M extends MVS_Model
 			$this->_order_rule = $this->cleaner($_GET['orderRule']);
 	}
 	
-	public function movies($offset = 0){
+	public function movies($p){
 		
-		$filters = array('order_by' => array($this->_order_by, $this->_order_rule));
+		$offset = ($this->cleaner($p) - 1) * $this->per_page;
+		$filters = array('order_by' => array($this->_order_by, 'ASC'));
 		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
+		$movies['offset'] = $offset;
+		$movies['per_page'] = $this->per_page;
 		
 		if (count($movies['data']))
 			return $movies;
@@ -55,6 +58,22 @@ class Movie_M extends MVS_Model
 	
 		if (count($genres['data']))
 			return $genres;
+		else
+			return FALSE;
+	
+	}
+	
+	// Get all langs
+	public function _langs(){
+		
+		$this->_table_name = 'mvs_lang';
+		$this->_primary_key = 'lang_id';
+		$this->_order_by = 'lang_id';
+
+		$langs = $this->get_data();
+
+		if (count($langs['data']))
+			return $langs;
 		else
 			return FALSE;
 	

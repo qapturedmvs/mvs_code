@@ -56,10 +56,13 @@
 	  <?php echo form_multiselect('countries', $countries, explode("|", $movie->cntry_id), 'id="cntry_id" class="form-control"'); ?>
 	  <span class="input-group-addon selections selectedCountries"></span>
 	</div>
-	<div class="input-group">
-	  <span class="input-group-addon">Language</span>
-	  <?php echo form_input(array('name' => 'mvs_langs', 'value' => $movie->mvs_langs, 'id' => 'mvs_langs', 'class' => 'form-control')); ?>
+	
+	<div class="input-group groupMulti" rel="langs">
+	  <span class="input-group-addon">Languages</span>
+	  <?php echo form_multiselect('langs', $langs, explode("|", $movie->lang_id), 'id="lang_id" class="form-control"'); ?>
+	  <span class="input-group-addon selections selectedLangs"></span>
 	</div>
+	
 	<div class="input-group">
 	  <span class="input-group-addon">Production</span>
 	  <?php echo form_input(array('name' => 'mvs_prod', 'value' => $movie->mvs_prod, 'id' => 'mvs_prod', 'class' => 'form-control')); ?>

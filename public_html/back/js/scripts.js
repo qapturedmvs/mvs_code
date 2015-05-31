@@ -44,7 +44,7 @@ if(exist($('.pageMovie'))){
 	function getSelections(sel){
 		$('.groupMulti[rel="'+sel+'"] .selections').html('');
 		$('.groupMulti[rel="'+sel+'"] select option:selected').each(function(){
-			$('.groupMulti[rel="'+sel+'"] .selections').append('<small rel="'+$(this).text()+'">'+$(this).text()+'</small>');
+			$('.groupMulti[rel="'+sel+'"] .selections').append('<small rel="'+$(this).val()+'">'+$(this).text()+'</small>');
 		});
 	}
 	

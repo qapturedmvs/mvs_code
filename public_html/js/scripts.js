@@ -28,11 +28,11 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 			li = that._renderItemData( ul, item );
 			
 			if( item.result_type == 'movie' ){
-				li.html('<div class="row"><span class="poster"><a href="/mvs_code/public_html/movie/'+ item.result_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="/mvs_code/public_html/movie/'+ item.result_slug + '">'+ item.result_title + ' ('+ item.result_year +')</a></span><hr class="qFixer" /></div>');
+				li.html('<div class="row"><span class="poster"><a href="'+site_url+'movie/'+ item.result_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="'+site_url+'movie/'+ item.result_slug + '">'+ item.result_title + ' ('+ item.result_year +')</a></span><hr class="qFixer" /></div>');
 			}else if( item.result_type == 'star' ){
-				li.html('<div class="row"><span class="title"><a href="/mvs_code/public_html/actor/'+ item.result_slug + '">'+ item.result_title +'</a></span><hr class="qFixer" /></div>');
-			}else if( item.result_type == 'users' ){
-				li.html('<div class="row"><span class="title"><a href="/user/wall/actions/'+ item.usr_nick + '">'+ item.usr_name +'</a></span><hr class="qFixer" /></div>');
+				li.html('<div class="row"><span class="title"><a href="'+site_url+'actor/'+ item.result_slug + '">'+ item.result_title +'</a></span><hr class="qFixer" /></div>');
+			}else if( item.result_type == 'user' ){
+				li.html('<div class="row"><span class="title"><a href="'+site_url+'user/wall/actions/'+ item.result_slug + '">'+ item.result_title +'</a></span><hr class="qFixer" /></div>');
 			}else if( item.result_type == 'noResult' ){
 				li.html('<div class="row">No Result</div>');
 			}
@@ -43,29 +43,6 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 });
 
 
-//function mergeData( data ){
-//	
-//	var obj = [], m = data['movies'] , s = data['stars'];
-//	
-//	if( m.length > 0 ){
-//		for( var i = 0; i < m.length; ++i )
-//			m[i]['category'] = 'movies';
-//		
-//		obj = obj.concat( m );	
-//	}
-//	
-//	if( s.length > 0 ){
-//		for( var j = 0; j < s.length; ++j )
-//			s[j]['category'] = 'stars';	
-//		
-//		obj = obj.concat( s );	
-//	}
-//	
-//	if( obj.length > 0 ) return obj 
-//	else return [{ 'category': 'noResult' }];
-//	
-//}
-
 if( $('#search_keyword').length > 0 )
 	$('#search_keyword').qapturedComplete({
 		source: function( request, response ) {
@@ -73,7 +50,6 @@ if( $('#search_keyword').length > 0 )
 			getAjax( { uri: site_url + "ajx/search_ajx/suggest?q=" + request.term, param: null }, function( d ){
 				
 				if( d.result == 'OK' )
-			  		//response( mergeData( d.data ) );
 						response( d.data );
 					
 		    });
@@ -904,22 +880,27 @@ if( exist($('.pageMovie')) )
 	
 
 // User Finder Page
-if( $('.pageUserFinder').length > 0 && typeof keyword != 'undefined' )
-	getAjx({ controller: 'UserSearchController', uri: "ajx/search_ajx/get_users/suggest?u="+keyword }, function(){
+if( $('.pageUserFinder').length > 0 && typeof keyword != 'undefined' ){
+	getAjx({ controller: 'UserSearchController', uri: "ajx/search_ajx/get_users/1?u="+keyword }, function(){
 		
 		setTimeout(function(){ lazyLoadActive(); }, 1);
 		
 	});
+	
+	//var page = 1;
+	//infiniteScroll({ controller: 'UserSearchController', uri: 'ajx/search_ajx/get_users/{{page}}?&u='+keyword, 'pageSize': 25, 'type': 0 });
+	
+}
 
 // User Search Suggest
 if( $('#user_keyword').length > 0 )
 	$('#user_keyword').qapturedComplete({
 		source: function( request, response ) {
 			
-			getAjax( { uri: site_url + "ajx/search_ajx/get_users/suggest?u=" + request.term, param: null }, function( d ){
+			getAjax( { uri: site_url + "ajx/search_ajx/suggest_users?u=" + request.term, param: null }, function( d ){
 				
 				if( d.result == 'OK' )
-			  	response( prepareData(d.data) );
+			  	response( d.data );
 					
 		    });
 			
@@ -927,21 +908,21 @@ if( $('#user_keyword').length > 0 )
 		  minLength: 2
 	});
 	
-	function prepareData( data ){
-	
-	var obj = [];
-	
-	if( data.length > 0 ){
-		for( var i = 0; i < data.length; ++i )
-			data[i]['category'] = 'users';
-		
-		obj = obj.concat( data );	
-	}
-	
-	if( obj.length > 0 ) return obj;
-	else return [{ 'category': 'noResult' }];
-	
-}
+//	function prepareData( data ){
+//	
+//	var obj = [];
+//	
+//	if( data.length > 0 ){
+//		for( var i = 0; i < data.length; ++i )
+//			data[i]['category'] = 'users';
+//		
+//		obj = obj.concat( data );	
+//	}
+//	
+//	if( obj.length > 0 ) return obj;
+//	else return [{ 'category': 'noResult' }];
+//	
+//}
 
 
 function cleanText( k ){

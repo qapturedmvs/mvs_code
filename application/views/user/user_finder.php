@@ -9,7 +9,6 @@
       <ul>
         <?php $this->load->view('components/_user_list_repeater'); ?>
       </ul>
-      <a class="more" href="javascript:void(0);">Get More Results</a>
     </div>
   </div>
   <?php else: ?>
