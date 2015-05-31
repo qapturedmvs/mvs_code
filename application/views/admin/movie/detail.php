@@ -1,8 +1,19 @@
 <div class="container pageMovie">
 <div class="headHolder">
-	<div class="posterHolder"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/'.$movie->mvs_imdb_id.'.jpg" alt="'.$movie->mvs_title.'" />'; ?></div>
-	<h2 class="sub-header">Movie #<?php echo $movie->mvs_id; ?></h2>
-	<a href="javascript:history.go(-1)" class="btn btn-default btnBack">Back</a>
+	<div class="posterHolder">
+		<img src="<?php echo ($movie->mvs_poster != 0) ? $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg' : $site_url.'images/placeHolder.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /></div>
+	<div class="topHolder">
+		<h2 class="sub-header">Movie #<?php echo $movie->mvs_id; ?></h2>
+		<div class="covers">
+			<ul></ul>
+			<div class="clearfix"></div>
+			<div class="coversNav"><a href="javascript:void(0);" class="btn btn-default btnMore">Load More</a></div>
+		</div>
+	</div>
+	<div class="btnHolder">
+		<a href="javascript:void(0);" class="btn btn-default btnCovers">Covers</a>
+		<a href="javascript:history.go(-1)" class="btn btn-default btnBack">Back</a>
+	</div>
 	<div class="clearfix"></div>
 </div>
 <?php echo form_open(); ?>

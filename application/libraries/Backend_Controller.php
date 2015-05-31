@@ -9,10 +9,9 @@
 		{
 			parent::__construct();	
 			
-			//$this->output->enable_profiler();
 			$this->load->model('admin/user_m');
-			$this->load->helper(array('form', 'mvs_helper'));
-			$this->load->library(array('form_validation', 'pagination'));
+			$this->load->helper('mvs_helper');
+			$this->load->library('pagination');
 
 			// Login check
 			$exception_uris = array('admin/user/login', 'admin/user/logout');

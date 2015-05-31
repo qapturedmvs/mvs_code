@@ -48,14 +48,22 @@ nav{text-align:center;}
 .posterGrid a{display:block; width:62px; min-height:100px; background:#ccc; border:1px solid #aaa;}
 h2.sub-header{margin:10px 0 20px;}
 .alignCenter{text-align:center;}
+.none{display:none;}
 
 /* Movie Detail */
 .pageMovie .headHolder{margin-bottom:20px;}
-.pageMovie .headHolder .posterHolder{min-width:150px; background:#ccc; border:1px solid #aaa; height:250px; float:left; margin-right:25px; position:relative; z-index:5;}
+.pageMovie .headHolder .posterHolder{min-width:150px; background:#ccc; border:1px solid #aaa; height:450px; float:left; margin-right:25px; position:relative; z-index:5;}
 .pageMovie .headHolder .posterHolder img{height:250px; cursor:pointer; cursor:hand;}
 .pageMovie .headHolder .posterHolder img.big{position:absolute; top:0; left:0; height:auto;}
-.pageMovie .headHolder h2{float:left;}
-.pageMovie .headHolder .btnBack{float:right;}
+.pageMovie .headHolder .topHolder{float:left; width:840px;}
+.pageMovie .headHolder .topHolder .covers{margin-top:15px;}
+.pageMovie .headHolder .topHolder .covers ul{list-style:none; padding:0; margin:0;}
+.pageMovie .headHolder .topHolder .covers li{float:left; margin:0 40px 10px 0; width:150px; height:150px;}
+.pageMovie .headHolder .topHolder .covers li span{display:block; margin-top:5px; text-align:center;}
+.pageMovie .headHolder .topHolder .covers .coversNav{display:none; text-align:center;}
+.pageMovie .headHolder .topHolder .covers.called .coversNav{display:block;}
+.pageMovie .headHolder .btnHolder{float:right;}
+.pageMovie .headHolder .btnHolder .btnCovers{margin-right:5px;}
 .input-group{margin-bottom:15px;}
 .input-group-addon:first-child{min-width:150px; text-align:left;}
 .input-group textarea{height:100px !important; resize:none;}

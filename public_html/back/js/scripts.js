@@ -38,6 +38,44 @@ if(exist($('.pgaeMovies'))){
 //Movies Detail
 if(exist($('.pageMovie'))){
 	
+	var coverPage = 1;
+	
+	function get_covers(p){
+		
+		var covers;
+		
+		$.post(site_url+'admin/admin_ajx/get_movie_cover/'+p+'?q=terminator salvation', function(data){
+				if(data['responseStatus'] == 200){
+					covers = data['responseData']['results'];
+	
+					for(var i=0; i<covers.length; i++){
+						$('.covers ul').append('<li><a href="'+covers[i]['url']+'"><img src="'+covers[i]['tbUrl']+'" title="'+covers[i]['title']+'" /><span>'+covers[i]['width']+'x'+covers[i]['height']+'</span></a></li>');
+					}
+					
+					$('.covers').addClass('called');
+					$('.btnCovers').hide();
+					
+				}
+		});
+		
+	}
+	
+	$('.btnCovers').click(function(){
+		
+		get_covers(coverPage);
+	
+	});
+	
+	$('.btnMore').click(function(){
+		
+		coverPage++;
+		
+		get_covers(coverPage);
+
+	
+	});
+
+	
 	// Multiselect actions
 	var sel;
 	

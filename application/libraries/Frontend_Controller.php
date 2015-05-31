@@ -14,7 +14,7 @@
 		{
 			parent::__construct();
 			
-			$this->load->helper(array('form', 'mvs_front_helper'));
+			$this->load->helper('mvs_front_helper');
 			$this->data['site_name'] = $this->config->item('mvs_site_name');
 
 			// CHECK USER LOGGED IN
