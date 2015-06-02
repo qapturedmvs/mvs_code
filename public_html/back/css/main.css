@@ -50,6 +50,11 @@ h2.sub-header{margin:10px 0 20px;}
 .alignCenter{text-align:center;}
 .none{display:none;}
 
+.hider{position:fixed; top:0; left:0; width:100%; height:100%; z-index:999; background:#000; opacity:.5;}
+.ajx-process{background:url(../images/ajax-process.gif) center center no-repeat; position:fixed; top:50%; left:50%; width:32px; height:32px; z-index:999; margin:-16px 0 0 -16px; z-index:9999;}
+
+.process .hider, .process .ajx-process{display:block !important;}
+
 /* Movie Detail */
 .pageMovie .headHolder{margin-bottom:20px;}
 .pageMovie .headHolder .posterHolder{min-width:150px; background:#ccc; border:1px solid #aaa; height:450px; float:left; margin-right:25px; position:relative; z-index:5;}

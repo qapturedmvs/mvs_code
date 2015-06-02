@@ -113,5 +113,13 @@ class Movie_M extends MVS_Model
 			return FALSE;
 	
 	}
+	
+	public function set_cover($slug){
+		
+		$this->db->update('mvs_movies', array('mvs_cover' => 1), array('mvs_slug' => $slug));
+		
+		return TRUE;
+		
+	}
 
 }

@@ -42,18 +42,20 @@ if(exist($('.pageMovie'))){
 	
 	function get_covers(p){
 		
-		var covers;
+		var covers, title = $('#mvs_title').val()+' film '+$('#mvs_year').val();
 		
-		$.post(site_url+'admin/admin_ajx/get_movie_cover/'+p+'?q=terminator salvation', function(data){
+		$.post(site_url+'admin/admin_ajx/get_movie_cover/'+p+'?q='+title, function(data){
 				if(data['responseStatus'] == 200){
 					covers = data['responseData']['results'];
 	
 					for(var i=0; i<covers.length; i++){
-						$('.covers ul').append('<li><a href="'+covers[i]['url']+'"><img src="'+covers[i]['tbUrl']+'" title="'+covers[i]['title']+'" /><span>'+covers[i]['width']+'x'+covers[i]['height']+'</span></a></li>');
+						$('.covers ul').append('<li><a href="javascript:void(0);" rel="'+covers[i]['url']+'"><img src="'+covers[i]['tbUrl']+'" title="'+covers[i]['title']+'" /><span>'+covers[i]['width']+'x'+covers[i]['height']+'</span></a></li>');
 					}
 					
 					$('.covers').addClass('called');
 					$('.btnCovers').hide();
+					
+					bind_cover_img();
 					
 				}
 		});
@@ -69,11 +71,32 @@ if(exist($('.pageMovie'))){
 	$('.btnMore').click(function(){
 		
 		coverPage++;
-		
 		get_covers(coverPage);
-
 	
 	});
+	
+	function bind_cover_img(){
+		
+		$('.covers li a').click(function(e){
+			
+			e.preventDefault;
+			var path = $(this).attr("rel"), slug = $('#mvs_slug').val();
+			
+			$('body').addClass('process');
+			
+			$.post(site_url+'admin/admin_ajx/get_cover_image/'+slug+'?img='+path, function(data){
+				
+				if(data['result'] == 'OK'){
+					
+					$('body').removeClass('process');
+					
+				}
+				
+			});
+			
+		});
+
+	}
 
 	
 	// Multiselect actions

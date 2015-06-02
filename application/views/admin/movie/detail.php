@@ -18,6 +18,11 @@
 </div>
 <?php echo form_open(); ?>
 	<div class="input-group">
+	  <span class="input-group-addon">Cover</span>
+	  <?php echo form_input(array('name' => 'mvs_cover', 'value' => ($movie->mvs_cover == 1) ? $site_url.'data/covers/'.$movie->mvs_slug.'.jpg' : '', 'id' => 'mvs_cover', 'class' => 'form-control')); ?>
+	  <?php echo ($movie->mvs_cover == 1) ? '<span class="input-group-addon"><a target="_blank" href="'.$site_url.'data/covers/'.$movie->mvs_slug.'.jpg">Show Cover</a></span>' : ''; ?>
+	</div>
+	<div class="input-group">
 	  <span class="input-group-addon">Title</span>
 	  <?php echo form_input(array('name' => 'mvs_title', 'value' => $movie->mvs_title, 'id' => 'mvs_title', 'class' => 'form-control')); ?>
 	</div>
