@@ -125,43 +125,65 @@
 </div>
 <script type="text/javascript">
 	
-	var color = {
-    get: function(a, b, c) {
-        var e = new Image;
-        e.onerror = function() {
-            alert("y\u00fcklemede hata")
-        };
-        e.onload = function() {
-            var a = document.createElement("canvas");
-            a.width = e.width;
-            a.height = e.height;
-            a = a.getContext("2d");
-            a.drawImage(e, 0, 0);
-            a = a.getImageData(0, 0, this.width, this.height).data;
-            a = color.rgbToHex(a[0], a[1], a[2]);
-            //a = color.shade("#" + a, -8);
-            b((!1 == c ? "" : "#") + a);
-        };
-        e.src = a
-    },
-    rgbToHex: function(a, b, c) {
-        return color.toHex(a) + color.toHex(b) + color.toHex(c)
-    },
-    toHex: function(a) {
-        a = parseInt(a, 10);
-        if (isNaN(a)) return "00";
-        a = Math.max(0, Math.min(a,
-            255));
-        return "0123456789ABCDEF".charAt((a - a % 16) / 16) + "0123456789ABCDEF".charAt(a % 16)
-    },
-    shade: function(a, b) {
-        var c = parseInt(a.slice(1), 16),
-            e = Math.round(2.55 * b),
-            h = (c >> 16) + e,
-            g = (c >> 8 & 255) + e,
-            c = (c & 255) + e;
-        return (16777216 + 65536 * (255 > h ? 1 > h ? 0 : h : 255) + 256 * (255 > g ? 1 > g ? 0 : g : 255) + (255 > c ? 1 > c ? 0 : c : 255)).toString(16).slice(1)
-    }
+
+var color = {
+  get: function(a, b, c) {
+
+			var res = 10;
+
+      var e = new Image;
+      e.onerror = function() {
+          alert("y\u00fcklemede hata")
+      };
+      e.onload = function() {
+          var a = document.createElement("canvas");
+			a.width = e.width;
+          a.height = e.height;
+          a = a.getContext("2d");
+          a.drawImage(e, 0, 0, e.width, e.height, 0, 0, res, res);
+          
+  var s = 0, data = [0, 0, 0];
+  
+  for(var i=0; i< Math.pow(res, 2); ++i)
+  {
+if( i % res == 0 && i > 0 ) s++;
+
+var	point = a.getImageData(s, i-(s*res), this.width, this.height).data
+data[0] += point[0];
+data[1] += point[1];
+data[2] += point[2];
+  }
+  
+  data[0] = Math.round( data[0] * Math.pow(res, -2) );
+  data[1] = Math.round( data[1] * Math.pow(res, -2) );
+  data[2] = Math.round( data[2] * Math.pow(res, -2) );
+  
+  a = data;
+  
+          a = color.rgbToHex(a[0], a[1], a[2]);
+          a = color.shade("#" + a, -8);
+          b((!1 == c ? "" : "#") + a);
+      };
+      e.src = a
+  },
+  rgbToHex: function(a, b, c) {
+      return color.toHex(a) + color.toHex(b) + color.toHex(c)
+  },
+  toHex: function(a) {
+      a = parseInt(a, 10);
+      if (isNaN(a)) return "00";
+      a = Math.max(0, Math.min(a,
+          255));
+      return "0123456789ABCDEF".charAt((a - a % 16) / 16) + "0123456789ABCDEF".charAt(a % 16)
+  },
+  shade: function(a, b) {
+      var c = parseInt(a.slice(1), 16),
+          e = Math.round(2.55 * b),
+          h = (c >> 16) + e,
+          g = (c >> 8 & 255) + e,
+          c = (c & 255) + e;
+      return (16777216 + 65536 * (255 > h ? 1 > h ? 0 : h : 255) + 256 * (255 > g ? 1 > g ? 0 : g : 255) + (255 > c ? 1 > c ? 0 : c : 255)).toString(16).slice(1)
+  }
 };
 
  color.get('<?php echo $site_url.getCoverPath($movie->mvs_slug, 'small'); ?>', function( k ) {
