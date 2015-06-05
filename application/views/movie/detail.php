@@ -2,7 +2,7 @@
 	var mvs_id = <?php echo $movie->mvs_id; ?>;
 </script>
 <div class="pageDefault pageMovie" mvs-id="<?php echo $movie->mvs_id; ?>">
-	<section class="hero"<?php echo ($movie->mvs_cover != 0) ? ' style="background:url('.$site_url.'/data/movies/covers/'.$movie->mvs_slug.'.jpg) center center no-repeat; background-size:cover;"' : ''; ?>></section>
+	<section class="hero"<?php echo ($movie->mvs_cover != 0) ? ' style="background:url('.$site_url.'/data/covers/'.$movie->mvs_slug.'.jpg) center center no-repeat; background-size:cover;"' : ''; ?>></section>
 	<section class="body">
 		<aside class="mainCol left">
 			<div class="details">

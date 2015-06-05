@@ -47,7 +47,7 @@ if( $('#search_keyword').length > 0 )
 	$('#search_keyword').qapturedComplete({
 		source: function( request, response ) {
 			
-			getAjax( { uri: site_url + "ajx/search_ajx/suggest?q=" + request.term, param: null }, function( d ){
+			getAjax( { uri: site_url + "ajx/search_ajx/suggest?t=both&q=" + request.term, param: null }, function( d ){
 				
 				if( d.result == 'OK' )
 						response( d.data );
@@ -55,7 +55,8 @@ if( $('#search_keyword').length > 0 )
 		    });
 			
 		  },
-		  minLength: 2
+		  minLength: 2,
+			appendTo:'.mainSearchHolder'
 	});
 
 
@@ -905,7 +906,8 @@ if( $('#user_keyword').length > 0 )
 		    });
 			
 		  },
-		  minLength: 2
+		  minLength: 2,
+			appendTo:'.userSearchHolder'
 	});
 	
 //	function prepareData( data ){

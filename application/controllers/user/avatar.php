@@ -21,12 +21,12 @@
 		
 		function edit(){
 			
-			$config['upload_path'] = './data/users_temp';
-			$config['file_name']  = $this->user['usr_nick'];
+			$config['upload_path'] = './data/users';
+			$config['file_name']  = $this->user['usr_nick'].'_temp';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size']	= '200';
-			$config['max_width']  = '500';
-			$config['max_height']  = '500';
+			$config['max_width']  = '400';
+			$config['max_height']  = '400';
 			$config['overwrite']  = TRUE;
 			
 			$this->load->library('upload', $config);

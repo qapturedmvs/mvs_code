@@ -10,6 +10,73 @@ function exist(obj){
 }
 
 
+function getAjax( obj, callback, error ){
+	$.ajax({
+		type:'POST',
+		url:obj['uri'] || null,
+		dataType: obj['dataType'] || null,
+		data:obj['param'] || null,
+		error: function( e ){ if( error != undefined ) error( e ); },
+		success:function( e ){
+			if( callback != undefined ) callback( e );
+		}
+	});
+}
+
+// Qaptured AutoComplete
+$.widget( "custom.qapturedComplete", $.ui.autocomplete, {
+	_create: function() {
+		this._super();
+		this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+	},
+	_renderMenu: function( ul, items ) {
+			
+		var that = this,
+			currentCategory = "";
+			
+		$.each( items, function( index, item ) {
+			var li;
+			if ( item.result_type != currentCategory ){
+				
+				ul.append('<li class="ui-autocomplete-category '+ item.result_type +'"><h2>' + item.result_type + '</h2></li>' );
+				currentCategory = item.result_type;
+			}
+			
+			li = that._renderItemData( ul, item );
+			
+			if( item.result_type == 'movie' ){
+				li.html('<div class="row"><span class="title"><a href="'+site_url+'admin/movie/detail/'+ item.result_id + '">'+ item.result_title + ' ('+ item.result_year +')</a></span></div>');
+			}else if( item.result_type == 'star' ){
+				li.html('<div class="row"><span class="title"><a href="'+site_url+'actor/'+ item.result_slug + '">'+ item.result_title +'</a></span></div>');
+			}else if( item.result_type == 'user' ){
+				li.html('<div class="row"><span class="title"><a href="'+site_url+'user/wall/actions/'+ item.result_slug + '">'+ item.result_title +'</a></span></div>');
+			}else if( item.result_type == 'noResult' ){
+				li.html('<div class="row">No Result</div>');
+			}
+			
+		});
+		
+	}
+});
+
+
+if(exist($('#search_movie')))
+	$('#search_movie').qapturedComplete({
+		source: function( request, response ) {
+			
+			getAjax( { uri: site_url + "ajx/search_ajx/suggest?t=movie&q=" + request.term, param: null }, function( d ){
+				
+				if( d.result == 'OK' )
+						response( d.data );
+					
+		    });
+			
+		  },
+		  minLength: 2,
+			appendTo:'.movie-search'
+	});
+
+
 // Movies List
 if(exist($('.pgaeMovies'))){
 	
@@ -89,6 +156,7 @@ if(exist($('.pageMovie'))){
 				if(data['result'] == 'OK'){
 					
 					$('body').removeClass('process');
+					$('#mvs_cover').val(site_url+'data/covers/'+slug+'.jpg').after('<span class="input-group-addon"><a href="'+site_url+'data/covers/'+slug+'.jpg" target="_blank">Show Cover</a></span>');
 					
 				}
 				
@@ -206,3 +274,7 @@ if(exist($('.pageRate'))){
 	
 
 }
+
+
+
+

@@ -18,7 +18,7 @@
 		<div class="userHolder">
 			<?php $this->load->view('components/_userbox'); ?>
 		</div>
-		<div class="searchHolder">
+		<div class="searchHolder mainSearchHolder">
 			<?php $this->load->view('components/_searchbox'); ?>
 		</div>
 		<hr class="qFixer" />

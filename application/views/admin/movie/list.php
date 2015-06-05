@@ -1,5 +1,10 @@
 <div class="container pgaeMovies">
 	<h2 class="sub-header">Movies</h2>
+	
+		<div class="input-group movie-search">
+			<input type="text" class="form-control" id="search_movie" />
+		</div>
+	
 	<div class="table-responsive">
 		<?php if(count($movies)): ?>
 		<div class="panel panel-default panelMovies">

@@ -41,7 +41,7 @@ class Search_M extends MVS_Model
     
     $data['keyword'] = $this->cleaner($data['keyword']);
     
-    $results = $this->db->call_procedure('sp_search_user', $data);
+    $results = $this->db->call_procedure('sp_search_users', $data);
 
 		if($results)
 			return $results;

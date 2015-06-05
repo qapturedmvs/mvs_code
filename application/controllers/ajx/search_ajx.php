@@ -52,8 +52,9 @@
 		public function suggest(){
 			
 			$keyword = $this->get_vars['q'];
+			$type = $this->get_vars['t'];
 			$json = (object) array();
-			$data = array('keyword' => $keyword, 'type' => 'both', 'offset' => 0, 'per_page' => 5);
+			$data = array('keyword' => $keyword, 'type' => $type, 'offset' => 0, 'per_page' => 5);
 			$results = ($keyword) ? $this->search_m->suggest_movies_stars($data) : FALSE;
 
 			if($results){
@@ -75,9 +76,9 @@
 		
 		public function suggest_users(){
 			
-			$data = array('keyword' => $this->get_vars['u'], 'login_user' => $this->user['usr_id'], 'offset' => 0, 'per_page' => 5);
+			$data = array('keyword' => $this->get_vars['u'], 'login_user' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'offset' => 0, 'per_page' => 5);
 			$results = FALSE;
-		 
+		
 			if($data['keyword']){
 				
 				$results = $this->search_m->suggest_users($data);
@@ -112,7 +113,7 @@
 		
 		public function get_users($p = 1){
 			
-			$data = array('keyword' => $this->get_vars['u'], 'login_user' => $this->user['usr_id'], 'offset' => $p, 'per_page' => 25);
+			$data = array('keyword' => $this->get_vars['u'], 'login_user' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'offset' => $p, 'per_page' => 25);
 			$results = FALSE;
 		 
 			if($data['keyword']){
