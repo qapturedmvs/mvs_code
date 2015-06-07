@@ -172,6 +172,33 @@
 			}
 
 		}
+		
+		public function applaud_movie($action){
+				
+			if($this->logged_in){
+				
+				$this->load->model('action_m');
+				
+				$this->data['action'] = $action;
+				$id = $this->input->post('id', TRUE);
+				$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
+				
+				if($action === 'applaud')
+					$data['mvs_id'] = $id;
+				else
+					$data['app_id'] = $id;
+
+				$this->data['applaud_result'] = $this->action_m->applaud_movie($data);
+				
+			}else{
+				
+				$this->data['applaud_result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_applaud_movie', $this->data);
+
+		}
   
   }
 

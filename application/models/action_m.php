@@ -82,13 +82,14 @@ class Action_M extends MVS_Model
 	public function get_movie_actions($data){
 		
 		$filters = array(
-			'select' => 'cl.list_id, cl.list_title, cld.ldt_id, s.seen_id, w.wtc_id',
+			'select' => 'cl.list_id, cl.list_title, cld.ldt_id, s.seen_id, w.wtc_id, a.app_id',
 			'from' => 'mvs_users u',
 			'join' => array(
 				array('mvs_custom_lists cl', 'cl.usr_id = u.usr_id', 'left'),
 				array('mvs_custom_list_data cld', 'cld.list_id = cl.list_id AND cld.mvs_id = '.$data['mvs_id'], 'left'),
 				array('mvs_seen s', 's.usr_id = u.usr_id AND s.mvs_id = '.$data['mvs_id'], 'left'),
-				array('mvs_watchlist w', 'w.usr_id = u.usr_id AND w.mvs_id = '.$data['mvs_id'], 'left')
+				array('mvs_watchlist w', 'w.usr_id = u.usr_id AND w.mvs_id = '.$data['mvs_id'], 'left'),
+				array('mvs_applaud a', 'a.usr_id = u.usr_id AND a.mvs_id = '.$data['mvs_id'], 'left')
 				),
 			'where' => 'u.usr_id = '.$data['usr_id'],
 			'order_by' => 'cl.list_time DESC'
@@ -101,6 +102,27 @@ class Action_M extends MVS_Model
 		else
 			return FALSE;
 		
+	}
+	
+		public function applaud_movie($data){
+		
+		if($data['action'] === 'applaud'){
+			
+			unset($data['action']);
+			$out = array('@app_id' => NULL);
+			$this->db->call_procedure('sp_applaud_movie', $data, $out);
+			$result = $out['@app_id'];
+
+		}else{
+
+			$this->db->where('app_id = '.$data['app_id'].' AND usr_id = '.$data['usr_id']);
+			$this->db->delete('mvs_applaud');
+			$result = 'unapplaud';
+			
+		}
+		
+		return $result;
+	
 	}
   
 }

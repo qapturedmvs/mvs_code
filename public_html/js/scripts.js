@@ -348,7 +348,7 @@ if ($('.form-signup').length > 0)
 function single_seen(obj){
 
 	var action = $(obj).attr("rel"),
-				id = (action == 'seen') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("seen-id");
+			id = (action == 'seen') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("seen-id");
 				
 	getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
 				
@@ -365,6 +365,31 @@ function single_seen(obj){
 				}else
 					alert(e['msg']);
 					
+		});
+
+}
+
+// Applaud Action
+function applaud_movie(obj){
+	
+	var action = $(obj).attr("rel"),
+			id = (action == 'applaud') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("app-id");
+				
+	getAjax( { uri: site_url+'ajx/movie_actions_ajx/applaud_movie/'+action, param: {id:id} }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					
+					if(e['action'] == 'applaud')
+						$(obj).removeAttr("app-id");
+						
+					else
+						$(obj).attr("app-id", e['app-id']);
+						
+					$(obj).attr("rel", e['action']);
+					
+				}else{
+					alert(e['msg']);
+				}
 		});
 
 }
@@ -673,6 +698,28 @@ if( exist($('.pageWatchlist')) ){
 	// infinite-Scroll
 	//-- infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
 	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=uwl&usr='+usr, 'pageSize': 30, 'type': 0 });
+}
+
+// Applaud Page
+if( exist($('.pageApplaud')) ){
+	
+	if(sessionStorage.viewType == "grid")
+    $('.movieListHolder').removeClass("row").addClass(sessionStorage.viewType);
+	
+	$('.controllers .view a').click(function(){
+		var view = $(this).attr("class");
+		
+		sessionStorage.viewType = view;
+		
+		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
+		
+		lazyLoadActive();
+		
+	});
+	
+	// infinite-Scroll
+	//-- infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=uapp&usr='+usr, 'pageSize': 30, 'type': 0 });
 }
 
 // Follow Unfollow

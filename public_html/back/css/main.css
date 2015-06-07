@@ -78,6 +78,12 @@ h2.sub-header{margin:10px 0 20px;}
 .input-group .castHolder{height:auto;}
 .input-group .castHolder .list-group-item .actor{display:inline-block; width:300px;}
 
+
+.movie-search{width:350px;}
+.movie-search ul{list-style:none; padding:10px; position: absolute;}
+.movie-search ul .row{margin:0;}
+.movie-search ul li.ui-autocomplete-category{display:none;}
+
 /* Settings */
 .NavHolder{margin-bottom:40px;}
 

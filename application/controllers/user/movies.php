@@ -134,6 +134,35 @@
 			}
 			
 		}
+		
+		public function applaud($slug = NULL){		
+			
+			if($slug){
+				
+				$this->data['controls'] = array('page' => 'applaud', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
+				
+				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+					
+					$this->load->model('applaud_m');
+					
+					$this->data['the_user'] = $this->applaud_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
+					$this->data['controls']['owner'] = FALSE;
+					
+					if(!$this->data['the_user'])
+						show_404();
+						
+				}
+	
+				$this->data['subview'] = 'user/applaud';
+				$this->load->view('_main_body_layout', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
+			
+		}
   
   }
 

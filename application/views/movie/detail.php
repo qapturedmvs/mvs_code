@@ -36,7 +36,7 @@
 							<?php if($logged_in): ?>
 							<ul>
 								<li class="seenMovie singleSeen"><a<?php echo ($actions['lists'][0]->seen_id !== NULL) ? ' rel="unseen" seen-id="'.$actions['lists'][0]->seen_id.'"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
-								<li><a href="javascript:void(0);">Qapture</a></li>
+								<li class="applaudMovie"><a<?php echo ($actions['lists'][0]->app_id !== NULL) ? ' rel="unapplaud" app-id="'.$actions['lists'][0]->app_id.'"' : ' rel="applaud"'; ?> href="javascript:void(0);" onclick="applaud_movie(this)">Applaud</a></li>
 								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
 										<ul class="dLists">

@@ -3,6 +3,7 @@
   <ul>
     <li><a href="<?php echo $site_url.'user/movies/seen/'.$umm_slug; ?>">Seen Movies</a></li>
     <li><a href="<?php echo $site_url.'user/movies/watchlist/'.$umm_slug; ?>">Watchlist</a></li>
+    <li><a href="<?php echo $site_url.'user/movies/applaud/'.$umm_slug; ?>">Applaud List</a></li>
     <li><a href="<?php echo $site_url.'user/movies/lists/'.$umm_slug; ?>">Custom Movie Lists</a></li>
   </ul>
   <hr class="qFixer" />

@@ -43,6 +43,13 @@
 							$cst_str =  array('usr_id' => $vars['usr']);
 							unset($vars['usr']);
 							break;
+						
+					case 'uapp':
+							$model = 'applaud_m';
+							$this->load->model($model);
+							$cst_str =  array('usr_id' => $vars['usr']);
+							unset($vars['usr']);
+							break;
 
 				}
 				

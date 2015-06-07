@@ -1,7 +1,9 @@
 <div class="pageDefault pageProfile">
 	<div class="titleDefault titleProfile">
 		<h1>Your Profile</h1>
-		<p>Last Login: <?php //echo date_format(date_create($the_user->usr_last_login), 'M d, Y H:i'); ?></p>
+	</div>
+	<div class="userAvatar">
+		<a href="<?php echo $site_url.'user/avatar'; ?>"><img src="<?php echo $site_url.$the_user->usr_avatar; ?>" alt="<?php echo $the_user->usr_name; ?>" title="<?php echo $the_user->usr_name; ?>" /></a>
 	</div>
 	<div class="profileForm">
 	<?php echo form_open('', array('class' => 'form-profile', 'role' => 'form')); ?>
