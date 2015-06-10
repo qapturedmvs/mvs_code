@@ -165,6 +165,13 @@
 		
 	}
 	
+	function gnrtPassword($type){
+
+		$slug = str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4));
+		return $slug;
+		
+	}
+	
 	function time_calculator($time){
 		
 		$postTime = strtotime($time);

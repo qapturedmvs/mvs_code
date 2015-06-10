@@ -91,6 +91,7 @@
 					$this->data['login_error'] = 'That email/password combination does not exist';
 					
 				}
+				
 			}else{
 				
 				$this->data['login_error'] = validation_errors();

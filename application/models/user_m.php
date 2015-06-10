@@ -53,6 +53,17 @@ class User_M extends MVS_Model
     return array('usr_id' => $this->db->insert_id(), 'usr_name' => $data['sgn_name'], 'usr_act_key' => $usr_act_key);
 	}
   
+  public function user_auth_social($proc, $data){
+    
+    $user = $this->db->call_procedure($proc, $data);
+
+		if($user)
+			return $user[0];
+		else
+			return FALSE;
+    
+  }
+  
   public function profile($id){
     
     $user = $this->get_data($id);

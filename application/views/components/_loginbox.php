@@ -1,7 +1,7 @@
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
-    console.log(response);
+    //console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
@@ -69,7 +69,11 @@
   function testAPI() {
     FB.api('/me', function(response) {
       //console.log('Successful login for: ' + response.name);
-      console.log(JSON.stringify(response));
+      //console.log(response);
+      
+      getAjax( { uri: site_url+'ajx/auth_ajx/fb_auth/', param:response }, function( e ){
+
+			});
 
     });
   }
