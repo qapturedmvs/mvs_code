@@ -1,7 +1,7 @@
 <?php if($logged_in): ?>
 <div class="userbox">
   <div class="userInfo">
-    <span class="userAvatar"><img src="<?php echo ($user['usr_avatar'] != '') ? $site_url.$user['usr_avatar'] : $site_url.'images/user.jpg'; ?>" alt="<?php echo $user['usr_name']; ?>" /></span>
+    <span class="userAvatar"><img src="<?php echo ($user['usr_avatar'] != '') ? $site_url.'data/users/'.$user['usr_avatar'].'.jpg' : $site_url.'images/user.jpg'; ?>" alt="<?php echo $user['usr_name']; ?>" /></span>
     <a href="<?php echo $site_url.'user/feeds'; ?>"><?php echo $user['usr_name']; ?></a>
   </div>
   <div class="userMenu">

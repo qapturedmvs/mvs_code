@@ -22,7 +22,7 @@
 		function edit(){
 			
 			$config['upload_path'] = './data/users';
-			$config['file_name']  = $this->user['usr_nick'].'_temp';
+			$config['file_name']  = gnrtString(6, 6).'_'.$this->user['usr_id'].'_temp';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size']	= '200';
 			$config['max_width']  = '400';

@@ -165,10 +165,10 @@
 		
 	}
 	
-	function gnrtPassword($type){
-
-		$slug = str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4));
-		return $slug;
+	function gnrtString($alpha, $num){
+		
+		$str = str_shuffle(strtolower(random_string('alpha', $alpha)).random_string('numeric', $num));
+		return $str;
 		
 	}
 	
