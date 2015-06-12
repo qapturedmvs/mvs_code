@@ -24,11 +24,11 @@
 				'fb_id' => $auth['id'],
 				'usr_nick' => gnrtSlug('user'),
 				'usr_name' => $auth['name'],
-				'usr_email' => $auth['email'],
+				'usr_email' => (isset($auth['email'])) ? $auth['email'] : '',
 				'usr_password' => hash('sha512', str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4))),
 				'usr_token' => $token,
 				'usr_gender' => $auth['gender'],
-				'usr_act_key' => hash('sha1', $auth['email']),
+				'usr_act_key' => hash('sha1', 'fb'.$auth['id']),
 				'usr_time' => date($this->config->item('mvs_db_time'))
 			);
 			

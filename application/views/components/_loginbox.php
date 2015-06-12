@@ -10,6 +10,8 @@
       // Logged into your app and Facebook.
       if(type == 'login')
         fb_auth();
+      else
+        console.log('connected');
       
     }else if(response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
