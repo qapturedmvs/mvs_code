@@ -107,13 +107,25 @@
 			
 			if($this->form_validation->run() === TRUE){
 				
-				$user = $this->user_m->signup($data);
+				$nick = gnrtSlug('user');
+				$password = hash('sha512', $data['sgn_password']);
+				$usr_act_key = hash('sha1', $nick.time());
+				$usr_data = array(
+					'usr_nick' => $nick,
+					'usr_name' => $data['sgn_name'],
+					'usr_email' => $data['sgn_email'],
+					'usr_password' => $password,
+					'usr_act_key' => $usr_act_key,
+					'usr_time' => date($this->config->item('mvs_db_time'))
+				);
+				
+				$user = $this->user_m->user_auth('sp_signup', $usr_data);
 				
 				if($user){
 					
 					$this->data['mail'] = $user;
-
-					$this->_send_mail($data['sgn_email'], 'Qaptured User Activation', $this->data, 'user_activation');
+					//ACTIVATE LATER
+					//$this->_send_mail($data['sgn_email'], 'Qaptured User Activation', $this->data, 'user_activation');
 					
 					redirect($successPage, 'refresh');
 					

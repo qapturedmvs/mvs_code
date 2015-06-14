@@ -32,30 +32,8 @@ class User_M extends MVS_Model
 		
 	}
   
-  public function signup($data){
-    
-		$nick = gnrtSlug('user');
-		$password = $this->hash($data['sgn_password'], 'sha512');
-		$usr_act_key = $this->hash($nick.time(), 'sha1');
-    $user = array(
-      'usr_nick' => $nick,
-      'usr_name' => $data['sgn_name'],
-      'usr_email' => $data['sgn_email'],
-      'usr_password' => $password,
-      'usr_avatar' => '',
-			'usr_slogan' => '',
-      'usr_account' => 'qp',
-			'usr_act_key' => $usr_act_key,
-      'usr_time' => date($this->config->item('mvs_db_time'))
-    );
-		
-    $this->db->insert('mvs_users', $user);
-    
-    return array('usr_id' => $this->db->insert_id(), 'usr_name' => $data['sgn_name'], 'usr_act_key' => $usr_act_key);
-	}
-  
-  public function user_auth_social($proc, $data){
-    
+  public function user_auth($proc, $data){
+
     $user = $this->db->call_procedure($proc, $data);
 
 		if($user)

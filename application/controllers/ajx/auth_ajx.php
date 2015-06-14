@@ -32,7 +32,7 @@
 				'usr_time' => date($this->config->item('mvs_db_time'))
 			);
 			
-			$user = $this->user_m->user_auth_social('sp_fb_auth', $data);
+			$user = $this->user_m->user_auth('sp_fb_auth', $data);
 			
 			$this->data['result'] = $this->_build_session($user, $token);
 			$this->load->view('results/_social_auth', $this->data);
