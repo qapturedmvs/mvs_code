@@ -65,24 +65,31 @@
   });
 	
 	
-	
-	function signinCallback(authResult) {
-		console.log(authResult);
-		if (authResult['status']['signed_in']) {
-			// Update the app to reflect a signed in user
-			// Hide the sign-in button now that the user is authorized, for example:
-			//document.getElementById('signinButton').setAttribute('style', 'display: none');
+	//Google+ Connect
+	function signinCallback(authResult){
+//console.log(authResult);
+		if(authResult['status']['signed_in']){
 			
-			//gapi.client.load('plus','v1', function(){
-			//	var request = gapi.client.plus.people.get({
-			//		'userId': 'me'
-			//	});
-			//	request.execute(function(resp) {
-			//		console.log(resp);
-			//	});
-			// });
+			gapi.client.load('plus','v1', function(){
+				
+				var request = gapi.client.plus.people.get({
+					'userId': 'me'
+				});
+
+				request.execute(function(response){
+					
+					getAjax( { uri: site_url+'ajx/auth_ajx/gp_auth/', param:response }, function( e ){
+        
+						if(e['result'] == 'OK')
+							window.location.reload();
+							
+					});
+					
+				});
+				
+			 });
 			
-		} else {
+		}else{
 			// Update the app to reflect a signed out user
 			// Possible error values:
 			//   "user_signed_out" - User is signed-out
@@ -91,6 +98,22 @@
 			console.log('Sign-in state: ' + authResult['error']);
 		}
 	}
+	
+	function googlePlusLogin(){
+		gapi.signin.render("signinButton", { 
+			'callback': signinCallback, 
+			'clientid': '823545813703-bc6go0nl8n5636jd1ojg1up9lja2luoe.apps.googleusercontent.com', 
+			'cookiepolicy': 'single_host_origin', 
+			//'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+			'scope': 'profile'
+		});
+	}
+	
+	$('#signinButton').click(function(){  
+
+		googlePlusLogin();
+    
+  });
 	
 	
 

@@ -12,20 +12,16 @@
 <?php echo form_close(); ?>
 <div class="lnkDefault lnkForgetPassword"><a href="<?php echo $site_url.'user/password/forget'; ?>">Forget Password?</a></div>
   <div class="socials">
-
+  <ul>
+    <li>
     <a class="fbLogin" href="javascript:void(0);">FACEBOOK CONNECT</a>
-    
-    <a href="javascript:void(0);" id="signinButton">
-      <span
-        class="g-signin"
-        data-callback="signinCallback"
-        data-clientid="823545813703-bc6go0nl8n5636jd1ojg1up9lja2luoe.apps.googleusercontent.com"
-        data-cookiepolicy="single_host_origin"
-        data-scope="profile">GOOGLE+ CONNECT
-      </span>
-    </a>
-
-  
+    </li>
+    <li>
+      <a href="javascript:void(0);" id="signinButton">
+        <span>GOOGLE+ CONNECT</span>
+      </a>
+    </li>
+  </ul>
   </div>
 </div>
 <script src="<?php echo site_url('js/social.js'); ?>"></script>

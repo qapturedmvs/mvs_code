@@ -1181,60 +1181,9 @@ function confirmation( _t ){
     });
 }
 
-// REVEALING A SPOILER
+	// REVEALING A SPOILER
 function showSpoiler( _t ){
 	var _this = $( _t ), prts = _this.parents('div.spl:eq(0)');
 	
 	prts.removeClass('spl');
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////// CROP TOOL
-/*
-<div class="jc-demo-box"> <img src="demo_files/sago.jpg" id="cropImg" alt="" />
-  <div id="preview-pane">
-    <div class="preview-container"> <img src="demo_files/sago.jpg" class="jcrop-preview" alt="Preview" /> </div>
-  </div>
-  <div class="clearfix"></div>
-</div>
-*/
-
-var crop = {
-	el: '#cropImg',
-	preview: '#preview-pane',
-	previewCon: '#preview-pane .preview-container',
-	previewImg: '#preview-pane .preview-container img',
-	xsize: 400,
-	ysize: 300,
-	boundx: null,
-	boundy: null,
-	jcrop_api: null,
-	updatePreview: function( c ){
-		var _this = crop, previewImg = $( _this.previewImg );
-		if( parseInt( c.w ) > 0 ){
-        	var rx = _this.xsize / c.w, 
-				ry = _this.ysize / c.h;
-		    previewImg.css({
-				width: Math.round( rx * _this.boundx ) + 'px',
-				height: Math.round( ry * _this.boundy ) + 'px',
-				marginLeft: '-' + Math.round( rx * c.x ) + 'px',
-				marginTop: '-' + Math.round( ry * c.y ) + 'px'
-			});
-      }
-	},
-	init: function(){
-		var _this = this, el = $( _this.el ), preview = $( _this.preview ) ;
-		if( el.length > 0 && preview.length > 0 ){
-			el.Jcrop({
-				onChange: _this.updatePreview,
-				onSelect: _this.updatePreview,
-				aspectRatio: _this.xsize / _this.ysize
-			},function(){
-				var bounds = this.getBounds();
-				_this.boundx = bounds[ 0 ];
-				_this.boundy = bounds[ 1 ];
-				_this.jcrop_api = this;	
-				preview.appendTo( _this.jcrop_api.ui.holder );
-			});
-		}
-	}
-};
