@@ -15,15 +15,16 @@
 			
 			$this->data['the_user'] = array('avatar' => $this->user['usr_avatar'], 'slug' => $this->user['usr_nick']);
 			$this->data['mode'] = 'upload';
+			$hdn = $this->input->post('hdnAvatar', TRUE);
 			
-			if(isset($inputs['hdnAvatar'])){
+			if(isset($hdn)){
 				
 				$config['upload_path'] = './data/users';
 				$config['file_name']  = gnrtString(6, 6).'_'.$this->user['usr_id'].'_temp';
 				$config['allowed_types'] = 'gif|jpg|png';
-				$config['max_size']	= '200';
-				$config['max_width']  = '400';
-				$config['max_height']  = '400';
+				$config['max_size']	= '300';
+				$config['max_width']  = '500';
+				$config['max_height']  = '500';
 				$config['overwrite']  = TRUE;
 				
 				$this->load->library('upload', $config);

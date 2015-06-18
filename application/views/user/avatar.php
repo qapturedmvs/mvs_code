@@ -13,6 +13,7 @@
 	<div class="avatarHolder">
 		<img id="cropImg" src="<?php echo $site_url.'data/users/'.$image['file_name']; ?>" />
 	</div>
+	<a class="btnDefault btnSaveImg" href="javascript:void(0);">SAVE</a>
 </div>
 <script type="text/javascript">
 
@@ -70,13 +71,37 @@
 //
 //crop.init();
 
+var imgData = null;
+
+function get_img_data(d){
+	
+	imgData = d;
+	
+}
+
 jQuery(function($) {
 		$('#cropImg').Jcrop({
 			bgColor:     'black',
 			bgOpacity:   .4,
 			//setSelect:   [ 100, 100, 50, 50 ],
-			aspectRatio: 1 / 1
+			aspectRatio: 1 / 1,
+			onChange: get_img_data,
+			onSelect: get_img_data
 		});
+});
+
+$('.btnSaveImg').click(function(){
+		if(imgData != null){
+      //console.log(imgData);
+			imgData['src'] = $('#cropImg').attr("src").replace(site_url, '/');
+		
+			getAjax( { uri: site_url + "ajx/avatar_ajx", param: imgData }, function( d ){
+				
+				if( d.result == 'OK' )
+						response( d.data );
+				
+			});
+    }
 });
 	
 </script>
