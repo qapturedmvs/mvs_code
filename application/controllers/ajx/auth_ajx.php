@@ -25,7 +25,7 @@
 				'fb_id' => $auth['id'],
 				'usr_nick' => gnrtSlug('user'),
 				'usr_name' => $auth['name'],
-				'usr_email' => (isset($auth['email'])) ? $auth['email'] : '',
+				'usr_email' => (isset($auth['email'])) ? $auth['email'] : NULL,
 				'usr_password' => hash('sha512', str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4))),
 				'usr_token' => $token,
 				'usr_gender' => $auth['gender'],
@@ -59,20 +59,30 @@
 				'gp_id' => $auth['id'],
 				'usr_nick' => gnrtSlug('user'),
 				'usr_name' => $auth['displayName'],
-				'usr_email' => '',
+				'usr_email' => NULL,
 				'usr_password' => hash('sha512', str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4))),
 				'usr_token' => $token,
 				'usr_avatar' => ($avatar) ? $avatar : '',
 				'usr_gender' => $auth['gender'],
-				'usr_act_key' => hash('sha1', 'fb'.$auth['id']),
+				'usr_act_key' => hash('sha1', 'gp'.$auth['id']),
 				'usr_time' => date($this->config->item('mvs_db_time'))
 			);
-var_dump($data);
-			//$user = $this->user_m->user_auth('sp_gp_auth', $data);
-			//
-			//$this->data['result'] = $this->_build_session($user, $token);
-			//$this->load->view('results/_social_auth', $this->data);
 
+			$user = $this->user_m->user_auth('sp_gp_auth', $data);
+			
+			if($user['usr_avatar'] != $avatar)
+				unlink(FCPATH.'data\users\\'.$avatar.'.jpg');
+			
+			$this->data['result'] = $this->_build_session($user, $token);
+			$this->load->view('results/_social_auth', $this->data);
+
+		}
+		
+		//Twitter Authantication
+		public function tw_auth(){
+			
+
+			
 		}
 		
 		private function _build_session($user, $token){

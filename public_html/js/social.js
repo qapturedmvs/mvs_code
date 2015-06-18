@@ -67,8 +67,8 @@
 	
 	//Google+ Connect
 	function signinCallback(authResult){
-//console.log(authResult);
-		if(authResult['status']['signed_in']){
+
+		if(authResult["status"]["method"] == "PROMPT" && authResult['status']['signed_in']){
 			
 			gapi.client.load('plus','v1', function(){
 				
@@ -89,7 +89,7 @@
 				
 			 });
 			
-		}else{
+		}else if(!authResult['status']['signed_in']){
 			// Update the app to reflect a signed out user
 			// Possible error values:
 			//   "user_signed_out" - User is signed-out
@@ -100,7 +100,8 @@
 	}
 	
 	function googlePlusLogin(){
-		gapi.signin.render("signinButton", { 
+		
+		gapi.auth.signIn({ 
 			'callback': signinCallback, 
 			'clientid': '823545813703-bc6go0nl8n5636jd1ojg1up9lja2luoe.apps.googleusercontent.com', 
 			'cookiepolicy': 'single_host_origin', 
@@ -109,11 +110,7 @@
 		});
 	}
 	
-	$('#signinButton').click(function(){  
-
-		googlePlusLogin();
-    
-  });
+	$('#signinButton').click(googlePlusLogin);
 	
 	
 

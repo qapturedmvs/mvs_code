@@ -33,9 +33,9 @@ class User_M extends MVS_Model
 	}
   
   public function user_auth($proc, $data){
-
+//var_dump($data);
     $user = $this->db->call_procedure($proc, $data);
-
+    
 		if($user)
 			return $user[0];
 		else
