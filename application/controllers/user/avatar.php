@@ -17,7 +17,7 @@
 			$this->data['mode'] = 'upload';
 			$hdn = $this->input->post('hdnAvatar', TRUE);
 			
-			if(isset($hdn)){
+			if($hdn){
 				
 				$config['upload_path'] = './data/users';
 				$config['file_name']  = gnrtString(6, 6).'_'.$this->user['usr_id'].'_temp';

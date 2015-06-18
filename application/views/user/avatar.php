@@ -3,7 +3,7 @@
 	<?php echo form_open_multipart();?>
 	<input type="file" name="userfile" size="20" />
 	<br /><br />
-	<input type="hidden" id="hdnAvatar" name="hdnAvatar" />
+	<input type="hidden" id="hdnAvatar" name="hdnAvatar" value="1" />
 	<input type="submit" value="upload" />
 	<?php echo form_close();?>
 	<div class="errorHolder">
@@ -11,7 +11,7 @@
 	</div>
 	<?php else: ?>
 	<div class="avatarHolder">
-		<img id="cropImg" src="<?php echo $site_url.'data/users/'.$image['file_name']; ?>" />
+		<img id="cropImg" rel="<?php echo $image['file_name']; ?>" src="<?php echo $site_url.'data/users/'.$image['file_name']; ?>" />
 	</div>
 	<a class="btnDefault btnSaveImg" href="javascript:void(0);">SAVE</a>
 </div>
@@ -93,12 +93,13 @@ jQuery(function($) {
 $('.btnSaveImg').click(function(){
 		if(imgData != null){
       //console.log(imgData);
-			imgData['src'] = $('#cropImg').attr("src").replace(site_url, '/');
+			imgData['src'] = $('#cropImg').attr("rel");
 		
 			getAjax( { uri: site_url + "ajx/avatar_ajx", param: imgData }, function( d ){
 				
 				if( d.result == 'OK' )
-						response( d.data );
+					console.log(d);
+					//window.location.replace(site_url+'user/profile');
 				
 			});
     }
