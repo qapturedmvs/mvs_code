@@ -14,8 +14,8 @@
 			$inputs = $this->input->post(NULL, TRUE);
 			$path = FCPATH.'data\users\\';
 			
-			//$config['image_library'] = 'imagemagick';
-			//$config['library_path'] = 'C:\\ImageMagick-6.6.5-Q16\\';
+			$config['image_library'] = 'imagemagick';
+			$config['library_path'] = 'C:\\xampp\ImageMagick\\';
 			//$config['image_library'] = 'gd2';
 			$config['source_image'] = $path.$inputs['src'];
 			$config['new_image'] = $path.str_replace('_temp', '', $inputs['src']);
