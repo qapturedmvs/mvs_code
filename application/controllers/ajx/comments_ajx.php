@@ -88,7 +88,7 @@
 		private function _prepare_comment_data($feed){
 			
 			$feed['feed_ago'] = time_calculator($feed['feed_time']);
-			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : $feed['usr_avatar'];
+			$feed['usr_avatar'] = get_user_avatar($feed['usr_avatar']);
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 			
 			return $feed;

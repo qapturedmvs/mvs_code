@@ -1,6 +1,6 @@
 <?php if(isset($the_user)): ?>
 <div class="theUserBox user-box">
-	<div class="userAvatar"><img title="<?php echo $the_user->usr_name; ?>" src="<?php echo ($the_user->usr_avatar === '') ? $site_url.'images/user.jpg' : $site_url.$the_user->usr_avatar; ?>" /></div>
+	<div class="userAvatar"><img title="<?php echo $the_user->usr_name; ?>" src="<?php echo $site_url.get_user_avatar($the_user->usr_avatar); ?>" /></div>
 	<div class="userName"><a href="<?php echo $site_url.'user/wall/actions/'.$the_user->usr_nick; ?>"><?php echo $the_user->usr_name; ?></a></div>
 	<div class="userSlogan"><?php echo $the_user->usr_slogan; ?></div>
 	<div class="theUserMenu">

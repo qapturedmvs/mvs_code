@@ -223,3 +223,13 @@
 		return $text;
 	}
 	
+	function get_user_avatar($usr_avatar){
+		
+		if($usr_avatar == '')
+			$usr_avatar = 'images/user.jpg';
+		else
+			$usr_avatar = 'data/users/'.$usr_avatar.'.jpg';
+			
+		return $usr_avatar;
+		
+	}

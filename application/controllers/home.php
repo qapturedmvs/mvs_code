@@ -71,7 +71,8 @@
 						$cookie = array(
 							'name' => 'mvs_lgn_token',
 							'value' => $data['lgn_token'],
-							'expire' => 31536000
+							'expire' => 31536000,
+							'path'   => '/'
 						);
 
 						$this->input->set_cookie($cookie);

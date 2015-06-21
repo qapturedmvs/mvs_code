@@ -97,7 +97,7 @@ class MVS_Model extends CI_Model {
 			
 			case 'profile':
 				$filters = array(
-					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_slogan, u.usr_email',
+					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_cover, u.usr_slogan, u.usr_email',
 					'from' => 'mvs_users u',
 					'where' => "u.usr_nick = '$slug'"
 				);

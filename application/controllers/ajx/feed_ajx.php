@@ -194,7 +194,7 @@
 			$temp = date_parse($feed['feed_time']);
 			$feed['feed_year'] = $temp['year'];
 			$feed['feed_ago'] = time_calculator($feed['feed_time']);
-			$feed['usr_avatar'] = ($feed['usr_avatar'] == '') ? 'images/user.jpg' : 'data/users/'.$feed['usr_avatar'].'.jpg';
+			$feed['usr_avatar'] = get_user_avatar($feed['usr_avatar']);
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 
 			if(isset($feed['mvs_poster']))				

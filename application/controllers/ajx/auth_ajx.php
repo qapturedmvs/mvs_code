@@ -70,9 +70,6 @@
 
 			$user = $this->user_m->user_auth('sp_gp_auth', $data);
 			
-			if($user['usr_avatar'] != $avatar)
-				unlink(FCPATH.'data\users\\'.$avatar.'.jpg');
-			
 			$this->data['result'] = $this->_build_session($user, $token);
 			$this->load->view('results/_social_auth', $this->data);
 
@@ -103,7 +100,8 @@
 				$cookie = array(
 					'name' => 'mvs_lgn_token',
 					'value' => $token,
-					'expire' => 31536000
+					'expire' => 31536000,
+					'path'   => '/'
 				);
 
 				$this->input->set_cookie($cookie);
@@ -115,41 +113,6 @@
 			
 			return $result;
 			
-		}
-		
-		private function _set_avatar($id, $image){
-			
-			$this->load->library('image_lib');
-				
-			$path = FCPATH.'data\users\\';
-			$name = gnrtString(6, 6).'_'.$id;
-			$temp = $path.$name.'_temp.jpg';
-			
-			if(copy($image, $temp)){
-			
-				$config['image_library'] = 'gd2';
-				$config['source_image'] = $temp;
-				$config['new_image'] = $path.$name.'.jpg';
-				$config['width'] = 200;
-				$config['height'] = 200;
-			
-				$this->image_lib->initialize($config);
-			
-				if (!$this->image_lib->resize()){
-					
-					$result = FALSE;
-				
-				}else{
-					
-					$result = $name;
-					unlink($path.$name.'_temp.jpg');
-				
-				}
-			
-			}
-			
-			return $result;
-		
 		}
 	
 	}

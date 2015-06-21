@@ -3,7 +3,7 @@
 		<h1>Your Profile</h1>
 	</div>
 	<div class="userAvatar">
-		<a href="<?php echo $site_url.'user/avatar'; ?>"><img src="<?php echo ($user['usr_avatar'] != '') ? $site_url.'data/users/'.$the_user->usr_avatar.'.jpg' : $site_url.'images/user.jpg'; ?>" alt="<?php echo $the_user->usr_name; ?>" title="<?php echo $the_user->usr_name; ?>" /></a>
+		<a href="<?php echo $site_url.'user/settings/avatar'; ?>"><img src="<?php echo $site_url.get_user_avatar($user['usr_avatar']); ?>" alt="<?php echo $the_user->usr_name; ?>" title="<?php echo $the_user->usr_name; ?>" /></a>
 	</div>
 	<div class="profileForm">
 	<?php echo form_open('', array('class' => 'form-profile', 'role' => 'form')); ?>

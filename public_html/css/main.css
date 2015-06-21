@@ -257,7 +257,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .ReviewListHolder .listItem .spl .text{background:url(../images/spl_msg.png) no-repeat center center; text-indent:-9999px; cursor:hand; cursor:pointer;}
 
 .ReviewListHolder .listItem .feedHolder .userInfo{float:left; width:125px; }
-.ReviewListHolder .listItem .feedHolder .userInfo a.usrAvatar{display:block; width:60px; height:66px;}
+.ReviewListHolder .listItem .feedHolder .userInfo a.usrAvatar{display:block; width:60px; height:60px; background-size:cover;}
 .ReviewListHolder .listItem .feedHolder .feedInfo{float:left; width:840px;}
 
 .ReviewListHolder .listItem .feedHolder .refs{margin-top:20px; padding:0 30px;}

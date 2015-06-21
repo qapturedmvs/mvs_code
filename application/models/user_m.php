@@ -66,6 +66,32 @@ class User_M extends MVS_Model
     
     return TRUE;
   }
+  
+  public function set_avatar($id, $usr_avatar){
+    
+    $this->db->where('usr_id', $id);
+    $this->db->update('mvs_users', array('usr_avatar' => $usr_avatar));
+    
+  }
+  
+  public function get_cover($id){
+    
+    $filters = array('select' => 'usr_cover', 'from' => 'mvs_users', 'where' => "usr_id = $id");
+    $user = $this->get_data(NULL, 0, FALSE, $filters);
+
+    if(isset($user['data']))
+      return $user['data'];
+    else
+      return FALSE;
+    
+  }
+  
+  public function set_cover($id, $usr_cover){
+    
+    $this->db->where('usr_id', $id);
+    $this->db->update('mvs_users', array('usr_cover' => $usr_cover));
+    
+  }
 	
 	public function reset_password($id, $data){
     

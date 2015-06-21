@@ -148,7 +148,7 @@
 				$users[$key]->usr_id = $user['result_id'];
 				$users[$key]->usr_nick = $user['result_slug'];
 				$users[$key]->usr_name = $user['result_title'];
-				$users[$key]->usr_avatar = ($user['result_poster'] === '') ? 'images/user.jpg' : $user['result_poster'];
+				$users[$key]->usr_avatar = get_user_avatar($user['result_poster']);
 				$users[$key]->usr_me = ($user['result_id'] === $this->user['usr_id']) ? 1 : 0;
 				$users[$key]->flw_id = ($user['result_follow'] === NULL) ? 0 : $user['result_follow'];
 				
