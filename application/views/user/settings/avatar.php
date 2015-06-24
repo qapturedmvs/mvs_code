@@ -40,7 +40,7 @@ $('.btnSaveImg').click(function(){
 
 			imgData['src'] = $('#cropImg').attr("rel");
 
-			getAjax( { uri: site_url + "ajx/avatar_ajx", param: imgData }, function( d ){
+			getAjax( { uri: site_url + "ajx/user_visuals_ajx", param: imgData }, function( d ){
 				
 				if( d.result == 'OK' )
 					window.location.replace(site_url+'user/settings/details');

@@ -53,7 +53,8 @@
 			else
 				$auth['gender'] = 0;
 			
-			$avatar = $this->_set_avatar($auth['id'], str_replace('sz=50', 'sz=200', $auth['image']['url']));
+			//$avatar = $this->_set_avatar($auth['id'], str_replace('sz=50', 'sz=200', $auth['image']['url']));
+			$avatar = FALSE;
 			
 			$data = array(
 				'gp_id' => $auth['id'],
@@ -67,7 +68,7 @@
 				'usr_act_key' => hash('sha1', 'gp'.$auth['id']),
 				'usr_time' => date($this->config->item('mvs_db_time'))
 			);
-
+//var_dump($data);
 			$user = $this->user_m->user_auth('sp_gp_auth', $data);
 			
 			$this->data['result'] = $this->_build_session($user, $token);

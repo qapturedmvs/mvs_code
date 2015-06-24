@@ -66,75 +66,28 @@
 		
 		public function cover(){
 			
+			$this->data['mode'] = 'upload';
 			$user = $this->user_m->get_cover($this->user['usr_id']);
-			$ref = $this->input->post('refUrl', TRUE);
+			$hdn = $this->input->post('hdnCover', TRUE);
 
-			if($ref){
+			if($hdn){
 				$config['upload'] = array(
-					'upload_path' => './data/user-covers',
+					'upload_path' => './data/users-cover',
 					'file_name' => ($user[0]->usr_cover != '') ? $user[0]->usr_cover.'_temp' : 'quc_'.$this->user['usr_id'].'_'.hash('sha1', $this->user['usr_id']).'_temp',
 					'allowed_types' => 'jpg|jpeg|png',
-					'max_size' => '700',
-					'max_width' => '2000',
-					'max_height' => '1500',
+					'max_size' => '3000',
+					'max_width' => '4000',
+					'max_height' => '4000',
 					'overwrite' => TRUE
 				);				
 				
 				$this->load->library('upload', $config['upload']);
 				
-				if(!$this->upload->do_upload()){
-					
-					$this->data['image'] = array('error' => $this->upload->display_errors());
-					
-				}else{
-					
-					$upload_data = $this->upload->data();
-					$new_image = explode('_temp', $upload_data['file_name']);
-					$config['resize'] = array(
-						'image_library' => 'gd2',
-						'source_image' => $upload_data['full_path'],
-						'new_image' => $upload_data['file_path'].$new_image[0].'.jpg',
-						'width' => 1920
-					);
-					
-					$this->load->library('image_lib');
-					$this->image_lib->initialize($config['resize']);
-					
-					if (!$this->image_lib->resize()){
-						
-							$this->data['image'] = array('error' => $this->image_lib->display_errors());
-							
-					}else{
-					
-						$config['crop'] = array(
-							'image_library' => 'gd2',
-							'source_image' => $upload_data['file_path'].$new_image[0].'.jpg',
-							'maintain_ratio' => FALSE,
-							'height' => 600,
-							'x_axis' => '0',
-							'y_axis' => '0'
-						);
-						
-						$this->image_lib->clear();
-						$this->image_lib->initialize($config['crop']);
-						
-						if (!$this->image_lib->crop()){
-
-							$this->data['image'] = array('error' => $this->image_lib->display_errors());
-								
-						}else{
-							
-							$this->data['image'] = array('result' => TRUE);
-							unlink($upload_data['full_path']);
-
-							if($user[0]->usr_cover == '')
-								$this->user_m->set_cover($this->user['usr_id'], $new_image[0]);
-							
-						}
-					
-					}
-					
-				}
+				$this->data['image'] = (!$this->upload->do_upload()) ? array('error' => $this->upload->display_errors()) : $this->upload->data();
+				
+				if(!isset($this->data['image']['error']))
+					$this->data['mode'] = 'edit';
+			
 			}
 	
 			$this->data['subview'] = 'user/settings/cover';

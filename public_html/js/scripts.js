@@ -1187,3 +1187,28 @@ function showSpoiler( _t ){
 	
 	prts.removeClass('spl');
 }
+
+
+// MOVIE LIST MULTI ACTIONS
+function makeAll( type ){
+	var el, url, id = '', arr = [];
+	if( type == 'seen' ) el = $('.selected[data-seen="0"]');
+	else if( type == 'watchList' ) el = $('.selected[data-watchList="0"]');
+	else if( type == 'customList' ) el = $('.selected[data-customList]');
+	el.each(function( i, k ){
+		   var _this = $( this ), e;
+	if( type == 'customList' ){
+	
+	}else{
+	e = _this.parents('*[mvs-id]')
+	}
+	
+	if( e.length > 0 ) arr.push( e.attr('mvs-id') );
+	   });
+	
+	getAjax( { uri: site_url + 'ajx/movie_actions_ajx/mark_all_seen/', param: { ids:arr.toString(), act:type } }, function( e ){
+	
+	
+	
+	});
+}
