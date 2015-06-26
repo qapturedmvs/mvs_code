@@ -14,13 +14,16 @@
     public function list_lister(){
 				
 			$json = (object) array();
-			$usr_id = (isset($this->get_vars['usr'])) ? $this->get_vars['usr'] : $this->user['usr_id'];
-			$lists = $this->user_custom_list_m->get_lists($usr_id);
+			$usr = array('usr' => (isset($this->get_vars['usr'])) ? $this->get_vars['usr'] : $this->user['usr_id'], 'lgn_usr' => ($this->user['usr_id']) ? $this->user['usr_id'] : NULL);
+			$lists = $this->user_custom_list_m->get_lists($usr);
+			$cls = array();
 			
+			foreach($lists as $k => $v)
+				$cls[] = $this->_prepare_list_data($v);
+
 			if($lists){
 				$json->result = 'OK';
-				$json->total_count = $lists['total_count'];
-				$json->data = $lists['data'];
+				$json->data = $cls;
 			}else{
 				$json->result = 'FALSE';
 				$json->data = '';
@@ -31,6 +34,26 @@
 			$this->load->view('json/main_json_view', $this->data);
 				
     }
+		
+		private function _prepare_list_data($list){
+			
+			$list['owner'] = ($list['usr_id'] == $this->user['usr_id']) ? 1 : 0;
+			$temp['slugs'] = explode('||', $list['list_data_slugs']);
+			$temp['titles'] = explode('||', $list['list_data_titles']);
+			$temp['poster_fls'] = explode('||', $list['list_data_posters']);
+			
+			foreach($temp['slugs'] as $k => $v){
+				$list['cld'][] = array(
+					'cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg',
+					'title' => $temp['titles'][$k]
+				);
+			}
+			
+			unset($temp);
+			
+			return $list;
+			
+		}
 		
 		public function edit_list_detail($list_id = NULL){
 				

@@ -13,16 +13,11 @@ class User_Custom_List_M extends MVS_Model
 	}
   
 	// User Custom Lists (User Movie Lists)
-	public function get_lists($usr_id){
+	public function get_lists($usr){
 		
-		$filters = array(
-			'where' => 'usr_id = '.$usr_id,
-			'order_by' => 'list_time DESC'
-		);
+		$lists = $this->db->call_procedure('sp_get_user_customlists', $usr);
 		
-		$lists = $this->get_data(NULL, 0, TRUE, $filters);
-		
-		if(isset($lists['data']))
+		if($lists)
 			return $lists;
 		else
 			return FALSE;
