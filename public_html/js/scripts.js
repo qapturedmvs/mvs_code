@@ -1,10 +1,53 @@
 // GLOBAL VARIABLE
 
+/*
+
+
+http://www.instructables.com/id/3-Ways-to-Enable-Administrator-Account-in-Windows-/
+window user admin yap
+
+npm install socket.io, kurulum
+
+package.json oluştur klasore at
+
+npm info socket.io version , versiyon öğrenme
+
+npm info express version , express versiyon öğrenme
+
+oluşturduğun klasöre command prompt ile gir
+
+npm install, gerekli dosyaları yükle
+
+node app.js
+
+https://www.youtube.com/watch?v=pNKNYLv2BpQ
+
+
+
+socket.io client
+
+$(document).ready(function(){
+	  var socket = io();
+	  $("#add_status").click(function(){
+		socket.emit('status added',$("#comment").val());
+	  });
+	  socket.on('refresh feed',function(msg){
+		$("#show_comments").append(msg + '<br /><br />');
+	  });
+});
+
+
+*/
+
+
+
 var /*site_url = $('#site_url').val(),*/ qs = window.location.search, feed_year = 0;
 
 // GLOBAL ANGULAR MODULE
 var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
 	qapturedApp.config(['$httpProvider', function( $httpProvider ){ $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest'; }]);
+	qapturedApp.filter('unsafe', function( $sce ){ return function( val ){ return $sce.trustAsHtml(val); }; });
+
 	
 // Qaptured AutoComplete
 $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
@@ -1083,6 +1126,10 @@ if( typeof commentPage !== 'undefined' ){
 	});
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////// SHOW REPLIES
+
+if( $('#reply_text').length > 0 )
+	CKEDITOR.inline( 'reply_text' );
+
 function ShowReplies( t ){
 	var _this = $( t ), prts = _this.parents('[act-id]');
 	if( prts.length > 0 ){
