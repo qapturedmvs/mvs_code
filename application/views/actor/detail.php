@@ -25,7 +25,7 @@
 									
 								$cover = getCoverPath($slug, 'medium');
 								
-								echo '<li style="background:url('.$site_url.$cover.') center center no-repeat; background-size:cover;"><a title="'.$feat['title'].' - '.$feat['year'].'" href="'.$site_url.'movie/'.$slug.'"></a></li>';	
+								echo '<li><a title="'.$feat['title'].' - '.$feat['year'].'" href="'.$site_url.'movie/'.$slug.'"><span class="poster" style="background:url('.$site_url.$cover.') center center no-repeat; background-size:cover;"></span><span class="title">'.$feat['title'].' <small>'.$feat['year'].'</small></span></a></li>';	
 	
 							}
 						?>

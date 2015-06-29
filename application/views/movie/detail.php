@@ -31,6 +31,9 @@
 						</div>
 						<?php endif; ?>
 						<div class="trailer"><a class="trailerBtn button" onclick="watch_trailer(this)" href="javascript:void(0);">Trailer</a></div>
+						<?php if($movie['rev_count'] !== NULL): ?>
+						<div class="reviewCount"><a href="javascript:void(0);"><?php echo $movie['rev_count']; ?> Review</a></div>
+						<?php endif; ?>
 						<hr class="qFixer" />
 						<div class="actions">
 							<?php if($logged_in): ?>

@@ -17,7 +17,7 @@
 				
 				if($id = $this->input->post('id', TRUE)){
 					
-					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $id);
+					$data = array('mvs_id' => $id, 'usr_id' => $this->user['usr_id']);
 					$this->data['seen_result'] = $this->action_m->seen_movie($data);
 					
 				}else{

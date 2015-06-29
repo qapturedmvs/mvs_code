@@ -1122,8 +1122,9 @@ if( typeof commentPage !== 'undefined' ){
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////// SHOW REPLIES
 
-if( $('#reply_text').length > 0 )
-	CKEDITOR.inline( 'reply_text' );
+
+if( $('#comment_text').length > 0 )
+	CKEDITOR.inline( 'comment_text' );
 
 function ShowReplies( t ){
 	var _this = $( t ), prts = _this.parents('[act-id]');

@@ -296,8 +296,9 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageActor .detail .btnSet{margin-bottom:60px;}
 .pageActor .detail .movies{padding-top:15px; border-top:1px solid #e6e6e6;}
 .pageActor .detail .movies .featured{margin:10px 0 50px;}
-.pageActor .detail .movies .featured li{float:left; margin-right:10px; width:145px; height:220px; background:#eee;}
-.pageActor .detail .movies .featured li a{width:145px; height:220px; display:block;}
+.pageActor .detail .movies .featured li{float:left; margin-right:10px;}
+.pageActor .detail .movies .featured li .poster{display:block; width:145px; height:220px; background:#eee; margin-bottom:10px;}
+.pageActor .detail .movies .featured li a{}
 
 .pageActor .detail .movies .filmography .tabFilmography{margin-bottom:20px;}
 .pageActor .detail .movies .filmography .tabFilmography li{float:left; margin-right:15px;}
