@@ -25,14 +25,11 @@
 		
 				if($actor){
           
-					$type_unq = array(); 
 					$featured = array();
 					$movies = array();
 					$i = 0;
 
 					foreach($actor as $key => $val){
-						
-						$type_unq[] = $actor[$key]->type_title;
 						
 						if($i === 0)
 							$this->data['actor'] = $actor[$key]->str_name;
@@ -44,22 +41,18 @@
 
 						}
 						
-						$movies[] = array('title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug, 'type' => $actor[$key]->type_title);
+						$movies[$actor[$key]->type_title][$actor[$key]->mvs_year][] = array('title' => $actor[$key]->mvs_title, 'slug' => $actor[$key]->mvs_slug);
 
 					}
 					
-					function sortByYear($a, $b){
-							if ($a['year'] == $b['year']){
-									return 0;
-							}
-							return ($a['year'] > $b['year']) ? -1 : 1;
-					}
+					ksort($movies);
+					
+					foreach($movies as $key => $val)
+						krsort($movies[$key]);
 					
 					unset($actor);
-					usort($movies, "sortByYear");
 					
 					$this->data['featured'] = $featured;
-					$this->data['types'] = array_unique($type_unq);
 					$this->data['movies'] = $movies;
 					
 					 //Setting meta_tags object
@@ -69,7 +62,7 @@
 						'type' => 'actor',
 						'image' => ''
 					);
-				
+					
 					// Load view
 					$this->data['subview'] = 'actor/detail';
 					$this->load->view('_main_body_layout', $this->data);

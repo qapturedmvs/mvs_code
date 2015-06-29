@@ -1113,8 +1113,8 @@ if( typeof commentPage !== 'undefined' ){
 		var item = $(this).attr("rel");
 		
 		if(!$(this).parent('li').hasClass("selected")){
-			$('.tabContent li').hide();
-			$('.tabContent li.'+item).show();
+			$('.tabContent > ul').hide();
+			$('.tabContent > ul.'+item).show();
 			$('.tabFilmography a').parent('li.selected').removeClass("selected");
 			$(this).parent('li').addClass("selected");
 		}

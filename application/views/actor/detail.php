@@ -7,7 +7,7 @@
 			<h1><?php echo $actor; ?></h1>
 			<div class="position">
 				<ul>
-					<?php foreach($types as $type): ?>
+					<?php foreach($movies as $type => $data): ?>
 					<li><?php echo $type; ?></li>
 					<?php endforeach; ?>
 				</ul>
@@ -36,18 +36,28 @@
 					<div class="titleDefault titleFilmography">Full Filmography</div>
 						<div class="tabDefault tabFilmography">
 							<ul>
-								<?php foreach($types as $type): ?>
+								<?php foreach($movies as $type => $datas): ?>
 								<li<?php echo ($type == 'Actor') ? ' class="selected"' : ''; ?>><a rel="<?php echo $type; ?>" href="javascript:void(0);"><?php echo $type; ?></a></li>
 								<?php endforeach; ?>
 							</ul>
 								<hr class="qFixer" />
 						</div>
 						<div class="tabContent">
-								<ul>
-									<?php foreach($movies as $slug => $movie): ?>
-									<li class="<?php echo $movie['type']; ?>"><span class="year"><?php echo $movie['year']; ?></span></span><span class="movie"><a href="<?php echo $site_url.'movie/'.$movie['slug']; ?>"><?php echo $movie['title']; ?></a></span><hr class="qFixer" /></li>
+							<?php foreach($movies as $type => $datas): ?>
+								<ul class="<?php echo $type; ?>">
+									<?php foreach($datas as $year => $items): ?>
+									<li>
+										<span class="year"><?php echo $year; ?></span>
+										<ul>
+											<?php foreach($items as $item): ?>
+											<li><a href="<?php echo $site_url.'movie/'.$item['slug']; ?>"><?php echo $item['title']; ?></a></li>
+											<?php endforeach; ?>
+										</ul>
+										<hr class="qFixer" />
+									</li>
 									<?php endforeach; ?>
 								</ul>
+								<?php endforeach; ?>
 							</div>
 					</div>
 			</div>

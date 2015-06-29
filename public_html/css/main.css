@@ -296,7 +296,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageActor .detail .btnSet{margin-bottom:60px;}
 .pageActor .detail .movies{padding-top:15px; border-top:1px solid #e6e6e6;}
 .pageActor .detail .movies .featured{margin:10px 0 50px;}
-.pageActor .detail .movies .featured li{float:left; margin-right:10px;}
+.pageActor .detail .movies .featured li{float:left; margin-right:10px; width:145px;}
 .pageActor .detail .movies .featured li .poster{display:block; width:145px; height:220px; background:#eee; margin-bottom:10px;}
 .pageActor .detail .movies .featured li a{}
 
@@ -305,12 +305,12 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageActor .detail .movies .filmography .tabFilmography li a{font-weight:bold;}
 .pageActor .detail .movies .filmography .tabFilmography li.selected a{text-decoration:underline;}
 
-.pageActor .detail .movies .filmography .tabContent li{clear:both; margin-bottom:10px; display:none;}
+.pageActor .detail .movies .filmography .tabContent > ul{display:none;}
+.pageActor .detail .movies .filmography .tabContent li li{clear:both; margin-bottom:10px; line-height:15px;}
 .pageActor .detail .movies .filmography .tabContent li span.year{display:inline-block; width:50px; float:left;}
-.pageActor .detail .movies .filmography .tabContent li span.movie{display:inline-block; width:300px; float:left;}
+.pageActor .detail .movies .filmography .tabContent li ul{display:inline-block; width:300px; float:left;}
 .pageActor .detail .movies .filmography .tabContent li span.movie a:hover{text-decoration:underline;}
-.pageActor .detail .movies .filmography .tabContent li span.character{color:#555; float:left;}
-.pageActor .detail .movies .filmography .tabContent li.Actor{display:block;}
+.pageActor .detail .movies .filmography .tabContent ul.Actor{display:block;}
 
 /* SEARCH */
 .pageSearch{}
