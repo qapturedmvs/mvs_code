@@ -53,9 +53,6 @@
 			else
 				$auth['gender'] = 0;
 			
-			//$avatar = $this->_set_avatar($auth['id'], str_replace('sz=50', 'sz=200', $auth['image']['url']));
-			$avatar = FALSE;
-			
 			$data = array(
 				'gp_id' => $auth['id'],
 				'usr_nick' => gnrtSlug('user'),
@@ -63,12 +60,11 @@
 				'usr_email' => NULL,
 				'usr_password' => hash('sha512', str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4))),
 				'usr_token' => $token,
-				'usr_avatar' => ($avatar) ? $avatar : '',
 				'usr_gender' => $auth['gender'],
 				'usr_act_key' => hash('sha1', 'gp'.$auth['id']),
 				'usr_time' => date($this->config->item('mvs_db_time'))
 			);
-//var_dump($data);
+
 			$user = $this->user_m->user_auth('sp_gp_auth', $data);
 			
 			$this->data['result'] = $this->_build_session($user, $token);

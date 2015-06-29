@@ -9,22 +9,22 @@
     
     public function index(){ show_404(); }
     
-    public function seen_unseen_movie($action){
+    public function seen(){
 				
 			if($this->logged_in){
 				
 				$this->load->model('action_m');
 				
-				$this->data['action'] = $action;
-				$id = $this->input->post('id', TRUE);
-				$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
-				
-				if($action === 'seen')
-					$data['mvs_id'] = $id;
-				else
-					$data['seen_id'] = $id;
-
-				$this->data['seen_result'] = $this->action_m->seen_movie($data);
+				if($id = $this->input->post('id', TRUE)){
+					
+					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $id);
+					$this->data['seen_result'] = $this->action_m->seen_movie($data);
+					
+				}else{
+					
+					$this->data['seen_result'] = 'no-movie';
+					
+				}
 				
 			}else{
 				

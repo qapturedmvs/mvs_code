@@ -18,15 +18,16 @@
 			
 		}
 	
-		public function index($id = NULL){
+		public function index($slug = NULL){
 
-			if($id){
-
-				$movie = $this->movie_m->movie($id);
+			if($slug){
+				
+				$data = array('slug' => $slug, ($this->logged_in) ? $this->user['usr_id'] : NULL);
+				$movie = $this->movie_m->movie($data);
 		
 				if($movie){
-
-					$this->data['movie'] = $movie['data'];
+				
+					$this->data['movie'] = $movie;
 					$this->data['controls'] = array('page' => 'movie-detail');
 					
 					// Eğer filmin cast, genre, country bilgilerinden olmayan var ise view'daki loop hata vermesin
@@ -34,16 +35,16 @@
 					$this->data['genres'] = array();
 					$this->data['countries'] = array();
 					
-					$casts = $this->movie_m->getCastList(str_replace('|', ',', trim($movie['data']->cst_id, '|')));
-
+					$casts = $this->movie_m->getCastList(str_replace('|', ',', trim($movie['cst_id'], '|')));
+				
 					if($casts)
 						$this->data['casts'] = $casts['data'];
 						
 					// Genres & Countries	
 					foreach($this->filter_def['like'] as $key => $val){
 						
-						if($movie['data']->{$val[0]} != ''){
-							$this->data[$val[1]]['data'] = explode('|', trim($movie['data']->{$val[0]}, '|'));
+						if($movie[$val[0]] != ''){
+							$this->data[$val[1]]['data'] = explode('|', trim($movie[$val[0]], '|'));
 							$this->data[$val[1]]['table'] = $this->cache_table_data($val[1], 'movie_m', array('id' => $val[0], 'title' => $val[2]));
 						}
 							
@@ -51,14 +52,14 @@
 					
 					// Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(
-						'title' => $movie['data']->mvs_title.' ('.$movie['data']->mvs_year.')',
-						'description' => $movie['data']->mvs_plot,
+						'title' => $movie['mvs_title'].' ('.$movie['mvs_year'].')',
+						'description' => $movie['mvs_plot'],
 						'type' => 'movie',
-						'image' => $movie['data']->mvs_poster
+						'image' => $movie['mvs_poster']
 					);
 					
 					if(isset($this->user['usr_id']))
-						$this->data['actions'] = $this->_set_actions($movie['data']->mvs_id);
+						$this->data['actions'] = $this->_set_actions($movie['mvs_id']);
 					
 					// Load view
 					$this->data['subview'] = 'movie/detail';

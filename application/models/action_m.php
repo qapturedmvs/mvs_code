@@ -14,20 +14,10 @@ class Action_M extends MVS_Model
   
 	public function seen_movie($data){
 		
-		if($data['action'] === 'seen'){
-			
-			unset($data['action']);
-			$out = array('@seen_id' => NULL);
-			$this->db->call_procedure('sp_seen_single', $data, $out);
-			$result = $out['@seen_id'];
-
-		}else{
-			
-			$this->db->where('seen_id = '.$data['seen_id'].' AND usr_id = '.$data['usr_id']);
-			$this->db->delete('mvs_seen');
-			$result = 'unseen';
-			
-		}
+		$data['mvs_id'] = $this->cleaner($data['mvs_id']);
+		$out = array('@seen_id' => NULL);
+		$this->db->call_procedure('sp_seen_single', $data, $out);
+		$result = $out['@seen_id'];
 		
 		return $result;
 	

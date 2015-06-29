@@ -390,18 +390,13 @@ if ($('.form-signup').length > 0)
 // Seen Action (Detail & List)
 function single_seen(obj){
 
-	var action = $(obj).attr("rel"),
-			id = (action == 'seen') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("seen-id");
-				
-	getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen_unseen_movie/'+action, param: {id:id} }, function( e ){
+	var id = $(obj).parents('*[mvs-id]').attr('mvs-id');
+
+	getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen/', param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
-					if(e['action'] == 'seen')
-						$(obj).removeAttr("seen-id");
-					else{
-						$(obj).attr("seen-id", e['seen-id']);
-						$('a[rel="rwtc"]').attr("rel", "awtc").removeAttr("wtc-id");	
-					}
+					if(e['action'] == 'unseen')
+						$('a[rel="rwtc"]').attr("rel", "awtc").removeAttr("wtc-id");
 						
 					$(obj).attr("rel", e['action']);
 					

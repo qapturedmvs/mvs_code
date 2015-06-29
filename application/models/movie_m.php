@@ -80,13 +80,13 @@ class Movie_M extends MVS_Model
 	}
 	
 	// MOVIE DETAIL
-	public function movie($id){
+	public function movie($data){
 		
-		$id = $this->cleaner($id);
-		$movie = $this->get_data($id, 0, FALSE, NULL);
-	
-		if(isset($movie['data']))
-			return $movie;
+		$data['slug'] = $this->cleaner($data['slug']);
+		$movie = $this->db->call_procedure('sp_get_movie_detail', $data);
+
+		if($movie)
+			return $movie[0];
 		else
 			return FALSE;
 	

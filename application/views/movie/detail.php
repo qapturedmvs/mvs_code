@@ -1,15 +1,15 @@
 <script type="text/javascript">
-	var mvs_id = <?php echo $movie->mvs_id; ?>;
+	var mvs_id = <?php echo $movie['mvs_id']; ?>;
 </script>
-<div class="pageDefault pageMovie" mvs-id="<?php echo $movie->mvs_id; ?>">
-	<section class="hero"<?php echo ($movie->mvs_cover != 0) ? ' style="background:url('.$site_url.'/data/covers/'.$movie->mvs_slug.'.jpg) center center no-repeat; background-size:cover;"' : ''; ?>></section>
+<div class="pageDefault pageMovie" mvs-id="<?php echo $movie['mvs_id']; ?>">
+	<section class="hero"<?php echo ($movie['mvs_cover'] != 0) ? ' style="background:url('.$site_url.'/data/covers/'.$movie['mvs_slug'].'.jpg) center center no-repeat; background-size:cover;"' : ''; ?>></section>
 	<section class="body">
 		<aside class="mainCol left">
 			<div class="details">
-				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.getCoverPath($movie->mvs_slug, 'medium'); ?>" alt="<?php echo $movie->mvs_title; ?>" /></div></div>
+				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.getCoverPath($movie['mvs_slug'], 'medium'); ?>" alt="<?php echo $movie['mvs_title']; ?>" /></div></div>
 				<div class="text left">
 					<div class="posArea">
-						<h1 title="<?php echo $movie->mvs_title; ?>"><?php echo $movie->mvs_title.' (<small>'.$movie->mvs_year.'</small>)'; ?></h1>
+						<h1 title="<?php echo $movie['mvs_title']; ?>"><?php echo $movie['mvs_title'].' (<small>'.$movie['mvs_year'].'</small>)'; ?></h1>
 						<?php if($genres): ?>
 						<div class="genre">
 							<ul>
@@ -35,7 +35,7 @@
 						<div class="actions">
 							<?php if($logged_in): ?>
 							<ul>
-								<li class="seenMovie singleSeen"><a<?php echo ($actions['lists'][0]->seen_id !== NULL) ? ' rel="unseen" seen-id="'.$actions['lists'][0]->seen_id.'"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
+								<li class="seenMovie singleSeen"><a<?php echo ($movie['seen_id'] !== NULL) ? ' rel="unseen"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
 								<li class="applaudMovie"><a<?php echo ($actions['lists'][0]->app_id !== NULL) ? ' rel="unapplaud" app-id="'.$actions['lists'][0]->app_id.'"' : ' rel="applaud"'; ?> href="javascript:void(0);" onclick="applaud_movie(this)">Applaud</a></li>
 								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
@@ -64,7 +64,7 @@
 						</div>
 					</div>
 					<div class="plot">
-						<p><?php echo $movie->mvs_plot; ?></p>
+						<p><?php echo $movie['mvs_plot']; ?></p>
 					</div>
 					<div class="cast">
 						<span class="title">Stars: </span>
@@ -113,9 +113,10 @@
 							</ul>
 							<hr class="qFixer" />
 						</div>
-						<span class="listTitle">{{item.list_title}} ({{item.list_movie_count}})</span>
-						<hr class="qFixer" />
 						</a>
+						<div class="listInfo"><a class="listTitle" href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a> <small>{{item.list_movie_count}}</small> by <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></div>
+						<hr class="qFixer" />
+						
 					</li>
 				</ul>
 			</section>
@@ -186,7 +187,7 @@ data[2] += point[2];
   }
 };
 
- color.get('<?php echo $site_url.getCoverPath($movie->mvs_slug, 'small'); ?>', function( k ) {
+ color.get('<?php echo $site_url.getCoverPath($movie['mvs_slug'], 'small'); ?>', function( k ) {
 		$('.pageMovie .hero').css("background-color", k);  
   });
 	
