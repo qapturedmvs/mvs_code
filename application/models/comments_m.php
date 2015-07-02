@@ -49,24 +49,25 @@ class Comments_M extends MVS_Model
 	}
 	
 	public function add_comment($data){
-		
+		var_dump($data);
 		$out = array('@result' => NULL);
 		$this->db->call_procedure('sp_add_review', $data, $out);
+		
 		$result = $out['@result'];
-
+		var_dump($result);
 		return $result;
 	
 	}
 	
-	public function reply_comment($data){
-
-		$out = array('@result' => NULL);
-		$this->db->call_procedure('sp_reply_review', $data, $out);
-		$result = $out['@result'];
-
-		return $result;
-	
-	}
+	//public function reply_comment($data){
+	//
+	//	$out = array('@result' => NULL);
+	//	$this->db->call_procedure('sp_reply_review', $data, $out);
+	//	$result = $out['@result'];
+	//
+	//	return $result;
+	//
+	//}
 	
 	public function edit_comment($data){
 	

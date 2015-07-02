@@ -1039,9 +1039,9 @@ if( typeof commentPage !== 'undefined' ){
 	}
 			
 	$('a.btnComment').click(function(){
-			cmtText = $('#comment_text').val(),
+			cmtText = CKEDITOR.instances.comment_text.getData(),
 			spl = ($('#comment_spl').is(":checked")) ? 1 : 0;
-			
+
 			if(cmtText != '')
 				add_comment(0, cmtText, spl, commType, commId);
 	});
@@ -1083,7 +1083,7 @@ if( typeof commentPage !== 'undefined' ){
 			$("#replyForm").appendTo(comm);
 			
 			$('a.btnReply').unbind('click').click(function(){
-				cmtText = $('#reply_text').val(),
+				cmtText = CKEDITOR.instances.reply_text.getData(),
 				spl = ($('#reply_spl').is(":checked")) ? 1 : 0;
 				
 				if(cmtText != '')
@@ -1124,7 +1124,10 @@ if( typeof commentPage !== 'undefined' ){
 
 
 if( $('#comment_text').length > 0 )
-	CKEDITOR.inline( 'comment_text' );
+	CKEDITOR.inline( 'comment_text', {allowedContent:'br'});
+	
+if( $('#reply_text').length > 0 )
+	CKEDITOR.inline( 'reply_text', {allowedContent:'br'});
 
 function ShowReplies( t ){
 	var _this = $( t ), prts = _this.parents('[act-id]');

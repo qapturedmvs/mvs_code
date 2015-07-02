@@ -103,19 +103,10 @@
 				
 				if($vars){
 					
+					$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => (isset($vars['ref'])) ? $vars['ref'] : NULL, 'act_type' => $vars['type'], 'id' => (isset($vars['id'])) ? $vars['id'] : NULL, 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
 					$this->load->model('comments_m');
 					
-					if(isset($vars['ref'])){
-					
-						$data = array('usr_id' => $this->user['usr_id'], 'act_ref_id' => $vars['ref'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
-						$this->data['comment_result'] = $this->comments_m->reply_comment($data);
-						
-					}else{
-						
-						$data = array('usr_id' => $this->user['usr_id'], 'type' => $vars['type'], 'id' => $vars['id'], 'act_text' => $vars['text'], 'act_spl_fl' => $vars['spl']);
-						$this->data['comment_result'] = $this->comments_m->add_comment($data);
-						
-					}
+					$this->data['comment_result'] = $this->comments_m->add_comment($data);
 
 				}else{
 					
@@ -129,7 +120,7 @@
 				
 			}
 			
-			$this->load->view('results/_add_comment', $this->data);
+			//$this->load->view('results/_add_comment', $this->data);
 
     }
 		

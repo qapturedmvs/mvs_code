@@ -1,3 +1,4 @@
+<script src="<?php echo site_url('js/ckeditor/ckeditor.js'); ?>"></script>
 <script type="text/javascript">
 	var mvs_id = <?php echo $movie['mvs_id']; ?>;
 </script>

@@ -1,3 +1,4 @@
+<script src="<?php echo site_url('js/ckeditor/ckeditor.js'); ?>"></script>
 <script type="text/javascript">
 	var list_id = <?php echo $list['list_id']; ?>;
 </script>
