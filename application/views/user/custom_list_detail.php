@@ -15,7 +15,7 @@
 		<hr class="qFixer" />
 	</div>
 	<div class="titleDefault titleCustomList">
-		<h4 class="normal-mode"><?php echo $list['list_title']; ?></h4>
+		<h4 class="normal-mode"><?php echo $list['list_title']; ?></h4><small><?php echo $list['list_data_count']; ?></small>
 		<input type="text" class="listTitle edit-mode" value="<?php echo $list['list_title']; ?>" />
 	</div>
 	<?php if($logged_in): ?>

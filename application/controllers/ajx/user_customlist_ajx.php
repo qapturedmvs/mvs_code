@@ -18,19 +18,22 @@
 			$lists = $this->user_custom_list_m->get_lists($usr);
 			$cls = array();
 			
-			foreach($lists as $k => $v)
+			if($lists){
+				
+				foreach($lists as $k => $v)
 				$cls[] = $this->_prepare_list_data($v);
 
-			if($lists){
 				$json->result = 'OK';
 				$json->data = $cls;
+				
 			}else{
+				
 				$json->result = 'FALSE';
 				$json->data = '';
+				
 			}
 			
 			$this->data['json'] = json_encode($json);
-			
 			$this->load->view('json/main_json_view', $this->data);
 				
     }

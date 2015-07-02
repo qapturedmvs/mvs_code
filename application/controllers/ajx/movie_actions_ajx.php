@@ -99,8 +99,8 @@
 		
 				if($results){
 
-					foreach($results as $result)
-						$result['usr_avatar'] = ($result['usr_avatar'] === '') ? 'images/user.jpg' : $result['usr_avatar'];
+					foreach($results as $k => $result)
+						$results[$k]['usr_avatar'] = ($result['usr_avatar'] === '') ? 'images/user.jpg' : $result['usr_avatar'];
 
 					$json->result = 'OK';
 					$json->data['total'] = $results[0]['total'];

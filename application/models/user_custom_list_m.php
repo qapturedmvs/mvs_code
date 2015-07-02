@@ -29,7 +29,7 @@ class User_Custom_List_M extends MVS_Model
 		$cl = $this->db->call_procedure('sp_get_customlist', $data);
 
 		if($cl)
-			return $cl;
+			return $cl[0];
 		else
 			return FALSE;
 		

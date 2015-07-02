@@ -91,7 +91,8 @@
 			<?php if($logged_in): ?>
 			<div class="userNetworkSeen">
 				<div ng-controller="mdUserNetworkSeen">
-					<span ng-repeat="item in items.users"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
+					<span class="avatars" ng-repeat="item in items.users"><a title="{{item.usr_name}}" href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}"><img src="<?php echo $site_url; ?>{{item.usr_avatar}}" /></a></span>
+					<span class="names" ng-repeat="item in items.users"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
 					<span ng-if="items.total > 4"> and {{items.total-3}} other people in your network</span> seen this movie.
 				</div>
 				<hr class="qFixer" />
