@@ -57,7 +57,7 @@
 				'gp_id' => $auth['id'],
 				'usr_nick' => gnrtSlug('user'),
 				'usr_name' => $auth['displayName'],
-				'usr_email' => NULL,
+				'usr_email' => '',
 				'usr_password' => hash('sha512', str_shuffle(strtolower(random_string('alpha', 4)).'+$'.random_string('numeric', 4))),
 				'usr_token' => $token,
 				'usr_gender' => $auth['gender'],
