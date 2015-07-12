@@ -1,20 +1,20 @@
 <?php 
 
 		$this->output->set_header('Content-Type: application/json; charset=utf-8');
-		
-		if($lst_result == -2)	
-			echo '{"result":"FALSE", "msg":"Custom list not found."}';
 
-		elseif($lst_result == -1)
-				echo '{"result":"FALSE", "msg":"Movie not found."}';
-				
-		elseif($lst_result == 0)
-				echo '{"result":"FALSE", "msg":"Movie already in that list."}';
+		if($result == -1)
+			echo '{"result":"OK", "msg":"Movie removed from your list", "itm-id":"0"}';
 		
-		elseif($lst_result == 'rfcl')
-				echo '{"result":"OK", "action":"atcl", "msg":"Movie removed from your list"}';
-				
+		elseif($result == 'no-user')
+			echo '{"result":"FALSE", "msg":"User not found"}';
+			
+		elseif($result == 'no-movie')
+			echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
+		
+		elseif($result == 0)
+			echo '{"result":"FALSE", "msg":"List not found."}';
+			
 		else
-				echo '{"result":"OK", "action":"rfcl", "msg":"Movie added your list", "ldt-id":"'.$lst_result.'"}';
+			echo '{"result":"OK", "msg":"Movie added your list", "itm-id":"'.$result.'"}';
 
 ?>

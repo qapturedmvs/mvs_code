@@ -57,31 +57,32 @@
 
 				if($user && $user['usr_act'] == 1){
 					
-					$session = array(
-						'usr_id' => $user['usr_id'],
-						'usr_nick' => $user['usr_nick'],
-						'usr_name' => $user['usr_name'],
-						'usr_email' => $user['usr_email'],
-						'usr_avatar' => $user['usr_avatar'],
-						'usr_loggedin' => TRUE,
-					);
 					
-					if($cookie){
-
-						$cookie = array(
-							'name' => 'mvs_lgn_token',
-							'value' => $data['lgn_token'],
-							'expire' => 31536000,
-							'path'   => '/'
-						);
-
-						$this->input->set_cookie($cookie);
-						
-					}
-						
-					$this->session->set_userdata($session);
-									
-					redirect($ref, 'refresh');
+					//$session = array(
+					//	'usr_id' => $user['usr_id'],
+					//	'usr_nick' => $user['usr_nick'],
+					//	'usr_name' => $user['usr_name'],
+					//	'usr_email' => $user['usr_email'],
+					//	'usr_avatar' => $user['usr_avatar'],
+					//	'usr_loggedin' => TRUE,
+					//);
+					//
+					//if($cookie){
+					//
+					//	$cookie = array(
+					//		'name' => 'mvs_lgn_token',
+					//		'value' => $data['lgn_token'],
+					//		'expire' => 31536000,
+					//		'path'   => '/'
+					//	);
+					//
+					//	$this->input->set_cookie($cookie);
+					//	
+					//}
+					//	
+					//$this->session->set_userdata($session);
+					if($this->_build_session($user, $data['lgn_token'], $cookie))	
+						redirect($ref, 'refresh');
 									
 				}elseif($user && $user['usr_act'] == 0){
 

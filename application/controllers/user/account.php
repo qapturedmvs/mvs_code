@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Account extends Frontend_Controller{
+	class Account extends User_Controller{
     
 		function __construct(){
 			parent::__construct();

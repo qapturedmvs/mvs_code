@@ -137,7 +137,7 @@
 					
 					}else{
 						
-						$i = 1;
+						$i = 0;
 						unset($data[$k]);
 						
 						foreach($data as $sk => $sv){
@@ -152,16 +152,16 @@
 							
 						}
 						
-						if(isset($d['grp'])){
+						if(isset($d['grp']) && $i > 1){
 							
 							$d['mov_grp_count'] = $i;
 							$d['seen_type'] = 'movie_group_seen';
 							$tree[] = $this->_prepare_wall_data($d);
 							
-						}elseif(isset($data[$k])){
+						}elseif($i == 1){
 							
 							$d['seen_type'] = 'single_seen';
-							$tree[] = $this->_prepare_wall_data($data[$k]);
+							$tree[] = $this->_prepare_wall_data($d);
 							
 							
 						}
@@ -198,7 +198,7 @@
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 
 			if(isset($feed['mvs_poster']))				
-				$feed['mvs_poster'] = ($feed['mvs_poster'] === '1') ? getCoverPath($feed['mvs_slug'], 'small') : 'images/placeHolder.jpg';
+				$feed['mvs_poster'] = getMoviePoster($feed['mvs_poster'], $feed['mvs_slug'], 'small');
 				
 			if(isset($feed['feed_text'])){
 				$feed['text_char'] = strlen($feed['feed_text']);
@@ -220,7 +220,7 @@
 				
 				foreach($temp['slugs'] as $k => $v){
 					$feed['cld'][] = array(
-						'cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg',
+						'cover' => getMoviePoster($temp['poster_fls'][$k], $v, 'small'),
 						'title' => $temp['titles'][$k]
 					);
 				}
@@ -233,11 +233,11 @@
 			
 		}
 		
-		public function rate_review($act_id){
+		public function rate_review($id){
 			
 			if($this->logged_in){
 				
-				$data = array('usr_id' => $this->user['usr_id'], 'act_id' => $act_id, 'value' => $this->get_vars['val']);
+				$data = array('usr_id' => $this->user['usr_id'], 'item_id' => $id, 'value' => $this->get_vars['val'], 'type' => 'rv');
 				$this->data['rate_result'] = $this->feed_m->rate_review($data);
 
 			}else{

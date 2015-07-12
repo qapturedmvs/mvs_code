@@ -5,7 +5,7 @@
 		function __construct(){
 			parent::__construct();
 			
-			$this->load->model('user_custom_list_m');
+			$this->load->model('customlist_m');
       
 		}
 		
@@ -14,8 +14,8 @@
     public function list_lister(){
 				
 			$json = (object) array();
-			$usr = array('usr' => (isset($this->get_vars['usr'])) ? $this->get_vars['usr'] : $this->user['usr_id'], 'lgn_usr' => ($this->user['usr_id']) ? $this->user['usr_id'] : NULL);
-			$lists = $this->user_custom_list_m->get_lists($usr);
+			$usr = array('usr' => (isset($this->get_vars['usr'])) ? $this->get_vars['usr'] : $this->user['usr_nick'], 'lgn_usr' => ($this->user['usr_id']) ? $this->user['usr_id'] : 0);
+			$lists = $this->customlist_m->get_lists($usr);
 			$cls = array();
 			
 			if($lists){
@@ -47,7 +47,7 @@
 			
 			foreach($temp['slugs'] as $k => $v){
 				$list['cld'][] = array(
-					'cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg',
+					'cover' => getMoviePoster($temp['poster_fls'][$k], $v, 'small'),
 					'title' => $temp['titles'][$k]
 				);
 			}
@@ -69,7 +69,7 @@
 					$data = array('list_id' => $list_id, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title'], 'list_order' => $vars['order'], 'list_remove' => (isset($vars['del'])) ? $vars['del'] : NULL);
 
 					var_dump($data);
-					//$this->data['ecl_result'] = $this->user_custom_list_m->edit_custom_list($data);
+					//$this->data['ecl_result'] = $this->customlist_m->edit_custom_list($data);
 					
 				}
 					
@@ -87,11 +87,11 @@
 				
 			if($this->logged_in){
 				
-				$this->load->model('user_custom_list_m');
+				$this->load->model('customlist_m');
 
 				$vars = $this->input->post(NULL, TRUE);
 				$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_title' => $vars['title'], 'list_slug' => gnrtSlug('list'));
-				$this->data['lst_result'] = $this->user_custom_list_m->create_customlist($data);
+				$this->data['lst_result'] = $this->customlist_m->create_customlist($data);
 				
 			}else{
 				
@@ -107,14 +107,14 @@
 				
 			if($this->logged_in){
 				
-				$this->load->model('user_custom_list_m');
+				$this->load->model('customlist_m');
 				
 				$vars = $this->input->post(NULL, TRUE);
 				
 				if(isset($vars['list'])){
 					
 					$data = array('list_id' => $list_id, 'usr_id' => $this->user['usr_id']);
-					$this->data['lst_result'] = $this->user_custom_list_m->delete_customlist($data);
+					$this->data['lst_result'] = $this->customlist_m->delete_customlist($data);
 				
 				}else{
 					
@@ -132,39 +132,12 @@
 			
 		}
 		
-		public function add_remove_from_list($action){
-				
-			if($this->logged_in){
-				
-				$this->load->model('user_custom_list_m');
-				
-				$this->data['action'] = $action;
-				$vars = $this->input->post(NULL, TRUE);
-				$data = array('action' => $action, 'usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['mvs']);
-				
-				if($action === 'atcl')
-					$data['list_id'] = $vars['id'];
-				else
-					$data['ldt_id'] = $vars['id'];
-				
-				$this->data['lst_result'] = $this->user_custom_list_m->add_remove_from_list($data);
-
-			}else{
-				
-				$this->data['lst_result'] = 'no-user';
-				
-			}
-			
-			$this->load->view('results/_cl_add_remove_from_list', $this->data);
-
-		}
-		
-		public function rate_customlist($list_id){
+		public function rate_customlist($id){
 			
 			if($this->logged_in){
 				
-				$data = array('usr_id' => $this->user['usr_id'], 'list_id' => $list_id, 'value' => $this->get_vars['val']);
-				$this->data['rate_result'] = $this->user_custom_list_m->rate_customlist($data);
+				$data = array('usr_id' => $this->user['usr_id'], 'item_id' => $id, 'value' => $this->get_vars['val'], 'type' => 'cl');
+				$this->data['rate_result'] = $this->customlist_m->rate_customlist($data);
 
 			}else{
 				

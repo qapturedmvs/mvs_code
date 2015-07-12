@@ -3,13 +3,9 @@
 	var list_id = <?php echo $list['list_id']; ?>;
 </script>
 <div class="pageDefault pageCustomListDetail">
-	<?php $this->load->view('components/_the_user'); ?>
 	<?php $this->load->view('components/menus/_user_movies_menu'); ?>
 	<div class="controllers">
-		<section class="view">
-			<a class="row" href="javascript:void(0);">Row View</a>
-			<a class="grid" href="javascript:void(0);">Grid View</a>
-		</section>
+		<?php $this->load->view('components/_movie_list_views'); ?>
 		<?php if($controls['cld_action'] === TRUE): ?>
 		<div class="editHolder"><a href="javascript:void(0);"><span class="normal-mode">EDIT</span><span class="edit-mode">DONE</span></a></div>
 		<?php endif; ?>
@@ -22,7 +18,7 @@
 	<?php if($logged_in): ?>
 <div class="rateHolder clRate<?php if($list['rate_value'] == 1) echo ' disableUp'; elseif($list['rate_value'] == -1) echo ' disableDown'; ?>"><a class="rateUp" href="javascript:void(0);">Up <small><?php echo $list['pos_rate']; ?></small></a><a class="rateDown" href="javascript:void(0);">Down <small><?php echo $list['neg_rate']; ?></small></a></div>
 	<?php endif; ?>
-	<?php $this->load->view('components/_movie_list_repeater'); ?>
+	<?php $this->load->view('components/repeaters/_movie_list_repeater'); ?>
 	<div class="social">
 		<?php $this->load->view('components/_commentbox'); ?>
 	</div>

@@ -13,66 +13,17 @@ class Movie_M extends MVS_Model
 	}
 	
 	// Movie list JSON
-	public function movies_json($offset = 0, $vars, $defs, $cst_str){
-
-
-		$filters = array(
-			'select' => 'mvs_id, mvs_title, mvs_year, mvs_runtime, mvs_slug, mvs_poster, gnr_id, cntry_id, mvs_imdb_id, mvs_rating',
-			'order_by' => 'mvs_year DESC, mvs_rating DESC'
-		);
+	public function movies_json($data){
 		
-		if(isset($vars['mfn']) && $cst_str['usr_id'] !== NULL){
-			
-			$filters['select'] = 'm.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_imdb_id, m.mvs_rating';
-			
-			switch($vars['mfn']){
-				
-				case 1:
-					$filters['join'] = array(
-						array('mvs_seen s', 's.usr_id = f.flwd_usr_id', 'inner'),
-						array('mvs_movies m', 'm.mvs_id = s.mvs_id', 'inner')
-					);
-					$filters['group_by'] = 'm.mvs_id';
-					$vars['mfn'] = TRUE;
-				break;
-			
-				case 2:
-					$filters['join'] = array(
-						array('mvs_watchlist w', 'w.usr_id = f.flwd_usr_id', 'inner'),
-						array('mvs_movies m', 'm.mvs_id = w.mvs_id', 'inner')
-					);
-					$filters['group_by'] = 'm.mvs_id';
-					$vars['mfn'] = TRUE;
-				break;
-			
-				case 3:
-					$filters['join'] = array(
-						array('mvs_feeds feed', 'feed.usr_id = f.flwd_usr_id', 'inner'),
-						array('mvs_movies m', 'm.mvs_id = feed.mvs_id', 'inner')
-					);
-					$filters['group_by'] = 'm.mvs_id';
-					$vars['mfn'] = TRUE;
-				break;
-				
-			}
-			
-			if($vars['mfn'] === TRUE){
-				$filters['from'] = 'mvs_follows f';
-				$filters['where'] = 'f.flwr_usr_id = '.$cst_str['usr_id'];
-			}
+		$data['list_type'] = $this->cleaner($data['list_type']);
+		$data['mfn'] = ($data['mfn'] !== 0) ? $this->cleaner($data['mfn']) : 0;
+		$data['usr'] = ($data['usr'] !== '') ? $this->cleaner($data['usr']) : '';
+		$data['list_id'] = ($data['list_id'] !== 0) ? $this->cleaner($data['list_id']) : 0;
+		$data['where'] = ($data['where'] !== '') ? $this->cleaner($data['where']) : '';
+		$data['offset'] = ($this->cleaner($data['offset']) - 1) * $data['perpage'];
+		$movies = $this->db->call_procedure('sp_get_movie_list', $data);
 
-		}
-		
-		unset($vars['mfn']);
-
-		if(count($vars) > 0){
-				$vars = qs_filter($vars, $defs);
-				$filters['where'] = (isset($filters['where'])) ? $filters['where'].' AND '.movies_where($vars, $defs) : movies_where($vars, $defs);
-		}
-		
-		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
-		
-		if(isset($movies['data']))
+		if($movies)
 			return $movies;
 		else
 			return FALSE;
@@ -149,26 +100,6 @@ class Movie_M extends MVS_Model
 		else
 			return FALSE;
 	
-	}
-	
-	public function _filters($vars, $defs){
-				
-				$this->per_page = 0;
-				$filters = array(
-								'select' => 'gnr_id, cntry_id, aud_id, mvs_year, mvs_rating',
-								'from' => 'mvs_movies'
-				);
-				
-				if($vars != NULL)
-					$filters['where'] = movies_where($vars, $defs);
-
-				$movies = $this->get_data(NULL, 0, FALSE, $filters);
-				
-				if(isset($movies['data']))
-					return $movies;
-				else
-				  return FALSE;
-				
 	}
 	
 }

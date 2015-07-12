@@ -24,7 +24,7 @@
 			foreach($results['all'] as $k => $v){
 				
 				if($v['result_type'] == 'movie')
-					$v['result_poster'] = ($v['result_poster'] == 1) ? getCoverPath($v['result_slug'], 'small') : 'images/placeHolder.jpg';
+					$v['result_poster'] = getMoviePoster($v['result_poster'], $v['result_slug'], 'small');
 				
 				$results[$v['result_type']][$k] = $v; 
 				
@@ -74,51 +74,15 @@
 			
 		}
 		
-		public function suggest_users(){
-			
-			$data = array('keyword' => $this->get_vars['u'], 'login_user' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'offset' => 0, 'per_page' => 5);
-			$results = FALSE;
-		
-			if($data['keyword']){
-				
-				$results = $this->search_m->suggest_users($data);
-				
-				foreach($results as $key => $user){
-				
-					if($this->logged_in)
-						$results[$key]['result_follow'] = ($user['result_follow'] === NULL) ? 0 : $user['result_follow'];
-					
-					$results[$key]['result_poster'] = ($user['result_poster'] === '') ? 'images/user.jpg' : $user['result_poster'];
-					$results[$key]['result_me'] = ($user['result_id'] === $this->user['usr_id']) ? 1 : 0;
-					
-				}
-				
-			}
-
-			$json = (object) array();
-	
-			if($results){						
-				$json->result = 'OK';
-				$json->data = $results;
-			}else{
-				$json->result = 'FALSE';
-				$json->data = '';
-			}
-			
-			$this->data['json'] = json_encode($json);
-			
-			$this->load->view('json/main_json_view', $this->data);
-			
-		}
-		
 		public function get_users($p = 1){
 			
-			$data = array('keyword' => $this->get_vars['u'], 'login_user' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'offset' => $p, 'per_page' => 25);
+			$data = array('keyword' => $this->get_vars['u'], 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'offset' => $p, 'per_page' => ($p == 0) ? 5 : 25);
 			$results = FALSE;
 		 
 			if($data['keyword']){
+				
 				$results = $this->search_m->find_users($data);				
-				$results = $this->_users_search_loop($results);
+				$results = $this->_users_loop($results);
 
 			}
 
@@ -137,27 +101,6 @@
 			$this->load->view('json/main_json_view', $this->data);
 			
 		}
-		
-		private function _users_search_loop($results){
-			
-			$users = array();
-			
-			foreach($results as $key => $user){
-				
-				$users[$key] = (object) array();
-				$users[$key]->usr_id = $user['result_id'];
-				$users[$key]->usr_nick = $user['result_slug'];
-				$users[$key]->usr_name = $user['result_title'];
-				$users[$key]->usr_avatar = get_user_avatar($user['result_poster']);
-				$users[$key]->usr_me = ($user['result_id'] === $this->user['usr_id']) ? 1 : 0;
-				$users[$key]->flw_id = ($user['result_follow'] === NULL) ? 0 : $user['result_follow'];
-				
-			}
-			
-			return $users;
-			
-		}
-		
 			
 	}
 

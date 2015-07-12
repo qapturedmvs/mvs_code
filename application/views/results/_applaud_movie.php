@@ -2,16 +2,19 @@
 		
 		$this->output->set_header('Content-Type: application/json; charset=utf-8');
 		
-		if($applaud_result == 'unapplaud')
-			echo '{"result":"OK", "action":"applaud", "msg":"Movie unapplauded"}';
+		if($result == -1)
+			echo '{"result":"OK", "msg":"Movie unapplauded", "itm-id":"0"}';
 		
-		elseif($applaud_result == 'no-user')
+		elseif($result == 'no-user')
 			echo '{"result":"FALSE", "msg":"User not found"}';
+			
+		elseif($result == 'no-movie')
+			echo '{"result":"FALSE", "msg":"An error occured. Please try again later."}';
 		
-		elseif($applaud_result == 0)
+		elseif($result == 0)
 			echo '{"result":"FALSE", "msg":"Movie already applauded"}';
 			
 		else
-			echo '{"result":"OK", "action":"unapplaud", "msg":"Movie applauded", "app-id":"'.$applaud_result.'"}';
+			echo '{"result":"OK", "msg":"Movie applauded", "itm-id":"'.$result.'"}';
 
 ?>

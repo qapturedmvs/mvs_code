@@ -89,35 +89,12 @@ class MVS_Model extends CI_Model {
 	
 	}
 	
-	public function get_user_from_slug($slug, $user = FALSE, $page){
+	public function get_userbox($data){
 		
-		$this->per_page = 1;
+		$data['usr_nick'] = $this->cleaner($data['usr_nick']);
+		$result = $this->db->call_procedure('sp_get_userbox', $data);
 		
-		switch($page){
-			
-			case 'profile':
-				$filters = array(
-					'select' => 'u.usr_id, u.usr_nick, u.usr_name, u.usr_avatar, u.usr_cover, u.usr_slogan, u.usr_email',
-					'from' => 'mvs_users u',
-					'where' => "u.usr_nick = '$slug'"
-				);
-				
-				if($user){
-					
-					$filters['select'] .= ', f.flw_id, f.flwr_usr_id';
-					$filters['join'] = array('mvs_follows f', "f.flwd_usr_id = u.usr_id AND f.flwr_usr_id = $user", 'left');
-					
-				}
-			break;
-						
-		}
-		
-		$the_user = $this->get_data(NULL, 0, FALSE, $filters);
-		
-		if(isset($the_user['data']))
-			return $the_user['data'][0];
-		else
-			return FALSE;
+		return $result[0];
 		
 	}
 	

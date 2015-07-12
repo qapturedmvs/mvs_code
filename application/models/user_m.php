@@ -162,60 +162,31 @@ class User_M extends MVS_Model
   
   public function get_user_network($data){
     
-    $this->per_page = 30;
+    $data['usr_nick'] = $this->cleaner($data['usr_nick']);
+    $data['type'] = $this->cleaner($data['type']);
+    $data['perpage'] = 100;
+    $data['offset'] = ($this->cleaner($data['offset']) - 1) * $data['perpage'];
     
-    $p = $this->cleaner($data['p']);
-    $curPage = ($p != '') ? $p : 1;
-    $offset = ($curPage-1) * $this->per_page;
-    
-    if($data['action'] === 'followers'){
-      
-      $filters = array(
-        'select' => 'us.usr_id, us.usr_nick, us.usr_name, us.usr_avatar',
-        'from' => 'mvs_users u',
-        'join' => array(
-          array('mvs_follows f', 'f.flwd_usr_id = u.usr_id', 'inner'),
-          array('mvs_users us', 'us.usr_id = f.flwr_usr_id', 'inner')
-        ),
-        'where' => "u.usr_nick = '".$data['nick']."'",
-        'order_by' => 'us.usr_name ASC'
-      );
-      
-      if(isset($data['login_user'])){
-        $filters['select'] .= ', fl.flw_id';
-        //$filters['join'][0][1] .= ' AND f.flwr_usr_id != '.$data['login_user'];
-        $filters['join'][] = array('mvs_follows fl', 'fl.flwd_usr_id = f.flwr_usr_id AND fl.flwr_usr_id = '.$data['login_user'], 'left');
-      }
-      
-    }else{
-      
-      $filters = array(
-        'select' => 'us.usr_id, us.usr_nick, us.usr_name, us.usr_avatar',
-        'from' => 'mvs_users u',
-        'join' => array(
-          array('mvs_follows f', 'f.flwr_usr_id = u.usr_id', 'inner'),
-          array('mvs_users us', 'us.usr_id = f.flwd_usr_id', 'inner')
-        ),
-        'where' => "u.usr_nick = '".$data['nick']."'",
-        'order_by' => 'us.usr_name ASC'
-      );
-      
-      if(isset($data['login_user'])){
-        $filters['select'] .= ', fl.flw_id';
-        //$filters['join'][0][1] .= ' AND f.flwd_usr_id != '.$data['login_user'];
-        $filters['join'][] = array('mvs_follows fl', 'fl.flwd_usr_id = f.flwd_usr_id AND fl.flwr_usr_id = '.$data['login_user'], 'left');
-      }
-      
-    }
-    
-    $network = $this->get_data(NULL, $offset, TRUE, $filters);
+    $users = $this->db->call_procedure('sp_get_user_network', $data);
 
-    if(isset($network['data']))
-      return $network;
-    else
-      return FALSE;
+		if($users)
+			return $users;
+		else
+			return FALSE;
     
   }
+  
+  public function follow_user($data){
+    
+    $data['flwd_usr_id'] = $this->cleaner($data['flwd_usr_id']);
+    $data['flw_id'] = $this->cleaner($data['flw_id']);
+    $out = array('@result' => NULL);
+    $this->db->call_procedure('sp_follow', $data, $out);
+    $result = $out['@result'];
+
+    return $result;
+		
+	}
 
   
 }

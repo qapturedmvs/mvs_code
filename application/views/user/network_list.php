@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	var nick = '<?php echo (isset($the_user)) ? $the_user->usr_nick : $user['usr_nick']; ?>';
+	var nick = '<?php echo $the_user['usr_nick']; ?>';
 </script>
 <div rel="<?php echo $controls['page']; ?>" class="pageDefault pageNetwork page-<?php echo $controls['page']; ?>">
 	<?php $this->load->view('components/_the_user'); ?>
@@ -10,11 +10,11 @@
 	</div>
 	<hr class="qFixer" />
 	<div class="titleDefault titleNetwork">
-		<h1><?php echo ($controls['page'] == 'followers') ? 'Followers' : 'Followings'; ?></h1>
+		<h1><?php echo ($controls['page'] == 'flwr') ? 'Followers' : 'Followings'; ?></h1>
 	</div>
 	<div class="listHolder" ng-controller='userNetwork'>
 		<ul>
-			<?php $this->load->view('components/_user_list_repeater'); ?>
+			<?php $this->load->view('components/repeaters/_user_list_repeater'); ?>
 		</ul>
 		<hr class="qFixer" />
 	</div>

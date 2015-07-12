@@ -9,7 +9,7 @@
       <h4>MOVIES</h4>
       <ul>
         <li ng-repeat='item in items.movie'> 
-        <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.result_slug}}'>{{item.result_title}}</a></span> 
+        <span class='title'><a ng-href='<?php echo $site_url ?>movie/{{item.result_slug}}'>{{item.result_title}}</a></span> 
         <span class='year'>{{item.result_year}}</span>
         </li>
       </ul>
@@ -19,7 +19,7 @@
       <h4>STARS</h4>
       <ul>
         <li ng-repeat='item in items.star'> 
-        <span class='title'><a ng-href='/mvs_code/public_html/actor/{{item.result_slug}}'>{{item.result_title}}</a></span>
+        <span class='title'><a ng-href='<?php echo $site_url ?>actor/{{item.result_slug}}'>{{item.result_title}}</a></span>
         </li>
       </ul>
       <a class="more" href="<?php echo $site_url.'search/star?q='.$keyword; ?>">Get More Results</a>

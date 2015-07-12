@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Movies extends Frontend_Controller{
+	class Movies extends User_Controller{
     
 		function __construct(){
 			parent::__construct();
@@ -13,23 +13,30 @@
 
 			if($slug){
 
-				$this->load->model('user_custom_list_m');
+				$this->load->model('user_m');
 				
-				$this->data['controls'] = array('page' => 'cl', 'cl_action' => TRUE, 'owner' => TRUE);
-
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
-
-					$this->data['the_user'] = $this->user_custom_list_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
-					$this->data['controls']['cl_action'] = FALSE;
+				$data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['the_user'] = $this->user_m->get_userbox($data);
+				
+				if($this->data['the_user']){
 					
-					if(!$this->data['the_user'])
-						show_404();
-
-				}
+					$this->data['controls'] = array('page' => 'cl', 'cl_action' => TRUE, 'owner' => TRUE);
 	
-				$this->data['subview'] = 'user/custom_list';
-				$this->load->view('_main_body_layout', $this->data);
+					if($this->data['the_user']['owner_fl'] === 0){
+	
+						$this->data['controls']['owner'] = FALSE;
+						$this->data['controls']['cl_action'] = FALSE;
+	
+					}
+		
+					$this->data['subview'] = 'user/custom_list';
+					$this->load->view('_main_body_layout', $this->data);
+				
+				}else{
+				
+					show_404();
+					
+				}
 			
 			}else{
 				
@@ -43,31 +50,32 @@
 			
 			if($slug){
 				
-				$this->load->model('user_custom_list_m');
+				$this->load->model('customlist_m');
 				
-				$this->data['controls'] = array('page' => 'cld', 'seen_action' =>  'single', 'cld_action' => TRUE, 'owner' => TRUE);
-				$cl = $this->user_custom_list_m->get_customlist_detail(array('slug' => $slug, 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : NULL));
+				$data = array('slug' => $slug, 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$cl = $this->customlist_m->get_customlist_detail($data);
 				
-				
-				if(!$cl)
-					show_404();
-				
-				$this->data['the_user'] = (object) array('usr_id' => $cl['usr_id'], 'usr_nick' => $cl['usr_nick'], 'usr_name' => $cl['usr_name'], 'usr_avatar' => $cl['usr_avatar'], 'usr_slogan' => $cl['usr_slogan'], 'flw_id' => $cl['flw_id']);
-				$this->data['list'] = array('list_id' => $cl['list_id'], 'list_title' => $cl['list_title'], 'pos_rate' => $cl['pos_rate'], 'neg_rate' => $cl['neg_rate'], 'rate_id' => $cl['rate_id'], 'rate_value' => $cl['rate_value'], 'list_data_count' => $cl['list_data_count']);
-				
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $this->data['the_user']->usr_nick)){
-
-					$this->data['controls']['owner'] = FALSE;
-					$this->data['controls']['cld_action'] = FALSE;
+				if($cl){
+					
+					$this->data['controls'] = array('page' => 'cld', 'seen_action' =>  'single', 'cld_action' => TRUE, 'owner' => TRUE);
+					$this->data['the_user'] = array('usr_id' => $cl['usr_id'], 'usr_nick' => $cl['usr_nick'], 'usr_name' => $cl['usr_name'], 'usr_avatar' => $cl['usr_avatar'], 'usr_slogan' => $cl['usr_slogan'], 'lgn_flwr' => $cl['flw_id'], 'owner_fl' => $cl['owner_fl']);
+					$this->data['list'] = array('list_id' => $cl['list_id'], 'list_title' => $cl['list_title'], 'pos_rate' => $cl['pos_rate'], 'neg_rate' => $cl['neg_rate'], 'rate_id' => $cl['rate_id'], 'rate_value' => $cl['rate_value'], 'list_data_count' => $cl['list_data_count']);
+					
+					if($this->data['the_user']['owner_fl'] === 0){
+	
+						$this->data['controls']['owner'] = FALSE;
+						$this->data['controls']['cld_action'] = FALSE;
+						
+					}
+	
+					$this->data['subview'] = 'user/custom_list_detail';
+					$this->load->view('_main_body_layout', $this->data);
 					
 				}else{
 					
-					unset($this->data['the_user']);
+					show_404();
 					
 				}
-
-				$this->data['subview'] = 'user/custom_list_detail';
-				$this->load->view('_main_body_layout', $this->data);
 			
 			}else{
 				
@@ -81,22 +89,26 @@
 			
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'seen', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
+				$this->load->model('user_m');
 				
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+				$data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['the_user'] = $this->user_m->get_userbox($data);
+				
+				if($this->data['the_user']){
 					
-					$this->load->model('seen_m');
+					$this->data['controls'] = array('page' => 'seen', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
 					
-					$this->data['the_user'] = $this->seen_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
+					if($this->data['the_user']['owner_fl'] === 0)
+						$this->data['controls']['owner'] = FALSE;
+		
+					$this->data['subview'] = 'user/seen';
+					$this->load->view('_main_body_layout', $this->data);
+				
+				}else{
+				
+					show_404();
 					
-					if(!$this->data['the_user'])
-						show_404();
-						
 				}
-	
-				$this->data['subview'] = 'user/seen';
-				$this->load->view('_main_body_layout', $this->data);
 			
 			}else{
 				
@@ -110,22 +122,26 @@
 			
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'wtc', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
+				$this->load->model('user_m');
 				
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
-
-					$this->load->model('watchlist_m');
+				$data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['the_user'] = $this->user_m->get_userbox($data);
+				
+				if($this->data['the_user']){
 					
-					$this->data['the_user'] = $this->watchlist_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
+					$this->data['controls'] = array('page' => 'wtc', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
 					
-					if(!$this->data['the_user'])
-						show_404();
-						
+					if($this->data['the_user']['owner_fl'] === 0)
+						$this->data['controls']['owner'] = FALSE;
+		
+					$this->data['subview'] = 'user/watchlist';
+					$this->load->view('_main_body_layout', $this->data);
+				
+				}else{
+					
+					show_404();
+					
 				}
-	
-				$this->data['subview'] = 'user/watchlist';
-				$this->load->view('_main_body_layout', $this->data);
 			
 			}else{
 				
@@ -139,22 +155,26 @@
 			
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'applaud', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
+				$this->load->model('user_m');
 				
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+				$data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['the_user'] = $this->user_m->get_userbox($data);
+				
+				if($this->data['the_user']){
 					
-					$this->load->model('applaud_m');
+					$this->data['controls'] = array('page' => 'applaud', 'seen_action' =>  'single', 'cld_action' => FALSE, 'owner' => TRUE);
 					
-					$this->data['the_user'] = $this->applaud_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
+					if($this->data['the_user']['owner_fl'] === 0)
+						$this->data['controls']['owner'] = FALSE;
+		
+					$this->data['subview'] = 'user/applaud';
+					$this->load->view('_main_body_layout', $this->data);
+				
+				}else{
+				
+					show_404();
 					
-					if(!$this->data['the_user'])
-						show_404();
-						
 				}
-	
-				$this->data['subview'] = 'user/applaud';
-				$this->load->view('_main_body_layout', $this->data);
 			
 			}else{
 				

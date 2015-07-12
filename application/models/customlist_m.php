@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_Custom_List_M extends MVS_Model
+class Customlist_M extends MVS_Model
 {
 	
 	protected $_table_name = 'mvs_custom_lists';
@@ -35,39 +35,6 @@ class User_Custom_List_M extends MVS_Model
 		
 	}
 	
-	// Custom Movie list JSON
-	public function movies_json($offset = 0, $vars, $defs, $cst_str){
-		
-		$filters = array(
-			'select' => 'c.ldt_id, m.mvs_id, m.mvs_title, m.mvs_year, m.mvs_runtime, m.mvs_slug, m.mvs_poster, m.gnr_id, m.cntry_id, m.mvs_rating, m.mvs_plot',
-			'from' => 'mvs_custom_list_data c',
-			'join' => array(
-				array('mvs_custom_lists cl', 'cl.list_id = c.list_id', 'inner'),
-				array('mvs_movies m', 'm.mvs_id = c.mvs_id', 'inner')
-			),
-			'where' => 'c.list_id = '.$cst_str['list_id'],
-			'order_by' => 'c.ldt_list_order ASC, c.ldt_id ASC'
-		);
-		
-		if($cst_str['usr_id'] !== NULL){
-			$filters['select'] .= ', s.seen_id';
-			$filters['join'][] = array('mvs_seen s', 's.mvs_id = c.mvs_id AND s.usr_id = '.$cst_str['usr_id'], 'left');
-		}
-		
-		if(count($vars) > 0){
-				$vars = qs_filter($vars, $defs);
-				$filters['where'] = (isset($filters['where'])) ? $filters['where'].' AND '.movies_where($vars, $defs) : movies_where($vars, $defs);
-		}
-
-		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
-
-		if(count($movies['data']))
-			return $movies;
-		else
-			return FALSE;
-	
-	}
-	
 	public function create_customlist($data){
 
 		$out = array('@list_id' => NULL, '@ldt_id' => NULL);
@@ -84,27 +51,6 @@ class User_Custom_List_M extends MVS_Model
 		$this->db->call_procedure('sp_delete_customlist', $data, $out);
 		$result = $out['@result'];
 
-		return $result;
-		
-	}
-	
-	public function add_remove_from_list($data){
-		
-		if($data['action'] === 'atcl'){
-			
-			unset($data['action']);
-			$out = array('@ldt_id' => NULL);
-			$this->db->call_procedure('sp_addto_customlist', $data, $out);
-			$result = $out['@ldt_id'];
-
-		}else{
-			
-			$this->db->where('ldt_id = '.$data['ldt_id'].' AND mvs_id = '.$data['mvs_id']);
-			$this->db->delete('mvs_custom_list_data');
-			$result = 'rfcl';
-			
-		}
-		
 		return $result;
 		
 	}
@@ -138,9 +84,9 @@ class User_Custom_List_M extends MVS_Model
 
 	public function rate_customlist($data){
 			
-			$data['list_id'] = $this->cleaner($data['list_id']);
+			$data['item_id'] = $this->cleaner($data['item_id']);
 			$out = array('@result' => NULL);
-			$this->db->call_procedure('sp_rate_customlist', $data, $out);
+			$this->db->call_procedure('sp_rate_item', $data, $out);
 			$result = $out['@result'];
 		
 		return $result;

@@ -1,4 +1,3 @@
-<script src="<?php echo site_url('js/ckeditor/ckeditor.js'); ?>"></script>
 <script type="text/javascript">
 	var mvs_id = <?php echo $movie['mvs_id']; ?>;
 </script>
@@ -7,7 +6,7 @@
 	<section class="body">
 		<aside class="mainCol left">
 			<div class="details">
-				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.getCoverPath($movie['mvs_slug'], 'medium'); ?>" alt="<?php echo $movie['mvs_title']; ?>" /></div></div>
+				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'medium'); ?>" alt="<?php echo $movie['mvs_title']; ?>" /></div></div>
 				<div class="text left">
 					<div class="posArea">
 						<h1 title="<?php echo $movie['mvs_title']; ?>"><?php echo $movie['mvs_title'].' (<small>'.$movie['mvs_year'].'</small>)'; ?></h1>
@@ -36,28 +35,25 @@
 						<div class="reviewCount"><a href="javascript:void(0);"><?php echo $movie['rev_count']; ?> Review</a></div>
 						<?php endif; ?>
 						<hr class="qFixer" />
-						<div class="actions">
+						<div class="movieActions">
 							<?php if($logged_in): ?>
 							<ul>
-								<li class="seenMovie singleSeen"><a<?php echo ($movie['seen_id'] !== NULL) ? ' rel="unseen"' : ' rel="seen"'; ?> href="javascript:void(0);" onclick="single_seen(this)"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></li>
-								<li class="applaudMovie"><a<?php echo ($actions['lists'][0]->app_id !== NULL) ? ' rel="unapplaud" app-id="'.$actions['lists'][0]->app_id.'"' : ' rel="applaud"'; ?> href="javascript:void(0);" onclick="applaud_movie(this)">Applaud</a></li>
+								<li class="seenMovie singleSeen"><a<?php echo ($movie['seen_id'] !== NULL) ? ' data-itm-id="'.$movie['seen_id'].'"' : ' data-itm-id="0"'; ?> href="javascript:void(0);" onclick="s_seen(this)">Watched</a></li>
+								<li class="applaudMovie"><a<?php echo ($movie['app_id'] !== NULL) ? ' data-itm-id="'.$movie['app_id'].'"' : ' data-itm-id="0"'; ?> href="javascript:void(0);" onclick="s_applaud(this)">Applaud</a></li>
 								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
 									<div class="listSelection">
-										<ul class="dLists">
-											<li class="wtc addtoWtc"><a onclick="add_remove_wtc(this)" <?php echo ($actions['lists'][0]->wtc_id !== NULL) ? 'wtc-id="'.$actions['lists'][0]->wtc_id.'" rel="rwtc"' : 'rel="awtc"'; ?> href="javascript:void(0);"><span class="awtc">Add to Watchlist</span><span class="rwtc">Remove from Watchlist</span></a></li>
-											<li class="cnl"><a href="javascript:void(0);">Add to New Custom List</a>
-											<div class="listCreate none"><input maxlength="255" placeholder="Enter list title" type="text" /><a rel="cncl" href="javascript:void(0);">Add</a></div>
-											</li>
-										</ul>
-										<div class="cLists none">
-										<h5>My Lists</h5>
-										<ul>
-											<?php foreach($actions['lists'] as $list): ?>
-												<?php if($list->list_id !== NULL): ?>
-												<li <?php echo ($list->ldt_id !== NULL) ? 'ldt-id="'.$list->ldt_id.'" rel="rfcl"' : 'rel="atcl"'; ?> list-id="<?php echo $list->list_id; ?>"><a href="javascript:void(0);"><?php echo $list->list_title; ?></a></li>
-												<?php endif; ?>
+										<ul class="cLists">
+											<li class="wtc addtoWtc"><a onclick="s_watchlist(this)" <?php echo ($movie['wtc_id'] !== NULL) ? 'data-itm-id="'.$movie['wtc_id'].'"' : 'data-itm-id="0"'; ?> href="javascript:void(0);">Watchlist</a></li>
+											<?php foreach($cls as $cl): ?>
+												<li><a onclick="s_customlist(this)" data-prn-id="<?php echo $cl['list_id']; ?>" <?php echo ($cl['ldt_id'] !== NULL) ? 'data-itm-id="'.$cl['ldt_id'].'"' : 'data-itm-id="0"'; ?> href="javascript:void(0);"><?php echo $cl['list_title']; ?></a></li>
 											<?php endforeach; ?>
 										</ul>
+										<div class="ncList">
+											<a href="javascript:void(0);">Add to New Custom List</a>
+											<div class="listCreate none">
+												<input maxlength="255" placeholder="Enter list title" type="text" />
+												<a rel="cncl" href="javascript:void(0);">Add</a>
+											</div>
 										</div>
 										<hr class="qFixer" />
 									</div>
@@ -90,9 +86,9 @@
 				<hr class="qFixer" />
 			</div>
 			<?php if($logged_in): ?>
-			<div class="userNetworkSeen">
-				<div ng-controller="mdUserNetworkSeen">
-					<span class="avatars" ng-repeat="item in items.users"><a title="{{item.usr_name}}" href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}"><img src="<?php echo $site_url; ?>{{item.usr_avatar}}" /></a></span>
+			<div class="userNetworkSeen" ng-controller="mdUserNetworkSeen">
+				<div ng-if="items.users.length > 0">
+					<span class="avatars" ng-repeat="item in items.users"><a class="lazy" title="{{item.usr_name}}" href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a></span>
 					<span class="names" ng-repeat="item in items.users"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
 					<span ng-if="items.total > 4"> and {{items.total-3}} other people in your network</span> seen this movie.
 				</div>
@@ -104,26 +100,24 @@
 			</div>
 		</aside>
 		<aside class="sidebar right">
-			<section class="btnSet">
-				<a class="btnDefault btnExplore rc" href="#">Explore &gt;</a>
-			</section>
 			<section class="lists relatedLists" ng-controller="mdUserCustomlists">
-				<span class="sectionTitle">Related Lists</span>
-				<ul>
-					<li ng-repeat="item in items.lists">
-						<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">
-						<div class="listCover" ng-if="item.list_data_slugs != null">
-							<ul>
-								<li ng-repeat="cld in item.cld" class="lazy" data-original="<?php echo $site_url; ?>{{cld.cover}}"></li>
-							</ul>
+				<div ng-if="items.lists.length > 0">
+					<span class="sectionTitle">Related Lists</span>
+					<ul>
+						<li ng-repeat="item in items.lists">
+							<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">
+							<div class="listCover" ng-if="item.list_data_slugs != null">
+								<ul>
+									<li ng-repeat="cld in item.cld" class="lazy" data-original="<?php echo $site_url; ?>{{cld.cover}}"></li>
+								</ul>
+								<hr class="qFixer" />
+							</div>
+							</a>
+							<div class="listInfo"><a class="listTitle" href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a> <small>{{item.list_movie_count}}</small> by <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></div>
 							<hr class="qFixer" />
-						</div>
-						</a>
-						<div class="listInfo"><a class="listTitle" href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a> <small>{{item.list_movie_count}}</small> by <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></div>
-						<hr class="qFixer" />
-						
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</div>
 			</section>
 		</aside>
 		<hr class="qFixer" />
@@ -192,7 +186,7 @@ data[2] += point[2];
   }
 };
 
- color.get('<?php echo $site_url.getCoverPath($movie['mvs_slug'], 'small'); ?>', function( k ) {
+ color.get('<?php echo $site_url.getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'small'); ?>', function( k ) {
 		$('.pageMovie .hero').css("background-color", k);  
   });
 	

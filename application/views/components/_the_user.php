@@ -1,17 +1,19 @@
 <?php if(isset($the_user)): ?>
-<div class="theUserBox user-box">
-	<div class="userAvatar"><img title="<?php echo $the_user->usr_name; ?>" src="<?php echo $site_url.get_user_avatar($the_user->usr_avatar); ?>" /></div>
-	<div class="userName"><a href="<?php echo $site_url.'user/wall/actions/'.$the_user->usr_nick; ?>"><?php echo $the_user->usr_name; ?></a></div>
-	<div class="userSlogan"><?php echo $the_user->usr_slogan; ?></div>
-	<div class="theUserMenu">
-    <ul>
-      <li><a href="<?php echo $site_url.'user/movies/lists/'.$the_user->usr_nick; ?>">Movie Lists</a></li>
-			<li><a href="<?php echo $site_url.'user/network/followers/'.$the_user->usr_nick; ?>">Network</a></li>
-    </ul>
-  </div>
-	<?php if($logged_in): ?>
+<div class="theUserBox user-box" usr-id="<?php echo $the_user['usr_id']; ?>">
+	<div class="userAvatar"><img title="<?php echo $the_user['usr_name']; ?>" src="<?php echo $site_url.get_user_avatar($the_user['usr_avatar']); ?>" /></div>
+	<div class="userName"><a href="<?php echo $site_url.'user/wall/actions/'.$the_user['usr_nick']; ?>"><?php echo $the_user['usr_name']; ?></a></div>
+	<div class="userSlogan"><?php echo $the_user['usr_slogan']; ?></div>
+	<div class="userSummary">
+		<ul>
+			<li class="seenCount"><a href="<?php echo $site_url.'user/movies/seen/'.$the_user['usr_nick']; ?>"><span><?php echo $the_user['seen_count']; ?></span><small>SEEN</small></a></li>
+			<li class="flwrCount"><a href="<?php echo $site_url.'user/network/followers/'.$the_user['usr_nick']; ?>"><span><?php echo $the_user['followers_count']; ?></span><small>FOLLOWERS</small></a></li>
+			<li class="flwgCount"><a href="<?php echo $site_url.'user/network/followings/'.$the_user['usr_nick']; ?>"><span><?php echo $the_user['followings_count']; ?></span><small>FOLLOWINGS</small></a></li>
+		</ul>
+		<hr class="qFixer" />
+	</div>
+	<?php if($logged_in && $the_user['owner_fl'] === 0): ?>
 	<div class="followHolder">
-		<a usr-id="<?php echo $the_user->usr_id; ?>" <?php echo ($the_user->flw_id === NULL) ? 'rel="follow"' :  'rel="unfollow" flw-id="'.$the_user->flw_id.'"'; ?> onclick="follow_unfollow(this)" href="javascript:void(0);"><span class="flw">Follow</span><span class="uflw">Unfollow</span></a>
+		<a <?php echo 'data-itm-id="'.$the_user['lgn_flwr'].'"'; ?> onclick="follow_user(this)" href="javascript:void(0);"><span class="flw">Follow</span><span class="uflw">Unfollow</span></a>
 	</div>
 	<?php endif; ?>
 </div>

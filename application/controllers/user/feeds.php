@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Feeds extends Frontend_Controller{
+	class Feeds extends User_Controller{
     
 		function __construct(){
 			parent::__construct();

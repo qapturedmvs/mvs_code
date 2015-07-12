@@ -37,24 +37,10 @@ class Search_M extends MVS_Model
     
   }
   
-  public function suggest_users($data){
-    
-    $data['keyword'] = $this->cleaner($data['keyword']);
-    
-    $results = $this->db->call_procedure('sp_search_users', $data);
-
-		if($results)
-			return $results;
-		else
-			return FALSE;
-    
-  }
-  
   public function find_users($data){
-    
-    $data['keyword'] = $this->cleaner($data['keyword']);
-    $data['offset'] = ($this->cleaner($data['offset']) - 1) * $data['per_page'];
 
+    $data['keyword'] = $this->cleaner($data['keyword']);
+    $data['offset'] = ($data['offset'] !== 0) ? ($this->cleaner($data['offset']) - 1) * $data['per_page'] : $data['offset'];
     $results = $this->db->call_procedure('sp_search_user', $data);
 
 		if($results)

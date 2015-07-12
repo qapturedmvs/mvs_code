@@ -50,14 +50,14 @@
 		
 		public function cover(){
 				
-				$inputs = $this->input->post(NULL, TRUE);,
+				$inputs = $this->input->post(NULL, TRUE);
 				$path = FCPATH.'data\users-cover\\';
 				$new_image = explode('_temp', $inputs['src']);
 				$config['crop'] = array(
 					'image_library' => 'gd2',
 					'source_image' => $upload_data['file_path'].$new_image[0].'.jpg',
 					'maintain_ratio' => FALSE,
-					'width' => 1920
+					'width' => 1920,
 					'height' => 600,
 					'x_axis' => '0',
 					'y_axis' => '0'

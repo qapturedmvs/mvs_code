@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Network extends Frontend_Controller{
+	class Network extends User_Controller{
     
 		function __construct(){
 			parent::__construct();
@@ -14,20 +14,24 @@
       
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'followers', 'owner' => TRUE);
-
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
-
-					$this->data['the_user'] = $this->user_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
+				$data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['the_user'] = $this->user_m->get_userbox($data);
+				
+				if($this->data['the_user']){
 					
-					if(!$this->data['the_user'])
-						show_404();
-
-				}
+					$this->data['controls'] = array('page' => 'flwr', 'owner' => TRUE);
 	
-				$this->data['subview'] = 'user/network_list';
-				$this->load->view('_main_body_layout', $this->data);
+					if($this->data['the_user']['owner_fl'] === 0)
+						$this->data['controls']['owner'] = FALSE;
+
+					$this->data['subview'] = 'user/network_list';
+					$this->load->view('_main_body_layout', $this->data);
+				
+				}else{
+					
+					show_404();
+					
+				}
 			
 			}else{
 				
@@ -41,20 +45,24 @@
       
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'followings', 'owner' => TRUE);
-
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
-
-					$this->data['the_user'] = $this->user_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
+				$data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['the_user'] = $this->user_m->get_userbox($data);
+				
+				if($this->data['the_user']){
 					
-					if(!$this->data['the_user'])
-						show_404();
-
-				}
+					$this->data['controls'] = array('page' => 'flwg', 'owner' => TRUE);
 	
-				$this->data['subview'] = 'user/network_list';
-				$this->load->view('_main_body_layout', $this->data);
+					if($this->data['the_user']['owner_fl'] === 0)
+						$this->data['controls']['owner'] = FALSE;
+		
+					$this->data['subview'] = 'user/network_list';
+					$this->load->view('_main_body_layout', $this->data);
+					
+				}else{
+					
+					show_404();
+					
+				}
 			
 			}else{
 				

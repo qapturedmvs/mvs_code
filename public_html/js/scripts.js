@@ -50,7 +50,7 @@ var qapturedApp = angular.module('qapturedApp', ['infinite-scroll']);
 
 	
 // Qaptured AutoComplete
-$.widget( "custom.qapturedComplete", $.ui.autocomplete, {
+$.widget( "custom.qptComplete", $.ui.autocomplete, {
 	_create: function() {
 		this._super();
 		this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
@@ -74,8 +74,6 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 				li.html('<div class="row"><span class="poster"><a href="'+site_url+'movie/'+ item.result_slug + '"><div class="posterImg" src=""></div></a></span><span class="title"><a href="'+site_url+'movie/'+ item.result_slug + '">'+ item.result_title + ' ('+ item.result_year +')</a></span><hr class="qFixer" /></div>');
 			}else if( item.result_type == 'star' ){
 				li.html('<div class="row"><span class="title"><a href="'+site_url+'actor/'+ item.result_slug + '">'+ item.result_title +'</a></span><hr class="qFixer" /></div>');
-			}else if( item.result_type == 'user' ){
-				li.html('<div class="row"><span class="title"><a href="'+site_url+'user/wall/actions/'+ item.result_slug + '">'+ item.result_title +'</a></span><hr class="qFixer" /></div>');
 			}else if( item.result_type == 'noResult' ){
 				li.html('<div class="row">No Result</div>');
 			}
@@ -85,9 +83,49 @@ $.widget( "custom.qapturedComplete", $.ui.autocomplete, {
 	}
 });
 
+// Qaptured User AutoComplete
+$.widget( "custom.qptUserComplete", $.ui.autocomplete, {
+	_create: function() {
+		this._super();
+		this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+	},
+	_renderMenu: function( ul, items ) {
+			
+		var that = this;
+			
+		$.each( items, function( index, item ) {
+			var li = that._renderItemData( ul, item );
 
+			li.html('<div class="row"><span class="title"><a href="'+site_url+'user/wall/actions/'+ item.usr_nick + '">'+ item.usr_name +'</a></span><hr class="qFixer" /></div>');
+			
+		});
+		
+	}
+});
+
+// Qaptured Country AutoComplete
+$.widget( "custom.qptCountryComplete", $.ui.autocomplete, {
+	_create: function() {
+		this._super();
+		this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+	},
+	_renderMenu: function( ul, items ) {
+			
+		var that = this;
+			
+		$.each( items, function( index, item ) {
+			var li = that._renderItemData( ul, item );
+
+			li.html('<div class="row"><span class="title"><a href="javascript:void(0);" rel="'+ index +'">'+ item.value +'</a></span><hr class="qFixer" /></div>');
+			
+		});
+		
+	}
+});
+
+// Search Suggest
 if( $('#search_keyword').length > 0 )
-	$('#search_keyword').qapturedComplete({
+	$('#search_keyword').qptComplete({
 		source: function( request, response ) {
 			
 			getAjax( { uri: site_url + "ajx/search_ajx/suggest?t=both&q=" + request.term, param: null }, function( d ){
@@ -102,6 +140,40 @@ if( $('#search_keyword').length > 0 )
 			appendTo:'.mainSearchHolder'
 	});
 
+
+// User Search Suggest
+if( $('#user_keyword').length > 0 )
+	$('#user_keyword').qptUserComplete({
+		source: function( request, response ) {
+			
+			getAjax( { uri: site_url + "ajx/search_ajx/get_users?u=" + request.term, param: null }, function( d ){
+				
+				if( d.result == 'OK' )
+			  	response( d.data );
+					
+		    });
+			
+		  },
+		  minLength: 2,
+			appendTo:'.userSearchHolder'
+	});
+	
+// Country Suggest
+if( $('#country_suggest').length > 0 )
+	$('#country_suggest').qptCountryComplete({
+		source: function( request, response ) {
+			
+			getAjax( { uri: site_url + "ajx/movie_ajx/get_countries?u=" + request.term, param: null }, function( d ){
+				
+				if( d.result == 'OK' )
+			  	response( d.data );
+					
+		    });
+			
+		  },
+		  minLength: 2,
+			appendTo:'.cntrySuggHolder'
+	});
 
 // Obj Exist
 function exist(obj){
@@ -386,19 +458,23 @@ if ($('.form-signup').length > 0)
 
 
 //////* MOVIE ACTIONS *//////
-		
-// Seen Action (Detail & List)
-function single_seen(obj){
+	
+function get_obj_detail(obj, pre){
+	
+	return {id:$(obj).parents('*['+pre+'-id]').attr(pre+'-id'), itm:$(obj).attr('data-itm-id')};
 
-	var id = $(obj).parents('*[mvs-id]').attr('mvs-id');
+}	
 
-	getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen/', param: {id:id} }, function( e ){
+// Single Seen
+function s_seen(obj){
+
+	getAjax( { uri: site_url+'ajx/movie_actions_ajx/s_seen/', param: get_obj_detail(obj, 'mvs') }, function( e ){
 				
 				if(e['result'] == 'OK'){
-					if(e['action'] == 'unseen')
-						$('a[rel="rwtc"]').attr("rel", "awtc").removeAttr("wtc-id");
-						
-					$(obj).attr("rel", e['action']);
+					if(e['itm-id'] != 0)
+						$('.addtoWtc a').attr("data-itm-id", "0");
+
+					$(obj).attr("data-itm-id", e['itm-id']);
 					
 				}else
 					alert(e['msg']);
@@ -407,30 +483,89 @@ function single_seen(obj){
 
 }
 
-// Applaud Action
-function applaud_movie(obj){
-	
-	var action = $(obj).attr("rel"),
-			id = (action == 'applaud') ? $(obj).parents('*[mvs-id]').attr("mvs-id") : $(obj).attr("app-id");
-				
-	getAjax( { uri: site_url+'ajx/movie_actions_ajx/applaud_movie/'+action, param: {id:id} }, function( e ){
+// Seen Page Unseen
+function unseen(obj){
+
+		var id = $(obj).attr("seen-id");
+
+		getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen_unseen_movie/unseen', param: {id:id} }, function( e ){
 				
 				if(e['result'] == 'OK'){
+					$(obj).parents('div.movieItem').fadeOut(333, function(){
+						$(obj).parents('div.movieItem').remove();
+					});
 					
-					if(e['action'] == 'applaud')
-						$(obj).removeAttr("app-id");
-						
-					else
-						$(obj).attr("app-id", e['app-id']);
-						
-					$(obj).attr("rel", e['action']);
-					
-				}else{
+				}else
 					alert(e['msg']);
-				}
+					
+		});
+	
+}
+
+// Single Applaud
+function s_applaud(obj){
+				
+	getAjax( { uri: site_url+'ajx/movie_actions_ajx/s_applaud/', param: get_obj_detail(obj, 'mvs') }, function( e ){
+				
+				if(e['result'] == 'OK')
+					$(obj).attr("data-itm-id", e['itm-id']);
+				else
+					alert(e['msg']);
+					
 		});
 
 }
+
+// Single Watchlist
+function s_watchlist(obj){
+			
+		getAjax( { uri: site_url+'ajx/movie_actions_ajx/s_watchlist/', param: get_obj_detail(obj, 'mvs') }, function( e ){
+				
+				if(e['result'] == 'OK'){
+					if(e['itm-id'] != 0)
+						$('.seenMovie a').attr("data-itm-id", "0");
+					
+					$(obj).attr("data-itm-id", e['itm-id']);
+					
+				}else
+					alert(e['msg']);
+					
+		});
+}
+
+
+// Single Custom List
+function s_customlist(obj){
+		
+		var params = get_obj_detail(obj, 'mvs');
+				params['list'] = $(obj).attr("data-prn-id");
+		
+		getAjax( { uri: site_url+'ajx/movie_actions_ajx/s_customlist/', param: params }, function( e ){
+				
+				if(e['result'] == 'OK')
+					$(obj).attr("data-itm-id", e['itm-id']);
+				else
+					alert(e['msg']);
+					
+		});
+}
+
+
+// Follow User
+function follow_user(obj){
+
+	getAjax( { uri: site_url+'ajx/user_ajx/follow_user/', param: get_obj_detail(obj, 'usr') }, function( e ){
+				
+				if(e['result'] == 'OK')						
+					$(obj).attr("data-itm-id", e['itm-id']);	
+				else
+					alert(e['msg']);
+					
+		});
+
+}
+
+
 
 // Movie List Seen
 var seenList = [];
@@ -470,31 +605,10 @@ function removeSeen(){
 	
 }
 
-// Movie Detail Watchlist
-function add_remove_wtc(obj){
-		var action = $(obj).attr("rel"),
-				id = (action == 'awtc') ? mvs_id : $(obj).attr("wtc-id");
-			
-		getAjax( { uri: site_url+'ajx/movie_actions_ajx/add_remove_watchlist/'+action, param: {id:id} }, function( e ){
-				
-				if(e['result'] == 'OK'){
-					if(e['action'] == 'awtc')
-						$(obj).removeAttr("wtc-id");
-					else{
-						$(obj).attr("wtc-id", e['wtc-id']);
-						$('a[rel="unseen"]').attr("rel", "seen").removeAttr("seen-id");
-					}
-						
-					$(obj).attr("rel", e['action']);
-					
-				}else
-					alert(e['msg']);
-					
-		});
-}
+
 
 // Movie Detail Custom List
-$('.cnl > a').click(function(){
+$('.ncList > a').click(function(){
 	$('.listCreate').toggleClass("none");
 	$('.listCreate input').val('');	
 });
@@ -523,24 +637,7 @@ $('.listCreate a').click(function(){
 		
 });
 
-// Movie Detail Add/Remove to/from Custom List
-$('.cLists li a').click(function(){
-		var action = $(this).parent('li').attr("rel"),
-				id = (action == 'atcl') ? $(this).parent('li').attr("list-id") : $(this).parent('li').attr("ldt-id");
-		
-		getAjax( { uri: site_url+'ajx/user_customlist_ajx/add_remove_from_list/'+action, param: {id: id, mvs: mvs_id} }, function( e ){
-				
-				if(e['result'] == 'OK'){
-					if(e['action'] == 'atcl')
-						$('.cLists li[ldt-id="'+id+'"]').removeAttr("ldt-id").attr("rel", e['action']);
-					else
-						$('.cLists li[list-id="'+id+'"]').attr("ldt-id", e['ldt-id']).attr("rel", e['action']);	
-				}else
-					alert(e['msg']);
-					
-		});
-	
-});
+
 function getAjax( obj, callback, error ){
 	$.ajax({
 		type:'POST',
@@ -577,7 +674,7 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ucl&list='+list_id, 'pageSize': 100, 'type': 0 }, function(){
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=cl&list='+list_id, 'pageSize': 100, 'type': 0 }, function(){
 		if( $('.pageCustomListDetail').hasClass('edit') ){
 			checkSortable('destroy');
 			checkSortable('add');
@@ -693,27 +790,10 @@ if( exist($('.pageSeen')) ){
 	
 	// infinite-Scroll
 	//--> infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'us', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=us&usr='+usr, 'pageSize': 30, 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=sl&usr='+usr, 'pageSize': 100, 'type': 0 });
 }
 
-// Seen Page Unseen
-function unseen(obj){
 
-		var id = $(obj).attr("seen-id");
-
-		getAjax( { uri: site_url+'ajx/movie_actions_ajx/seen_unseen_movie/unseen', param: {id:id} }, function( e ){
-				
-				if(e['result'] == 'OK'){
-					$(obj).parents('div.movieItem').fadeOut(333, function(){
-						$(obj).parents('div.movieItem').remove();
-					});
-					
-				}else
-					alert(e['msg']);
-					
-		});
-	
-}
 
 
 // Watchlist Page
@@ -735,7 +815,7 @@ if( exist($('.pageWatchlist')) ){
 	
 	// infinite-Scroll
 	//-- infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=uwl&usr='+usr, 'pageSize': 30, 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=wl&usr='+usr, 'pageSize': 100, 'type': 0 });
 }
 
 // Applaud Page
@@ -757,31 +837,7 @@ if( exist($('.pageApplaud')) ){
 	
 	// infinite-Scroll
 	//-- infiniteScroll({ 'uri': 'ajx/movie_ajx/lister/', 'listType': 'uwl', 'pageSize': 30, 'cstVar': '&usr='+usr, 'type': 0 });
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=uapp&usr='+usr, 'pageSize': 30, 'type': 0 });
-}
-
-// Follow Unfollow
-function follow_unfollow(obj){
-
-	var action = $(obj).attr("rel"),
-				id = (action == 'follow') ? $(obj).attr("usr-id") : $(obj).attr("flw-id");
-				
-	getAjax( { uri: site_url+'ajx/follow_actions_ajx/follow_unfollow_user/'+action, param: {id:id} }, function( e ){
-				
-				if(e['result'] == 'OK'){
-					if(e['action'] == 'follow')
-						$(obj).removeAttr("flw-id");
-					else{
-						$(obj).attr("flw-id", e['flw-id']);
-					}
-						
-					$(obj).attr("rel", e['action']);
-					
-				}else
-					alert(e['msg']);
-					
-		});
-
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=al&usr='+usr, 'pageSize': 100, 'type': 0 });
 }
 
 // Profile Page Check User Nick
@@ -838,7 +894,7 @@ function string_to_slug(str) {
 if( exist($('.pageNetwork')) ){
 	var action = $('.pageNetwork').attr('rel'), page = 1;
 	
-	getAjx({ controller: 'userNetwork', uri: 'ajx/user_ajx/get_ff_list/'+page+'?act='+action+'&nick='+nick }, function(){
+	getAjx({ controller: 'userNetwork', uri: 'ajx/user_ajx/get_ff_list/'+page+'?type='+action+'&nick='+nick }, function(){
 		
 		setTimeout(lazyLoadActive, 1);
 	
@@ -978,22 +1034,7 @@ if( $('.pageUserFinder').length > 0 && typeof keyword != 'undefined' ){
 	
 }
 
-// User Search Suggest
-if( $('#user_keyword').length > 0 )
-	$('#user_keyword').qapturedComplete({
-		source: function( request, response ) {
-			
-			getAjax( { uri: site_url + "ajx/search_ajx/suggest_users?u=" + request.term, param: null }, function( d ){
-				
-				if( d.result == 'OK' )
-			  	response( d.data );
-					
-		    });
-			
-		  },
-		  minLength: 2,
-			appendTo:'.userSearchHolder'
-	});
+
 	
 //	function prepareData( data ){
 //	

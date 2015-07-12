@@ -15,21 +15,29 @@
 	
 	}
 	
-	function getCoverPath($slug, $size){
+	function getMoviePoster($poster, $slug, $size){
 		
-		switch($size){
+		$path = 'images/placeHolder.jpg';
+		
+		if($poster == 1){
 			
-			case 'medium':
-				$size = '_175x240_';
+			switch($size){
+				
+				case 'medium':
+					$size = '_175X240_';
+					break;
+				
+				case 'small':
+					$size = '_80X120_';
 				break;
+				
+			}
 			
-			case 'small':
-				$size = '_80X120_';
-			break;
+			$path = 'data/movies/thumbs/'.$slug.$size.'.jpg';
 			
 		}
 		
-		return 'data/movies/thumbs/'.$slug.$size.'.jpg';
+		return $path;
 	
 	}
 	

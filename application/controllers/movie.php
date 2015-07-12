@@ -22,7 +22,7 @@
 
 			if($slug){
 				
-				$data = array('slug' => $slug, ($this->logged_in) ? $this->user['usr_id'] : NULL);
+				$data = array('slug' => $slug, ($this->logged_in) ? $this->user['usr_id'] : 0);
 				$movie = $this->movie_m->movie($data);
 		
 				if($movie){
@@ -59,7 +59,7 @@
 					);
 					
 					if(isset($this->user['usr_id']))
-						$this->data['actions'] = $this->_set_actions($movie['mvs_id']);
+						$this->data['cls'] = $this->_get_customlists($movie['mvs_id']);
 					
 					// Load view
 					$this->data['subview'] = 'movie/detail';
@@ -75,13 +75,13 @@
 			
 		}
 		
-		private function _set_actions($mvs_id){
+		private function _get_customlists($mvs_id){
 			
 			$this->load->model('action_m');
 			
-			$db_data['lists'] = $this->action_m->get_movie_actions(array('mvs_id' => $mvs_id, 'usr_id' => $this->user['usr_id']));
-			
-			return $db_data;
+			$cls = $this->action_m->get_user_md_customlists(array('usr_id' => $this->user['usr_id'], 'mvs_id' => $mvs_id));
+
+			return $cls;
 	
 		}
 	}

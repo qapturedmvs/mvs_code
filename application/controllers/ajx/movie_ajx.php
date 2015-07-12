@@ -4,7 +4,6 @@
 		function __construct(){
 			parent::__construct();
 			
-			//$this->output->enable_profiler(TRUE);
 			$this->load->model('movie_m');
 		}
 		
@@ -13,101 +12,49 @@
 		public function lister($p = 1){
 				
 				$vars = $this->get_vars;
-				$cst_str = '';
-				$model = '';
-
-				switch($vars['type']){
-					
-					case 'ml':
-							$cst_str =  array('usr_id' => $this->user['usr_id']);
-							$model = 'movie_m';
-							break;
-						
-					case 'ucl':
-							$model = 'user_custom_list_m';
-							$this->load->model($model);
-							$cst_str =  array('usr_id' => $this->user['usr_id'], 'list_id' => $vars['list']);
-							unset($vars['list']);
-							break;
-					
-					case 'us':
-							$model = 'seen_m';
-							$this->load->model($model);
-							$cst_str =  array('usr_id' => $vars['usr']);
-							unset($vars['usr']);
-							break;
-						
-					case 'uwl':
-							$model = 'watchlist_m';
-							$this->load->model($model);
-							$cst_str =  array('usr_id' => $vars['usr']);
-							unset($vars['usr']);
-							break;
-						
-					case 'uapp':
-							$model = 'applaud_m';
-							$this->load->model($model);
-							$cst_str =  array('usr_id' => $vars['usr']);
-							unset($vars['usr']);
-							break;
-
-				}
-				
-				unset($vars['type']);
-				
-				$p = $this->{$model}->cleaner($p);
-				$curPage = ($p != '') ? $p : 1;
-				$offset = ($curPage-1) * $this->{$model}->per_page;
-				$db_data = $this->{$model}->movies_json($offset, $vars, $this->filter_def, $cst_str);
-				$movies = $db_data['data'];
+				$data = array('list_type' => $vars['type'], 'mfn' => (isset($vars['mfn'])) ? $vars['mfn'] : 0, 'usr' => (isset($vars['usr'])) ? $vars['usr'] : '', 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'list_id' => (isset($vars['list'])) ? $vars['list'] : 0, 'where' => $this->_movies_where($vars, $this->filter_def), 'offset' => $p, 'perpage' => 100);
+				$movies = $this->movie_m->movies_json($data);
 				$tables['genres'] = $this->cache_table_data('genres', 'movie_m', array('id' => 'gnr_id', 'title' => 'gnr_title'));
 				$tables['countries'] = $this->cache_table_data('countries', 'movie_m', array('id' => 'cntry_id', 'title' => 'cntry_title'));
 				$json = (object) array();
-		
+				
 				if($movies){
 					
-					// Getting User's Seen Movies
-					if($this->logged_in)
-						$usr_seen = $this->_get_user_seen();
-					
-					foreach($movies as $movie){
+					foreach($movies as $key => $movie){
 						
-						$movie->mvs_genre = array();
-						$movie->mvs_country = array();
+						$movies[$key]['mvs_genre'] = array();
+						$movies[$key]['mvs_country'] = array();
 						
-						if($movie->gnr_id !== ''){
+						if($movie['gnr_id'] !== ''){
 							
-							$genres = explode('|', trim($movie->gnr_id, '|'));
+							$genres = explode('|', trim($movie['gnr_id'], '|'));
 							
 							foreach($genres as $genre)
-								$movie->mvs_genre[] = $tables['genres'][$genre];
+								$movies[$key]['mvs_genre'][] = $tables['genres'][$genre];
 						
 						}
 						
-						if($movie->cntry_id !== ''){
+						if($movie['cntry_id'] !== ''){
 							
-							$countries = explode('|', trim($movie->cntry_id, '|'));
+							$countries = explode('|', trim($movie['cntry_id'], '|'));
 							
 							foreach($countries as $country)
-								$movie->mvs_country[] = $tables['countries'][$country];
+								$movies[$key]['mvs_country'][] = $tables['countries'][$country];
 							
 						}
 										
-						$movie->mvs_poster = (file_exists(FCPATH."data\movies\\thumbs\\".$movie->mvs_slug."_175x240_.jpg")) ? "data/movies/thumbs/".$movie->mvs_slug."_175x240_.jpg" : NULL;
-						
-						// Users Seen Check
-						if(isset($usr_seen['list'][$movie->mvs_id]))
-							$movie->usr_seen = 1;
-						else
-							$movie->usr_seen = 0;
+						$movies[$key]['mvs_poster'] = getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'medium');
 						
 					}
 					
 					$json->result = 'OK';
 					$json->data = $movies;
+					
 				}else{
+					
 					$json->result = 'FALSE';
 					$json->data = '';
+					
 				}
 				
 				$this->data['json'] = json_encode($json);
@@ -116,25 +63,89 @@
 			
 		}
 		
-		private function _get_user_seen(){
+		private function _movies_where($vars, $defs){
 			
-			$this->load->model('action_m');
+			$vars = qs_filter($vars, $defs);
+			$where = '';
 			
-			$seen = $this->action_m->get_user_seen($this->user['usr_id']);
-			$usr_seen = array('count' => $seen['total_count'], 'list' => array());
-			
-			if($seen){
-				
-				foreach($seen['data'] as $movie){
+			if($vars){
+	
+				foreach($vars as $key => $val){
 					
-					$usr_seen['list'][$movie->mvs_id] = $movie->seen_id;
+					$where_or = '';
 					
+					if(isset($defs['like'][$key])){
+	
+						 $sep = ($where == '') ? '' : ' AND ';
+			 
+						foreach($val as $v){
+						 
+							$sSep = ($where_or == '') ? '' : ' OR ';
+							$where_or .= $sSep.$defs['like'][$key][0]." LIKE '%|".$v."|%'";
+									
+						}
+						 
+						if($where_or != '')
+							$where .= $sep.'('.$where_or.')';
+	
+								
+					}else if(isset($defs['equal'][$key])){
+	
+						$sep = ($where == '') ? '' : ' AND ';
+						
+						foreach($val as $v){
+							
+							$sSep = ($where_or == '') ? '' : ' OR ';
+							$where_or .= $sSep.$defs['equal'][$key][0].' = '.$v;
+							
+						}
+						 
+						if($where_or != '')
+							$where .= $sep.'('.$where_or.')';
+	
+					}else if(isset($defs['between'][$key])){
+						
+						 $sep = ($where == '') ? '' : ' AND ';
+						 $where .= $sep.'('.$defs['between'][$key].' BETWEEN '.$val[0].' AND '.$val[1].')';
+						 
+					}
+					 
 				}
+			
+			}
+			
+			return $where;
+			
+		}
+		
+		public function get_countries(){
+			
+			$vars = $this->get_vars;
+			$json = (object) array();
+			$result = FALSE;
+			
+			if(isset($vars['u'])){
+			
+				$countries = $this->cache_table_data('countries', 'movie_m', array('id' => 'cntry_id', 'title' => 'cntry_title'));
+				$result = preg_grep('/'.$vars['u'].'/i', $countries);
+			
+			}
+
+			if($result){
+				
+				$json->result = 'OK';
+				$json->data = $result;
+				
+			}else{
+				
+				$json->result = 'FALSE';
+				$json->data = '';
 				
 			}
 			
-			return $usr_seen;
-			
+			$this->data['json'] = json_encode($json);
+			$this->load->view('json/main_json_view', $this->data);
+
 		}
 
 	}

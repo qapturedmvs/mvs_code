@@ -4,8 +4,8 @@
 	    <div ng-repeat='item in reddit.items' ng-class="{movieItem:item.type == 0, seperator:item.type == 1}">
           <div ng-switch="item.type">
           <div ng-switch-when='0' mvs-id="{{item.mvs_id}}" class="movieItemInner"> 
-            <span class='poster'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'><div class="lazy posterImg" data-original="<?php echo $site_url ?>{{item.mvs_poster}}"></div></a></span> 
-            <span class='title'><a ng-href='/mvs_code/public_html/movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span> 
+            <span class='poster'><a ng-href='<?php echo $site_url ?>movie/{{item.mvs_slug}}'><div class="lazy posterImg" data-original="<?php echo $site_url ?>{{item.mvs_poster}}"></div></a></span> 
+            <span class='title'><a ng-href='<?php echo $site_url ?>movie/{{item.mvs_slug}}'>{{item.mvs_title}}</a></span> 
             <span class='year'>{{item.mvs_year}}</span> 
             <span class='runtime'>{{item.mvs_runtime}} min.</span> 
             <span class='rating'>{{item.mvs_rating}}</span> 
@@ -15,14 +15,25 @@
 						<div class='plot'>{{item.mvs_plot}}</div>
 						<?php endif; ?>
 						<?php if($logged_in): ?>
-							<?php if($controls['seen_action'] === 'multi'): ?>
-							<div class="seen multiSeen"><a onclick="select_movie(this)" rel="0" href="javascript:void(0);">Select</a></div>
-							<?php elseif($controls['seen_action'] === 'single'): ?>
-							<div class='seen singleSeen'><a ng-if="item.usr_seen==0" rel="seen" onclick="single_seen(this)" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a>
-							<a ng-if="item.usr_seen==1" rel="unseen" seen-id="{{item.seen_id}}" onclick="<?php echo ($controls['page'] == 'seen') ? 'unseen(this)' : 'single_seen(this)'; ?>" href="javascript:void(0);"><span class="actSeen">Seen</span><span class="actUnseen">Unseen</span></a></div>
-							<?php endif; ?>
+							
+							<div class="movieActions">
+								<ul>
+									<li class="seenMovie singleSeen"><a data-itm-id="{{item.lgn_seen_fl}}" href="javascript:void(0);" onclick="s_seen(this)">Watched</a></li>
+									<li class="addToList"><a href="javascript:void(0);">Add to list</a>
+										<div class="listSelection">
+											<ul class="cLists">
+												<li class="wtc addtoWtc"><a data-itm-id="{{item.lgn_wtc_fl}}" onclick="s_watchlist(this)" href="javascript:void(0);">Watchlist</a></li>
+											</ul>
+											<hr class="qFixer" />
+										</div>
+									</li>
+								</ul>
+								<hr class="qFixer" />
+								<div class="multiActSelect"><a data-itm-sn="{{item.lgn_seen_fl}}" data-itm-wt="{{item.lgn_wtc_fl}}" data-itm-cl="{{item.lgn_cl_fl}}" href="javascript:void(0);">Select</a></div>
+							</div>
+							
 							<?php if($controls['page'] === 'cld'): ?>
-							<div class="remove edit-mode"><a ldt-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" rel="0" href="javascript:void(0);">Remove</a></div>
+							<div class="remove edit-mode"><a data-itm-id="{{item.ldt_id}}" class="removeItem" onclick="removeFromList(this)" rel="0" href="javascript:void(0);">Remove</a></div>
 							<?php endif; ?>
 						<?php endif; ?>
             <hr class="qFixer" />

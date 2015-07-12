@@ -1,7 +1,7 @@
+<script src="<?php echo site_url('js/ckeditor/ckeditor.js'); ?>"></script>
 <script type="text/javascript">
-	var nick = '<?php echo (isset($the_user)) ? $the_user->usr_nick : $user['usr_nick']; ?>';
+	var nick = '<?php echo $the_user['usr_nick']; ?>';
 </script>
-
 <div class="pageDefault pageWall">
   <?php $this->load->view('components/_the_user'); ?>
   <div class="titleDefault titleWall">
@@ -216,16 +216,6 @@
                   </div>
                   <hr class="qFixer" />
                 </div>
-                <?php if($logged_in): ?>
-                <div class="feedControls">
-                  <div class="generalControls">
-                    <div class="rateHolder feedRate">
-											<a class="rateUp" ng-class="{active:item.usr_rate_value != 1}" href="javascript:void(0);">Up <small>{{item.feed_pos_rate}}</small></a>
-											<a class="rateDown" ng-class="{active:item.usr_rate_value != -1}" href="javascript:void(0);">Down <small>{{item.feed_neg_rate}}</small></a>
-										</div>
-                  </div>
-                </div>
-                <?php endif; ?>
               </div>
               <?php //User's seen action ?>
               <div seen-id="{{item.feed_id}}" class="feedHolder seen mov" ng-if="item.feed_type == 'sn'">

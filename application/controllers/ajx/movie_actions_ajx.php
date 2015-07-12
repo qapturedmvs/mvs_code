@@ -9,30 +9,118 @@
     
     public function index(){ show_404(); }
     
-    public function seen(){
+    public function s_seen(){
 				
 			if($this->logged_in){
 				
 				$this->load->model('action_m');
+				$vars = $this->input->post(NULL, TRUE);
 				
-				if($id = $this->input->post('id', TRUE)){
+				if($vars){
 					
-					$data = array('mvs_id' => $id, 'usr_id' => $this->user['usr_id']);
-					$this->data['seen_result'] = $this->action_m->seen_movie($data);
+					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'seen_id' => $vars['itm']);
+					$this->data['result'] = $this->action_m->seen_movie($data);
 					
 				}else{
 					
-					$this->data['seen_result'] = 'no-movie';
+					$this->data['result'] = 'no-movie';
 					
 				}
 				
 			}else{
 				
-				$this->data['seen_result'] = 'no-user';
+				$this->data['result'] = 'no-user';
 				
 			}
 			
 			$this->load->view('results/_seen_movie', $this->data);
+
+		}
+		
+		public function s_watchlist(){
+				
+			if($this->logged_in){
+				
+				$this->load->model('action_m');
+
+				$vars = $this->input->post(NULL, TRUE);
+				
+				if($vars){
+					
+					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'wtc_id' => $vars['itm']);
+					$this->data['result'] = $this->action_m->add_remove_watchlist($data);
+				
+				}else{
+					
+					$this->data['result'] = 'no-movie';
+					
+				}
+					
+			}else{
+				
+				$this->data['result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_wtc_add_remove', $this->data);
+
+		}
+		
+		public function s_applaud(){
+				
+			if($this->logged_in){
+				
+				$this->load->model('action_m');
+				
+				$vars = $this->input->post(NULL, TRUE);
+				
+				if($vars){
+					
+					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'app_id' => $vars['itm']);
+					$this->data['result'] = $this->action_m->applaud_movie($data);
+				
+				}else{
+					
+					$this->data['result'] = 'no-movie';
+					
+				}
+				
+			}else{
+				
+				$this->data['result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_applaud_movie', $this->data);
+
+		}
+		
+		public function s_customlist(){
+			
+			if($this->logged_in){
+				
+				$this->load->model('action_m');
+				
+				$vars = $this->input->post(NULL, TRUE);
+				
+				if($vars){
+					
+					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_id' => $vars['list']);
+					$this->data['result'] = $this->action_m->add_remove_from_customlist($data);
+				
+				}else{
+					
+					$this->data['result'] = 'no-movie';
+					
+				}
+				
+			}else{
+				
+				$this->data['result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_cl_add_remove_from_list', $this->data);
 
 		}
 		
@@ -60,41 +148,16 @@
 
 		}
 		
-		public function add_remove_watchlist($action){
-				
-			if($this->logged_in){
-				
-				$this->load->model('action_m');
-				
-				$this->data['action'] = $action;
-				$id = $this->input->post('id', TRUE);
-				$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
-				
-				if($action === 'awtc')
-					$data['mvs_id'] = $id;
-				else
-					$data['wtc_id'] = $id;
-					
-				$this->data['wtc_result'] = $this->action_m->add_remove_watchlist($data);
-					
-			}else{
-				
-				$this->data['wtc_result'] = 'no-user';
-				
-			}
-			
-			$this->load->view('results/_wtc_add_remove', $this->data);
-
-		}
+		
 		
 		public function myn_seen_users($movie = 0){
 
 			if($this->logged_in && $movie != 0){
 				
-				$this->load->model('seen_m');
+				$this->load->model('action_m');
 				
 				$data = array('usr' => $this->user['usr_id'], 'mvs' => $movie, 'offset' => 0, 'limit' => 5);
-				$results = $this->seen_m->myn_seen_users($data);
+				$results = $this->action_m->get_md_myn_seen_users($data);
 				$json = (object) array();
 		
 				if($results){
@@ -127,12 +190,12 @@
 		
 		public function movie_customlists($movie = 0){
 
-			if($this->logged_in && $movie != 0){
+			if($movie !== 0){
 				
-				$this->load->model('user_custom_list_m');
+				$this->load->model('customlist_m');
 				
-				$data = array('mvs' => $movie, 'usr' => ($this->logged_in) ? $this->user['usr_id'] : NULL, 'type' => 'rlt');
-				$results = $this->user_custom_list_m->get_movie_customlists($data);
+				$data = array('mvs' => $movie, 'usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'type' => 'rlt');
+				$results = $this->customlist_m->get_movie_customlists($data);
 				$json = (object) array();
 		
 				if($results){
@@ -145,7 +208,7 @@
 							$temp['poster_fls'] = explode('||', $result['list_data_posters']);
 							
 							foreach($temp['slugs'] as $k => $v)
-								$results[$key]['cld'][] = array('cover' => ($temp['poster_fls'][$k] === '1') ? getCoverPath($v, 'small') : 'images/placeHolder.jpg');
+								$results[$key]['cld'][] = array('cover' => getMoviePoster($temp['poster_fls'][$k], $v, 'small'));
 							
 						}
 						
@@ -173,32 +236,7 @@
 
 		}
 		
-		public function applaud_movie($action){
-				
-			if($this->logged_in){
-				
-				$this->load->model('action_m');
-				
-				$this->data['action'] = $action;
-				$id = $this->input->post('id', TRUE);
-				$data = array('action' => $action, 'usr_id' => $this->user['usr_id']);
-				
-				if($action === 'applaud')
-					$data['mvs_id'] = $id;
-				else
-					$data['app_id'] = $id;
-
-				$this->data['applaud_result'] = $this->action_m->applaud_movie($data);
-				
-			}else{
-				
-				$this->data['applaud_result'] = 'no-user';
-				
-			}
-			
-			$this->load->view('results/_applaud_movie', $this->data);
-
-		}
+		
   
   }
 

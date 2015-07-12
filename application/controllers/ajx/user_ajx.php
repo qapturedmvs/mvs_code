@@ -32,29 +32,24 @@
 		
 		public function get_ff_list($p = 1){
 			
-			$data = array('action' => $this->get_vars['act'], 'nick' => $this->get_vars['nick'], 'p' => $p);
+			if($this->get_vars){
+				
+				$data = array('usr_nick' => $this->get_vars['nick'], 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'type' => $this->get_vars['type'], 'offset' => $p);
 
-			if($data['nick'] && $data['action']){
-
-				if($this->logged_in)
-					$data['login_user'] = $this->user['usr_id'];
-
-				$results = $this->user_m->get_user_network($data);
-				$results['data'] = $this->users_loop($results['data']);
+				$users = $this->user_m->get_user_network($data);
+				$users = $this->_users_loop($users);
 				
 				$json = (object) array();
 		
-				if($results){						
+				if($users){						
 					$json->result = 'OK';
-					$json->data = $results['data'];
-					$json->total = $results['total_count'];
+					$json->data = $users;
 				}else{
 					$json->result = 'FALSE';
 					$json->data = '';
 				}
 				
 				$this->data['json'] = json_encode($json);
-			
 				$this->load->view('json/main_json_view', $this->data);
 			
 			}else{
@@ -64,6 +59,33 @@
 			}
 			
 		}
+		
+		public function follow_user(){
+
+			if($this->logged_in){
+				
+				$vars = $this->input->post(NULL, TRUE);
+				
+				if($vars){
+					
+					$data = array('flwd_usr_id' => $vars['id'], 'flwr_usr_id' => $this->user['usr_id'], 'flw_id' => $vars['itm']);
+					$this->data['result'] = $this->user_m->follow_user($data);
+					
+				}else{
+					
+					$this->data['result'] = 'no-data';
+					
+				}
+				
+			}else{
+				
+				$this->data['result'] = 'no-user';
+				
+			}
+			
+			$this->load->view('results/_follow_user', $this->data);
+				
+    }
   
   }
 

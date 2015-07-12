@@ -7,7 +7,7 @@
   <div ng-controller='UserSearchController' class="results">
     <div class="users">
       <ul>
-        <?php $this->load->view('components/_user_list_repeater'); ?>
+        <?php $this->load->view('components/repeaters/_user_list_repeater'); ?>
       </ul>
     </div>
   </div>

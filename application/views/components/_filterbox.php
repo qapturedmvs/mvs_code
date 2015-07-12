@@ -23,31 +23,41 @@
   <div class="boxHeader"></div>
   <div class="boxBody"> 
     <ul class="filterList">
-   <?php foreach($tables as $group => $filter): ?>
-   <li class="filter <?php echo strtolower($labels[$group]); ?>">
-   <?php if($group != 'mfy' && $group != 'mfr'): ?>
-      <a href="javascript:void(0);" class="title"><?php echo $labels[$group]; ?></a>
-      <div class="submenu">
-      <ul class="multi" rel="<?php echo $group; ?>">
-        <?php foreach($filter as $key => $value): ?>         
-          <li><a rel="<?php echo $key; ?>" href="javascript:void(0);"><?php echo $value; ?></a></li>
-        <?php endforeach; ?>
-      </ul>
-      <hr class="qFixer" />
-      </div>
-      <?php else: ?>
-        <?php if($filter['min'] != $filter['max']): ?>
-        <div class="sliderHolder" rel="<?php echo $group; ?>">
-          <a class="title"><?php echo $labels[$group]; ?></a>
+      <li class="filter country">
+        <a href="javascript:void(0);" class="title">COUNTRY</a>
+        <?php echo form_input(array('name' => 'country_suggest', 'id' => 'country_suggest', 'placeholder' => 'Type country name...')); ?>
+        <div class="cntrySuggHolder"></div>
+        <hr class="qFixer" />
+      </li>
+      <li class="filter genre">
+        <a href="javascript:void(0);" class="title">GENRE</a>
+        <div class="submenu">
+        <ul class="multi" rel="mfg">
+          <?php foreach($tables['mfg'] as $key => $value): ?>         
+            <li><a rel="<?php echo $key; ?>" href="javascript:void(0);"><?php echo $value; ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+        <hr class="qFixer" />
+        </div>
+      </li>
+      <li class="filter rating">
+        <div class="sliderHolder" rel="mfr">
+          <a class="title">RATING</a>
           <span class="limits min"></span>
-          <div min="<?php echo $filter['min']; ?>" max="<?php echo $filter['max']; ?>" class="slider"></div>
+          <div min="<?php echo $tables['mfr']['min']; ?>" max="<?php echo $tables['mfr']['max']; ?>" class="slider"></div>
           <span class="limits max"></span>
           <hr class="qFixer" />
         </div>
-        <?php endif; ?>
-      <?php endif; ?>
-    </li>
-   <?php endforeach; ?>
+      </li>
+      <li class="filter year">
+        <div class="sliderHolder" rel="mfy">
+          <a class="title">RATING</a>
+          <span class="limits min"></span>
+          <div min="<?php echo $tables['mfy']['min']; ?>" max="<?php echo $tables['mfy']['max']; ?>" class="slider"></div>
+          <span class="limits max"></span>
+          <hr class="qFixer" />
+        </div>
+      </li>
    <?php if($logged_in): ?>
    <li class="filter network">
     <a class="title" href="javascript:void(0);">MY NETWORK</a>
@@ -56,6 +66,7 @@
       <option value="1">Friend's Seen</option>
       <option value="2">Friend's Watchlist</option>
       <option value="3">Friend's Commented</option>
+      <option value="4">Friend's Applauded</option>
     </select>
    </li>
    <?php endif; ?>

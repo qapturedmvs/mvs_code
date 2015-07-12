@@ -69,37 +69,59 @@
 			
 		}
 		
-		protected function cache_table_data($table, $model, $fields){
+		protected function _build_session($user, $token, $cookie){
+			
+			$result = FALSE;
+			
+			if($user){
+					
+				$session = array(
+					'usr_id' => $user['usr_id'],
+					'usr_nick' => $user['usr_nick'],
+					'usr_name' => $user['usr_name'],
+					'usr_email' => $user['usr_email'],
+					'usr_avatar' => $user['usr_avatar'],
+					'usr_loggedin' => TRUE,
+				);
+				
+				if($cookie){
+					
+					$cookie = array(
+						'name' => 'mvs_lgn_token',
+						'value' => $token,
+						'expire' => 31536000,
+						'path'   => '/'
+					);
+	
+					$this->input->set_cookie($cookie);
+				
+				}
+			
+				$this->session->set_userdata($session);
+				
+				$result = TRUE;
+
+			}
+			
+			return $result;
+			
+		}
+		
+		protected function cache_table_data($func, $model, $fields){
 			
 			$data = array();
 
-			if(!$data = $this->cache->get($table)){
-					$db_data = $this->{$model}->{$table}();
+			if(!$data = $this->cache->get($func)){
+					$db_data = $this->{$model}->{$func}();
 					
 					foreach($db_data as $d)
 						$data[$d->{$fields['id']}] = $d->{$fields['title']};
 					
-					$this->cache->save($table, $data, 600);
+					$this->cache->save($func, $data, 600);
 			}
 			
 			return $data;
 		
-		}
-		
-		protected function users_loop($users){
-			
-			foreach($users as $user){
-				
-				if($this->logged_in)
-					$user->flw_id = ($user->flw_id === NULL) ? 0 : $user->flw_id;
-				
-				$user->usr_avatar = ($user->usr_avatar === '') ? 'images/user.jpg' : 'data/users/'.$user->usr_avatar.'.jpg';
-				$user->usr_me = ($user->usr_id === $this->user['usr_id']) ? 1 : 0;
-				
-			}
-			
-			return $users;
-			
 		}
 		
 	}

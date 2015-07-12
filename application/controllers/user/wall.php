@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Wall extends Frontend_Controller{
+	class Wall extends User_Controller{
     
 		function __construct(){
 			parent::__construct();
@@ -14,23 +14,27 @@
       
 			if($slug){
 				
-				$this->data['controls'] = array('page' => 'wall', 'owner' => TRUE);
-				
-				if((!$this->logged_in) || ($this->logged_in && $this->user['usr_nick'] !== $slug)){
+        $data = array('usr_nick' => $slug, 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+        $this->data['the_user'] = $this->feed_m->get_userbox($data);
+        
+        if($this->data['the_user']){
           
-          $this->data['the_user'] = $this->feed_m->get_user_from_slug($slug, $this->user['usr_id'], 'profile');
-					$this->data['controls']['owner'] = FALSE;
-					
-					if(!$this->data['the_user'])
-						show_404();
-					
-				}
-				
-				// SET PAGE LOAD TIME
-				$this->session->set_flashdata('page_loaded', date("Y-m-d H:i:s"));
-
-				$this->data['subview'] = 'user/wall';
-				$this->load->view('_main_body_layout', $this->data);
+          $this->data['controls'] = array('page' => 'wall', 'owner' => TRUE);
+          
+          if($this->data['the_user']['owner_fl'] === 0)
+            $this->data['controls']['owner'] = FALSE;
+          
+          // SET PAGE LOAD TIME
+          $this->session->set_flashdata('page_loaded', date("Y-m-d H:i:s"));
+  
+          $this->data['subview'] = 'user/wall';
+          $this->load->view('_main_body_layout', $this->data);
+          
+        }else{
+          
+          show_404();
+          
+        }
 			
 			}else{
 				

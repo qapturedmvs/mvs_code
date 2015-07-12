@@ -54,7 +54,7 @@ class MVS_DB_mysqli_driver extends CI_DB_mysqli_driver
 
     // Build a sql statement to call the stored procedure
     $query = 'CALL ' . $procedure_name . '(' . $args_str . $out_params_str . ');' . $select_out_params_sql;
-
+    //var_dump($query);
     // Was the call successful? If so, process the results...
     if ($mysqli->multi_query($query)) // this generates buffered resultsets
     {

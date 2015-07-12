@@ -104,9 +104,18 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 
 .movieListHolder .movieItem .seen a[rel="1"]{text-decoration:underline;}
 
-.singleSeen a span{display:none;}
-.singleSeen a[rel=seen] .actSeen{display:inline;}
-.singleSeen a[rel=unseen] .actUnseen{display:inline;}
+a[data-itm-id]{background:#000 !important; color:#fff;}
+a[data-itm-id="0"]{background:#e6e6e6 !important; color:#000;}
+
+a.btnFollow span{display:none;}
+a.btnFollow[data-itm-id] span.uflw{display:inline;}
+a.btnFollow[data-itm-id="0"] span.flw{display:inline;}
+a.btnFollow[data-itm-id="0"] span.uflw{display:none;}
+
+/* NETWORK */
+.pageNetwork[rel="flwr"] .flwdStatus{display:none;}
+.pageNetwork[rel="flwg"] .flwrStatus{display:none;}
+
 
 .addtoWtc span{display:none;}
 .addtoWtc a[rel=awtc] span.awtc{display:inline;}
@@ -161,26 +170,7 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .mainCol .details .text .country{float:left; margin:0 0 25px 0;}
 .pageMovie .body .mainCol .details .text .country li{float:left; height:15px; line-height:15px; border-left:2px; solid #000; padding:0 10px; font-size:12px;}
 .pageMovie .body .mainCol .details .text .country li:first-child{padding-left:0; border-left:none;}
-.pageMovie .body .mainCol .details .text .actions{display:inline-block; margin-bottom:30px; height:30px; }
-.pageMovie .body .mainCol .details .text .actions > ul{border:2px solid #000; height:30px;}
-.pageMovie .body .mainCol .details .text .actions > ul > li{float:left; position:relative;}
-.pageMovie .body .mainCol .details .text .actions > ul > li > a{padding:7px 22px; font-size:14px; line-height:16px; background:#E6E6E6; border:none; border-left:2px solid #000; cursor:pointer; cursor:hand; display:inline-block;}
-.pageMovie .body .mainCol .details .text .actions > ul > li:first-child a{border-left:none;}
-.pageMovie .body .mainCol .details .text .actions > ul > li > a:hover{background:#fff; text-decoration:none;}
-.pageMovie .body .mainCol .details .text .actions > ul > li > a[rel=unseen]{background:#000; color:#fff;}
-.pageMovie .body .mainCol .details .text .actions > ul > li > a[rel=unapplaud]{background:#000; color:#fff;}
-.pageMovie .body .mainCol .details .text .actions .listSelection{position:absolute; left:1px; background:#e6e6e6; border:1px solid #ccc; width:150px; padding:10px; display:none;}
-.pageMovie .body .mainCol .details .text .actions > ul > li.addToList:hover .listSelection{display:block;}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul{}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul.addTo{}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul.added{max-height:200px;}
-.pageMovie .body .mainCol .details .text .actions .listSelection ul li{margin-bottom:8px;}
 
-.pageMovie .body .mainCol .details .text .actions .listCreate{padding-top:10px;}
-.pageMovie .body .mainCol .details .text .actions .cLists{margin-top:5px;}
-.pageMovie .body .mainCol .details .text .actions .cLists h5{margin-bottom:5px;}
-.pageMovie .body .mainCol .details .text .actions .cLists li[rel=rfcl] a{color:#ff0000;}
-.pageMovie .body .mainCol .details .text .actions .cLists li[rel=atcl] a{color:#0000ff;}
 .pageMovie .body .mainCol .details .text .plot{margin-bottom:20px;}
 .pageMovie .body .mainCol .details .text .cast{}
 .pageMovie .body .mainCol .details .text .cast li{clear:both; margin-bottom:10px;}
@@ -201,6 +191,27 @@ body textarea{border:2px solid #000; background:#fff; resize:none;}
 .pageMovie .body .sidebar .lists .listCover ul li:nth-child(2n){margin-right:0;}
 .pageMovie .body .sidebar .lists .listCover ul li:nth-child(3){margin-bottom:0;}
 .pageMovie .body .sidebar .lists .listCover ul li:nth-child(4){margin-bottom:0;}
+
+.userNetworkSeen{margin-bottom:20px;}
+.userNetworkSeen .avatars a{display:inline-block; width:60px; height:60px; margin-right:5px;}
+
+
+.movieActions{display:inline-block; margin-bottom:30px; height:30px; }
+.movieActions > ul{border:2px solid #000; height:30px;}
+.movieActions > ul > li{float:left; position:relative;}
+.movieActions > ul > li > a{padding:7px 22px; font-size:14px; line-height:16px; background:#E6E6E6; border:none; border-left:2px solid #000; cursor:pointer; cursor:hand; display:inline-block;}
+.movieActions > ul > li:first-child a{border-left:none;}
+.movieActions > ul > li > a:hover{background:#fff; text-decoration:none;}
+.movieActions .listSelection{position:absolute; left:1px; background:#e6e6e6; border:1px solid #ccc; width:150px; padding:10px; display:none;}
+.movieActions > ul > li.addToList:hover .listSelection{display:block;}
+.movieActions .listSelection ul{}
+.movieActions .listSelection ul.addTo{}
+.movieActions .listSelection ul.added{max-height:200px;}
+.movieActions .listSelection ul li{margin-bottom:8px;}
+.movieActions .listCreate{padding-top:10px;}
+.movieActions .cLists{margin-top:5px;}
+.movieActions .cLists h5{margin-bottom:5px;}
+
 
 /* COMMENTBOX */
 .commentboxHolder{}
