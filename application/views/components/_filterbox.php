@@ -26,8 +26,10 @@
       <li class="filter country">
         <a href="javascript:void(0);" class="title">COUNTRY</a>
         <?php echo form_input(array('name' => 'country_suggest', 'id' => 'country_suggest', 'placeholder' => 'Type country name...')); ?>
-        <div class="cntrySuggHolder"></div>
         <hr class="qFixer" />
+        <script type="text/javascript">
+          var cntryData = <?php echo json_encode($tables['mfc']); ?>;
+        </script>
       </li>
       <li class="filter genre">
         <a href="javascript:void(0);" class="title">GENRE</a>

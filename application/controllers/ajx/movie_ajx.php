@@ -117,36 +117,6 @@
 			return $where;
 			
 		}
-		
-		public function get_countries(){
-			
-			$vars = $this->get_vars;
-			$json = (object) array();
-			$result = FALSE;
-			
-			if(isset($vars['u'])){
-			
-				$countries = $this->cache_table_data('countries', 'movie_m', array('id' => 'cntry_id', 'title' => 'cntry_title'));
-				$result = preg_grep('/'.$vars['u'].'/i', $countries);
-			
-			}
-
-			if($result){
-				
-				$json->result = 'OK';
-				$json->data = $result;
-				
-			}else{
-				
-				$json->result = 'FALSE';
-				$json->data = '';
-				
-			}
-			
-			$this->data['json'] = json_encode($json);
-			$this->load->view('json/main_json_view', $this->data);
-
-		}
 
 	}
 

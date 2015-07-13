@@ -103,25 +103,6 @@ $.widget( "custom.qptUserComplete", $.ui.autocomplete, {
 	}
 });
 
-// Qaptured Country AutoComplete
-$.widget( "custom.qptCountryComplete", $.ui.autocomplete, {
-	_create: function() {
-		this._super();
-		this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
-	},
-	_renderMenu: function( ul, items ) {
-			
-		var that = this;
-			
-		$.each( items, function( index, item ) {
-			var li = that._renderItemData( ul, item );
-
-			li.html('<div class="row"><span class="title"><a href="javascript:void(0);" rel="'+ index +'">'+ item.value +'</a></span><hr class="qFixer" /></div>');
-			
-		});
-		
-	}
-});
 
 // Search Suggest
 if( $('#search_keyword').length > 0 )
@@ -158,22 +139,52 @@ if( $('#user_keyword').length > 0 )
 			appendTo:'.userSearchHolder'
 	});
 	
-// Country Suggest
-if( $('#country_suggest').length > 0 )
-	$('#country_suggest').qptCountryComplete({
-		source: function( request, response ) {
+var tagManager = {
+		el: 'input#country_suggest',
+		data: '', //cntryData,
+		tags: function(){
+			var _t = this, data = _t.data, arr = [];
+			$.each(data, function( i, k ){
+				arr.push( k );
+			});
+			return arr;
 			
-			getAjax( { uri: site_url + "ajx/movie_ajx/get_countries?u=" + request.term, param: null }, function( d ){
-				
-				if( d.result == 'OK' )
-			  	response( d.data );
-					
-		    });
-			
-		  },
-		  minLength: 2,
-			appendTo:'.cntrySuggHolder'
-	});
+		},
+		detect: function(){
+			 var _t = this, data = _t.data, el = $( _t.el ), f = qsManager.get('mfc').split(','), arr = [];
+			 if( el.length > 0 ){
+					for( var i = 0; i < f.length; ++i ){
+						var k = f[ i ], d = data[ k ];
+						if( d ) arr.push( d );
+					}
+				if( arr.length > 0 )
+					el.val( arr.toString() );		
+			 }  
+		},
+		searchTag: function(){
+			var _t = this, data = _t.data, el = $( _t.el );
+			if( el.length > 0 ){
+				console.log( el.val() );		
+			}
+		},
+		init: function(){
+			var _t = this, el = $( _t.el );
+			if( el.length > 0 ){
+				_t.detect();
+				el.tagit({
+					availableTags:  _t.tags(),
+					afterTagAdded: function( event, ui ){
+						_t.searchTag();
+					},
+					afterTagRemoved: function( event, ui ){
+						_t.searchTag();
+					}
+				});
+			}
+		}
+	};
+	
+	tagManager.init();
 
 // Obj Exist
 function exist(obj){

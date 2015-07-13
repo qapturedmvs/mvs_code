@@ -440,3 +440,5 @@ a.btnFollow[data-itm-id="0"] span.uflw{display:none;}
 
 /* CKEDITOR */
 .cke_textarea_inline{width:100%; height:90px; border:1px solid #000;}
+
+#country_suggest{display:none;}

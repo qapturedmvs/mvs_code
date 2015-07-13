@@ -29,6 +29,7 @@
 		private function _set_tables($filter_def){
 			
 			$tables = array();
+			$tables['mfc'] = $this->cache_table_data('countries', 'movie_m', array('id' => 'cntry_id', 'title' => 'cntry_title'));
 			$tables['mfg'] = $this->cache_table_data('genres', 'movie_m', array('id' => 'gnr_id', 'title' => 'gnr_title'));
 			$tables['mfr']  = array('min' => 1, 'max' => 10);
 			$tables['mfy']  = array('min' => 1950, 'max' => 2014);
