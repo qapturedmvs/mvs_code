@@ -19,29 +19,28 @@
 	
 		public function index($slug = NULL){
 
-			if($this->uri->segment(2) !== 'index'){	// Url'den index ile cagirilirsa 404 dönmeli
+			if($this->uri->segment(2) !== 'index' && $slug){	// Url'den index ile cagirilirsa 404 dönmeli
 				
-				$actor = $this->actor_m->actor($slug);
+				$data = array('slug' => $slug);
+				$actor = $this->actor_m->get_actor_movies($data);
 		
 				if($actor){
           
+					$this->data['actor'] = $actor[0]['str_name'];
 					$featured = array();
 					$movies = array();
 					$i = 0;
 
 					foreach($actor as $key => $val){
 						
-						if($i === 0)
-							$this->data['actor'] = $actor[$key]->str_name;
-						
-						if($i < 5 && $actor[$key]->mvs_poster != 0){
+						if($i < 5 && $actor[$key]['mvs_poster'] != 0 && !isset($featured[$actor[$key]['mvs_slug']])){
 
-							$featured[$actor[$key]->mvs_slug] = array('poster' => $actor[$key]->mvs_poster, 'title' => $actor[$key]->mvs_title, 'year' => $actor[$key]->mvs_year, 'slug' => $actor[$key]->mvs_slug);
+							$featured[$actor[$key]['mvs_slug']] = array('poster' => $actor[$key]['mvs_poster'], 'title' => $actor[$key]['mvs_title'], 'year' => $actor[$key]['mvs_year'], 'slug' => $actor[$key]['mvs_slug']);
 							$i++;
 
 						}
 						
-						$movies[$actor[$key]->type_title][$actor[$key]->mvs_year][] = array('title' => $actor[$key]->mvs_title, 'slug' => $actor[$key]->mvs_slug);
+						$movies[$actor[$key]['type_title']][$actor[$key]['mvs_year']][] = array('title' => $actor[$key]['mvs_title'], 'slug' => $actor[$key]['mvs_slug']);
 
 					}
 					

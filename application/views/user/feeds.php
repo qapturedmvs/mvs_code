@@ -243,7 +243,7 @@
 									</div>
 									<div class="feedInfo">
 										<div class="textContent">
-											<div class="text"><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a> has marked <a class="movieName" href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a>, <a ng-repeat="grp in item.grp" ng-if="$first" class="movieName" href="<?php echo $site_url; ?>movie/{{grp.mvs_slug}}">{{grp.mvs_title}}</a> and <span ng-repeat="grp in item.grp" ng-if="$last">{{$index-1}}</span> other movies as seen.</div>
+											<div class="text"><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a> has marked <a class="movieName" href="<?php echo $site_url; ?>movie/{{item.mvs_slug}}">{{item.mvs_title}}</a>, <a ng-repeat="grp in item.grp" ng-if="$first" class="movieName" href="<?php echo $site_url; ?>movie/{{grp.mvs_slug}}">{{grp.mvs_title}}</a> and <span ng-repeat="grp in item.grp" ng-if="$last">{{$index}}</span> other movies as seen.</div>
 										</div>
 										<div class="movieGroup">
 											<a ng-repeat="grp in item.grp" ng-if="$index >= 1" class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{grp.mvs_poster}}" href="<?php echo $site_url; ?>movie/{{grp.mvs_slug}}" title="{{grp.mvs_title}}"></a>
