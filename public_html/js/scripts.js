@@ -350,12 +350,22 @@ function infiniteScroll( obj, callback ){
 		qapturedApp.factory('Reddit', function( $http ){
 		  
 		  var Reddit = function() {
-			this.items = [];
-			this.busy = false;
-			this.btnState = obj['type'] == 1 ? true : false;
-			this.loading = false;
-			this.after = 1;
+				this.items = [];
+				this.busy = false;
+				this.btnState = obj['type'] == 1 ? true : false;
+				this.loading = false;
+				this.after = 1;
 		  };
+			
+			Reddit.prototype.clear = function(){
+				
+				this.items = [];
+				this.busy = false;
+				this.btnState = obj['type'] == 1 ? true : false;
+				this.loading = false;
+				this.after = 1;
+
+			};
 		  
 		  Reddit.prototype.nextPage = function(){ 
 			
