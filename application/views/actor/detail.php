@@ -1,10 +1,13 @@
+<script type="text/javascript">
+	var slug = '<?php echo $actor['str_slug']; ?>';
+</script>
 <div class="pageDefault pageActor">
   <section class="body">
 		<aside class="cover left">
-			<img src="<?php echo $site_url; ?>images/actor.jpg" alt="<?php echo $actor; ?>" title="<?php echo $actor; ?>" />
+			<img src="<?php echo $site_url; ?>images/actor.jpg" alt="<?php echo $actor['str_name']; ?>" title="<?php echo $actor['str_name']; ?>" />
 		</aside>
 		<aside class="detail right">
-			<h1><?php echo $actor; ?></h1>
+			<h1><?php echo $actor['str_name']; ?></h1>
 			<div class="position">
 				<ul>
 					<?php foreach($movies as $type => $data): ?>

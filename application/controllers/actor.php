@@ -26,7 +26,7 @@
 		
 				if($actor){
           
-					$this->data['actor'] = $actor[0]['str_name'];
+					$this->data['actor'] = array('str_name' => $actor[0]['str_name'], 'str_slug' => $actor[0]['str_slug']);
 					$featured = array();
 					$movies = array();
 					$i = 0;
@@ -56,8 +56,8 @@
 					
 					 //Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(
-						'title' => $this->data['actor'],
-						'description' => $this->data['actor'],
+						'title' => $this->data['actor']['str_name'],
+						'description' => $this->data['actor']['str_name'],
 						'type' => 'actor',
 						'image' => ''
 					);

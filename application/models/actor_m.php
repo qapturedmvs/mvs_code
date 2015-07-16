@@ -21,5 +21,18 @@ class Actor_M extends MVS_Model
 			return FALSE;
 	
 	}
+	
+	// Actor graph
+	public function get_actor_graph($data){
+		
+		$data['slug'] = $this->cleaner($data['slug']);
+		$gps = $this->db->call_procedure('sp_get_actor_graph', $data);
+
+		if($gps)
+			return $gps;
+		else
+			return FALSE;
+	
+	}
     
 }
