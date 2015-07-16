@@ -8,7 +8,7 @@
 		protected $logged_in = FALSE;
 		
 		// TEMP
-		protected $filter_def = array('like' => array('mfc' => array('cntry_id', 'countries', 'cntry_title'), 'mfg' => array('gnr_id', 'genres', 'gnr_title')), 'between' => array('mfr' => 'mvs_rating', 'mfy' => 'mvs_year'), 'network' => array('mfn' => 'network'));
+		protected $filter_def = array('like' => array('mfc' => array('cntry_id', 'countries', 'cntry_title'), 'mfg' => array('gnr_id', 'genres', 'gnr_title')), 'between' => array('mfr' => 'mvs_rating', 'mfy' => 'mvs_year'), 'network' => array('mfn' => 'network'), 'unseen' => array('mfu' => 'unseen'));
 		
 		function __construct ()
 		{

@@ -15,7 +15,8 @@
 					
 					$vars = $this->get_vars;
 					$data = array('slug' => $slug);
-					$gps = $this->movie_m->movies_json($data);
+					$gps = $this->actor_m->get_actor_graph($data);
+					$json = (object) array();
 					
 					if($gps){
 						

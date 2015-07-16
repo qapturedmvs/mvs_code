@@ -141,7 +141,7 @@ if( $('#user_keyword').length > 0 )
 	
 var tagManager = {
 		el: 'input#country_suggest',
-		data: '', //cntryData,
+		data: null,
 		tags: function(){
 			var _t = this, data = _t.data, arr = [];
 			$.each(data, function( i, k ){
@@ -170,6 +170,7 @@ var tagManager = {
 		init: function(){
 			var _t = this, el = $( _t.el );
 			if( el.length > 0 ){
+				_t.data = cntryData;
 				_t.detect();
 				el.tagit({
 					availableTags:  _t.tags(),
@@ -260,6 +261,17 @@ if(exist($('.pageMovies'))){
 			qsManager.put('mfn', fVal);
 		else
 			qsManager.remove('mfn');
+		
+	});
+	
+	$('li.filter.unseen a').click(function(){
+		
+		var fVal = $(this).attr('rel');
+		
+		if(fVal == 0)
+			qsManager.put('mfu', '1');
+		else
+			qsManager.remove('mfu');
 		
 	});
 	

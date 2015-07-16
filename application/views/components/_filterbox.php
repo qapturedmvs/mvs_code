@@ -1,19 +1,20 @@
-
-<?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING', 'mfn' => array("Friend's Seen", "Friend's Watchlist", "Friend's Commented")); ?>
+<?php $labels = array('mfg' => 'GENRE', 'mfc' => 'COUNTRY', 'mfy' => 'YEAR', 'mfr' => 'RATING', 'mfn' => array("Friend's Seen", "Friend's Watchlist", "Friend's Commented", "Friend's Applauded"), 'mfu' => 'Hide seen movies'); ?>
 <section class="filters">
   <?php if($vars): ?>
   <div class="choicesHolder none">
     <div class="chHeader"><span>SELECTIONS</span><a class="clrChoices" href="javascript:void(0);">Clear All</a></div>
     <div class="choices">
       <?php foreach($vars as $key => $val): ?>
-        <?php if($key != 'mfr' && $key != 'mfy' && $key != 'mfn'): ?>
+        <?php if($key == 'mfg' || $key == 'mfc'): ?>
           <?php foreach($val as $v): ?>
               <a grp="<?php echo $key; ?>" rel="<?php echo $v; ?>" href="javascript:void(0);"><span><?php echo $tables[$key][$v]; ?></span></a>
           <?php endforeach; ?>
-        <?php elseif($key != 'mfn'): ?>
+        <?php elseif($key == 'mfr' || $key == 'mfy'): ?>
           <a grp="<?php echo $key; ?>" href="javascript:void(0);"><span><?php echo $labels[$key].': '.$val[0].' - '.$val[1]; ?></span></a>
-        <?php else: ?>
+        <?php elseif($key == 'mfn'): ?>
           <a grp="<?php echo $key; ?>" href="javascript:void(0);"><span><?php echo 'NETWORK: '.$labels[$key][($val[0]-1)]; ?></span></a>
+        <?php elseif($key == 'mfu'): ?>
+          <a grp="<?php echo $key; ?>" href="javascript:void(0);"><span><?php echo 'UNSSEN: '.$labels[$key]; ?></span></a>
         <?php endif; ?>
       <?php endforeach; ?>
     </div>
@@ -71,6 +72,7 @@
       <option value="4">Friend's Applauded</option>
     </select>
    </li>
+   <li class="filter unseen"><a rel="<?php echo (isset($vars['mfu'])) ? 1 : 0; ?>" href="javascript:void(0);">Show Unseen Movies</a></li>
    <?php endif; ?>
    </ul>
   <hr class="qFixer" />
