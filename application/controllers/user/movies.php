@@ -10,7 +10,7 @@
 		}
     
     public function lists($slug = NULL){
-
+	
 			if($slug){
 
 				$this->load->model('user_m');

@@ -72,7 +72,7 @@
       <option value="4">Friend's Applauded</option>
     </select>
    </li>
-   <li class="filter unseen"><a rel="<?php echo (isset($vars['mfu'])) ? 1 : 0; ?>" href="javascript:void(0);">Show Unseen Movies</a></li>
+   <li class="filter unseen"><a rel="<?php echo (isset($vars['mfu'])) ? 1 : 0; ?>" href="javascript:void(0);">Hide Seen Movies</a></li>
    <?php endif; ?>
    </ul>
   <hr class="qFixer" />
