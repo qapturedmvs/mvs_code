@@ -139,8 +139,57 @@ if( $('#user_keyword').length > 0 )
 			appendTo:'.userSearchHolder'
 	});
 	
-var tagManager = {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// FILTER
+	 
+	///////////////////////////////////////////// SLIDER
+	var slider = {
+		el: '.rating .slider, .year .slider',
+		control:  function( k ){
+			var o = null;
+			if( qs.indexOf( k['rel'] + '=' ) != -1 ){
+				var d = qsManager.get( k['rel'] ).split(','), _min = d[ 0 ] || k['min'], _max = d[ 1 ]  || k['max'];
+				if( _min < k['min'] && _min > k['max'] ) _min = k['min'];
+				if( _max < k['min'] && _max > k['max'] ) _max = k['max'];
+				o = { min: _min, max: _max };
+			}
+			return o;
+		},
+		getValue: function(){
+			var _t = this, el = $( _t.el ), o = {};
+			if( el.length > 0 ){
+				el.each(function( i, k ){
+                    var _this = $( this ), rel = _this.attr('rel'), _min = Math.round( _this.rangeSlider("min") ), _max = Math.round( _this.rangeSlider("max") );
+					o[ rel ] = [ _min, _max ];
+                });
+			}else
+				o = null;
+			
+			return o;	
+		},
+		
+		init: function(){		
+			var _t = this, el = $( _t.el );
+			if( el.length > 0 ){
+				el.each(function(i, k) {
+					var _this = $( this ), _min = parseFloat( _this.attr('min') ), _max = parseFloat( _this.attr('max') ), defMin = _min, defMax = _max, rel = _this.attr('rel'), d = _t.control( { min: _min, max: _max, rel: rel } );
+					if( d != null ){
+						defMin = d['min'];
+						defMax = d['max'];
+					}		
+					_this
+					.rangeSlider({ bounds:{ min: _min, max: _max }, defaultValues:{ min: defMin, max: defMax, step: 1 } });
+				});
+			}
+		}
+	};
+	
+	slider.init();
+	
+	///////////////////////////////////////////// TAG MANAGER
+	/* https://github.com/aehlke/tag-it */
+	var tagManager = {
 		el: 'input#country_suggest',
+		filterType: 'mfc',
 		data: null,
 		tags: function(){
 			var _t = this, data = _t.data, arr = [];
@@ -151,7 +200,7 @@ var tagManager = {
 			
 		},
 		detect: function(){
-			 var _t = this, data = _t.data, el = $( _t.el ), f = qsManager.get('mfc').split(','), arr = [];
+			 var _t = this, data = _t.data, el = $( _t.el ), f = qsManager.get( _t.filterType ).split(','), arr = [];
 			 if( el.length > 0 ){
 					for( var i = 0; i < f.length; ++i ){
 						var k = f[ i ], d = data[ k ];
@@ -161,31 +210,122 @@ var tagManager = {
 					el.val( arr.toString() );		
 			 }  
 		},
-		searchTag: function(){
+		control: function( n ){
+			var _t = this, data = _t.data, b = true;
+			$.each(data, function( i, k ){
+				if( k == n ) b = false;
+			});
+			return b;
+		},
+		getKeys: function( n ){
 			var _t = this, data = _t.data, el = $( _t.el );
 			if( el.length > 0 ){
-				console.log( el.val() );		
+				var a = [];
+				$.each(data, function( i, k ){ 
+					if( n.indexOf( k ) != -1 ) a.push( i );
+				});
+				return a;		
+			}
+		},
+		getValue: function(){
+			var _t = this, el = $( _t.el );
+			if( el.length > 0 ){
+				var a = _t.getKeys( el.tagit("assignedTags") ), o = {};
+					if( a.length > 0 )
+						o[ _t.filterType ] = a;
+					else
+						o = null;	
+				return o;
 			}
 		},
 		init: function(){
 			var _t = this, el = $( _t.el );
 			if( el.length > 0 ){
+				if( typeof cntryData != undefined )
 				_t.data = cntryData;
 				_t.detect();
 				el.tagit({
 					availableTags:  _t.tags(),
-					afterTagAdded: function( event, ui ){
-						_t.searchTag();
-					},
-					afterTagRemoved: function( event, ui ){
-						_t.searchTag();
+					beforeTagAdded: function( event, ui ){
+						if( _t.control( ui.tagLabel ) ){
+							$('.country-tag').val('');
+							return false;
+						}
 					}
-				});
+				})
+				.data("ui-tagit")
+				.tagInput
+				.addClass("country-tag");
 			}
 		}
 	};
 	
 	tagManager.init();
+    
+	///////////////////////////////////////////// MULTIPLE
+	var multipleSelect = {
+		el: '.genre .multi li a',
+		filterType: 'mfg',
+		control: function(){
+			var _t = this, el = $( _t.el ), f = qsManager.get( _t.filterType ).split(',');
+			for( var i = 0; i < f.length; ++i ){
+				var k = f[ i ];
+				$( _t.el + '[rel="'+ k +'"]' ).addClass('selected');
+			}
+		},
+		getValue: function(){
+			var _t = this, el = $( _t.el + '.selected' ), o = {};
+			if( el.length > 0 ){
+				var a = [];
+				$.each(el, function( i, k ){ 
+					a.push( $( this ).attr('rel') );
+				});
+				o[ _t.filterType ] = a;
+			}else
+				o = null;
+			
+			return o;
+		},
+		init: function(){
+			var _t = this, el = $( _t.el );
+			if( el.length > 0 ){
+				_t.control();
+				el.bind('click', function(){
+					$( this ).toggleClass('selected');
+				});
+			} 
+		}
+	};
+	
+	multipleSelect.init();
+	
+	///////////////////////////////////////////// APPLY FILTER
+	var applyFilter = {
+		el: '.btnApplyFilter',
+		init: function(){
+			var _t = this, el = $( _t.el ), arr = [tagManager, multipleSelect, slider];
+			if( el.length > 0 ){
+				el.bind('click', function(){
+					var uri = '', counter = 0;					
+					for( var i = 0; i < arr.length; ++i){
+						var a = arr[ i ].getValue();
+						if( a != null && a != undefined ){
+							$.each(a, function( j, k ){
+								uri += ( counter == 0 ? '?' : '&' );
+								uri += ( j + '=' + k.toString() );
+								counter++;
+							});
+						}
+					}
+					if( uri != '' ) window.location.href = uri;
+				});
+			}
+		}
+	};
+	
+	applyFilter.init();
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 // Obj Exist
 function exist(obj){
@@ -215,112 +355,14 @@ if(exist($('.pageMovies'))){
 		
 	});
 	
-	  var defs = [], vals = [], fg;
-  
-  function set_slider_vals(obj, min, max){
-    $('span.min', obj).text(min);
-    $('span.max', obj).text(max);
-  }
-  
-  $('.sliderHolder').each(function(){
-    fg = $(this).attr("rel");
-    defs[fg] = [];
-    defs[fg][0] = parseFloat($('.slider', this).attr("min"));
-    defs[fg][1] = parseFloat($('.slider', this).attr("max"));
-    
-    if(qs.indexOf(fg+'=') != -1){
-      vals[fg] = qsManager.get(fg).split(',');
-      set_slider_vals(this, vals[fg][0], vals[fg][1]);
-    }else{
-      vals[fg] = [defs[fg][0],defs[fg][1]];
-      set_slider_vals(this, defs[fg][0], defs[fg][1]);
-    }
-    
-    $('.slider', this).slider({max:defs[fg][1], min:defs[fg][0], range:true, values:vals[fg], change:function(event, ui){
-      fg = $(this).parents('.sliderHolder').attr("rel");
-      
-      
-      if(ui.values[0] != vals[fg][0] || ui.values[1] != vals[fg][1]){
-        if(ui.values[0] == defs[fg][0] && ui.values[1] == defs[fg][1])
-          qsManager.remove(fg);
-        else
-          qsManager.put(fg, ui.values[0]+','+ui.values[1], false);
-      }
-    },
-    slide:function(event, ui){
-      var obj = $(this).parents('.sliderHolder');
-      set_slider_vals(obj, ui.values[0], ui.values[1]);
-    }
-    });
-  });
-	
-	$('li.filter.network select').change(function(){
-		var fVal = $('option:selected', this).val();
-		
-		if(fVal != 0)
-			qsManager.put('mfn', fVal);
-		else
-			qsManager.remove('mfn');
-		
-	});
-	
-	$('li.filter.unseen a').click(function(){
-		
-		var fVal = $(this).attr('rel');
-		
-		if(fVal == 0)
-			qsManager.put('mfu', '1');
-		else
-			qsManager.remove('mfu');
-		
-	});
-	
+
 	$('.filterList > li').mouseenter(function(){
 		$(this).addClass("active");
 	}).mouseleave(function(){
 		$(this).removeClass("active");
 	});
 	
-	var fg, fi;
-	
-	if(qs != ''){
-		var qObj = qsManager.qto(qs), id, grp, temp;
-		
-		$('.choicesHolder').removeClass('none');
-		
-		for(var e in qObj){
-			for(var i in qObj[e]){
-				$('.filters ul.multi[rel="'+e+'"] li a[rel="'+qObj[e][i]+'"]').addClass("selected");
-			}
-			
-			if(e == 'mfn')
-				$('li.filter.network select option[value="'+qObj[e][0]+'"]').attr("selected", "setected");
-			
-		}
-	}
-	
-	$('.clrChoices').click(function(){
-		
-		window.location.href = current_url;
-		
-	});
-	
-	$('.choices a').click(function(){
-		id = $(this).attr("rel"),
-		grp = $(this).attr("grp");
-		
-		if(id != undefined)
-			qsManager.mput(grp, id);
-		else
-			qsManager.remove(grp);
-	});
-	
-	$('.filters .submenu a').click(function(){
-		fg = $(this).parents('ul.multi').attr("rel"),
-		fi = $(this).attr("rel");
 
-		qsManager.mput(fg, fi);
-	});
 	
 	// infinite-Scroll
 	var s = qs != '' ?  '&' + qs.substr( 1, qs.length ) : '';

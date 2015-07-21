@@ -44,20 +44,16 @@
         </div>
       </li>
       <li class="filter rating">
-        <div class="sliderHolder" rel="mfr">
+        <div class="sliderHolder">
           <a class="title">RATING</a>
-          <span class="limits min"></span>
-          <div min="<?php echo $tables['mfr']['min']; ?>" max="<?php echo $tables['mfr']['max']; ?>" class="slider"></div>
-          <span class="limits max"></span>
+          <div min="<?php echo $tables['mfr']['min']; ?>" max="<?php echo $tables['mfr']['max']; ?>" class="slider" rel="mfr"></div>
           <hr class="qFixer" />
         </div>
       </li>
       <li class="filter year">
-        <div class="sliderHolder" rel="mfy">
+        <div class="sliderHolder">
           <a class="title">RATING</a>
-          <span class="limits min"></span>
-          <div min="<?php echo $tables['mfy']['min']; ?>" max="<?php echo $tables['mfy']['max']; ?>" class="slider"></div>
-          <span class="limits max"></span>
+          <div min="<?php echo $tables['mfy']['min']; ?>" max="<?php echo $tables['mfy']['max']; ?>" class="slider" rel="mfy"></div>
           <hr class="qFixer" />
         </div>
       </li>
@@ -77,5 +73,5 @@
    </ul>
   <hr class="qFixer" />
   </div>
-  <div class="boxFooter"></div>
+  <div class="boxFooter"><a href="javascript:void(0);" class="btnDefault btnApplyFilter"><span>APPLY FILTER</span></a></div>
 </section>
