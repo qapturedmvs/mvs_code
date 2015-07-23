@@ -26,25 +26,20 @@
 				$movie = $this->movie_m->movie($data);
 		
 				if($movie){
-				
-					$this->data['movie'] = $movie;
+
+					$this->data['movie'] = $movie[0];
 					$this->data['controls'] = array('page' => 'movie-detail');
 					
 					// Eğer filmin cast, genre, country bilgilerinden olmayan var ise view'daki loop hata vermesin
-					$this->data['casts'] = array();
+					$this->data['casts'] = $movie;
 					$this->data['genres'] = array();
 					$this->data['countries'] = array();
-					
-					$casts = $this->movie_m->getCastList(str_replace('|', ',', trim($movie['cst_id'], '|')));
-				
-					if($casts)
-						$this->data['casts'] = $casts['data'];
 						
 					// Genres & Countries	
 					foreach($this->filter_def['like'] as $key => $val){
 						
-						if($movie[$val[0]] != ''){
-							$this->data[$val[1]]['data'] = explode('|', trim($movie[$val[0]], '|'));
+						if($movie[0][$val[0]] != ''){
+							$this->data[$val[1]]['data'] = explode('|', trim($movie[0][$val[0]], '|'));
 							$this->data[$val[1]]['table'] = $this->cache_table_data($val[1], 'movie_m', array('id' => $val[0], 'title' => $val[2]));
 						}
 							
@@ -52,14 +47,14 @@
 					
 					// Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(
-						'title' => $movie['mvs_title'].' ('.$movie['mvs_year'].')',
-						'description' => $movie['mvs_plot'],
+						'title' => $movie[0]['mvs_title'].' ('.$movie[0]['mvs_year'].')',
+						'description' => $movie[0]['mvs_plot'],
 						'type' => 'movie',
-						'image' => $movie['mvs_poster']
+						'image' => $movie[0]['mvs_poster']
 					);
 					
 					if(isset($this->user['usr_id']))
-						$this->data['cls'] = $this->_get_customlists($movie['mvs_id']);
+						$this->data['cls'] = $this->_get_customlists($movie[0]['mvs_id']);
 					
 					// Load view
 					$this->data['subview'] = 'movie/detail';

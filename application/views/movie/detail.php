@@ -34,6 +34,8 @@
 						<?php if($movie['rev_count'] !== NULL): ?>
 						<div class="reviewCount"><a href="javascript:void(0);"><?php echo $movie['rev_count']; ?> Review</a></div>
 						<?php endif; ?>
+						<span class="imdbRatingPlugin" data-title="<?php echo $movie['mvs_imdb_id']; ?>" data-style="p1"><a href="http://www.imdb.com/title/<?php echo $movie['mvs_imdb_id']; ?>/?ref_=plg_rt_1"><img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_46x22.png" alt="<?php echo $movie['mvs_title'].' ('.$movie['mvs_year'].')'; ?> on IMDb" /></a></span>
+						<script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="http://g-ec2.images-amazon.com/images/G/01/imdb/plugins/rating/js/rating.min.js";stags.parentNode.insertBefore(js,stags);})(document,'script','imdb-rating-api');</script> 
 						<hr class="qFixer" />
 						<div class="movieActions">
 							<?php if($logged_in): ?>
@@ -72,10 +74,9 @@
 								$i = 0;
 								
 								foreach($casts as $cast){
-									if($i == 0)
-										echo '<a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
-									else
-										echo ', <a href="'.$site_url.'actor/'.$cast->str_slug.'">'.$cast->str_name.'</a>';
+
+									echo ($i == 0) ? '' : ', ';
+									echo '<a href="'.$site_url.'actor/'.$cast['str_slug'].'">'.$cast['str_name'].'</a>';
 									
 									$i++;
 								}

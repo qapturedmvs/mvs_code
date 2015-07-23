@@ -37,7 +37,7 @@ class Movie_M extends MVS_Model
 		$movie = $this->db->call_procedure('sp_get_movie_detail', $data);
 
 		if($movie)
-			return $movie[0];
+			return $movie;
 		else
 			return FALSE;
 	
@@ -76,27 +76,6 @@ class Movie_M extends MVS_Model
 
 		if(isset($countries['data']))
 			return $countries['data'];
-		else
-			return FALSE;
-	
-	}
-	
-	public function getCastList($cst_ids){
-		
-		$this->per_page = 0;
-		
-		$filters = array(
-				'select' => 'mvs_cast.mvs_id, mvs_cast.str_id, mvs_cast.char_name, mvs_stars.str_name, mvs_stars.str_slug, mvs_stars.str_photo',
-				'from' => 'mvs_cast',
-				'join' => array('mvs_stars', 'mvs_cast.str_id = mvs_stars.str_id', 'inner'),
-				'where' => "cst_id IN($cst_ids)",
-				'limit' => 4
-		);
-
-		$casts = $this->get_data(NULL, 0, FALSE, $filters);
-	
-		if(isset($casts['data']))
-			return $casts;
 		else
 			return FALSE;
 	
