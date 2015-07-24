@@ -7,7 +7,9 @@
 	<div class="controllers">
 		<?php $this->load->view('components/_movie_list_views'); ?>
 		<?php if($controls['cld_action'] === TRUE): ?>
-		<div class="editHolder"><a href="javascript:void(0);"><span class="normal-mode">EDIT</span><span class="edit-mode">DONE</span></a></div>
+		<div class="editHolder"><a href="javascript:void(0);"><span class="normal-mode">EDIT</span><span class="edit-mode">DONE</span></a>
+			<a class="deleteList edit-mode" onclick="deleteCustomList(this);" href="javascript:void(0);">DELETE LIST</a>
+		</div>
 		<?php endif; ?>
 		<hr class="qFixer" />
 	</div>

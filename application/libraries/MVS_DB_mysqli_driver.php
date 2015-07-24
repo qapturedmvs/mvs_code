@@ -58,17 +58,35 @@ class MVS_DB_mysqli_driver extends CI_DB_mysqli_driver
     // Was the call successful? If so, process the results...
     if ($mysqli->multi_query($query)) // this generates buffered resultsets
     {
+      
       // The first result contains the main data returned by the procedure, if any
       if($result = $mysqli->store_result())
       {
         // Put result rows into an array so we can return a db platform-independent array
         $data = array();
-        while ($row = $result->fetch_assoc())
-        {
-          $data[] = $row;
+        $data[] = $result->fetch_all();
+        
+        if(!$out_params && $mysqli->more_results()){
+          
+          while($mysqli->more_results() && $mysqli->next_result())
+          {
+            
+            $result = $mysqli->store_result();
+            
+            if ($result instanceof mysqli_result){
+              
+              $data[] = $result->fetch_all();
+              
+              $result->free();
+              
+            }
+            
+          }
+          
         }
-      }
 
+      }
+      
       // Loop through buffered results to get any OUT param values and clear each result
       while ($mysqli->more_results() && $mysqli->next_result())
       {
@@ -79,6 +97,7 @@ class MVS_DB_mysqli_driver extends CI_DB_mysqli_driver
           $result->free();
         }
       }
+        
     }
     else
     {

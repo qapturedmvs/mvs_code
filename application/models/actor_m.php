@@ -34,5 +34,19 @@ class Actor_M extends MVS_Model
 			return FALSE;
 	
 	}
+	
+	// Actor graph
+	public function test_func($data){
+		
+		//$out = array('@result' => NULL);
+		//$gps = $this->db->call_procedure('sp_test_multi', $data, $out);
+		//$result = $out['@result'];
+		
+		$gps = $this->db->call_procedure('sp_test_multi', $data);
+
+		//var_dump($gps);
+		//var_dump($result);
+	
+	}
     
 }

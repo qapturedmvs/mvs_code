@@ -16,8 +16,8 @@ input,select{vertical-align:middle}
 ol,ul,li{list-style:none;}
 
 .qFixer{display:block; width:100%; height:0 !important; font-size:0  !important; visibility:hidden; clear:both; float:none !important;}
-.none{display:none;}
-.hidden{visibilty:hidden;}
+.none{display:none !important;}
+.hidden{visibilty:hidden !important;}
 
 
 /* TEMP CSS */

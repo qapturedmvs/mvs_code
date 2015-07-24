@@ -355,6 +355,30 @@ if(exist($('.pageMovies'))){
 		
 	});
 	
+	var mfn = qsManager.get('mfn');
+	
+	$('li.filter.network select option[value="'+mfn+'"]').attr("selected", "selected");
+	
+	$('li.filter.network select').change(function(){
+		var fVal = $('option:selected', this).val();
+		
+		if(fVal != 0)
+			qsManager.put('mfn', fVal);
+		else
+			qsManager.remove('mfn');
+		
+	});
+	
+	$('li.filter.unseen a').click(function(){
+		
+		var fVal = $(this).attr('rel');
+		
+		if(fVal == 0)
+			qsManager.put('mfu', '1');
+		else
+			qsManager.remove('mfu');
+
+	});
 
 	$('.filterList > li').mouseenter(function(){
 		$(this).addClass("active");
@@ -758,19 +782,13 @@ if( exist($('.pageCustomListDetail')) ){
 }
 
 function deleteCustomList(obj){
-	
-	var list = $(obj).attr("list-id");
 			
-		getAjax( { uri: site_url+'ajx/user_customlist_ajx/delete_custom_list/', param: {list:list} }, function( e ){
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/delete_custom_list/', param: {list:list_id} }, function( e ){
 				
-				if(e['result'] == 'OK'){
-					
-					$(obj).parents('.listItem').fadeOut(333, function(){
-						$(obj).parents('.listItem').remove();
-					});
-					
-				}else
-					alert(e['msg']);
+			if(e['result'] == 'OK')
+				window.location.href = site_url+'user/feeds';
+			else
+				alert(e['msg']);
 					
 		});
 	
