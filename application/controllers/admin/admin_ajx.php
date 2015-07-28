@@ -32,7 +32,7 @@
 				$this->load->library('image_lib');
 				
 				$image = $this->input->get('img', TRUE);
-				$path = FCPATH.'data\covers\\';
+				$path = FCPATH.'data/covers/';
 				$temp = $path.$slug.'_temp.jpg';
 				$this->data['cover_result'] = FALSE;
 				
