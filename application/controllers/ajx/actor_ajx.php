@@ -40,13 +40,6 @@
 				}
 			
 		}
-		
-		public function test_cnt_func(){
-			
-			$this->actor_m->test_func(array('year' => 1995));
-			
-		}
-	
 
 	}
 

@@ -58,35 +58,17 @@ class MVS_DB_mysqli_driver extends CI_DB_mysqli_driver
     // Was the call successful? If so, process the results...
     if ($mysqli->multi_query($query)) // this generates buffered resultsets
     {
-      
       // The first result contains the main data returned by the procedure, if any
       if($result = $mysqli->store_result())
       {
         // Put result rows into an array so we can return a db platform-independent array
         $data = array();
-        $data[] = $result->fetch_all();
-        
-        if(!$out_params && $mysqli->more_results()){
-          
-          while($mysqli->more_results() && $mysqli->next_result())
-          {
-            
-            $result = $mysqli->store_result();
-            
-            if ($result instanceof mysqli_result){
-              
-              $data[] = $result->fetch_all();
-              
-              $result->free();
-              
-            }
-            
-          }
-          
+        while ($row = $result->fetch_assoc())
+        {
+          $data[] = $row;
         }
-
       }
-      
+
       // Loop through buffered results to get any OUT param values and clear each result
       while ($mysqli->more_results() && $mysqli->next_result())
       {
@@ -97,7 +79,83 @@ class MVS_DB_mysqli_driver extends CI_DB_mysqli_driver
           $result->free();
         }
       }
+    }
+    else
+    {
+      return FALSE;
+    }
+
+    // No data returned by procedure? If we made it this far, the procedure execution was successful but did not return any data.
+    if ($data == '')
+    {
+      return TRUE;
+    }
+    return $data;
+  }
+  
+  public function call_multi_table_procedure($procedure_name, $args = array())
+  {
+    $args_str = '';
+    $data = '';
+    $result = NULL;
+    $mysqli = $this->conn_id;
+
+    // Escape and prepare procedure arguments
+    if ($args)
+    {
+      foreach ($args as $key => $val)
+      {
+        $args[$key] = '"' . $this->escape_str($val) . '"';
+      }
+      $args_str = implode(', ', $args);
+    }
+
+    // Build a sql statement to call the stored procedure
+    $query = 'CALL ' . $procedure_name . '(' . $args_str . ');';
+    //var_dump($query);
+    // Was the call successful? If so, process the results...
+    if ($mysqli->multi_query($query)) // this generates buffered resultsets
+    {
+      // The first result contains the main data returned by the procedure, if any
+      if($result = $mysqli->store_result())
+      {
+        // Put result rows into an array so we can return a db platform-independent array
+        $data = array();
         
+        while ($row = $result->fetch_assoc())
+        {
+          $data[0][] = $row;
+        }
+        
+        $result->free();
+        
+        if($mysqli->more_results()){
+          
+          $index = 1;
+          
+          while($mysqli->more_results() && $mysqli->next_result()){
+            
+            $result = $mysqli->store_result();
+            
+            if($result instanceof mysqli_result){
+              
+              while ($row = $result->fetch_assoc())
+              {
+                $data[$index][] = $row;
+              }
+              
+              $index++;
+              
+              $result->free();
+              
+            }
+            
+          }
+          
+        }
+        
+      }
+
     }
     else
     {
