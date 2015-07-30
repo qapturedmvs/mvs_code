@@ -33,5 +33,5 @@
 		<script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/plugins.js'); ?>"></script>
   </head>
-  <body ng-app="qapturedApp">
+  <body ng-app="qapturedApp"<?php echo (isset($controls['page'])) ? ' class="'.$controls['page'].'"' : ''; ?>>
 		<input type="hidden" id="site_url" value="<?php echo $site_url; ?>" />

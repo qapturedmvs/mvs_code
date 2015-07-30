@@ -21,6 +21,7 @@
 			if(isset($inputs['sgn_submit']))
 				$this->_signup($inputs, 'user/account/success');
 				
+			$this->data['controls'] = array('page' => 'home');
 			$this->data['subview'] = 'home';
 			$this->load->view('_main_body_layout', $this->data);	
 			

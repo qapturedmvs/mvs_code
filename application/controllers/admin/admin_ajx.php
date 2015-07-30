@@ -41,8 +41,8 @@
 					$config['image_library'] = 'gd2';
 					$config['source_image'] = $temp;
 					$config['new_image'] = $path.$slug.'.jpg';
-					$config['width'] = 1920;
-					$config['height'] = 1080;
+					$config['width'] = 1600;
+					//$config['height'] = 1080;
 				
 					$this->image_lib->initialize($config);
 				
