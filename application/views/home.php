@@ -6,7 +6,9 @@
       <?php $this->load->view('components/_signupbox'); ?>
     </div>
     <div class="movieInfo">
-      <span>Inception <small>2010</small></span>
+      <div class="title">
+        <span>Inception</span><small>2010</small>
+      </div>
     </div>
   </div>
 </div>

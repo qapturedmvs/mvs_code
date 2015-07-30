@@ -17,7 +17,7 @@ ol,ul,li{list-style:none;}
 
 *{box-sizing:border-box;}
 
-input{border:none; background:none; color:#898989; outline:none;}
+input{border:1px solid #d7d7d7; background:none; color:#898989; outline:none; height:36px; line-height:36px; width:300px; padding:0 20px;}
 input[type="text"]{height:36px; line-height:36px;}
 input[type="submit"]{cursor:hand; cursor:pointer;}
 
@@ -49,9 +49,17 @@ input[type="submit"]{cursor:hand; cursor:pointer;}
 
 /* SEARCHBOX */
 .searchbox{height:32px; width:150px; border:1px solid #d7d7d7; position:relative; padding:0 15px;}
-.searchbox input{width:100%; height:32px; line-height:32px;}
+.searchbox input{width:100%; height:32px; line-height:32px; padding:0; border:none;}
 .searchbox .btnHolder{position:absolute; top:0; right:0; height:100%; padding:7px 15px 0 0;}
 .searchbox .btnSearch{display:block; width:16px; height:16px; background-position:0 0;}
 
 /* LOGIN PAGE */
 .home .qHeroInner{height:640px;}
+.home .qHeroInner .slogan{position:absolute; left:0; top:95px; color:#fff; font-size:36px; width:500px;}
+
+.home .qHeroInner .userboxes{position:absolute; top:75px; right:0; padding:60px 50px; width:400px; height:500px; background:#fff;}
+
+.home .qHeroInner .movieInfo{position:absolute; left:0; bottom:65px; width:500px;}
+.home .qHeroInner .movieInfo .title{display:table;}
+.home .qHeroInner .movieInfo .title span{color:#fff; font-size:30px; display:table-cell; vertical-align:middle;}
+.home .qHeroInner .movieInfo .title small{color:#fff; font-size:13px; padding-left:10px; display:table-cell; vertical-align:middle;}
