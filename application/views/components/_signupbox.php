@@ -1,4 +1,4 @@
-<div class="signupbox">
+<div class="signupbox none">
 <?php echo form_open('', array('class' => 'form-signup', 'role' => 'form')); ?>
 	<h2 class="form-signin-heading">Please sign up</h2>
 	<div class="error"><?php if(isset($signup_error)) echo $signup_error; ?></div>

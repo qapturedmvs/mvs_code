@@ -61,20 +61,17 @@
    <li class="filter network">
     <a class="title" href="javascript:void(0);">MY NETWORK</a>
     <select>
-      <option value="0">All Movies</option>
+      <option value="0">Choose</option>
       <option value="1">Friend's Seen</option>
       <option value="2">Friend's Watchlist</option>
       <option value="3">Friend's Commented</option>
       <option value="4">Friend's Applauded</option>
     </select>
    </li>
-   <li class="filter unseen"><a href="javascript:void(0);" rel="<?php echo (isset($vars['mfu'])) ? '1">Show' : '0">Hide'; ?> Seen Movies</a></li>
+   <li class="filter unseen"><a rel="<?php echo (isset($vars['mfu'])) ? 1 : 0; ?>" href="javascript:void(0);">Hide Seen Movies</a></li>
    <?php endif; ?>
    </ul>
   <hr class="qFixer" />
   </div>
-  <div class="boxFooter">
-    <a href="javascript:void(0);" class="btnDefault btnApplyFilter"><span>APPLY FILTER</span></a>
-    <a href="javascript:void(0);" class="btnDefault btnClearFilter none"><span>CLEAR</span></a>
-  </div>
+  <div class="boxFooter"><a href="javascript:void(0);" class="btnDefault btnApplyFilter"><span>APPLY FILTER</span></a></div>
 </section>

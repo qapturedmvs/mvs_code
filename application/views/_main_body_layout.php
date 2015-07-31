@@ -3,15 +3,17 @@
 	<div id="qHeader">
 		<div class="innerHeader qFixer">
 			<div class="logo left">
-				<a href="<?php echo $site_url; ?>">Qaptured</a>
+				<a href="/">Qaptured</a>
 			</div>
 			<nav class="mainMenu left">
 				<ul>
 					<?php if($logged_in): ?>
-					<li><a href="<?php echo $site_url.'user/feeds'; ?>">home</a></li>
+					<li class="m-feeds"><a href="/user/feeds">Home</a></li>
+					<?php else: ?>
+					<li class="m-home"><a href="/">Home</a></li>
 					<?php endif; ?>
-					<li><a href="#">Explore</a></li>
-					<li><a href="<?php echo $site_url.'movies'; ?>">Movies</a></li>
+					<li class="m-explore"><a href="#">Explore</a></li>
+					<li class="m-movies"><a href="/movies">Movies</a></li>
 				</ul>
 			</nav>
 			<div class="searchHolder mainSearchHolder left">

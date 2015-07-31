@@ -7,7 +7,6 @@
 		function __construct(){
 			parent::__construct();
 			
-			$this->output->enable_profiler(TRUE);
 			$this->filter_defs = $this->filter_def;
 			$this->load->model('movie_m');
 			

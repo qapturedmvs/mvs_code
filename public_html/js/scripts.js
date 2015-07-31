@@ -355,30 +355,6 @@ if(exist($('.pageMovies'))){
 		
 	});
 	
-	var mfn = qsManager.get('mfn');
-	
-	$('li.filter.network select option[value="'+mfn+'"]').attr("selected", "selected");
-	
-	$('li.filter.network select').change(function(){
-		var fVal = $('option:selected', this).val();
-		
-		if(fVal != 0)
-			qsManager.put('mfn', fVal);
-		else
-			qsManager.remove('mfn');
-		
-	});
-	
-	$('li.filter.unseen a').click(function(){
-		
-		var fVal = $(this).attr('rel');
-		
-		if(fVal == 0)
-			qsManager.put('mfu', '1');
-		else
-			qsManager.remove('mfu');
-
-	});
 
 	$('.filterList > li').mouseenter(function(){
 		$(this).addClass("active");
@@ -390,7 +366,7 @@ if(exist($('.pageMovies'))){
 	
 	// infinite-Scroll
 	var s = qs != '' ?  '&' + qs.substr( 1, qs.length ) : '';
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ml' + s, 'pageSize': 100, 'type': 0 });
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=ml' + s, 'pageSize': 100, 'type': 1 });
 }
 
 if( $('.pageSearch').length > 0 && typeof keyword != 'undefined' )
@@ -773,7 +749,7 @@ if( exist($('.pageCustomListDetail')) ){
 	});
 	
 	// infinite-Scroll
-	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=cl&list='+list_id, 'pageSize': 100, 'type': 0 }, function(){
+	infiniteScroll({ controller: 'infiniteScrollController', uri: 'ajx/movie_ajx/lister/{{page}}?type=cl&list='+list_id, 'pageSize': 100, 'type': 1 }, function(){
 		if( $('.pageCustomListDetail').hasClass('edit') ){
 			checkSortable('destroy');
 			checkSortable('add');
@@ -782,13 +758,19 @@ if( exist($('.pageCustomListDetail')) ){
 }
 
 function deleteCustomList(obj){
+	
+	var list = $(obj).attr("list-id");
 			
-		getAjax( { uri: site_url+'ajx/user_customlist_ajx/delete_custom_list/', param: {list:list_id} }, function( e ){
+		getAjax( { uri: site_url+'ajx/user_customlist_ajx/delete_custom_list/', param: {list:list} }, function( e ){
 				
-			if(e['result'] == 'OK')
-				window.location.href = site_url+'user/feeds';
-			else
-				alert(e['msg']);
+				if(e['result'] == 'OK'){
+					
+					$(obj).parents('.listItem').fadeOut(333, function(){
+						$(obj).parents('.listItem').remove();
+					});
+					
+				}else
+					alert(e['msg']);
 					
 		});
 	

@@ -1,4 +1,4 @@
-<div class="qHero" style="background-image:url(data/covers/qmbz7pq7z7.jpg);">
+<div class="qHero" style="background-image:url(data/covers/qm0d2hm4fq.jpg);">
   <div class="qHeroInner">
     <div class="slogan">Share your passion, discover new movies and connect with others.</div>
     <div class="userboxes">

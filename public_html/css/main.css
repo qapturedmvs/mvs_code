@@ -15,11 +15,54 @@ hr{display:block;height:0;border:0;margin:0;padding:0;}
 input,select{vertical-align:middle}
 ol,ul,li{list-style:none;}
 
-*{box-sizing:border-box;}
+@font-face {
+    font-family: 'regular';
+    src: url('fonts/sanfranciscotext-regular-qwf.eot');
+    src: url('fonts/sanfranciscotext-regular-qwf.eot?#iefix') format('embedded-opentype'),
+         url('fonts/sanfranciscotext-regular-qwf.woff2') format('woff2'),
+         url('fonts/sanfranciscotext-regular-qwf.woff') format('woff'),
+         url('fonts/sanfranciscotext-regular-qwf.ttf') format('truetype'),
+         url('fonts/sanfranciscotext-regular-qwf.svg#san_francisco_textregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
-input{border:1px solid #d7d7d7; background:none; color:#898989; outline:none; height:36px; line-height:36px; width:300px; padding:0 20px;}
-input[type="text"]{height:36px; line-height:36px;}
+}
+
+@font-face {
+    font-family: 'semibold';
+    src: url('fonts/sanfranciscotext-semibold-qwf.eot');
+    src: url('fonts/sanfranciscotext-semibold-qwf.eot?#iefix') format('embedded-opentype'),
+         url('fonts/sanfranciscotext-semibold-qwf.woff2') format('woff2'),
+         url('fonts/sanfranciscotext-semibold-qwf.woff') format('woff'),
+         url('fonts/sanfranciscotext-semibold-qwf.ttf') format('truetype'),
+         url('fonts/sanfranciscotext-semibold-qwf.svg#san_francisco_textsemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'thin';
+    src: url('fonts/sanfranciscotext-thin-qwf.eot');
+    src: url('fonts/sanfranciscotext-thin-qwf.eot?#iefix') format('embedded-opentype'),
+         url('fonts/sanfranciscotext-thin-qwf.woff2') format('woff2'),
+         url('fonts/sanfranciscotext-thin-qwf.woff') format('woff'),
+         url('fonts/sanfranciscotext-thin-qwf.ttf') format('truetype'),
+         url('fonts/sanfranciscotext-thin-qwf.svg#san_francisco_textthin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+*{box-sizing:border-box; font-family:regular; color:#000;}
+
+input{background:none;}
+input[type="text"], input[type="password"], input[type="email"]{color:#898989; outline:none; box-shadow:none; height:36px; line-height:36px; width:300px; padding:0 20px; border:1px solid #d7d7d7;}
 input[type="submit"]{cursor:hand; cursor:pointer;}
+input[type="checkbox"]{border:1px solid #a6a6a6; border-radius:5px; width:13px; height:13px;}
+a{text-decoration:none;}
+a:hover{text-decoration:underline;}
+button{cursor:pointer; cursor:hand; border:none;}
 
 .qFixer:after{display:table; width:100%; height:0 !important; font-size:0  !important; visibility:hidden; clear:both; float:none !important;}
 .none{display:none !important;}
@@ -30,36 +73,67 @@ input[type="submit"]{cursor:hand; cursor:pointer;}
 .right{float:right;}
 .sprite{background-image:url(../images/sprite.png); background-repeat:no-repeat;}
 
+.lnkDefault{font-size:13px; color:#000;}
 
 #qContainer{}
 #qHeader{width:1200px; margin:0 auto; height:65px; background:#fff;}
 #qBody{}
 #qFooter{}
 
+.qMainBlock{width:1200px; margin:0 auto;}
 .qHero{width:100%; position:relative; background-size:cover; background-repeat:no-repeat; background-position:center center;}
-.qHeroInner{width:1200px; position:relative; margin:0 auto;}
+.qHeroInner{position:relative;}
 
 /* HEADER */
-.innerHeader{padding-top:20px;}
+.innerHeader{padding-top:18px;}
 .innerHeader .logo{padding:0 80px 0 0;}
 .innerHeader .logo a{display:block; width:136px; height:27px; text-indent:-9999px; background:url(../images/logo.png) center center no-repeat; background-size:cover;}
 .innerHeader .mainMenu{height:27px; margin-right:25px;}
 .innerHeader .mainMenu li{float:left; margin-left:40px; line-height:27px;}
 .innerHeader .mainMenu li:first-child{margin-left:0;}
+.innerHeader .mainMenu li a{color:#898989; font-size:16px;}
+
+.home .mainMenu li.m-home a{color:#000;}
 
 /* SEARCHBOX */
-.searchbox{height:32px; width:150px; border:1px solid #d7d7d7; position:relative; padding:0 15px;}
+.searchbox{height:32px; width:150px; border:1px solid #d7d7d7; position:relative; top:-2px; padding:0 15px;}
 .searchbox input{width:100%; height:32px; line-height:32px; padding:0; border:none;}
-.searchbox .btnHolder{position:absolute; top:0; right:0; height:100%; padding:7px 15px 0 0;}
+.searchbox .btnHolder{position:absolute; top:0; right:15px; height:100%; padding:7px 0 0 0; background:#fff;}
 .searchbox .btnSearch{display:block; width:16px; height:16px; background-position:0 0;}
 
 /* LOGIN PAGE */
 .home .qHeroInner{height:640px;}
-.home .qHeroInner .slogan{position:absolute; left:0; top:95px; color:#fff; font-size:36px; width:500px;}
-
-.home .qHeroInner .userboxes{position:absolute; top:75px; right:0; padding:60px 50px; width:400px; height:500px; background:#fff;}
-
+.home .qHeroInner .slogan{position:absolute; left:0; top:95px; color:#fff; font-size:36px; width:500px; line-height:42px;}
 .home .qHeroInner .movieInfo{position:absolute; left:0; bottom:65px; width:500px;}
 .home .qHeroInner .movieInfo .title{display:table;}
 .home .qHeroInner .movieInfo .title span{color:#fff; font-size:30px; display:table-cell; vertical-align:middle;}
-.home .qHeroInner .movieInfo .title small{color:#fff; font-size:13px; padding-left:10px; display:table-cell; vertical-align:middle;}
+.home .qHeroInner .movieInfo .title small{color:#fff; font-size:13px; padding-left:10px; display:table-cell; vertical-align:middle; font-family:thin;}
+
+/* Loginbox */
+.userboxes{position:absolute; top:75px; right:0; padding:60px 50px; width:400px; height:500px; background:#fff;}
+.userboxes .loginbox{}
+.userboxes .loginbox #lgn_email{margin-bottom:10px;}
+.userboxes .loginbox #lgn_password{margin-bottom:20px;}
+.userboxes .loginbox .loginboxBottom{padding:0 7px; margin-bottom:25px; height:20px; line-height:20px;}
+.userboxes .loginbox .loginboxBottom label{padding-left:7px; font-size:13px;}
+.userboxes .loginbox .loginboxBottom a{float:right;}
+.userboxes .loginbox .btnLogin{height:38px; width:300px; line-height:38px; color:#fff; text-align:center; font-family:semibold; background:#bca786; margin-bottom:50px; font-size:14px;}
+.userboxes .loginbox .socials{margin-bottom:30px;}
+.userboxes .loginbox .socials li{margin-bottom:10px;}
+.userboxes .loginbox .socials .fbLogin{background:#334f8d; display:block; height:38px; width:300px; line-height:38px; color:#fff; text-align:center; font-family:semibold; font-size:14px;}
+.userboxes .loginbox .socials #signinButton{background:#d1402a; display:block; height:38px; width:300px; line-height:38px; color:#fff; text-align:center; font-family:semibold; font-size:14px;}
+.userboxes .loginbox .loginToSignup{font-size:13px; text-align:center;}
+.userboxes .loginbox .loginToSignup a{font-family:semibold;}
+
+
+/* MOVIES PAGE */
+.pageMovies{}
+
+/* Filterbox */
+.filters{display:none;}
+
+/* Movie Repeater */
+.movieListHolder{}
+.movieListHolder .movieItem{width:220px; height:455px; margin-right:25px; float:left;}
+.movieListHolder .movieItem:nth-of-type(5n){margin-right:0;}
+.movieListHolder .movieItem a.poster{display:block; height:326px; width:100%; background-size:cover; margin-bottom:15px;}
