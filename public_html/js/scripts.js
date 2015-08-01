@@ -341,15 +341,19 @@ if(exist($('.loginHolder'))) $('.loginHolder .loginForm').minusDropDown();
 // Movies List
 if(exist($('.pageMovies'))){
 	
-	if(sessionStorage.viewType == "grid")
-    $('.movieListHolder').removeClass("row").addClass(sessionStorage.viewType);
+	var viewType = (sessionStorage.viewType != undefined) ? sessionStorage.viewType : 'grid';
+
+	$('.movieListHolder').attr("rel", viewType);
+	$('.controllers .view a[rel="'+viewType+'"]').addClass("selected");
 	
 	$('.controllers .view a').click(function(){
-		var view = $(this).attr("class");
 		
-		sessionStorage.viewType = view;
+		viewType = $(this).attr("rel");
+		sessionStorage.viewType = viewType;
 		
-		$('.movieListHolder').removeClass("row").removeClass("grid").addClass(view);
+		$('.controllers .view a.selected').removeClass("selected");
+		$('.controllers .view a[rel="'+viewType+'"]').addClass("selected");
+		$('.movieListHolder').attr("rel", viewType);
 		
 		lazyLoadActive();
 		
