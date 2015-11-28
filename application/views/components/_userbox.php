@@ -1,17 +1,19 @@
 <?php if($logged_in): ?>
 <div class="userbox">
-  <div class="userInfo">
-    <span class="userAvatar"><img src="<?php echo $site_url.get_user_avatar($user['usr_avatar']).'?t='.time(); ?>" alt="<?php echo $user['usr_name']; ?>" /></span>
-    <a href="<?php echo $site_url.'user/feeds'; ?>"><?php echo $user['usr_name']; ?></a>
+  <div class="userInfo qFixer">
+    <a class="usrAvatar lazy" data-original="<?php echo get_user_avatar($user['usr_avatar']); ?>" href="<?php echo '/user/wall/actions/'.$user['usr_nick']; ?>"></a>
+    <a class="usrName" href="<?php echo '/user/wall/actions/'.$user['usr_nick']; ?>"><?php echo $user['usr_name']; ?></a>
   </div>
-  <div class="userMenu">
+  <div class="userMenu none spriteBefore">
     <ul>
-      <li><a href="<?php echo $site_url.'user/settings/details'; ?>">Settings</a></li>
-      <li><a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>">Wall</a></li>
-      <li><a href="<?php echo $site_url.'user/movies/lists/'.$user['usr_nick']; ?>">My Movie Lists</a></li>
-      <li><a href="<?php echo $site_url.'user/network/followers/'.$user['usr_nick']; ?>">My Network</a></li>
+      <li><a href="<?php echo '/user/wall/actions/'.$user['usr_nick']; ?>">My Profile</a></li>
+      <li><a href="<?php echo '/user/movies/seen/'.$user['usr_nick']; ?>">My Movies</a></li>
+      <li><a href="<?php echo '/user/movies/lists/'.$user['usr_nick']; ?>">Custom Lists</a></li>
+      <li><a href="<?php echo '/user/movies/watchlist/'.$user['usr_nick']; ?>">Watch List</a></li>
+      <li><a href="<?php echo '/user/network/followers/'.$user['usr_nick']; ?>">My Network</a></li>
+      <li class="usrSettings"><a href="/user/settings/general">Settings</a></li>
+      <li class="usrSignout"><a href="/user/logout">Sign Out</a></li>
     </ul>
   </div>
-  <div class="usrLogout"><a href="<?php echo $site_url.'user/logout'; ?>">logout</a></div>
 </div>
 <?php endif; ?>

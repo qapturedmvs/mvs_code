@@ -17,23 +17,30 @@
 	
 	function getMoviePoster($poster, $slug, $size){
 		
-		$path = 'images/placeHolder.jpg';
+		$path = 'images/noPoster.jpg';
 		
 		if($poster == 1){
+			
+			$folder = 'thumbs/';
 			
 			switch($size){
 				
 				case 'medium':
-					$size = '_175X240_';
+					$size = '_220X326_';
 					break;
 				
 				case 'small':
-					$size = '_80X120_';
+					$size = '_150X222_';
+				break;
+				
+				case 'original':
+					$size = '';
+					$folder = '';
 				break;
 				
 			}
 			
-			$path = 'data/movies/thumbs/'.$slug.$size.'.jpg';
+			$path = 'data/movies/'.$folder.$slug.$size.'.jpg';
 			
 		}
 		
@@ -41,44 +48,103 @@
 	
 	}
 	
-	function movies_where($vars, $allFilters){
+	function get_movie_Cover($slug, $size = NULL){
 		
-		$where = '';
+		$path = '/data/covers/';
+			
+			switch($size){
+				
+				case 'hd':
+					$path = '/data/login-covers/';
+				break;
 
-		foreach($vars as $key => $val){
-			 if(isset($allFilters['like'][$key])){
-					$where_or = '';
-					$sep = ($where == '') ? '' : ' AND ';
-					$sSep = '';
+			}
+			
+			return $path.$slug.'.jpg';
 		
+	}
+	
+	function getStarPhoto($photo, $slug, $size){
+		
+		$path = 'images/noAvatar.jpg';
+		
+		if($photo == 1){
+			
+			$folder = 'thumbs/';
+			
+			switch($size){
+				
+				case 'medium':
+					$size = '_250X362_';
+				break;
+				
+				case 'small':
+					$size = '_90X123_';
+				break;
+				
+				case 'original':
+					$size = '';
+					$folder = '';
+				break;
+				
+			}
+			
+			$path = 'data/stars/'.$folder.$slug.$size.'.jpg';
+			
+		}
+		
+		return $path;
+	
+	}
+	
+	function movies_where($vars, $defs){
+			
+		$where = '';
+		
+		if($vars){
+
+			foreach($vars as $key => $val){
+				
+				$where_or = '';
+				
+				if(isset($defs['like'][$key])){
+
+					 $sep = ($where == '') ? '' : ' AND ';
+		 
 					foreach($val as $v){
-								$sSep = ($where_or == '') ? '' : ' OR ';
-								$where_or .= $sSep.$allFilters['like'][$key][0]." LIKE '%|".$v."|%'";
-					}
-					
-					if($where_or != ''){
-						 $where .= $sep.'('.$where_or.')';
-					}
-						 
-			 }else if(isset($allFilters['equal'][$key])){
-					$where_or = '';
-					$sep = ($where == '') ? '' : ' AND ';
-					$sSep = '';
-					
-					foreach($val as $v){
+					 
 						$sSep = ($where_or == '') ? '' : ' OR ';
-						$where_or .= $sSep.$allFilters['equal'][$key][0].' = '.$v;
+						$where_or .= $sSep.$defs['like'][$key][0]." LIKE '%|".$v."|%'";
+								
 					}
-					
-					if($where_or != ''){
-						 $where .= $sep.'('.$where_or.')';
-					}
-		
-			 }else if(isset($allFilters['between'][$key])){
+					 
+					if($where_or != '')
+						$where .= $sep.'('.$where_or.')';
+
+							
+				}else if(isset($defs['equal'][$key])){
+
 					$sep = ($where == '') ? '' : ' AND ';
-					$where .= $sep.'('.$allFilters['between'][$key].' BETWEEN '.$val[0].' AND '.$val[1].')';
-			 }
-			 
+					
+					foreach($val as $v){
+						
+						$sSep = ($where_or == '') ? '' : ' OR ';
+						$where_or .= $sSep.$defs['equal'][$key][0].' = '.$v;
+						
+					}
+					 
+					if($where_or != '')
+						$where .= $sep.'('.$where_or.')';
+
+				}else if(isset($defs['between'][$key])){
+					
+					 $sep = ($where == '') ? '' : ' AND ';
+					 $where .= $sep.'('.$defs['between'][$key].' BETWEEN '.$val[0].' AND '.$val[1].')';
+					 
+				}
+				 
+			}
+		
 		}
 		
 		return $where;
@@ -143,11 +209,13 @@
 		
 		$prefLen = strlen($prefOld);
 		$data = array();
-		
+
 		if(count($array)){
 			foreach($array as $key => $val){
 				if(substr($key, 0, $prefLen) === $prefOld){
 					$data[str_replace($prefOld, $prefNew, $key)] = $val;
+				}else{
+					$data[$key] = $val;
 				}
 			}
 		}
@@ -234,10 +302,21 @@
 	function get_user_avatar($usr_avatar){
 		
 		if($usr_avatar == '')
-			$usr_avatar = 'images/user.jpg';
+			$usr_avatar = '/images/noAvatar.jpg';
 		else
-			$usr_avatar = 'data/users/'.$usr_avatar.'.jpg';
+			$usr_avatar = '/data/users/'.$usr_avatar.'.jpg?t='.time();
 			
 		return $usr_avatar;
+		
+	}
+	
+	function get_user_Cover($usr_cover){
+		
+		if($usr_cover == '')
+			$usr_cover = '/images/noCover.jpg';
+		else
+			$usr_cover = '/data/user-covers/'.$usr_cover.'.jpg?t='.time();
+			
+		return $usr_cover;
 		
 	}

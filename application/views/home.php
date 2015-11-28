@@ -1,13 +1,12 @@
-<div class="qHero" style="background-image:url(data/covers/qm0d2hm4fq.jpg);">
-  <div class="qHeroInner">
+<div class="qHero" style="background-image:url(data/covers/<?php echo $cover['mvs_slug']; ?>.jpg);">
+  <div class="qHeroInner qMainBlock">
     <div class="slogan">Share your passion, discover new movies and connect with others.</div>
-    <div class="userboxes">
+    <div class="userboxes <?php echo $sys_msg['type']; ?>">
       <?php $this->load->view('components/_loginbox'); ?>
-      <?php $this->load->view('components/_signupbox'); ?>
     </div>
     <div class="movieInfo">
-      <div class="title">
-        <span>Inception</span><small>2010</small>
+      <div class="title qValign">
+        <a href="/movie/<?php echo $cover['mvs_slug']; ?>"><?php echo $cover['mvs_title']; ?></a><small><?php echo $cover['mvs_year']; ?></small>
       </div>
     </div>
   </div>

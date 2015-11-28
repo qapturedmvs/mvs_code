@@ -75,3 +75,36 @@ function getVars($array){
 	
 	return $qs;
 }
+
+	function getStarPhoto($photo, $slug, $size){
+		
+		$path = 'images/noAvatar.jpg';
+		
+		if($photo == 1){
+			
+			$folder = 'thumbs/';
+			
+			switch($size){
+				
+				case 'medium':
+					$size = '_250X362_';
+				break;
+				
+				case 'small':
+					$size = '_90X123_';
+				break;
+				
+				case 'original':
+					$size = '';
+					$folder = '';
+				break;
+				
+			}
+			
+			$path = 'data/stars/'.$folder.$slug.$size.'.jpg';
+			
+		}
+		
+		return $path;
+	
+	}

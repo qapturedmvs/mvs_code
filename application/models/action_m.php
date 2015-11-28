@@ -24,11 +24,16 @@ class Action_M extends MVS_Model
 	
 	}
 	
-	public function seen_movie_multi($data){
+	public function bulk_action($data, $act){
 		
-		$this->db->insert_batch('mvs_seen', $data);
+		$act = $this->cleaner($act);
+		$data['mvs'] = $this->cleaner($data['mvs']);
+		$data['mvs_c'] = $this->cleaner($data['mvs_c']);
+		$out = array('@result' => NULL);
+		$this->db->call_procedure('sp_multi_'.$act, $data, $out);
+		$result = $out['@result'];
 		
-		return 'mseen';
+		return $result;
 	
 	}
 	

@@ -38,15 +38,15 @@
 |
 */
 
-$route['default_controller'] = "home";
-$route['404_override'] = '';
+$route['default_controller'] = 'home';
+$route['404_override'] = 'pagenotfound';
 
-// �ny�zle ilgili route'lar, admin route'lar�ndan daha yukar�da tan�ml� olmal�
-// �ny�zle ilgili route'lar
+// onyuzle ilgili route'lar, admin route'larindan daha yukarida tanimli olmali
+// onyuzle ilgili route'lar
 //$route['movie/index/(:any)'] = "movie/$1";
 
 // Admin ilgili route'lar
-$route['admin'] = "admin/user/login";
+$route['admin'] = 'admin/user/login';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

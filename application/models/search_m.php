@@ -3,8 +3,6 @@
 class Search_M extends MVS_Model
 {
 	
-	public $per_page = 10;
-	
 	function __construct (){
 		parent::__construct();
 	
@@ -27,7 +25,6 @@ class Search_M extends MVS_Model
   public function suggest_movies_stars($data){
     
     $data['keyword'] = $this->cleaner($data['keyword']);
-    
     $results = $this->db->call_procedure('sp_search', $data);
 
 		if($results)
@@ -41,6 +38,7 @@ class Search_M extends MVS_Model
 
     $data['keyword'] = $this->cleaner($data['keyword']);
     $data['offset'] = ($data['offset'] !== 0) ? ($this->cleaner($data['offset']) - 1) * $data['per_page'] : $data['offset'];
+    $data['type'] = $this->cleaner($data['type']);
     $results = $this->db->call_procedure('sp_search_user', $data);
 
 		if($results)
@@ -49,7 +47,18 @@ class Search_M extends MVS_Model
 			return FALSE;
     
   }
+  
+  public function get_cities($data){
+    
+    $data['keyword'] = $this->cleaner($data['keyword']);
+    $results = $this->db->call_procedure('sp_search_location', $data);
 
+		if($results)
+			return $results;
+		else
+			return FALSE;
+    
+  }
   
 }
 

@@ -4,7 +4,6 @@
 		function __construct(){
 			parent::__construct();
 			
-			$this->output->enable_profiler();
 			$this->load->model('movie_m');
 			
 		}
@@ -26,24 +25,50 @@
 				$movie = $this->movie_m->movie($data);
 		
 				if($movie){
-
-					$this->data['movie'] = $movie[0];
-					$this->data['controls'] = array('page' => 'movie-detail');
 					
-					// Eğer filmin cast, genre, country bilgilerinden olmayan var ise view'daki loop hata vermesin
-					$this->data['casts'] = $movie;
-					$this->data['genres'] = array();
-					$this->data['countries'] = array();
+					$this->data['controls'] = array('page' => 'movie-detail');
+					$this->data['casts'] = array();
 						
-					// Genres & Countries	
-					foreach($this->filter_def['like'] as $key => $val){
+					foreach($movie as $key => $val){
 						
-						if($movie[0][$val[0]] != ''){
-							$this->data[$val[1]]['data'] = explode('|', trim($movie[0][$val[0]], '|'));
-							$this->data[$val[1]]['table'] = $this->cache_table_data($val[1], 'movie_m', array('id' => $val[0], 'title' => $val[2]));
-						}
+						if($key < 4 && $val['type_id'] == 1)
+							$this->data['casts']['stars'][] = array('str_name' => $val['str_name'], 'str_slug' => $val['str_slug'], 'type_id' => 1);
+						
+						if($val['type_id'] == 2)
+							$this->data['casts']['director'][] = array('str_name' => $val['str_name'], 'str_slug' => $val['str_slug'], 'type_id' => 2);
+					
+					}
+					
+					if($movie[0]['cntry_id'] != ''){
+						
+						$movie[0]['cntry_id'] = explode('|', trim($movie[0]['cntry_id'], '|'));
+						$temp = $this->cache_table_data('countries', 'movie_m', array('id' => 'cntry_id', 'title' => 'cntry_title'));
+
+						foreach($movie[0]['cntry_id'] as $key => $val)
+							$movie[0]['countries'][$key] = $temp[$val];
 							
 					}
+					
+					if($movie[0]['gnr_id'] != ''){
+						
+						$movie[0]['gnr_id'] = explode('|', trim($movie[0]['gnr_id'], '|'));
+						$temp = $this->cache_table_data('genres', 'movie_m', array('id' => 'gnr_id', 'title' => 'gnr_title'));
+						
+						foreach($movie[0]['gnr_id'] as $key => $val)
+							$movie[0]['genres'][$key] = $temp[$val];
+							
+					}
+
+					if($movie[0]['aud_id'] != 0){
+						
+						$temp = $this->cache_table_data('audience', 'movie_m', array('id' => 'aud_id', 'title' => 'aud_title'));
+						$movie[0]['audience'] = $temp[$movie[0]['aud_id']];
+
+					}
+					
+					$this->data['movie'] = $movie[0];
+					
+					unset($temp);
 					
 					// Setting meta_tags object
 					$this->data['meta_tags'] = (object) array(

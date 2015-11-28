@@ -5,13 +5,14 @@
 		function __construct(){
 			parent::__construct();
 
-			$this->load->model('feed_m');
-      
 		}
     
     public function index(){ show_404(); }
     
     public function wall($p = 1){
+      
+      $this->load->model('feed_m');
+      $this->load->model('movie_m');
       
 			$json = (object) array();
 			$data = array('nick' => $this->get_vars['nick'], 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'p' => $p);
@@ -37,6 +38,9 @@
 		
 		public function feeds($p = 1){
       
+      $this->load->model('feed_m');
+      $this->load->model('movie_m');
+
 			$json = (object) array();
 			$data = array('usr' => $this->user['usr_id'], 'p' => $p);
       $feeds = $this->feed_m->feeds_json($data);
@@ -61,6 +65,8 @@
 		
 		public function get_more_replies($act_id){
 			
+      $this->load->model('feed_m');
+      
 			$data = array('act_ref' => $act_id, 'login_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
       $feeds = $this->feed_m->get_more_replies($data);
       
@@ -119,7 +125,7 @@
 						
 						foreach($data as $sk => $sv){
 							
-							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id'] && $sv['usr_id'] != $this->user['usr_id'] && $i < 3){
+							if($sv['feed_type'] == 'sn' && $sv['mvs_id'] == $d['mvs_id'] && $sv['usr_id'] != $d['usr_id'] && $i < 3){
 								
 								$d['grp'][] = $this->_prepare_wall_data($sv);
 								unset($data[$sk]);
@@ -142,7 +148,7 @@
 						
 						foreach($data as $sk => $sv){
 							
-							if($sv['feed_type'] == 'sn' && $sv['usr_id'] == $d['usr_id'] && (int) $d['total_seen'] == 1){
+							if($sv['feed_type'] == 'sn' && $sv['usr_id'] == $d['usr_id'] && (int) $sv['total_seen'] == 1){
 								
 								$d['grp'][] = $this->_prepare_wall_data($sv);
 								unset($data[$sk]);
@@ -161,6 +167,64 @@
 						}elseif($i == 1){
 							
 							$d['seen_type'] = 'single_seen';
+							$tree[] = $this->_prepare_wall_data($d);
+							
+							
+						}
+						
+					}
+          
+        }elseif($d['feed_type'] == 'wt'){
+					
+					if((int) $d['total_seen'] > 1){
+						
+						$i = ($d['usr_id'] == $this->user['usr_id']) ? 0 : 1;
+						unset($data[$k]);
+						
+						foreach($data as $sk => $sv){
+							
+							if($sv['feed_type'] == 'wt' && $sv['mvs_id'] == $d['mvs_id'] && $sv['usr_id'] != $d['usr_id'] && $i < 3){
+								
+								$d['grp'][] = $this->_prepare_wall_data($sv);
+								unset($data[$sk]);
+								$i++;
+								
+							}
+							
+						}
+						
+						if(isset($d['grp'])){
+							$d['wtc_count'] = ($d['usr_wtc_fl'] != NULL) ? $i+1 : $i;
+							$d['wtc_type'] = 'user_group_wtc';
+							$tree[] = $this->_prepare_wall_data($d);
+						}
+					
+					}else{
+						
+						$i = 0;
+						unset($data[$k]);
+						
+						foreach($data as $sk => $sv){
+							
+							if($sv['feed_type'] == 'wt' && $sv['usr_id'] == $d['usr_id'] && (int) $sv['total_seen'] == 1){
+								
+								$d['grp'][] = $this->_prepare_wall_data($sv);
+								unset($data[$sk]);
+								$i++;
+								
+							}
+							
+						}
+						
+						if(isset($d['grp']) && $i > 1){
+							
+							$d['mov_grp_count'] = $i;
+							$d['wtc_type'] = 'movie_group_wtc';
+							$tree[] = $this->_prepare_wall_data($d);
+							
+						}elseif($i == 1){
+							
+							$d['wtc_type'] = 'single_wtc';
 							$tree[] = $this->_prepare_wall_data($d);
 							
 							
@@ -197,8 +261,8 @@
 			$feed['usr_avatar'] = get_user_avatar($feed['usr_avatar']);
 			$feed['owner'] = ($feed['usr_id'] == $this->user['usr_id']) ? 1 : 0;
 
-			if(isset($feed['mvs_poster']))				
-				$feed['mvs_poster'] = getMoviePoster($feed['mvs_poster'], $feed['mvs_slug'], 'small');
+			if(isset($feed['mvs_poster']))	
+				$feed['mvs_poster'] = getMoviePoster($feed['mvs_poster'], $feed['mvs_slug'], 'medium');
 				
 			if(isset($feed['feed_text'])){
 				$feed['text_char'] = strlen($feed['feed_text']);
@@ -211,6 +275,16 @@
 				}
 				
 			}
+      
+      if($feed['gnr_id'] != ''){
+						
+        $feed['genres'] = explode('|', trim($feed['gnr_id'], '|'));
+        $temp = $this->cache_table_data('genres', 'movie_m', array('id' => 'gnr_id', 'title' => 'gnr_title'));
+        
+        foreach($feed['genres'] as $key => $val)
+          $feed['genres'][$key] = $temp[$val];
+          
+      }
 			
 			if(isset($feed['list_data_slugs'])){
 				

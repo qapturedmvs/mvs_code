@@ -53,7 +53,7 @@ class User_M extends MVS_Model
 		
 		$user = $this->get_data(NULL, 0, FALSE, $filters);
 
-		if (isset($user['data'])){
+		if (isset($user['data'])) {
 			// Log in user
 			$data = array(
 				'name' => $user['data'][0]->adm_usr_name,
@@ -63,11 +63,6 @@ class User_M extends MVS_Model
 			);
 			
 			$this->session->set_userdata($data);
-			
-		}else{
-			
-			return FALSE;
-			
 		}
 	}
 

@@ -9,7 +9,12 @@
 		}
 		
 		public function index(){
-
+			
+			$covers = $this->user_m->get_login_covers();
+			$cover = mt_rand(0, count($covers)-1);
+			$this->data['cover'] = $covers[$cover];
+			$this->data['sys_msg'] = array('type' => 'login', 'status' => '', 'text' => '');
+			
 			$this->logged_in === FALSE || redirect('user/feeds');
 			$inputs = $this->input->post(NULL, TRUE);
 
@@ -47,7 +52,7 @@
 					
 				}else{
 					
-					$data['lgn_token'] = NULL;
+					$data['lgn_token'] = '';
 					
 				}
 				
@@ -57,47 +62,26 @@
 				$user = $this->user_m->login($data);
 
 				if($user && $user['usr_act'] == 1){
-					
-					
-					//$session = array(
-					//	'usr_id' => $user['usr_id'],
-					//	'usr_nick' => $user['usr_nick'],
-					//	'usr_name' => $user['usr_name'],
-					//	'usr_email' => $user['usr_email'],
-					//	'usr_avatar' => $user['usr_avatar'],
-					//	'usr_loggedin' => TRUE,
-					//);
-					//
-					//if($cookie){
-					//
-					//	$cookie = array(
-					//		'name' => 'mvs_lgn_token',
-					//		'value' => $data['lgn_token'],
-					//		'expire' => 31536000,
-					//		'path'   => '/'
-					//	);
-					//
-					//	$this->input->set_cookie($cookie);
-					//	
-					//}
-					//	
-					//$this->session->set_userdata($session);
+
 					if($this->_build_session($user, $data['lgn_token'], $cookie))	
 						redirect($ref, 'refresh');
 									
 				}elseif($user && $user['usr_act'] == 0){
 
-					$this->data['login_error'] = 'Please activate your account. <a href="'.$this->data['site_url'].'user/account/activate?act='.$user['data']->usr_act_key.'">Click here</a> for sending activation email.';
+					$this->data['sys_msg']['text'] = 'Please activate your account. <a href="'.$this->data['site_url'].'user/account/activate?act='.$user['data']->usr_act_key.'">Click here</a> for sending activation email.';
+					$this->data['sys_msg']['status'] = 'error';
 					
 				}else{
 					
-					$this->data['login_error'] = 'That email/password combination does not exist';
+					$this->data['sys_msg']['text'] = 'That email/password combination does not exist';
+					$this->data['sys_msg']['status'] = 'error';
 					
 				}
 				
 			}else{
 				
-				$this->data['login_error'] = validation_errors();
+				$this->data['sys_msg']['text'] = validation_errors();
+				$this->data['sys_msg']['status'] = 'error';
 				
 			}
 				
@@ -107,6 +91,7 @@
 				
 			$rules = $this->config->config['usr_signup'];
 			$this->form_validation->set_rules($rules);
+			$this->data['sys_msg'] = array('type' => 'signup', 'status' => '', 'text' => '');
 			
 			if($this->form_validation->run() === TRUE){
 				
@@ -134,12 +119,14 @@
 					
 				}else{
 					
-					$this->data['signup_error'] = 'This email is already registered. Want to login or recover your password?';
+					$this->data['sys_msg']['text'] = 'This email is already registered. Want to login or recover your password?';
+					$this->data['sys_msg']['status'] = 'error';
 					
 				}
 			}else{
 				
-					$this->data['signup_error'] = validation_errors();
+					$this->data['error']['text'] = validation_errors();
+					$this->data['sys_msg']['status'] = 'error';
 					
 			}
 				

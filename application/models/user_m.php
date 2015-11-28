@@ -11,10 +11,22 @@ class User_M extends MVS_Model
 	function __construct (){
 		parent::__construct();
 	}
+	
+	// Get login page covers
+	public function get_login_covers(){
+    
+    $covers = $this->db->call_procedure('sp_get_login_covers');
+
+		if($covers)
+			return $covers;
+		else
+			return FALSE;
+    
+  }
   
   public function login($data){
     
-		$data['lgn_password'] = ($data['lgn_password'] != NULL) ? $this->hash($data['lgn_password'], 'sha512') : NULL;
+		$data['lgn_password'] = ($data['lgn_password'] != NULL) ? $this->hash($data['lgn_password'], 'sha512') : '';
 
 		$user = $this->db->call_procedure('sp_user_login', $data);
 
@@ -60,7 +72,7 @@ class User_M extends MVS_Model
       $data['usr_password'] = $this->hash($data['usr_password'], 'sha512');
 		
     $data['usr_act_key'] = $this->hash($data['usr_email'], 'sha1');
-          
+
     $this->db->where('usr_id', $id);
     $this->db->update('mvs_users', $data);
     
@@ -71,18 +83,6 @@ class User_M extends MVS_Model
     
     $this->db->where('usr_id', $id);
     $this->db->update('mvs_users', array('usr_avatar' => $usr_avatar));
-    
-  }
-  
-  public function get_cover($id){
-    
-    $filters = array('select' => 'usr_cover', 'from' => 'mvs_users', 'where' => "usr_id = $id");
-    $user = $this->get_data(NULL, 0, FALSE, $filters);
-
-    if(isset($user['data']))
-      return $user['data'];
-    else
-      return FALSE;
     
   }
   
@@ -134,25 +134,26 @@ class User_M extends MVS_Model
     
   }
 	
-	public function get_user_data($usr, $usr_primary_key){
+	public function get_user_data($data){
 		
-    $this->_primary_key = $usr_primary_key;
-		$user = $this->get_data($usr);
-		
-		if(isset($user['data']))
-			return $user;
+    $data['usr_act_key'] = ($data['usr_act_key'] != '') ? $this->cleaner($data['usr_act_key']) : '';
+		$user = $this->db->call_procedure('sp_get_user', $data);
+
+		if($user)
+			return $user[0];
 		else
 			return FALSE;
 		
 	}
 	
-	public function activate_account($usr_act_key){
+	public function activate_account($data){
 		
-    $this->db->where('usr_act_key', $usr_act_key);
-    $this->db->set('usr_act', 1);
-    $this->db->update('mvs_users');
-    
-    return TRUE;
+    $data['usr_act_key'] = $this->cleaner($data['usr_act_key']);
+    $out = array('@result' => NULL);
+    $this->db->call_procedure('sp_activate_user', $data, $out);
+    $result = $out['@result'];
+
+    return $result;
 
 	}
   

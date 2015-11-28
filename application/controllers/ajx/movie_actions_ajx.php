@@ -95,9 +95,9 @@
 
 		}
 		
-		public function s_customlist(){
+		public function s_customlist($list = NULL){
 			
-			if($this->logged_in){
+			if($this->logged_in && $list){
 				
 				$this->load->model('action_m');
 				
@@ -105,7 +105,7 @@
 				
 				if($vars){
 					
-					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_id' => $vars['list']);
+					$data = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $vars['id'], 'list_id' => $list);
 					$this->data['result'] = $this->action_m->add_remove_from_customlist($data);
 				
 				}else{
@@ -124,35 +124,34 @@
 
 		}
 		
-		public function mark_all_seen(){
+		// Movie list bulk actions $act = (seen, wtc)
+		public function bulk_action($act = NULL){
 				
-			if($this->logged_in){
+			if($this->logged_in && $act){
 				
 				$this->load->model('action_m');
 				
-				$ids = $this->input->post('ids', TRUE);
-				$data = array();
+				$this->data['action'] = $act;
+				$vars = $this->input->post(NULL, TRUE);
+				$data = array('usr_id' => $this->user['usr_id'], 'mvs' => $vars['ids'],'mvs_c' => $vars['mc']);
 				
-				foreach($ids as $id)
-					$data[] = array('usr_id' => $this->user['usr_id'], 'mvs_id' => $id);
-				
-				$this->data['seen_result'] = $this->action_m->seen_movie_multi($data);
+				$this->data['result'] = $this->action_m->bulk_action($data, $act);
 
 			}else{
 				
-				$this->data['seen_result'] = 'no-user';
+				$this->data['result'] = 'no-user';
 				
 			}
 			
-			$this->load->view('results/_seen_movie', $this->data);
+			$this->load->view('results/_bulk_action', $this->data);
 
 		}
 		
 		
-		
-		public function myn_seen_users($movie = 0){
+		// Movie detail seen users in my network
+		public function md_myn_sn_usrs($movie = NULL){
 
-			if($this->logged_in && $movie != 0){
+			if($this->logged_in && $movie){
 				
 				$this->load->model('action_m');
 				
@@ -163,7 +162,7 @@
 				if($results){
 
 					foreach($results as $k => $result)
-						$results[$k]['usr_avatar'] = ($result['usr_avatar'] === '') ? 'images/user.jpg' : $result['usr_avatar'];
+						$results[$k]['usr_avatar'] = ($result['usr_avatar'] === '') ? 'images/user.jpg' : '/data/users/'.$result['usr_avatar'].'.jpg';
 
 					$json->result = 'OK';
 					$json->data['total'] = $results[0]['total'];
@@ -188,9 +187,10 @@
 
 		}
 		
-		public function movie_customlists($movie = 0){
+		// Movie detail related customlists
+		public function md_rlt_cls($movie = NULL){
 
-			if($movie !== 0){
+			if($movie){
 				
 				$this->load->model('customlist_m');
 				
@@ -236,7 +236,25 @@
 
 		}
 		
-		
+		// Get users add to list menu
+		public function get_add_cls_menu($movie = NULL){
+
+			if($movie){
+				
+				$this->load->model('customlist_m');
+				
+				$data = array('mvs' => $movie, 'usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
+				$this->data['results'] = $this->customlist_m->get_add_cls_menu($data);
+			
+				$this->load->view('html_results/_add_cls_menu', $this->data);
+			
+			}else{
+				
+				show_404();
+				
+			}
+
+		}
   
   }
 

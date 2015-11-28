@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--		<meta id="qViewport" name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, minimum-scale=0.8, target-densitydpi=device-dpi, user-scalable=no"/>-->
 		<?php
+			$site_name = 'Qaptured';
 			$temp_title = $site_name;
 			
 			if(isset($meta_tags)):
-		
 				$temp_title = $meta_tags->title.' - '.$temp_title;
 		?>
 			<link rel='image_src' href="<?php echo $site_url.$meta_tags->image; ?>">
@@ -27,11 +27,12 @@
 						page = '<?php echo (isset($controls['page'])) ? $controls['page'] : ''; ?>';
 			</script>
     <link href="<?php echo site_url('css/main.css'); ?>" rel="stylesheet">
+    <link href="<?php echo site_url('css/brk.css'); ?>" rel="stylesheet">
     <script src="<?php echo site_url('js/jquery-1.11.1.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/angular.min.js'); ?>"></script>
-    <link href="<?php echo site_url('js/jquery-ui/jquery-ui.css'); ?>" rel="stylesheet">
 		<script src="<?php echo site_url('js/jquery-ui/jquery-ui.min.js'); ?>"></script>
     <script src="<?php echo site_url('js/plugins.js'); ?>"></script>
   </head>
   <body ng-app="qapturedApp"<?php echo (isset($controls['page'])) ? ' class="'.$controls['page'].'"' : ''; ?>>
 		<input type="hidden" id="site_url" value="<?php echo $site_url; ?>" />
+		<main id="qContainer">

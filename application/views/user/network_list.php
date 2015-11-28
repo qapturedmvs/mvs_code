@@ -1,21 +1,12 @@
 <script type="text/javascript">
-	var nick = '<?php echo $the_user['usr_nick']; ?>';
+	var nick = '<?php echo $the_user['usr_nick']; ?>', action = '<?php echo $controls['page']; ?>';
 </script>
-<div rel="<?php echo $controls['page']; ?>" class="pageDefault pageNetwork page-<?php echo $controls['page']; ?>">
-	<?php $this->load->view('components/_the_user'); ?>
-	<hr class="qFixer" />
-	<?php $this->load->view('components/menus/_user_network_menu'); ?>
-	<div class="searchHolder userSearchHolder">
+<div class="qHero uHero" style="background-image:url(<?php echo get_user_Cover($the_user['usr_cover']); ?>);"></div>
+<div rel="<?php echo $controls['page']; ?>" class="pageDefault pageNetwork qMainBlock">
+	<?php $this->load->view('components/menus/_the_user_menu'); ?>
+	<div class="networkTop qFixer">
 		<?php $this->load->view('components/_user_searchbox'); ?>
+		<?php $this->load->view('components/menus/_user_network_menu'); ?>
 	</div>
-	<hr class="qFixer" />
-	<div class="titleDefault titleNetwork">
-		<h1><?php echo ($controls['page'] == 'flwr') ? 'Followers' : 'Followings'; ?></h1>
-	</div>
-	<div class="listHolder" ng-controller='userNetwork'>
-		<ul>
-			<?php $this->load->view('components/repeaters/_user_list_repeater'); ?>
-		</ul>
-		<hr class="qFixer" />
-	</div>
+	<?php $this->load->view('components/repeaters/_user_list_repeater'); ?>
 </div>

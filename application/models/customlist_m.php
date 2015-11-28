@@ -77,17 +77,21 @@ class Customlist_M extends MVS_Model
 	
 	public function edit_custom_list($data){
 		
-		$this->db->update('mvs_custom_lists', array('list_title' => $data['list_title']), 'list_id = '.$data['list_id'].' AND usr_id = '.$data['usr_id']);
-		return TRUE;
+		$cl = $this->db->call_procedure('sp_edit_customlist_detail', $data);
+
+		if($cl)
+			return $cl;
+		else
+			return FALSE;
 	
 	}
 
 	public function rate_customlist($data){
 			
-			$data['item_id'] = $this->cleaner($data['item_id']);
-			$out = array('@result' => NULL);
-			$this->db->call_procedure('sp_rate_item', $data, $out);
-			$result = $out['@result'];
+		$data['item_id'] = $this->cleaner($data['item_id']);
+		$out = array('@result' => NULL);
+		$this->db->call_procedure('sp_rate_item', $data, $out);
+		$result = $out['@result'];
 		
 		return $result;
 	
@@ -97,6 +101,19 @@ class Customlist_M extends MVS_Model
 		
 		$lists = $this->db->call_procedure('sp_get_movie_customlists', $data);
 
+		if($lists)
+			return $lists;
+		else
+			return FALSE;
+		
+	}
+	
+	
+	// Get users add to list menu
+	public function get_add_cls_menu($data){
+		
+		$lists = $this->db->call_procedure('sp_get_user_add_cls_menu', $data);
+		
 		if($lists)
 			return $lists;
 		else

@@ -6,14 +6,13 @@
 			parent::__construct();
 			
 			$this->session_check();
-			$this->output->enable_profiler();
 			$this->load->model('user_m');
       
 		}
     
-    public function details(){
-			
-			$user = $this->user_m->get_user_data($this->user['usr_id'], 'usr_id');
+    public function general(){
+
+			$data = array('usr_id' => $this->user['usr_id'], 'usr_act_key' => '');
 			$this->data['modified_data'] = FALSE;
 			$inputs = $this->input->post(NULL, TRUE);
 				
@@ -28,8 +27,9 @@
 
 			}
 			
-			$this->data['the_user'] = $user['data'];
-			$this->data['subview'] = 'user/settings/details';
+			$this->data['the_user'] = $this->user_m->get_user_data($data);
+			$this->data['controls'] = array('page' => 'set', 'owner' => TRUE);
+			$this->data['subview'] = 'user/settings/general';
 			$this->load->view('_main_body_layout', $this->data);
       
     }
@@ -43,7 +43,7 @@
 			if($hdn){
 				
 				$config['upload_path'] = './data/users';
-				$config['file_name']  = ($this->user['usr_avatar'] != '') ? $this->user['usr_avatar'].'_temp' : 'qua_'.$this->user['usr_id'].'_'.hash('sha1', $this->user['usr_id']).'_temp';
+				$config['file_name']  = ($this->user['usr_avatar'] != '') ? $this->user['usr_avatar'].'_temp' : 'qu_'.$this->user['usr_id'].'_'.hash('sha1', $this->user['usr_id']).'_temp';
 				$config['allowed_types'] = 'jpg|jpeg|png';
 				$config['max_size']	= '300';
 				$config['max_width']  = '400';
@@ -67,17 +67,16 @@
 		public function cover(){
 			
 			$this->data['mode'] = 'upload';
-			$user = $this->user_m->get_cover($this->user['usr_id']);
 			$hdn = $this->input->post('hdnCover', TRUE);
 
 			if($hdn){
 				$config['upload'] = array(
-					'upload_path' => './data/users-cover',
-					'file_name' => ($user[0]->usr_cover != '') ? $user[0]->usr_cover.'_temp' : 'quc_'.$this->user['usr_id'].'_'.hash('sha1', $this->user['usr_id']).'_temp',
+					'upload_path' => './data/user-covers/temp',
+					'file_name' => ($this->user['usr_cover'] != '') ? $this->user['usr_cover'] : 'qu_'.$this->user['usr_id'].'_'.hash('sha1', $this->user['usr_id']),
 					'allowed_types' => 'jpg|jpeg|png',
-					'max_size' => '3000',
-					'max_width' => '4000',
-					'max_height' => '4000',
+					'max_size' => '2048',
+					'max_width' => '3000',
+					'max_height' => '3000',
 					'overwrite' => TRUE
 				);				
 				
@@ -108,22 +107,27 @@
 					unset($data['prf_password']);
 					unset($data['repassword']);
 				}
+				
+				if($data['city_id'] == 0){
+					unset($data['prf_location']);
+					unset($data['city_id']);
+				}
 
 				$data = changePrefix($data, 'prf', 'usr');
-
+				
 				if($this->user_m->update_profile($this->user['usr_id'], $data) === TRUE){
 					
 					$this->_update_session($data);
-					$this->data['profile_error'] = 'Profile saved.';
+					$this->data['result'] = array('status' => 'success', 'info' => 'Profile saved');
 					
 				}else{
 					
-					$this->data['profile_error'] = 'An error occured. Please try again later.';
+					$this->data['result'] = array('status' => 'error', 'info' => 'An error occured. Please try again later.');
 					
 				}
 			}else{
 				
-				$this->data['profile_error'] = validation_errors();
+				$this->data['result'] = array('status' => 'error', 'info' => validation_errors());
 				
 			}
 			

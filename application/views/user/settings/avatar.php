@@ -4,7 +4,7 @@
 	<input type="file" name="userfile" size="20" />
 	<br /><br />
 	<input type="hidden" id="hdnAvatar" name="hdnAvatar" value="1" />
-	<input type="submit" value="upload" />
+	<button type="submit" class="btnDefault btnUpload">UPLOAD</button>
 	<?php echo form_close();?>
 	<div class="errorHolder">
 		<?php if(isset($image['error'])) echo $image['error']; ?>
@@ -13,7 +13,7 @@
 	<div class="avatarHolder">
 		<img id="cropImg" rel="<?php echo $image['file_name']; ?>" src="<?php echo $site_url.'data/users/'.$image['file_name']; ?>" />
 	</div>
-	<a class="btnDefault btnSaveImg" href="javascript:void(0);">SAVE</a>
+	<button class="btnDefault btnSaveImg">SAVE</button>
 </div>
 <script type="text/javascript">
 
@@ -43,7 +43,7 @@ $('.btnSaveImg').click(function(){
 			getAjax( { uri: site_url + "ajx/user_visuals_ajx", param: imgData }, function( d ){
 				
 				if( d.result == 'OK' )
-					window.location.replace(site_url+'user/settings/details');
+					window.location.replace(site_url+'user/settings/general');
 				
 			});
     }else{

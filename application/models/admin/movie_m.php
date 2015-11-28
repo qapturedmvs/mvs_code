@@ -24,8 +24,8 @@ class Movie_M extends MVS_Model
 	public function movies($p){
 		
 		$offset = ($this->cleaner($p) - 1) * $this->per_page;
-		$filters = array('order_by' => array($this->_order_by, 'ASC'));
-		$movies = $this->get_data(NULL, $offset, FALSE, $filters);
+		$filters = array('order_by' => array('mvs_score', 'DESC'));
+		$movies = $this->get_data(NULL, $offset, TRUE, $filters);
 		$movies['offset'] = $offset;
 		$movies['per_page'] = $this->per_page;
 		
@@ -34,6 +34,47 @@ class Movie_M extends MVS_Model
 		else
 			return FALSE;
 		
+	}
+	
+	public function covers($p){
+		
+		$this->per_page = 10000;
+		$offset = ($this->cleaner($p) - 1) * $this->per_page;
+		$filters = array('order_by' => 'mvs_rating DESC, mvs_year DESC', 'where' => "mvs_poster = 1 AND mvs_cover = 0 AND mvs_metascore <> ''");
+		$movies = $this->get_data(NULL, $offset, TRUE, $filters);
+		$movies['offset'] = $offset;
+		$movies['per_page'] = $this->per_page;
+		
+		if (count($movies['data']))
+			return $movies;
+		else
+			return FALSE;
+		
+	}
+	
+	public function covered($p){
+		
+		$this->per_page = 500;
+		$offset = ($this->cleaner($p) - 1) * $this->per_page;
+		$filters = array('order_by' => 'mvs_year DESC', 'where' => "mvs_cover = 1");
+		$movies = $this->get_data(NULL, $offset, TRUE, $filters);
+		$movies['offset'] = $offset;
+		$movies['per_page'] = $this->per_page;
+		
+		if (count($movies['data']))
+			return $movies;
+		else
+			return FALSE;
+		
+	}
+	
+	public function cover_count(){
+		
+		$query = "SELECT COUNT(mvs_id) total_count FROM mvs_movies WHERE mvs_cover = 1";
+		$count = $this->db->query($query)->row();
+		
+		return $count;
+	
 	}
 	
 	public function movie($id){

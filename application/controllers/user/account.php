@@ -31,20 +31,21 @@
 		
 		public function activate(){
 			
-			$db_data = $this->user_m->get_user_data($this->get_vars['act'], 'usr_act_key');
+			$act = $this->get_vars['act'];
 			
-			if(isset($db_data['data']) && $db_data['data']->usr_act == 0){
+			if($act){
 				
-				$this->data['act'] = $this->user_m->activate_account($this->get_vars['act']);
-				
+				$data = array('usr_act_key' => $act);
+				$this->data['act'] = $this->user_m->activate_account($data);
+
+				$this->data['subview'] = 'user/account/account_activate';
+				$this->load->view('_main_body_layout', $this->data);
+			
 			}else{
 				
-				redirect('', 'refresh');
+				show_404();
 				
 			}
-			
-			$this->data['subview'] = 'user/account/account_activate';
-			$this->load->view('_main_body_layout', $this->data);
 			
 		}
   

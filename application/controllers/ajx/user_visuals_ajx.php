@@ -12,7 +12,7 @@
 		public function index(){
 
 			$inputs = $this->input->post(NULL, TRUE);
-			$path = FCPATH.'data\users\\';
+			$path = FCPATH.'data/users/';
 			$new_image = explode('_temp', $inputs['src']);
 			$config['image_library'] = 'gd2';
 			$config['source_image'] = $path.$inputs['src'];
@@ -51,32 +51,57 @@
 		public function cover(){
 				
 				$inputs = $this->input->post(NULL, TRUE);
-				$path = FCPATH.'data\users-cover\\';
-				$new_image = explode('_temp', $inputs['src']);
-				$config['crop'] = array(
+
+				$path = FCPATH.'data/user-covers/';
+				
+				$config['resize'] = array(
 					'image_library' => 'gd2',
-					'source_image' => $upload_data['file_path'].$new_image[0].'.jpg',
-					'maintain_ratio' => FALSE,
-					'width' => 1920,
-					'height' => 600,
-					'x_axis' => '0',
-					'y_axis' => '0'
+					'source_image' => $path.'temp/'.$inputs['raw_name'].'.jpg',
+					'quality' => '80%',
+					'width' => 1600,
+					'height' => 900,
+					'master_dim' => 'width'
 				);
 				
-				$this->load->library('image_lib', $config);
+				$this->load->library('image_lib', $config['resize']);
 				
-				if (!$this->image_lib->crop()){
+				if (!$this->image_lib->resize()){
 
 					$this->data['result'] = $this->image_lib->display_errors();
 						
 				}else{
 					
-					$this->data['result'] = TRUE;
+					$this->image_lib->clear();
 					
-					unlink($path.$inputs['src']);
-
-					if($user[0]->usr_cover == '')
-						$this->user_m->set_cover($this->user['usr_id'], $new_image[0]);
+					$config['crop'] = array(
+						'image_library' => 'gd2',
+						'source_image' => $path.'temp/'.$inputs['raw_name'].'.jpg',
+						'new_image' => $path.$inputs['raw_name'].'.jpg',
+						'maintain_ratio' => FALSE,
+						'width' => 1600,
+						'height' => 400,
+						'x_axis' => '0',
+						'y_axis' => $inputs['y_axis']
+					);
+					
+					$this->image_lib->initialize($config['crop']); 
+					
+					if (!$this->image_lib->crop()){
+	
+						$this->data['result'] = $this->image_lib->display_errors();
+							
+					}else{
+						
+						$this->data['result'] = TRUE;
+						
+						unlink($path.'temp/'.$inputs['raw_name'].'.jpg');
+	
+						if($this->user['usr_cover'] == ''){
+							$this->user_m->set_cover($this->user['usr_id'], $inputs['raw_name']);
+							$this->session->set_userdata('usr_cover', $inputs['raw_name']);
+						}
+						
+					}
 					
 				}
 					

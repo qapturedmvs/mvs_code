@@ -1,194 +1,172 @@
 <script type="text/javascript">
 	var mvs_id = <?php echo $movie['mvs_id']; ?>;
 </script>
-<div class="pageDefault pageMovie" mvs-id="<?php echo $movie['mvs_id']; ?>">
-	<section class="hero"<?php echo ($movie['mvs_cover'] != 0) ? ' style="background:url('.$site_url.'/data/covers/'.$movie['mvs_slug'].'.jpg) center center no-repeat; background-size:cover;"' : ''; ?>></section>
-	<section class="body">
-		<aside class="mainCol left">
-			<div class="details">
-				<div class="cover left"><div class="posArea"><img src="<?php echo $site_url.getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'medium'); ?>" alt="<?php echo $movie['mvs_title']; ?>" /></div></div>
-				<div class="text left">
-					<div class="posArea">
-						<h1 title="<?php echo $movie['mvs_title']; ?>"><?php echo $movie['mvs_title'].' (<small>'.$movie['mvs_year'].'</small>)'; ?></h1>
-						<?php if($genres): ?>
-						<div class="genre">
-							<ul>
-								<?php foreach($genres['data'] as $genre): ?>
-								<li><?php echo $genres['table'][$genre]; ?></li>
-								<?php endforeach; ?>
-							</ul>
-							<hr class="qFixer" />
-						</div>
-						<?php endif; ?>
-						<?php if($countries): ?>
-						<div class="country">
-							<ul>
-								<?php foreach($countries['data'] as $country): ?>
-								<li><?php echo $countries['table'][$country]; ?></li>
-								<?php endforeach; ?>
-							</ul>
-							<hr class="qFixer" />
-						</div>
-						<?php endif; ?>
-						<div class="trailer"><a class="trailerBtn button" onclick="watch_trailer(this)" href="javascript:void(0);">Trailer</a></div>
-						<?php if($movie['rev_count'] !== NULL): ?>
-						<div class="reviewCount"><a href="javascript:void(0);"><?php echo $movie['rev_count']; ?> Review</a></div>
-						<?php endif; ?>
-						<span class="imdbRatingPlugin" data-title="<?php echo $movie['mvs_imdb_id']; ?>" data-style="p1"><a href="http://www.imdb.com/title/<?php echo $movie['mvs_imdb_id']; ?>/?ref_=plg_rt_1"><img src="http://g-ecx.images-amazon.com/images/G/01/imdb/plugins/rating/images/imdb_46x22.png" alt="<?php echo $movie['mvs_title'].' ('.$movie['mvs_year'].')'; ?> on IMDb" /></a></span>
-						<script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="http://g-ec2.images-amazon.com/images/G/01/imdb/plugins/rating/js/rating.min.js";stags.parentNode.insertBefore(js,stags);})(document,'script','imdb-rating-api');</script> 
-						<hr class="qFixer" />
-						<div class="movieActions">
-							<?php if($logged_in): ?>
-							<ul>
-								<li class="seenMovie singleSeen"><a<?php echo ($movie['seen_id'] !== NULL) ? ' data-itm-id="'.$movie['seen_id'].'"' : ' data-itm-id="0"'; ?> href="javascript:void(0);" onclick="s_seen(this)">Watched</a></li>
-								<li class="applaudMovie"><a<?php echo ($movie['app_id'] !== NULL) ? ' data-itm-id="'.$movie['app_id'].'"' : ' data-itm-id="0"'; ?> href="javascript:void(0);" onclick="s_applaud(this)">Applaud</a></li>
-								<li class="addToList"><a href="javascript:void(0);">Add to list</a>
-									<div class="listSelection">
-										<ul class="cLists">
-											<li class="wtc addtoWtc"><a onclick="s_watchlist(this)" <?php echo ($movie['wtc_id'] !== NULL) ? 'data-itm-id="'.$movie['wtc_id'].'"' : 'data-itm-id="0"'; ?> href="javascript:void(0);">Watchlist</a></li>
-											<?php foreach($cls as $cl): ?>
-												<li><a onclick="s_customlist(this)" data-prn-id="<?php echo $cl['list_id']; ?>" <?php echo ($cl['ldt_id'] !== NULL) ? 'data-itm-id="'.$cl['ldt_id'].'"' : 'data-itm-id="0"'; ?> href="javascript:void(0);"><?php echo $cl['list_title']; ?></a></li>
-											<?php endforeach; ?>
-										</ul>
-										<div class="ncList">
-											<a href="javascript:void(0);">Add to New Custom List</a>
-											<div class="listCreate none">
-												<input maxlength="255" placeholder="Enter list title" type="text" />
-												<a rel="cncl" href="javascript:void(0);">Add</a>
-											</div>
-										</div>
-										<hr class="qFixer" />
-									</div>
-								</li>
-							</ul>
-							<hr class="qFixer" />
-							<?php endif; ?>
-						</div>
-					</div>
-					<div class="plot">
-						<p><?php echo $movie['mvs_plot']; ?></p>
-					</div>
-					<div class="cast">
-						<span class="title">Stars: </span>
-							<?php
-								$i = 0;
-								
-								foreach($casts as $cast){
-
-									echo ($i == 0) ? '' : ', ';
-									echo '<a href="'.$site_url.'actor/'.$cast['str_slug'].'">'.$cast['str_name'].'</a>';
-									
-									$i++;
-								}
-							?>
-						<hr class="qFixer" />
-					</div>
+<div data-mvs-id="<?php echo $movie['mvs_id']; ?>" class="pageDefault pageMovie<?php echo ($movie['mvs_cover'] != 0) ? ' scrolledPage"><div class="qHero" style="background-image:url('.get_movie_Cover($movie['mvs_slug']).');">' : ' noCover"><div class="qHero">'; ?>
+		<div class="qHeroInner qMainBlock">
+			<div class="title"><h1><?php echo $movie['mvs_title']; ?></h1><small><?php echo $movie['mvs_year']; ?></small></div>
+			<section class="movieInfoTop qFixer">
+				<?php if(isset($movie['genres'])): ?>
+				<div class="genre">
+					<ul class="qFixer">
+						<?php foreach($movie['genres'] as $key => $genre): ?>
+						<li><a href="/movies?mfg=<?php echo $movie['gnr_id'][$key]; ?>"><?php echo $genre; ?></a></li>
+						<?php endforeach; ?>
+					</ul>
 				</div>
-				<hr class="qFixer" />
-			</div>
-			<?php if($logged_in): ?>
-			<div class="userNetworkSeen" ng-controller="mdUserNetworkSeen">
-				<div ng-if="items.users.length > 0">
-					<span class="avatars" ng-repeat="item in items.users"><a class="lazy" title="{{item.usr_name}}" href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}" data-original="<?php echo $site_url; ?>{{item.usr_avatar}}"></a></span>
-					<span class="names" ng-repeat="item in items.users"><span ng-if="!$first">, </span><a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
-					<span ng-if="items.total > 4"> and {{items.total-3}} other people in your network</span> seen this movie.
+				<?php endif; ?>
+				<?php if(isset($movie['audience'])): ?>
+				<div class="audience"><?php echo $movie['audience']; ?></div>
+				<?php endif; ?>
+				<?php if($movie['mvs_runtime'] != '' && $movie['mvs_runtime'] != 0): ?>
+				<div class="runtime"><?php echo $movie['mvs_runtime']; ?> min</div>
+				<?php endif; ?>
+			</section>
+		</div>
+	</div>
+	<div class="body qMainBlock qFixer">
+		<aside class="leftCol left">
+			<section class="visuals">
+				<div rel="<?php echo $movie['mvs_poster']; ?>" data-thumb="<?php echo $site_url.getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'small'); ?>" class="poster qFixer"><img src="<?php echo $site_url.getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'original'); ?>" alt="<?php echo $movie['mvs_title']; ?>" />
+				<div class="miniInfo"><span><?php echo $movie['mvs_title']; ?></span><small><?php echo $movie['mvs_year']; ?></small></div>
 				</div>
-				<hr class="qFixer" />
-			</div>
-			<?php endif; ?>
-			<div class="social">
-				<?php $this->load->view('components/_commentbox'); ?>
-			</div>
+				<?php if($movie['mvs_cover'] != 0 || ($movie['mvs_poster'] != 0 && $movie['mvs_rating'] >= 5)): ?>
+				<div class="trailer qFixer"><button class="spriteBefore" onclick="watch_trailer(this);">Trailer</button></div>
+				<?php endif; ?>
+			</section>
 		</aside>
-		<aside class="sidebar right">
-			<section class="lists relatedLists" ng-controller="mdUserCustomlists">
-				<div ng-if="items.lists.length > 0">
-					<span class="sectionTitle">Related Lists</span>
-					<ul>
-						<li ng-repeat="item in items.lists">
-							<a href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">
-							<div class="listCover" ng-if="item.list_data_slugs != null">
-								<ul>
-									<li ng-repeat="cld in item.cld" class="lazy" data-original="<?php echo $site_url; ?>{{cld.cover}}"></li>
-								</ul>
-								<hr class="qFixer" />
+		<aside class="midCol left">
+			<section class="movieInfoBottom">
+				<div class="stats">
+					<ul class="qFixer">
+						<?php if($movie['mvs_rating'] !== ''): ?>
+						<li class="rating spriteBefore"><?php echo $movie['mvs_rating']; ?></li>
+						<?php endif; ?>
+						<li class="imdbRate">
+							<a class="imdbRatingPlugin spriteAfter" target="_blank" data-title="<?php echo $movie['mvs_imdb_id']; ?>" data-style="p4" title="<?php echo $movie['mvs_title'].' ('.$movie['mvs_year'].')'; ?> on IMDb" href="http://www.imdb.com/title/<?php echo $movie['mvs_imdb_id']; ?>/?ref_=plg_rt_1"></a>
+						<script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="http://g-ec2.images-amazon.com/images/G/01/imdb/plugins/rating/js/rating.min.js";stags.parentNode.insertBefore(js,stags);})(document,'script','imdb-rating-api');</script>
+						</li>
+						<?php if($movie['rev_count'] !== NULL && $movie['rev_count'] != 0): ?>
+						<li class="revCount"><a class="spriteAfter"><?php echo $movie['rev_count']; ?></a></li>
+						<?php endif; ?>
+					</ul>
+				</div>
+				
+				<div class="plot">
+					<p><?php echo $movie['mvs_plot']; ?></p>
+				</div>
+				
+				<?php if($logged_in): ?>
+				<div class="movieActions">
+					<ul class="qFixer">
+						<li class="seen"><button class="btnDefault btnSeen" data-itm-id="<?php echo ($movie['seen_id'] !== NULL) ? $movie['seen_id'] : 0; ?>" onclick="qptAction.seen(this)">WATCHED</button></li>
+						<li class="addToList">
+							<button class="btnDefault btnAddToList">ADD TO LIST</button>
+							<div class="listSelection qFixer">
+								<div class="title">ADD TO</div>
+								<div class="wtc">
+									<button  class="chkDefault chkWtc" onclick="qptAction.watchlist(this)" data-itm-id="<?php echo ($movie['wtc_id'] !== NULL) ? $movie['wtc_id'] : 0; ?>">Watchlist</button>
+								</div>
+								<div class="clSearch">
+									<input class="rc" type="text" placeholder="List name..." />
+								</div>
+								<div class="cLists">
+									<?php foreach($cls as $cl): ?>
+									<button class="chkDefault chkCl" onclick="qptAction.customlist(this)" data-prn-id="<?php echo $cl['list_id']; ?>" data-itm-id="<?php echo ($cl['ldt_id'] !== NULL) ? $cl['ldt_id'] : 0; ?>"><?php echo $cl['list_title']; ?></button>
+									<?php endforeach; ?>
+								</div>
+								<div class="ncList">
+									<button>Add to New Custom List</button>
+									<div class="listCreate none">
+										<input class="rc" maxlength="255" placeholder="List title..." type="text" />
+										<button rel="cncl">Add</button>
+									</div>
+								</div>
 							</div>
-							</a>
-							<div class="listInfo"><a class="listTitle" href="<?php echo $site_url; ?>user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a> <small>{{item.list_movie_count}}</small> by <a href="<?php echo $site_url; ?>user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></div>
-							<hr class="qFixer" />
+						</li>
+						<li class="applaud"><button class="btnDefault btnApplaud" data-itm-id="<?php echo ($movie['app_id'] !== NULL) ? $movie['app_id'] : 0; ?>" onclick="qptAction.applaud(this)">APPLAUD</button></li>
+					</ul>
+				</div>
+
+				<div class="userNetworkSeen" ng-controller="pmdUsrNetSn">
+					<div class="qFixer" ng-if="items.users.length > 0">
+						<span class="avatars" ng-repeat="item in items.users"><a ng-if="$first && item.seen_fl!=0" class="usrAvatar lazy" title="<?php echo $user['usr_name']; ?>" href="/user/wall/actions/<?php echo $user['usr_nick']; ?>" data-original="<?php echo get_user_avatar($user['usr_avatar']); ?>"></a><a class="usrAvatar lazy" title="{{item.usr_name}}" href="/user/wall/actions/{{item.usr_nick}}" data-original="{{item.usr_avatar}}"></a></span>
+						<span class="names" ng-repeat="item in items.users"><a ng-if="$first && item.seen_fl!=0" href="/user/wall/actions/<?php echo $user['usr_nick']; ?>">You</a><span ng-if="$first && item.seen_fl!=0">, </span><span ng-if="!$first">, </span><a href="/user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a></span>
+						<span ng-if="items.total > 2"> and <b>{{items.total-2}} others</b></span> have watched this
+					</div>
+				</div>
+				<?php endif; ?>
+				
+				<div class="casts">
+					<?php if(isset($casts['director'])): ?>
+					<span class="director">
+						<b>DIRECTOR</b>
+						<?php
+							
+							foreach($casts['director'] as $key => $star){
+
+								echo ($key == 0) ? '' : ', ';
+								echo '<a href="/actor/'.$star['str_slug'].'">'.$star['str_name'].'</a>';
+								
+							}
+						?>
+					</span>
+					<?php endif; ?>
+					<?php if(isset($casts['stars'])): ?>
+					<span class="stars">
+					<b>STARS</b>
+						<?php
+							
+							foreach($casts['stars'] as $key => $star){
+
+								echo ($key == 0) ? '' : ', ';
+								echo '<a href="/actor/'.$star['str_slug'].'">'.$star['str_name'].'</a>';
+								
+							}
+						?>
+					</span>
+					<?php endif; ?>
+				</div>
+				
+				<?php if(isset($movie['countries'])): ?>
+				<div class="country">
+					<b>COUNTRY</b>
+					<?php foreach($movie['countries'] as $key => $country): ?>
+						<?php echo ($key == 0) ? '' : ', '; ?><a href="/movies?mfc=<?php echo $movie['cntry_id'][$key]; ?>"><?php echo $country; ?></a>
+					<?php endforeach; ?>
+				</div>
+				<?php endif; ?>
+				
+			</section>
+			<section class="reviews revMovie">
+				<?php $this->load->view('components/_reviewbox'); ?>
+			</section>
+		</aside>
+		
+		<aside class="rightCol right">
+			<section class="lists relatedLists rlClMovie" ng-controller="mdUserCustomlists">
+				<div ng-if="items.lists.length > 0">
+					<h5>RELATED LISTS</h5>
+					<ul>
+						<li class="clist qFixer" ng-repeat="item in items.lists">
+							<div class="listCover left" ng-if="item.list_data_slugs != null">
+								<a class="qFixer" href="/user/movies/detail/{{item.list_slug}}">
+									<figure ng-repeat="cld in item.cld" class="lazy left" data-original="<?php echo $site_url; ?>{{cld.cover}}"></figure>
+								</a>
+							</div>
+							<div class="listInfo left">
+								<div class="listTitle">
+									<a href="/user/movies/detail/{{item.list_slug}}">{{item.list_title}}</a>
+									<small>{{item.list_movie_count}}</small>
+								</div>
+								<div class="listOwner">
+									by <a href="/user/wall/actions/{{item.usr_nick}}">{{item.usr_name}}</a>
+								</div>
+							</div>
 						</li>
 					</ul>
 				</div>
 			</section>
 		</aside>
-		<hr class="qFixer" />
-	</section>
+	</div>
+
 </div>
-<script type="text/javascript">
-	
-
-var color = {
-  get: function(a, b, c) {
-
-			var res = 10;
-
-      var e = new Image;
-      e.onerror = function() {
-          alert("y\u00fcklemede hata")
-      };
-      e.onload = function() {
-          var a = document.createElement("canvas");
-			a.width = e.width;
-          a.height = e.height;
-          a = a.getContext("2d");
-          a.drawImage(e, 0, 0, e.width, e.height, 0, 0, res, res);
-          
-  var s = 0, data = [0, 0, 0];
-  
-  for(var i=0; i< Math.pow(res, 2); ++i)
-  {
-if( i % res == 0 && i > 0 ) s++;
-
-var	point = a.getImageData(s, i-(s*res), this.width, this.height).data
-data[0] += point[0];
-data[1] += point[1];
-data[2] += point[2];
-  }
-  
-  data[0] = Math.round( data[0] * Math.pow(res, -2) );
-  data[1] = Math.round( data[1] * Math.pow(res, -2) );
-  data[2] = Math.round( data[2] * Math.pow(res, -2) );
-  
-  a = data;
-  
-          a = color.rgbToHex(a[0], a[1], a[2]);
-          a = color.shade("#" + a, -8);
-          b((!1 == c ? "" : "#") + a);
-      };
-      e.src = a
-  },
-  rgbToHex: function(a, b, c) {
-      return color.toHex(a) + color.toHex(b) + color.toHex(c)
-  },
-  toHex: function(a) {
-      a = parseInt(a, 10);
-      if (isNaN(a)) return "00";
-      a = Math.max(0, Math.min(a,
-          255));
-      return "0123456789ABCDEF".charAt((a - a % 16) / 16) + "0123456789ABCDEF".charAt(a % 16)
-  },
-  shade: function(a, b) {
-      var c = parseInt(a.slice(1), 16),
-          e = Math.round(2.55 * b),
-          h = (c >> 16) + e,
-          g = (c >> 8 & 255) + e,
-          c = (c & 255) + e;
-      return (16777216 + 65536 * (255 > h ? 1 > h ? 0 : h : 255) + 256 * (255 > g ? 1 > g ? 0 : g : 255) + (255 > c ? 1 > c ? 0 : c : 255)).toString(16).slice(1)
-  }
-};
-
- color.get('<?php echo $site_url.getMoviePoster($movie['mvs_poster'], $movie['mvs_slug'], 'small'); ?>', function( k ) {
-		$('.pageMovie .hero').css("background-color", k);  
-  });
-	
-</script>

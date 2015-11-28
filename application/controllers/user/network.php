@@ -5,7 +5,6 @@
 		function __construct(){
 			parent::__construct();
 			
-			$this->output->enable_profiler();
 			$this->load->model('user_m');
       
 		}
@@ -21,7 +20,7 @@
 					
 					$this->data['controls'] = array('page' => 'flwr', 'owner' => TRUE);
 	
-					if($this->data['the_user']['owner_fl'] === 0)
+					if($this->data['the_user']['owner_fl'] === '0')
 						$this->data['controls']['owner'] = FALSE;
 
 					$this->data['subview'] = 'user/network_list';

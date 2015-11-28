@@ -1,12 +1,12 @@
 <div class="container pgaeMovies">
-	<h2 class="sub-header">Movies</h2>
+	<h2 class="sub-header">Movies <br /><small>Covers Selected: <b><?php echo $count->total_count; ?></b></small></h2>
 	
 		<div class="input-group movie-search">
 			<input type="text" class="form-control" id="search_movie" />
 		</div>
 	
 	<div class="table-responsive">
-		<?php if(count($movies)): ?>
+		<?php if(isset($movies)): ?>
 		<div class="panel panel-default panelMovies">
 		<div class="panel-heading">Movies in <?php echo ($movie_counts->offset+1).' - '.($movie_counts->offset+$movie_counts->per_page); ?></div>
 			<table class="table table-striped table-movies">
@@ -17,7 +17,7 @@
 						<th><a rel="title" href="javascript:void(0);">Title</a></th>
 						<th>Original Title</th>
 						<th><a rel="year" href="javascript:void(0);">Year</a></th>
-						<th style="text-align:right;"><a rel="runtime" href="javascript:void(0);">Runtime</a></th>
+						<th style="text-align:right;"><a rel="runtime" href="javascript:void(0);">Rating</a></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -25,11 +25,11 @@
 				<?php foreach($movies as $movie): ?>
 					<tr>
 						<td><?php echo $s; ?>.</td>
-						<td class="posterGrid"><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_60X85_.jpg" alt="'.$movie->mvs_title.'" />'; ?></a></td>
+						<td class="posterGrid"><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php //if($movie->mvs_poster != '') echo '<img src="'.$site_url.'data/movies/thumbs/'.$movie->mvs_imdb_id.'_60X85_.jpg" alt="'.$movie->mvs_title.'" />'; ?></a></td>
 						<td><a href="<?php echo $site_url.'admin/movie/detail/'.$movie->mvs_id; ?>"><?php echo $movie->mvs_title; ?></a></td>
 						<td><?php echo $movie->mvs_org_title; ?></td>
 						<td><?php echo $movie->mvs_year; ?></td>
-						<td style="text-align:right;"><?php echo $movie->mvs_runtime; ?> min.</td>
+						<td style="text-align:right;"><?php echo $movie->mvs_rating; ?></td>
 					</tr>
 				<?php $s++; ?>
 				<?php endforeach; ?>		

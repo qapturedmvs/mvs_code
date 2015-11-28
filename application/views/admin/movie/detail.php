@@ -1,9 +1,10 @@
 <div class="container pageMovie">
 <div class="headHolder">
 	<div class="posterHolder">
-		<img src="<?php echo ($movie->mvs_poster != 0) ? $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg' : $site_url.'images/placeHolder.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /></div>
+		<!-- <img src="<?php //echo ($movie->mvs_poster != 0) ? $site_url.'data/movies/thumbs/'.$movie->mvs_slug.'_175X240_.jpg' : $site_url.'images/placeHolder.jpg'; ?>" alt="<?php echo $movie->mvs_title; ?>" /> -->
+		</div>
 	<div class="topHolder">
-		<h2 class="sub-header">Movie #<?php echo $movie->mvs_id; ?></h2>
+		<h2 class="sub-header"><?php echo $movie->mvs_title; ?></h2>
 		<div class="covers">
 			<ul></ul>
 			<div class="clearfix"></div>
@@ -16,11 +17,33 @@
 	</div>
 	<div class="clearfix"></div>
 </div>
+<div class="googleSearch"><a target="_blank" href="https://www.google.com.tr/search?q=<?php echo str_replace(' ', '+', $movie->mvs_title); ?>+movie+<?php echo $movie->mvs_year; ?>&hl=en-US&tbs=isz:l,imgo:1&tbm=isch" class="btn btn-default">Search On Google</a></div>
 <?php echo form_open(); ?>
+	<div class="input-group mnCover">
+	  <span class="input-group-addon">Manual Cover</span>
+	  <?php echo form_input(array('name' => 'mvs_cover_mn', 'value' => '', 'id' => 'mvs_cover_mn', 'class' => 'form-control')); ?>
+	  <span class="input-group-addon">
+			<div class="btn-group btn-group-sm" role="group">
+				<button type="button" class="btn btn-default" rel="top">TOP</button>
+				<button type="button" class="btn btn-default" rel="middle">MIDDLE</button>
+				<button type="button" class="btn btn-default" rel="bottom">BOTTOM</button>
+			</div>
+		</span>
+	</div>
 	<div class="input-group">
 	  <span class="input-group-addon">Cover</span>
 	  <?php echo form_input(array('name' => 'mvs_cover', 'value' => ($movie->mvs_cover == 1) ? $site_url.'data/covers/'.$movie->mvs_slug.'.jpg' : '', 'id' => 'mvs_cover', 'class' => 'form-control')); ?>
-	  <?php echo ($movie->mvs_cover == 1) ? '<span class="input-group-addon"><a target="_blank" href="'.$site_url.'data/covers/'.$movie->mvs_slug.'.jpg">Show Cover</a></span>' : ''; ?>
+	  <span class="input-group-addon"><?php echo ($movie->mvs_cover == 1) ? '<a target="_blank" href="'.$site_url.'data/covers/'.$movie->mvs_slug.'.jpg">Show Cover</a>' : ''; ?></span>
+	</div>
+	<div class="input-group">
+	  <span class="input-group-addon">IMDB ID</span>
+	  <?php echo form_input(array('name' => 'mvs_imdb_id', 'value' => $movie->mvs_imdb_id, 'id' => 'mvs_imdb_id', 'class' => 'form-control')); ?>
+	  <span class="input-group-addon"><a target="_blank" href="<?php echo 'http://www.imdb.com/title/'.$movie->mvs_imdb_id; ?>">Go to IMDB</a></span>
+	</div>
+	<div class="input-group">
+	  <span class="input-group-addon">Slug</span>
+	  <?php echo form_input(array('name' => 'mvs_slug', 'value' => $movie->mvs_slug, 'id' => 'mvs_slug', 'class' => 'form-control')); ?>
+	  <span class="input-group-addon"><a target="_blank" href="<?php echo $site_url.'movie/'.$movie->mvs_slug; ?>">Go to Page</a></span>
 	</div>
 	<div class="input-group">
 	  <span class="input-group-addon">Title</span>
@@ -104,18 +127,8 @@
 	  <?php echo form_input(array('name' => 'mvs_tmt_meter', 'value' => $movie->mvs_tmt_meter, 'id' => 'mvs_tmt_meter', 'class' => 'form-control')); ?>
 	</div>
 	<div class="input-group">
-	  <span class="input-group-addon">IMDB ID</span>
-	  <?php echo form_input(array('name' => 'mvs_imdb_id', 'value' => $movie->mvs_imdb_id, 'id' => 'mvs_imdb_id', 'class' => 'form-control')); ?>
-	  <span class="input-group-addon"><a target="_blank" href="<?php echo 'http://www.imdb.com/title/'.$movie->mvs_imdb_id; ?>">Go to IMDB</a></span>
-	</div>
-	<div class="input-group">
 	  <span class="input-group-addon">Official Website</span>
 	  <?php echo form_input(array('name' => 'mvs_website', 'value' => $movie->mvs_website, 'id' => 'mvs_website', 'class' => 'form-control')); ?>
-	</div>
-	<div class="input-group">
-	  <span class="input-group-addon">Slug</span>
-	  <?php echo form_input(array('name' => 'mvs_slug', 'value' => $movie->mvs_slug, 'id' => 'mvs_slug', 'class' => 'form-control')); ?>
-	  <span class="input-group-addon"><a target="_blank" href="<?php echo $site_url.'movie/'.$movie->mvs_slug; ?>">Go to Page</a></span>
 	</div>
 	<div class="input-group">
 	  <span class="input-group-addon">Qaptured Note</span>

@@ -30,6 +30,20 @@ class Movie_M extends MVS_Model
 	
 	}
 	
+	// Movie list Count
+	public function movies_count($data){
+		
+		$data['mfn'] = ($data['mfn'] !== 0) ? $this->cleaner($data['mfn']) : 0;
+		$data['where'] = ($data['where'] !== '') ? $this->cleaner($data['where']) : '';
+		$count = $this->db->call_procedure('sp_get_movie_list_count', $data);
+
+		if($count)
+			return $count[0]['total_count'];
+		else
+			return FALSE;
+	
+	}
+	
 	// MOVIE DETAIL
 	public function movie($data){
 		
@@ -76,6 +90,25 @@ class Movie_M extends MVS_Model
 
 		if(isset($countries['data']))
 			return $countries['data'];
+		else
+			return FALSE;
+	
+	}
+	
+	// GET ALL AUDIENCE
+	public function audience(){
+
+		$this->per_page = 0;
+		$filters = array(
+			'select' => '*',
+			'from' => 'mvs_audience',
+			'order_by' => 'aud_title ASC'
+		);	
+
+		$audience = $this->get_data(NULL, 0, FALSE, $filters);
+
+		if(isset($audience['data']))
+			return $audience['data'];
 		else
 			return FALSE;
 	

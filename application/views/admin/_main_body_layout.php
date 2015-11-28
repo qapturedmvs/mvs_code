@@ -16,6 +16,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="<?php echo $site_url; ?>admin/movie/lister">Movies</a></li>
+				<li><a href="<?php echo $site_url; ?>admin/movie/covers">Covers</a></li>
+        <li><a href="<?php echo $site_url; ?>admin/movie/covered">Covered</a></li>
         <li><a href="<?php echo $site_url; ?>admin/actor/lister">Actors</a></li>
         <li><a href="#">Members</a></li>
         <li><a href="<?php echo $site_url; ?>admin/user">Admin Users</a></li>

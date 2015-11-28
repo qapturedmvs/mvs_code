@@ -66,7 +66,7 @@
 					
 					$vars = $this->input->post(NULL, TRUE);
 					
-					$data = array('list_id' => $list_id, 'usr_id' => $this->user['usr_id'], 'list_title' => $vars['title'], 'list_order' => $vars['order'], 'list_remove' => (isset($vars['del'])) ? $vars['del'] : NULL);
+					$data = array('usr_id' => $this->user['usr_id'], 'list_id' => $list_id, 'list_title' => $vars['title'], 'list_order_data' => $vars['order'], 'list_del_data' => (isset($vars['del'])) ? $vars['del'] : '', 'list_order_count' => $vars['oc'], 'list_del_count' => (isset($vars['dc'])) ? $vars['delc'] : 0);
 
 					var_dump($data);
 					//$this->data['ecl_result'] = $this->customlist_m->edit_custom_list($data);

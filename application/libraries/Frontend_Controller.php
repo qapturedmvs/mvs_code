@@ -15,7 +15,6 @@
 			parent::__construct();
 			
 			$this->load->helper('mvs_front_helper');
-			$this->data['site_name'] = $this->config->item('mvs_site_name');
 
 			// CHECK USER LOGGED IN
 			$this->logged_in = $this->data['logged_in'] = (bool) $this->session->userdata('usr_loggedin');
@@ -52,6 +51,7 @@
 						'usr_name' => $user['usr_name'],
 						'usr_email' => $user['usr_email'],
 						'usr_avatar' => $user['usr_avatar'],
+						'usr_cover' => $user['usr_cover'],
 						'usr_loggedin' => TRUE,
 					);
 						
@@ -81,6 +81,7 @@
 					'usr_name' => $user['usr_name'],
 					'usr_email' => $user['usr_email'],
 					'usr_avatar' => $user['usr_avatar'],
+					'usr_cover' => $user['usr_cover'],
 					'usr_loggedin' => TRUE,
 				);
 				
@@ -122,6 +123,12 @@
 			
 			return $data;
 		
+		}
+		
+		protected function send_404(){
+			
+			redirect('pagenotfound?uri='.uri_string(), 'location', 301);
+			
 		}
 		
 	}

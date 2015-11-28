@@ -4,7 +4,7 @@
 </script>
 <div class="commentbox">
 	<?php if($logged_in): ?>
-	<a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>" class="userAvatar"><img src="<?php echo $site_url.get_user_avatar($user['usr_avatar']).'?t='.time(); ?>" alt="<?php echo $user['usr_name']; ?>" /></a>
+	<a href="<?php echo $site_url.'user/wall/actions/'.$user['usr_nick']; ?>" class="userAvatar"><img src="<?php echo get_user_avatar($user['usr_avatar']).'?t='.time(); ?>" alt="<?php echo $user['usr_name']; ?>" /></a>
 	<div class="commentForm">
 		<textarea name="comment_text" id="comment_text" required></textarea>
 		<a href="javascript:void(0);" class="btnDefault btnComment rc">Comment</a>

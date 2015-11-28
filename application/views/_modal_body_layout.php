@@ -1,5 +1,5 @@
-<?php $this->load->view('admin/components/_page_head'); ?>
-
-    <?php $this->load->view($subview); ?>
-
-<?php $this->load->view('admin/components/_page_foot'); ?>
+<?php $this->load->view('components/_page_head'); ?>
+  <div id="qModal">
+  <?php $this->load->view($subview); ?>
+  </div>
+<?php $this->load->view('components/_page_foot'); ?>

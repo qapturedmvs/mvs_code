@@ -9,7 +9,7 @@
       
 		}
 		
-		public function forget(){
+		public function forgotten(){
 			
 			$inputs = $this->input->post(NULL, TRUE);
 			$this->data['pwf_result'] = '';
@@ -46,7 +46,7 @@
 				
 			}
 			
-			$this->data['subview'] = 'user/account/password_forget';
+			$this->data['subview'] = 'user/account/password_forgotten';
       $this->load->view('_main_body_layout', $this->data);
 			
 		}

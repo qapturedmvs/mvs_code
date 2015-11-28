@@ -1,5 +1,6 @@
 <section class="view">
-	<a class="row" href="javascript:void(0);">Row View</a>
-	<a class="grid" href="javascript:void(0);">Grid View</a>
-	<a class="mgrid" href="javascript:void(0);">Mini Grid View</a>
+	<span>View</span>
+	<button rel="row" class="row sprite">Row View</button>
+	<button rel="grid" class="grid sprite">Grid View</button>
+	<button rel="mgrid" class="mgrid sprite">Mini Grid View</button>
 </section>

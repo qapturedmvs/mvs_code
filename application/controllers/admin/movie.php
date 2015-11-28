@@ -15,6 +15,35 @@ class Movie extends Backend_Controller {
 		$this->data['movie_counts'] = (object)array('offset' => $db_data['offset'], 'per_page' => $db_data['per_page']);
 		$this->data['movies'] = $db_data['data'];
 		$this->data['paging'] = $this->_get_paging($db_data['total_count'], $this->movie_m->per_page, 'admin/movie/lister', 4);
+		$this->data['count'] = (object)array('total_count' => '');
+	
+		// Load view
+		$this->data['subview'] = 'admin/movie/list';
+		$this->load->view('admin/_main_body_layout', $this->data);
+		
+	}
+	
+	public function covers($p = 1){
+		
+		$db_data = $this->movie_m->covers($p);
+		$this->data['movie_counts'] = (object)array('offset' => $db_data['offset'], 'per_page' => $db_data['per_page']);
+		$this->data['movies'] = $db_data['data'];
+		$this->data['paging'] = $this->_get_paging($db_data['total_count'], 10000, 'admin/movie/covers', 4);
+		$this->data['count'] = $this->movie_m->cover_count();
+
+		// Load view
+		$this->data['subview'] = 'admin/movie/list';
+		$this->load->view('admin/_main_body_layout', $this->data);
+		
+	}
+	
+	public function covered($p = 1){
+		
+		$db_data = $this->movie_m->covered($p);
+		$this->data['movie_counts'] = (object)array('offset' => $db_data['offset'], 'per_page' => $db_data['per_page']);
+		$this->data['movies'] = $db_data['data'];
+		$this->data['paging'] = $this->_get_paging($db_data['total_count'], 500, 'admin/movie/covered', 4);
+		$this->data['count'] = $this->movie_m->cover_count();
 
 		// Load view
 		$this->data['subview'] = 'admin/movie/list';

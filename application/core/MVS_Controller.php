@@ -1,4 +1,5 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class MVS_Controller extends CI_Controller{
 	
 	function __construct() {
@@ -29,7 +30,6 @@ class MVS_Controller extends CI_Controller{
 
 	}
 	
-			
 	protected function _send_mail($usr_email, $subject, $data, $type){
 		
 		$result = TRUE;

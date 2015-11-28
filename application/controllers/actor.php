@@ -4,7 +4,6 @@
 		function __construct(){
 			parent::__construct();
 			
-			$this->output->enable_profiler();
 			$this->load->model('actor_m');
 		}
 
@@ -25,8 +24,8 @@
 				$actor = $this->actor_m->get_actor_movies($data);
 		
 				if($actor){
-          
-					$this->data['actor'] = array('str_name' => $actor[0]['str_name'], 'str_slug' => $actor[0]['str_slug']);
+
+					$this->data['actor'] = array('str_id' => $actor[0]['str_id'], 'str_name' => $actor[0]['str_name'], 'str_slug' => $actor[0]['str_slug'], 'str_photo' => $actor[0]['str_photo']);
 					$featured = array();
 					$movies = array();
 					$i = 0;

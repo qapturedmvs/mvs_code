@@ -1,6 +1,6 @@
 <?php
 
-  if($act === TRUE){
+  if($act == 1){
     
     echo 'ACTIVATION SUCCESS!!!';
     
