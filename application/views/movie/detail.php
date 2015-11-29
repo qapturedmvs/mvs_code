@@ -58,13 +58,13 @@
 				<?php if($logged_in): ?>
 				<div class="movieActions">
 					<ul class="qFixer">
-						<li class="seen"><button class="btnDefault btnSeen" data-itm-id="<?php echo ($movie['seen_id'] !== NULL) ? $movie['seen_id'] : 0; ?>" onclick="qptAction.seen(this)">WATCHED</button></li>
+						<li class="seen"><button class="btnDefault btnSeen spriteBefore" data-itm-id="<?php echo ($movie['seen_id'] !== NULL) ? $movie['seen_id'] : 0; ?>" onclick="qptAction.seen(this)">WATCHED</button></li>
 						<li class="addToList">
-							<button class="btnDefault btnAddToList">ADD TO LIST</button>
+							<button class="btnDefault btnAddToList spriteBefore">ADD TO LIST</button>
 							<div class="listSelection qFixer">
 								<div class="title">ADD TO</div>
 								<div class="wtc">
-									<button  class="chkDefault chkWtc" onclick="qptAction.watchlist(this)" data-itm-id="<?php echo ($movie['wtc_id'] !== NULL) ? $movie['wtc_id'] : 0; ?>">Watchlist</button>
+									<button  class="chkDefault chkWtc spriteBefore" onclick="qptAction.watchlist(this)" data-itm-id="<?php echo ($movie['wtc_id'] !== NULL) ? $movie['wtc_id'] : 0; ?>">Watchlist</button>
 								</div>
 								<div class="clSearch">
 									<input class="rc" type="text" placeholder="List name..." />
@@ -83,7 +83,7 @@
 								</div>
 							</div>
 						</li>
-						<li class="applaud"><button class="btnDefault btnApplaud" data-itm-id="<?php echo ($movie['app_id'] !== NULL) ? $movie['app_id'] : 0; ?>" onclick="qptAction.applaud(this)">APPLAUD</button></li>
+						<li class="applaud"><button class="btnDefault btnApplaud spriteBefore" data-itm-id="<?php echo ($movie['app_id'] !== NULL) ? $movie['app_id'] : 0; ?>" onclick="qptAction.applaud(this)">APPLAUD</button></li>
 					</ul>
 				</div>
 

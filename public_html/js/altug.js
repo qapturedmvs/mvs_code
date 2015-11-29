@@ -29,6 +29,25 @@ if( detectEl( $('.pageStar') ) ){
 }
 
 
+/////////////////// STAR DETAIL PAGE
+var starDetailPage = {
+	init: function(){
+		var btn = $('.role button'), target = $('.tabFilmography'), rel;
+		if( detectEl( btn ) && detectEl( target ) ){
+			btn
+			.bind('click', function(){
+        rel = $(this).text();
+        $('button[rel="'+rel+'"]', target).click();
+				pageScroll(target.offset().top);
+			});
+			
+		}
+
+	}
+};
+
+starDetailPage.init();
+
 //Deafult Dropdown
 $('.drpButton').click(function(){
   $(this).parent('.drpDefault').toggleClass('opened');

@@ -2,7 +2,7 @@
 <div class="pageDefault pageMovies qMainBlock">
 	<div class="controllers qFixer">
 		<ul class="cntrlLinks">
-			<li><button class="lnkDefault lnkFilters">Refine results</button></li>
+			<li><button class="lnkDefault lnkFilters">Refine</button></li>
 			<?php if($logged_in): ?>
 			<li class="multiActions">
 				<button class="lnkDefault lnkMultiAct">Actions</button>

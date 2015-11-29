@@ -12,7 +12,7 @@
 		public function lister($p = 1){
 				
 				$vars = $this->get_vars;
-				$data = array('list_type' => $vars['type'], 'mfn' => (isset($vars['mfn'])) ? $vars['mfn'] : 0, 'mfu' => (isset($vars['mfu'])) ? 1 : 0, 'usr' => (isset($vars['usr'])) ? $vars['usr'] : '', 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'list_id' => (isset($vars['list'])) ? $vars['list'] : 0, 'where' => movies_where(qs_filter($vars, $this->filter_def), $this->filter_def), 'offset' => $p, 'perpage' => 100);
+				$data = array('list_type' => $vars['type'], 'mfn' => (isset($vars['mfn'])) ? $vars['mfn'] : 0, 'mfu' => (isset($vars['mfu'])) ? 1 : 0, 'usr' => (isset($vars['usr'])) ? $vars['usr'] : '', 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'list_id' => (isset($vars['list'])) ? $vars['list'] : 0, 'where' => movies_where(qs_filter($vars, $this->filter_def), $this->filter_def), 'offset' => $p, 'perpage' => 120);
 				$movies = $this->movie_m->movies_json($data);
 				$tables['genres'] = $this->cache_table_data('genres', 'movie_m', array('id' => 'gnr_id', 'title' => 'gnr_title'));
 				$json = (object) array();

@@ -940,7 +940,7 @@ var qptAction = {
 				if(e['result'] == 'OK'){
 					if(e['itm-id'] != 0)
 						$('.chkWtc').attr("data-itm-id", "0");
-					$( obj ).attr("data-itm-id", e['itm-id']);
+						$( obj ).attr("data-itm-id", e['itm-id']);
 					
 					checkController('pmdUsrNetSn');
 					
@@ -975,7 +975,7 @@ var qptAction = {
 				if(e['result'] == 'OK'){
 					if(e['itm-id'] != 0)
 						$('.btnSeen').attr("data-itm-id", "0");
-					$( obj ).attr("data-itm-id", e['itm-id']);
+						$( obj ).attr("data-itm-id", e['itm-id']);
 				}else
 					_t.message( e['msg'] );
 					

@@ -16,9 +16,9 @@
 			
 			$tables = $this->_set_tables($this->filter_defs);
 			$vars = qs_filter($this->get_vars, $this->filter_defs);
-			
+
 			//Movies Total Count
-			$data = array('list_type' => 'ml', 'mfn' => (isset($vars['mfn'])) ? $vars['mfn'] : 0, 'mfu' => (isset($vars['mfu'])) ? 1 : 0, 'usr' => '', 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'list_id' => 0, 'where' => movies_where($vars, $this->filter_def));
+			$data = array('list_type' => 'ml', 'mfn' => (isset($vars['mfn'][0])) ? $vars['mfn'][0] : 0, 'mfu' => (isset($vars['mfu'][0])) ? 1 : 0, 'usr' => '', 'lgn_usr' => ($this->logged_in) ? $this->user['usr_id'] : 0, 'list_id' => 0, 'where' => movies_where($vars, $this->filter_def));
 			$this->data['total'] = $this->movie_m->movies_count($data);
 			
 			$this->data['controls'] = array('page' => 'movies', 'seen_action' => 'multi', 'cl_action' => FALSE);

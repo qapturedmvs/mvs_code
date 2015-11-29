@@ -26,11 +26,11 @@
 		<div class="revHolder" rel="{{items.length}}" ng-class="{block:items.length > 0}">
 			<div class="tabDefault tabReview">
 				<ul class="qFixer">
-					<li class="selected" rel="topReviews"><button data-uri="<?php echo $ajxUrl; ?>&type=nwf" ng-click="clicked($event);">Top reviews</button></li>
+					<li class="selected" rel="allReviews"><button data-uri="<?php echo $ajxUrl; ?>&type=all" ng-click="clicked($event);">All reviews</button></li>
+					<!--<li class="selected" rel="topReviews"><button data-uri="<?php echo $ajxUrl; ?>&type=nwf" ng-click="clicked($event);">Top reviews</button></li>-->
 					<?php if($logged_in): ?>
 					<li rel="myNetwork"><button data-uri="<?php echo $ajxUrl; ?>&type=myn" ng-click="clicked($event);">My network</button></li>
 					<?php endif; ?>
-					<li rel="allReviews"><button data-uri="<?php echo $ajxUrl; ?>&type=all" ng-click="clicked($event);">All reviews</button></li>
 				</ul>
 			</div>
 			<div class="revItemHolder" ng-if="items.length > 0">

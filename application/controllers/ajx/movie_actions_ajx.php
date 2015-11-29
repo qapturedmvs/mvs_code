@@ -175,15 +175,17 @@
 				
 				}
 				
-				$this->data['json'] = json_encode($json);
-			
-				$this->load->view('json/main_json_view', $this->data);
+				
 			
 			}else{
 				
-				show_404();
+				$json->result = 'FALSE';
+				$json->data = '';
 				
 			}
+			
+			$this->data['json'] = json_encode($json);
+			$this->load->view('json/main_json_view', $this->data);
 
 		}
 		
@@ -223,36 +225,34 @@
 					$json->data = '';
 				
 				}
-				
-				$this->data['json'] = json_encode($json);
-			
-				$this->load->view('json/main_json_view', $this->data);
 			
 			}else{
 				
-				show_404();
+				$json->result = 'FALSE';
+				$json->data = '';
 				
 			}
+			
+			$this->data['json'] = json_encode($json);
+			$this->load->view('json/main_json_view', $this->data);
 
 		}
 		
 		// Get users add to list menu
 		public function get_add_cls_menu($movie = NULL){
-
+			
+			$this->data['results'] = '';
+			
 			if($movie){
 				
 				$this->load->model('customlist_m');
 				
 				$data = array('mvs' => $movie, 'usr' => ($this->logged_in) ? $this->user['usr_id'] : 0);
 				$this->data['results'] = $this->customlist_m->get_add_cls_menu($data);
-			
-				$this->load->view('html_results/_add_cls_menu', $this->data);
-			
-			}else{
-				
-				show_404();
 				
 			}
+			
+			$this->load->view('html_results/_add_cls_menu', $this->data);
 
 		}
   

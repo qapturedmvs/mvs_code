@@ -8,10 +8,12 @@
 							<a class="lazy posterImg" data-original="<?php echo $site_url ?>{{item.mvs_poster}}" ng-href="/movie/{{item.mvs_slug}}"></a>
 						</div>
 						<div class="info">
-							<span class="title qValign"><a ng-href="/movie/{{item.mvs_slug}}">{{item.mvs_title}}</a><small class="year">{{item.mvs_year}}</small></span> 
-							<span class="genre">{{item.mvs_genre}}</span> 
-							<span class="rating" ng-if="item.mvs_rating != ''"><i class="sprite iconRate"></i>{{item.mvs_rating}}</span> 
-							<div class="plot">{{item.mvs_plot}}</div>
+							<a ng-href="/movie/{{item.mvs_slug}}">
+								<span class="rating" ng-if="item.mvs_rating != ''"><i class="sprite iconRate"></i>{{item.mvs_rating}}</span>
+								<span class="title qValign"><b>{{item.mvs_title}}</b><small class="year">{{item.mvs_year}}</small></span> 
+								<span class="genre">{{item.mvs_genre}}</span> 
+								<div class="plot">{{item.mvs_plot}}</div>
+							</a>
 						</div>
 						<?php if($logged_in): ?>
 							<div class="movieActions">
@@ -61,7 +63,7 @@
 	</div>
 	<?php if($controls['page'] != 'cld'): ?>
 	<div ng-controller="pagingController" class="pagingHolder">
-		<div paging class="qFixer" page="0" page-size="100" total="<?php echo $total; ?>" show-prev-next="true" paging-action="pagingClick(page, pageSize, total)"></div>  
+		<div paging class="qFixer" page="0" page-size="120" total="<?php echo $total; ?>" show-prev-next="true" paging-action="pagingClick(page, pageSize, total)"></div>  
 	</div>    
 	<?php endif; ?>
 </div>

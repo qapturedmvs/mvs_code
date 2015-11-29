@@ -286,13 +286,13 @@ section.view button.mgrid:hover, section.view button.mgrid.selected{background-p
 .movieListHolder .movieListInner{min-height:900px;}
 .movieListHolder .movieItem{width:220px; height:470px; margin-right:25px; float:left; position:relative;}
 .movieListHolder .movieItem:nth-of-type(5n){margin-right:0;}
-.movieListHolder .movieItem .poster{height:326px; width:100%; margin-bottom:15px;}
+.movieListHolder .movieItem .poster{height:326px; width:100%; margin-bottom:10px;}
 .movieListHolder .movieItem .poster a{display:block; height:326px; width:100%; background-size:cover; position:relative; background-position:50% 50%;}
-.movieListHolder .movieItem .title{display:block; margin-bottom:10px; max-height:61px; overflow:hidden;}
-.movieListHolder .movieItem .title a{font-size:18px; line-height:20px;}
+.movieListHolder .movieItem .title{display:block; margin-bottom:5px; max-height:61px; overflow:hidden;}
+.movieListHolder .movieItem .title b{font-size:18px; line-height:20px; font-weight:400;}
 .movieListHolder .movieItem .title small{font-size:12px; color:#777; padding-left:8px;}
-.movieListHolder .movieItem .genre{color:#919191; font-size:14px; display:block; margin-bottom:10px;}
-.movieListHolder .movieItem .rating{color:#b3945e; font-size:15px; display:table; vertical-align:middle;}
+.movieListHolder .movieItem .genre{color:#919191; font-size:14px; display:block;}
+.movieListHolder .movieItem .rating{color:#b3945e; font-size:15px; display:table; vertical-align:middle; margin-bottom:8px;}
 .movieListHolder .movieItem .rating i{background-position:-16px 0; display:inline-block; height:15px; width:15px;}
 .movieListHolder .movieItem .plot{display:none;}
 
@@ -324,9 +324,9 @@ section.view button.mgrid:hover, section.view button.mgrid.selected{background-p
 
 .movieListHolder[rel="row"] .movieItem{width:100%; height:200px; margin-right:0; border-top:1px solid #e5e5e5; padding:10px 0; float:none;}
 .movieListHolder[rel="row"] .movieItem:hover{background:#f8f8f8;}
-.movieListHolder[rel="row"] .movieItem .poster{height:178px; width:120px; position:absolute; left:0; top:10px;}
+.movieListHolder[rel="row"] .movieItem .poster{height:178px; width:120px; position:absolute; left:10px; top:10px;}
 .movieListHolder[rel="row"] .movieItem .poster a{height:178px; width:120px;}
-.movieListHolder[rel="row"] .movieItem .info{padding:20px 0 0 150px; width:100%;}
+.movieListHolder[rel="row"] .movieItem .info{padding:20px 0 0 160px; width:100%;}
 .movieListHolder[rel="row"] .movieItem .title a{font-size:26px; line-height:28px;}
 .movieListHolder[rel="row"] .movieItem .title small{}
 .movieListHolder[rel="row"] .movieItem .rating{color:#aa8d61; font-size:26px; display:table; vertical-align:middle; margin-bottom:15px;}
@@ -423,9 +423,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .movieActions li{float:left; margin-right:10px;}
 .movieActions li.addToList{position:relative;}
 .movieActions .btnSeen{background-color:#b3945e; color:#fff;}
+.movieActions .btnSeen::before{width:23px; height:13px; background-position:-158px -49px; margin-right:12px;}
 .movieActions .btnSeen[data-itm-id="0"]{background-color:#fff; color:#b3945e;}
+.movieActions .btnSeen[data-itm-id="0"]::before{background-position:-158px -12px;}
 .movieActions .btnApplaud{background-color:#b3945e; color:#fff;}
+.movieActions .btnApplaud::before{width:24px; height:22px; background-position:-55px -87px; margin-right:12px;}
 .movieActions .btnApplaud[data-itm-id="0"]{background-color:#fff; color:#b3945e;}
+.movieActions .btnAddToList::before{width:15px; height:15px; background-position:-126px -31px; margin-right:12px;}
 
 .listSelection{display:none; width:320px; max-height:310px; position:absolute; top:0; left:0; background:#fff; border-radius:10px; padding:15px 10px; box-shadow: 1px 1px 3px #000000; z-index:99;}
 .opened .listSelection{display:block;}
@@ -534,7 +538,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .theUserMenu li[data-act="set"]{float:right; margin-right:0;}
 .theUserMenu li[data-act="set"] a{position:relative; padding-right:32px;}
 .theUserMenu li[data-act="set"] a::after{width:14px; height:14px; position:absolute; right:5px; bottom:0; background-position:-61px -54px;}
-.theUserMenu[data-page="cl"] li[data-act="cl"] a, .theUserMenu[data-page="cld"] li[data-act="cl"] a, .theUserMenu[data-page="wall"] li[data-act="wall"] a, .theUserMenu[data-page="flwr"] li[data-act="ntw"] a, .theUserMenu[data-page="flwg"] li[data-act="ntw"] a, .theUserMenu[data-page="set"] li[data-act="set"] a{border-top:5px solid #000; color:#000;}
+.theUserMenu[data-page="cl"] li[data-act="cl"] a, .theUserMenu[data-page="cld"] li[data-act="cl"] a, .theUserMenu[data-page="wall"] li[data-act="wall"] a, .theUserMenu[data-page="flwr"] li[data-act="ntw"] a, .theUserMenu[data-page="flwg"] li[data-act="ntw"] a, .theUserMenu[data-page="set"] li[data-act="set"] a, .theUserMenu[data-page="seen"] li[data-act="cl"] a, .theUserMenu[data-page="wtc"] li[data-act="cl"] a, .theUserMenu[data-page="app"] li[data-act="cl"] a{border-top:5px solid #000; color:#000;}
 .theUserMenu[data-page="set"] li[data-act="set"] a::after{background-position:-61px -40px;}
 
 /* USER MOVIES MENU */
@@ -652,7 +656,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .feedItem .feed .feedRight .content.posterB .moviePoster{width:150px; height:222px; display:block; background-size:cover;}
 .feedItem .feed .feedRight .content.posterS .moviePoster{width:49px; height:73px; display:block; background-size:cover; float:left; margin:0 5px 5px 0;}
 .feedItem .feed .feedRight .content.posterM .moviePoster{width:100px; height:148px; display:block; background-size:cover; background-color:#222;}
-.feedItem .feed .mGrpSn .feedRight .content.posterS, .feedItem .feed .mGrpWtc .feedRight .content.posterS{padding-left:0; min-height:auto;}
+.feedItem .feed .mGrpSn .feedRight .content.posterS, .feedItem .feed .mGrpWtc .feedRight .content.posterS{padding-left:0; min-height:auto; max-height:155px; overflow:hidden;}
 .feedItem .feed .mGrpSn .feedRight .lnkSeeAll, .feedItem .feed .mGrpWtc .feedRight .lnkSeeAll{font-weight:600; font-size:13px;}
 .feedItem .feed .mGrpSn .feedRight .content, .feedItem .feed .mGrpWtc .feedRight .content{padding-right:60px;}
 
@@ -706,7 +710,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .pageSettings .pageRight .form-profile li label{display:inline-block; float:left; width:110px; height:38px; line-height:38px; font-size:16px; font-weight:300;}
 .pageSettings .pageRight .form-profile li input{float:left; width:350px;}
 .pageSettings .pageRight .form-profile li input#prf_slogan{width:550px;}
-.pageSettings .pageRight .form-profile .btnSaveSettings{border-color:#ccc; font-size:13px; font-weight:normal; color:#000; margin-left:110px;}
+.pageSettings .pageRight .form-profile .btnSaveSettings{font-size:13px; font-weight:normal; color:#000; margin-left:110px;}
 
 .ui-autocomplete-category.location{display:none;}
 .pageSettings .pageRight .form-profile li.userLoc .ui-autocomplete{width:350px !important;}
@@ -736,7 +740,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .draggable img{width:100%;}
 
 /* THE USERBOX */
-.theUserBox{padding-top:10px; margin-bottom:10px;}
+.theUserBox{padding-top:10px;}
 .theUserBox .boxLeft{width:240px; padding-left:20px;}
 .theUserBox .boxLeft figure{display:block; width:150px; height:150px; border-radius:75px; background-size:cover;}
 .theUserBox .boxRight{width:660px; padding:0 0 75px 60px; border-bottom:1px solid #ebebeb;}
@@ -744,7 +748,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .theUserBox .boxRight .userLocation{font-size:16px; color:#bbb; clear:both;}
 .theUserBox .boxRight .followHolder{}
 .theUserBox .boxRight .followHolder .btnFollow{padding:0 50px; height:36px; line-height:36px; border-radius:18px;}
-.theUserBox .boxRight .userBio{clear:both; padding-top:45px;}
+.theUserBox .boxRight .userBio{clear:both; padding-top:25px;}
 .theUserBox .boxRight .userSummary{margin-top:35px;}
 .theUserBox .boxRight .userSummary li{float:left; height:55px; line-height:55px; padding-left:35px; margin-left:35px; border-left:1px solid #ddd;}
 .theUserBox .boxRight .userSummary li:first-child{margin:0; padding:0; border:0;}
@@ -755,7 +759,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3000000', e
 .pageWall{}
 .pageWall .pageLeft{width:900px;}
 .pageWall .pageLeft .sideBar{width:240px; min-height:100px;}
-.pageWall .pageLeft .wallHolder{float:left; width:640px;}
+.pageWall .pageLeft .wallHolder{float:left; width:660px;}
 
 /* SEARCH SUGGEST */
 .suggestions{width:450px; position:absolute; bottom:0; left:0; z-index:9;}

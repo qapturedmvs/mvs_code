@@ -18,7 +18,7 @@
 				<div class="role">
 					<ul class="qFixer">
 						<?php foreach($movies as $type => $data): ?>
-						<li><?php echo $type; ?></li>
+						<li><button><?php echo $type; ?></button></li>
 						<?php endforeach; ?>
 					</ul>
 				</div>

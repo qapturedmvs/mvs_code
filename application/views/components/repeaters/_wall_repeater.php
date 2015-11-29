@@ -193,33 +193,6 @@
                 <div class="genres"><span ng-repeat="gnr in item.genres">{{gnr}}</span></div>
                 <div class="rating spriteAfter" ng-if="item.mvs_rating != ''">{{item.mvs_rating}}</div>
                 <div class="plot" ng-if="item.mvs_plot != null">{{item.mvs_plot}}</div>
-                <?php if($logged_in): ?>
-                <div class="movieActions qFixer">
-                  <ul class="qFixer">
-                    <li class="seen"><button class="btnDefault btnSeen" data-itm-id="{{item.usr_seen_fl}}" onclick="qptAction.seen(this)">WATCHED</button></li>
-                    <li class="addToList">
-                      <button class="btnDefault btnAddToList">ADD TO LIST</button>
-                      <div class="listSelection qFixer">
-                        <div class="title">ADD TO</div>
-                        <div class="wtc">
-                          <button class="chkDefault chkWtc" onclick="qptAction.watchlist(this)" data-itm-id="{{item.usr_wtc_fl}}">Watchlist</button>
-                        </div>
-                        <div class="clSearch">
-                          <input class="rc" type="text" placeholder="List name..." />
-                        </div>
-                        <div class="cLists"></div>
-                        <div class="ncList">
-                          <button>Add to New Custom List</button>
-                          <div class="listCreate none">
-                            <input class="rc" maxlength="255" placeholder="List title..." type="text" />
-                            <button rel="cncl">Add</button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <?php endif; ?>
               </div>
             </div>                                                
           </div>
@@ -248,33 +221,6 @@
                 <div class="genres"><span ng-repeat="gnr in item.genres">{{gnr}}</span></div>
                 <div class="rating spriteAfter" ng-if="item.mvs_rating != ''">{{item.mvs_rating}}</div>
                 <div class="plot" ng-if="item.mvs_plot != null">{{item.mvs_plot}}</div>
-                <?php if($logged_in): ?>
-                <div class="movieActions qFixer">
-                  <ul class="qFixer">
-                    <li class="seen"><button class="btnDefault btnSeen" data-itm-id="{{item.usr_seen_fl}}" onclick="qptAction.seen(this)">WATCHED</button></li>
-                    <li class="addToList">
-                      <button class="btnDefault btnAddToList">ADD TO LIST</button>
-                      <div class="listSelection qFixer">
-                        <div class="title">ADD TO</div>
-                        <div class="wtc">
-                          <button class="chkDefault chkWtc" onclick="qptAction.watchlist(this)" data-itm-id="{{item.usr_wtc_fl}}">Watchlist</button>
-                        </div>
-                        <div class="clSearch">
-                          <input class="rc" type="text" placeholder="List name..." />
-                        </div>
-                        <div class="cLists"></div>
-                        <div class="ncList">
-                          <button>Add to New Custom List</button>
-                          <div class="listCreate none">
-                            <input class="rc" maxlength="255" placeholder="List title..." type="text" />
-                            <button rel="cncl">Add</button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -304,33 +250,6 @@
                 <div class="genres"><span ng-repeat="gnr in item.genres">{{gnr}}</span></div>
                 <div class="rating spriteAfter" ng-if="item.mvs_rating != ''">{{item.mvs_rating}}</div>
                 <div class="plot" ng-if="item.mvs_plot != null">{{item.mvs_plot}}</div>
-                <?php if($logged_in): ?>
-                <div class="movieActions qFixer">
-                  <ul class="qFixer">
-                    <li class="seen"><button class="btnDefault btnSeen" data-itm-id="{{item.usr_seen_fl}}" onclick="qptAction.seen(this)">WATCHED</button></li>
-                    <li class="addToList">
-                      <button class="btnDefault btnAddToList">ADD TO LIST</button>
-                      <div class="listSelection qFixer">
-                        <div class="title">ADD TO</div>
-                        <div class="wtc">
-                          <button class="chkDefault chkWtc" onclick="qptAction.watchlist(this)" data-itm-id="{{item.usr_wtc_fl}}">Watchlist</button>
-                        </div>
-                        <div class="clSearch">
-                          <input class="rc" type="text" placeholder="List name..." />
-                        </div>
-                        <div class="cLists"></div>
-                        <div class="ncList">
-                          <button>Add to New Custom List</button>
-                          <div class="listCreate none">
-                            <input class="rc" maxlength="255" placeholder="List title..." type="text" />
-                            <button rel="cncl">Add</button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <?php endif; ?>
               </div>
             </div>
           </div>

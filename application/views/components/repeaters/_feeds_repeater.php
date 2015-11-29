@@ -216,7 +216,7 @@
               <a class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}" href="/movie/{{item.mvs_slug}}" title="{{item.mvs_title}}"></a>
               <a ng-repeat="grp in item.grp" class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{grp.mvs_poster}}" href="/movie/{{grp.mvs_slug}}" title="{{grp.mvs_title}}"></a>
             </div>
-            <a href="/user/movies/seen/{{item.usr_nick}}" class="lnkDefault lnkSeeAll">See all</a>
+            <a ng-if="item.grp.length > 24" href="/user/movies/seen/{{item.usr_nick}}" class="lnkDefault lnkSeeAll">See all</a>
           </div>
         </div>
 
@@ -309,6 +309,7 @@
               <a class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{item.mvs_poster}}" href="/movie/{{item.mvs_slug}}" title="{{item.mvs_title}}"></a>
               <a ng-repeat="grp in item.grp" class="moviePoster lazy" data-original="<?php echo $site_url; ?>{{grp.mvs_poster}}" href="/movie/{{grp.mvs_slug}}" title="{{grp.mvs_title}}"></a>
             </div>
+            <a ng-if="item.grp.length > 24" href="/user/movies/watchlist/{{item.usr_nick}}" class="lnkDefault lnkSeeAll">See all</a>
           </div>
         </div>
 

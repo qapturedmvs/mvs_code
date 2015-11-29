@@ -20,7 +20,7 @@
 
 /* */
 .movieListHolder .movieItem.opened{z-index:100;}
-.movieListHolder .movieItem.opened:after{content:'';position: fixed;z-index:-1;height: 100%;width: 100%;background: #000;opacity: 0.3;top:0;left:0}
+.movieListHolder .movieItem.opened:after{content:''; position: fixed; z-index:1; height: 100%; width:100%; background:#000; opacity:0.3; top:0; left:0}
 .movieListHolder .movieItem.opened .singleActions{display:block;}
 .movieListHolder .movieItem.opened .movieActions li.addToList .listSelection{display:block;}
 .movieListHolder .movieItem.opened .poster a:after{display:none;}
