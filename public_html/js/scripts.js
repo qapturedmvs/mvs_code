@@ -935,11 +935,11 @@ var qptAction = {
 		return{ id: el.parents('*[data-'+ pre +'-id]').attr('data-' + pre + '-id'), itm: el.attr('data-itm-id') };
 	},
 	seen: function( obj ){
-		var _t = this;
-		getAjax({ uri: site_url + 'ajx/movie_actions_ajx/s_seen/', param: _t.get_obj_detail( obj, 'mvs' ) }, function( e ){
+		var _t = this, el = $( obj );
+		getAjax({ uri: site_url + 'ajx/movie_actions_ajx/s_seen/', param: _t.get_obj_detail( obj, 'mvs' ) }, function( e, t ){
 				if(e['result'] == 'OK'){
 					if(e['itm-id'] != 0)
-						$('.chkWtc').attr("data-itm-id", "0");
+						$('div[data-mvs-id="'+t['param']['id']+'"] .chkWtc').attr("data-itm-id", "0");
 						$( obj ).attr("data-itm-id", e['itm-id']);
 					
 					checkController('pmdUsrNetSn');
@@ -971,10 +971,10 @@ var qptAction = {
 	},
 	watchlist: function( obj ){
 		var _t = this;	
-		getAjax({ uri: site_url + 'ajx/movie_actions_ajx/s_watchlist/', param: _t.get_obj_detail( obj, 'mvs' ) }, function( e ){
+		getAjax({ uri: site_url + 'ajx/movie_actions_ajx/s_watchlist/', param: _t.get_obj_detail( obj, 'mvs' ) }, function( e, t ){
 				if(e['result'] == 'OK'){
 					if(e['itm-id'] != 0)
-						$('.btnSeen').attr("data-itm-id", "0");
+						$('div[data-mvs-id="'+t['param']['id']+'"] .btnSeen').attr("data-itm-id", "0");
 						$( obj ).attr("data-itm-id", e['itm-id']);
 				}else
 					_t.message( e['msg'] );
@@ -1593,7 +1593,7 @@ function getAjax( obj, callback, error ){
 		},
 		success:function( e ){
 			if( callback != undefined ) 
-				callback( e );
+				callback( e, obj );
 		}
 	});
 }
