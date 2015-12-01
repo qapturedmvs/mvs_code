@@ -107,7 +107,9 @@
 			
 		}
 		
-		public function add_comment($page = NULL){
+		public function add_comment($reply = NULL){
+			
+			$view = 'results/_add_comment';
 				
 			if($this->logged_in){
 
@@ -119,21 +121,32 @@
 					
 					$this->load->model('comments_m');
 					
-					$this->data['comment_result'] = $this->comments_m->add_comment($data);
+					$result = $this->comments_m->add_comment($data);
+
+					if($reply){
+						
+						$view = 'html_results/_add_comment';
+						$this->data['result'] = $result[0];
+						
+					}else{
+						
+						$this->data['result'] = $result[0]['act_id'];
+						
+					}
 
 				}else{
 					
-					show_404();
+					$this->data['result'] = FALSE;
 					
 				}
 				
 			}else{
 				
-				$this->data['comment_result'] = 'no-user';
+				$this->data['result'] = 'no-user';
 				
 			}
 			
-			$this->load->view('results/_add_comment', $this->data);
+			$this->load->view($view, $this->data);
 
     }
 		
